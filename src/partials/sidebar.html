@@ -1,75 +1,178 @@
-<aside class="bg-navy text-navy-fg flex flex-col px-2 py-2.5 gap-px overflow-hidden hidden md:flex" id="sidebar">
-  <div class="flex items-center gap-2.5 px-2 py-2 pb-3.5 text-white">
-    <span class="w-[26px] h-[26px] rounded-[5px] bg-white text-navy flex items-center justify-center font-semibold text-sm shrink-0">B</span>
-    <span class="font-semibold tracking-tight text-[15px] whitespace-nowrap [&[data-layout=rail]_&]:hidden">Bookkip</span>
+<aside class="bg-navy text-navy-fg flex flex-col px-2 py-2.5 gap-0.5 overflow-y-auto overflow-x-hidden hidden md:flex shrink-0 w-60 [&[data-layout=rail]_&]:w-[58px] transition-all duration-200" id="sidebar">
+  <!-- Brand -->
+  <div class="flex items-center gap-2.5 px-2 py-1.5 pb-3 text-white">
+    <span class="w-[28px] h-[28px] rounded-[6px] bg-white text-navy flex items-center justify-center font-bold text-sm shrink-0 shadow-sm">B</span>
+    <span class="font-bold tracking-tight text-[15px] whitespace-nowrap [&[data-layout=rail]_&]:hidden">Bookkip</span>
   </div>
-  
-  <a href="/dashboard" class="flex items-center gap-2.5 px-2 h-[34px] rounded text-navy-fg hover:bg-navy-hover hover:text-white w-full text-left relative group [&[data-layout=rail]_&]:justify-center [&[data-layout=rail]_&]:px-0" data-label="Dashboard">
-    <svg class="w-5 h-5 stroke-2 shrink-0" aria-hidden="true"><use href="#i-layout-dashboard"/></svg>
-    <span class="whitespace-nowrap overflow-hidden [&[data-layout=rail]_&]:hidden">Dashboard</span>
-    <div class="hidden [&[data-layout=rail]_.group:hover_&]:block absolute left-[calc(100%+8px)] bg-ink text-white text-xs px-2 py-1 rounded whitespace-nowrap z-40">Dashboard</div>
-  </a>
 
-  <div class="text-[11px] text-navy-mute px-2 pt-3.5 pb-1 whitespace-nowrap [&[data-layout=rail]_&]:hidden">Sales</div>
-  <div class="h-px bg-[#252B6B] mx-2.5 my-1.5 hidden [&[data-layout=rail]_&]:block"></div>
+  <nav class="flex-1 flex flex-col gap-0.5 text-[13px]">
+    <!-- Dashboard -->
+    <a href="/index.html" class="flex items-center gap-2.5 px-2.5 h-[34px] rounded {{#if (eq active "dashboard")}}bg-indigo text-white font-medium{{else}}text-navy-fg hover:bg-navy-hover hover:text-white{{/if}} w-full relative group [&[data-layout=rail]_&]:justify-center [&[data-layout=rail]_&]:px-0" data-label="Dashboard">
+      <svg class="w-4 h-4 stroke-2 shrink-0"><use href="#i-layout-dashboard"/></svg>
+      <span class="whitespace-nowrap overflow-hidden [&[data-layout=rail]_&]:hidden">Dashboard</span>
+      <div class="hidden [&[data-layout=rail]_.group:hover_&]:block absolute left-[calc(100%+8px)] bg-ink text-white text-xs px-2.5 py-1.5 rounded shadow-lg whitespace-nowrap z-50">Dashboard</div>
+    </a>
 
-  <a href="/" class="flex items-center gap-2.5 px-2 h-[34px] rounded {{#if active_invoices}}bg-indigo text-white{{else}}text-navy-fg hover:bg-navy-hover hover:text-white{{/if}} w-full text-left relative group [&[data-layout=rail]_&]:justify-center [&[data-layout=rail]_&]:px-0" data-label="Invoices">
-    <svg class="w-5 h-5 stroke-2 shrink-0" aria-hidden="true"><use href="#i-file-text"/></svg>
-    <span class="whitespace-nowrap overflow-hidden [&[data-layout=rail]_&]:hidden">Invoices</span>
-    <span class="ml-auto text-[11px] text-navy-mute [&[data-layout=rail]_&]:hidden">4</span>
-    <div class="hidden [&[data-layout=rail]_.group:hover_&]:block absolute left-[calc(100%+8px)] bg-ink text-white text-xs px-2 py-1 rounded whitespace-nowrap z-40">Invoices</div>
-  </a>
-  
-  <a href="/quotations.html" class="flex items-center gap-2.5 px-2 h-[34px] rounded {{#if active_quotations}}bg-indigo text-white{{else}}text-navy-fg hover:bg-navy-hover hover:text-white{{/if}} w-full text-left relative group [&[data-layout=rail]_&]:justify-center [&[data-layout=rail]_&]:px-0" data-label="Quotations">
-    <svg class="w-5 h-5 stroke-2 shrink-0" aria-hidden="true"><use href="#i-file-clock"/></svg>
-    <span class="whitespace-nowrap overflow-hidden [&[data-layout=rail]_&]:hidden">Quotations</span>
-    <div class="hidden [&[data-layout=rail]_.group:hover_&]:block absolute left-[calc(100%+8px)] bg-ink text-white text-xs px-2 py-1 rounded whitespace-nowrap z-40">Quotations</div>
-  </a>
+    <!-- Customers -->
+    <a href="/customers.html" class="flex items-center gap-2.5 px-2.5 h-[34px] rounded {{#if (eq active "customers")}}bg-indigo text-white font-medium{{else}}text-navy-fg hover:bg-navy-hover hover:text-white{{/if}} w-full relative group [&[data-layout=rail]_&]:justify-center [&[data-layout=rail]_&]:px-0" data-label="Customers">
+      <svg class="w-4 h-4 stroke-2 shrink-0"><use href="#i-users"/></svg>
+      <span class="whitespace-nowrap overflow-hidden [&[data-layout=rail]_&]:hidden">Customers</span>
+      <div class="hidden [&[data-layout=rail]_.group:hover_&]:block absolute left-[calc(100%+8px)] bg-ink text-white text-xs px-2.5 py-1.5 rounded shadow-lg whitespace-nowrap z-50">Customers</div>
+    </a>
 
-  <a href="/customers.html" class="flex items-center gap-2.5 px-2 h-[34px] rounded {{#if active_customers}}bg-indigo text-white{{else}}text-navy-fg hover:bg-navy-hover hover:text-white{{/if}} w-full text-left relative group [&[data-layout=rail]_&]:justify-center [&[data-layout=rail]_&]:px-0" data-label="Customers">
-    <svg class="w-5 h-5 stroke-2 shrink-0" aria-hidden="true"><use href="#i-users"/></svg>
-    <span class="whitespace-nowrap overflow-hidden [&[data-layout=rail]_&]:hidden">Customers</span>
-    <div class="hidden [&[data-layout=rail]_.group:hover_&]:block absolute left-[calc(100%+8px)] bg-ink text-white text-xs px-2 py-1 rounded whitespace-nowrap z-40">Customers</div>
-  </a>
+    <!-- Product & Services Group -->
+    <div class="nav-group relative group" data-group="products">
+      <button class="flex items-center justify-between w-full px-2.5 h-[34px] rounded text-navy-fg hover:bg-navy-hover hover:text-white [&[data-layout=rail]_&]:justify-center [&[data-layout=rail]_&]:px-0" onclick="toggleNavGroup(this)">
+        <div class="flex items-center gap-2.5">
+          <svg class="w-4 h-4 stroke-2 shrink-0"><use href="#i-package"/></svg>
+          <span class="whitespace-nowrap overflow-hidden [&[data-layout=rail]_&]:hidden">Product & Services</span>
+        </div>
+        <svg class="w-3 h-3 stroke-2 transition-transform duration-150 [&[data-layout=rail]_&]:hidden group-data-[open=true]:rotate-180"><use href="#i-chevron-down"/></svg>
+      </button>
+      <div class="nav-sub hidden group-data-[open=true]:flex flex-col gap-0.5 pl-7 pr-1 py-1 text-xs text-navy-mute [&[data-layout=rail]_&]:hidden">
+        <a href="/products.html" class="px-2 py-1.5 rounded hover:text-white hover:bg-navy-hover truncate">Products</a>
+        <a href="/product_units.html" class="px-2 py-1.5 rounded hover:text-white hover:bg-navy-hover truncate">Product Units</a>
+      </div>
+      <!-- Rail flyout -->
+      <div class="hidden [&[data-layout=rail]_.group:hover_&]:flex flex-col gap-1 absolute left-[calc(100%+8px)] top-0 bg-ink text-white text-xs p-2 rounded-lg shadow-xl min-w-[150px] z-50">
+        <div class="font-semibold px-2 py-1 text-[11px] text-muted border-b border-line uppercase">Product & Services</div>
+        <a href="/products.html" class="px-2 py-1 rounded hover:bg-th hover:text-ink">Products</a>
+        <a href="/product_units.html" class="px-2 py-1 rounded hover:bg-th hover:text-ink">Product Units</a>
+      </div>
+    </div>
 
-  <div class="text-[11px] text-navy-mute px-2 pt-3.5 pb-1 whitespace-nowrap [&[data-layout=rail]_&]:hidden">Purchasing</div>
-  <div class="h-px bg-[#252B6B] mx-2.5 my-1.5 hidden [&[data-layout=rail]_&]:block"></div>
+    <!-- Vendors -->
+    <a href="/vendors.html" class="flex items-center gap-2.5 px-2.5 h-[34px] rounded {{#if (eq active "vendors")}}bg-indigo text-white font-medium{{else}}text-navy-fg hover:bg-navy-hover hover:text-white{{/if}} w-full relative group [&[data-layout=rail]_&]:justify-center [&[data-layout=rail]_&]:px-0" data-label="Vendors">
+      <svg class="w-4 h-4 stroke-2 shrink-0"><use href="#i-truck"/></svg>
+      <span class="whitespace-nowrap overflow-hidden [&[data-layout=rail]_&]:hidden">Vendors</span>
+      <div class="hidden [&[data-layout=rail]_.group:hover_&]:block absolute left-[calc(100%+8px)] bg-ink text-white text-xs px-2.5 py-1.5 rounded shadow-lg whitespace-nowrap z-50">Vendors</div>
+    </a>
 
-  <a href="/purchases.html" class="flex items-center gap-2.5 px-2 h-[34px] rounded {{#if active_purchases}}bg-indigo text-white{{else}}text-navy-fg hover:bg-navy-hover hover:text-white{{/if}} w-full text-left relative group [&[data-layout=rail]_&]:justify-center [&[data-layout=rail]_&]:px-0" data-label="Purchases">
-    <svg class="w-5 h-5 stroke-2 shrink-0" aria-hidden="true"><use href="#i-shopping-bag"/></svg>
-    <span class="whitespace-nowrap overflow-hidden [&[data-layout=rail]_&]:hidden">Purchases</span>
-    <div class="hidden [&[data-layout=rail]_.group:hover_&]:block absolute left-[calc(100%+8px)] bg-ink text-white text-xs px-2 py-1 rounded whitespace-nowrap z-40">Purchases</div>
-  </a>
-  
-  <a href="/vendors.html" class="flex items-center gap-2.5 px-2 h-[34px] rounded {{#if active_vendors}}bg-indigo text-white{{else}}text-navy-fg hover:bg-navy-hover hover:text-white{{/if}} w-full text-left relative group [&[data-layout=rail]_&]:justify-center [&[data-layout=rail]_&]:px-0" data-label="Vendors">
-    <svg class="w-5 h-5 stroke-2 shrink-0" aria-hidden="true"><use href="#i-truck"/></svg>
-    <span class="whitespace-nowrap overflow-hidden [&[data-layout=rail]_&]:hidden">Vendors</span>
-    <div class="hidden [&[data-layout=rail]_.group:hover_&]:block absolute left-[calc(100%+8px)] bg-ink text-white text-xs px-2 py-1 rounded whitespace-nowrap z-40">Vendors</div>
-  </a>
+    <!-- Sales Group (Invoices, Quotations, Recurring) -->
+    <div class="nav-group relative group" data-group="sales" data-open="{{#if (eq active "invoices")}}true{{else if (eq active "quotations")}}true{{else if (eq active "recurring_invoices")}}true{{else}}false{{/if}}">
+      <button class="flex items-center justify-between w-full px-2.5 h-[34px] rounded {{#if (eq active "invoices")}}text-white font-medium{{else if (eq active "quotations")}}text-white font-medium{{else}}text-navy-fg hover:bg-navy-hover hover:text-white{{/if}} [&[data-layout=rail]_&]:justify-center [&[data-layout=rail]_&]:px-0" onclick="toggleNavGroup(this)">
+        <div class="flex items-center gap-2.5">
+          <svg class="w-4 h-4 stroke-2 shrink-0"><use href="#i-file-text"/></svg>
+          <span class="whitespace-nowrap overflow-hidden [&[data-layout=rail]_&]:hidden">Sales</span>
+        </div>
+        <svg class="w-3 h-3 stroke-2 transition-transform duration-150 [&[data-layout=rail]_&]:hidden group-data-[open=true]:rotate-180"><use href="#i-chevron-down"/></svg>
+      </button>
+      <div class="nav-sub hidden group-data-[open=true]:flex flex-col gap-0.5 pl-7 pr-1 py-1 text-xs text-navy-mute [&[data-layout=rail]_&]:hidden">
+        <a href="/index.html" class="px-2 py-1.5 rounded {{#if (eq active "invoices")}}bg-indigo text-white font-medium{{else}}hover:text-white hover:bg-navy-hover{{/if}} truncate">Invoices</a>
+        <a href="/quotations.html" class="px-2 py-1.5 rounded {{#if (eq active "quotations")}}bg-indigo text-white font-medium{{else}}hover:text-white hover:bg-navy-hover{{/if}} truncate">Quotations</a>
+        <a href="/recurring_invoices.html" class="px-2 py-1.5 rounded hover:text-white hover:bg-navy-hover truncate">Recurring Invoices</a>
+      </div>
+      <!-- Rail flyout -->
+      <div class="hidden [&[data-layout=rail]_.group:hover_&]:flex flex-col gap-1 absolute left-[calc(100%+8px)] top-0 bg-ink text-white text-xs p-2 rounded-lg shadow-xl min-w-[150px] z-50">
+        <div class="font-semibold px-2 py-1 text-[11px] text-muted border-b border-line uppercase">Sales</div>
+        <a href="/index.html" class="px-2 py-1 rounded hover:bg-th hover:text-ink">Invoices</a>
+        <a href="/quotations.html" class="px-2 py-1 rounded hover:bg-th hover:text-ink">Quotations</a>
+        <a href="/recurring_invoices.html" class="px-2 py-1 rounded hover:bg-th hover:text-ink">Recurring Invoices</a>
+      </div>
+    </div>
 
-  <div class="text-[11px] text-navy-mute px-2 pt-3.5 pb-1 whitespace-nowrap [&[data-layout=rail]_&]:hidden">People</div>
-  <div class="h-px bg-[#252B6B] mx-2.5 my-1.5 hidden [&[data-layout=rail]_&]:block"></div>
+    <!-- Purchases Group -->
+    <div class="nav-group relative group" data-group="purchases" data-open="{{#if (eq active "purchases")}}true{{else}}false{{/if}}">
+      <button class="flex items-center justify-between w-full px-2.5 h-[34px] rounded {{#if (eq active "purchases")}}text-white font-medium{{else}}text-navy-fg hover:bg-navy-hover hover:text-white{{/if}} [&[data-layout=rail]_&]:justify-center [&[data-layout=rail]_&]:px-0" onclick="toggleNavGroup(this)">
+        <div class="flex items-center gap-2.5">
+          <svg class="w-4 h-4 stroke-2 shrink-0"><use href="#i-shopping-bag"/></svg>
+          <span class="whitespace-nowrap overflow-hidden [&[data-layout=rail]_&]:hidden">Purchases</span>
+        </div>
+        <svg class="w-3 h-3 stroke-2 transition-transform duration-150 [&[data-layout=rail]_&]:hidden group-data-[open=true]:rotate-180"><use href="#i-chevron-down"/></svg>
+      </button>
+      <div class="nav-sub hidden group-data-[open=true]:flex flex-col gap-0.5 pl-7 pr-1 py-1 text-xs text-navy-mute [&[data-layout=rail]_&]:hidden">
+        <a href="/purchases.html" class="px-2 py-1.5 rounded {{#if (eq active "purchases")}}bg-indigo text-white font-medium{{else}}hover:text-white hover:bg-navy-hover{{/if}} truncate">Purchase History</a>
+      </div>
+      <!-- Rail flyout -->
+      <div class="hidden [&[data-layout=rail]_.group:hover_&]:flex flex-col gap-1 absolute left-[calc(100%+8px)] top-0 bg-ink text-white text-xs p-2 rounded-lg shadow-xl min-w-[150px] z-50">
+        <div class="font-semibold px-2 py-1 text-[11px] text-muted border-b border-line uppercase">Purchases</div>
+        <a href="/purchases.html" class="px-2 py-1 rounded hover:bg-th hover:text-ink">Purchase History</a>
+      </div>
+    </div>
 
-  <a href="/employees.html" class="flex items-center gap-2.5 px-2 h-[34px] rounded {{#if active_employees}}bg-indigo text-white{{else}}text-navy-fg hover:bg-navy-hover hover:text-white{{/if}} w-full text-left relative group [&[data-layout=rail]_&]:justify-center [&[data-layout=rail]_&]:px-0" data-label="Employees">
-    <svg class="w-5 h-5 stroke-2 shrink-0" aria-hidden="true"><use href="#i-contact"/></svg>
-    <span class="whitespace-nowrap overflow-hidden [&[data-layout=rail]_&]:hidden">Employees</span>
-    <div class="hidden [&[data-layout=rail]_.group:hover_&]:block absolute left-[calc(100%+8px)] bg-ink text-white text-xs px-2 py-1 rounded whitespace-nowrap z-40">Employees</div>
-  </a>
-  
-  <a href="/attendance.html" class="flex items-center gap-2.5 px-2 h-[34px] rounded {{#if active_attendance}}bg-indigo text-white{{else}}text-navy-fg hover:bg-navy-hover hover:text-white{{/if}} w-full text-left relative group [&[data-layout=rail]_&]:justify-center [&[data-layout=rail]_&]:px-0" data-label="Attendance">
-    <svg class="w-5 h-5 stroke-2 shrink-0" aria-hidden="true"><use href="#i-calendar-check"/></svg>
-    <span class="whitespace-nowrap overflow-hidden [&[data-layout=rail]_&]:hidden">Attendance</span>
-    <div class="hidden [&[data-layout=rail]_.group:hover_&]:block absolute left-[calc(100%+8px)] bg-ink text-white text-xs px-2 py-1 rounded whitespace-nowrap z-40">Attendance</div>
-  </a>
+    <!-- Accounting Group -->
+    <div class="nav-group relative group" data-group="accounting" data-open="{{#if (eq active "accounting")}}true{{else}}false{{/if}}">
+      <button class="flex items-center justify-between w-full px-2.5 h-[34px] rounded text-navy-fg hover:bg-navy-hover hover:text-white [&[data-layout=rail]_&]:justify-center [&[data-layout=rail]_&]:px-0" onclick="toggleNavGroup(this)">
+        <div class="flex items-center gap-2.5">
+          <svg class="w-4 h-4 stroke-2 shrink-0"><use href="#i-landmark"/></svg>
+          <span class="whitespace-nowrap overflow-hidden [&[data-layout=rail]_&]:hidden">Accounting</span>
+        </div>
+        <svg class="w-3 h-3 stroke-2 transition-transform duration-150 [&[data-layout=rail]_&]:hidden group-data-[open=true]:rotate-180"><use href="#i-chevron-down"/></svg>
+      </button>
+      <div class="nav-sub hidden group-data-[open=true]:flex flex-col gap-0.5 pl-7 pr-1 py-1 text-xs text-navy-mute [&[data-layout=rail]_&]:hidden">
+        <a href="/accounts.html" class="px-2 py-1.5 rounded hover:text-white hover:bg-navy-hover truncate">Bank & Cash Accounts</a>
+        <a href="/transactions.html" class="px-2 py-1.5 rounded hover:text-white hover:bg-navy-hover truncate">Transactions</a>
+        <a href="/transaction_categories.html" class="px-2 py-1.5 rounded hover:text-white hover:bg-navy-hover truncate">Transaction Categories</a>
+        <a href="/transaction_methods.html" class="px-2 py-1.5 rounded hover:text-white hover:bg-navy-hover truncate">Transaction Methods</a>
+      </div>
+      <!-- Rail flyout -->
+      <div class="hidden [&[data-layout=rail]_.group:hover_&]:flex flex-col gap-1 absolute left-[calc(100%+8px)] top-0 bg-ink text-white text-xs p-2 rounded-lg shadow-xl min-w-[160px] z-50">
+        <div class="font-semibold px-2 py-1 text-[11px] text-muted border-b border-line uppercase">Accounting</div>
+        <a href="/accounts.html" class="px-2 py-1 rounded hover:bg-th hover:text-ink">Bank & Cash Accounts</a>
+        <a href="/transactions.html" class="px-2 py-1 rounded hover:bg-th hover:text-ink">Transactions</a>
+      </div>
+    </div>
 
-  <a href="/payroll.html" class="flex items-center gap-2.5 px-2 h-[34px] rounded {{#if active_payroll}}bg-indigo text-white{{else}}text-navy-fg hover:bg-navy-hover hover:text-white{{/if}} w-full text-left relative group [&[data-layout=rail]_&]:justify-center [&[data-layout=rail]_&]:px-0" data-label="Payroll">
-    <svg class="w-5 h-5 stroke-2 shrink-0" aria-hidden="true"><use href="#i-banknote"/></svg>
-    <span class="whitespace-nowrap overflow-hidden [&[data-layout=rail]_&]:hidden">Payroll</span>
-    <div class="hidden [&[data-layout=rail]_.group:hover_&]:block absolute left-[calc(100%+8px)] bg-ink text-white text-xs px-2 py-1 rounded whitespace-nowrap z-40">Payroll</div>
-  </a>
+    <!-- HR & Payroll Group -->
+    <div class="nav-group relative group" data-group="hr" data-open="{{#if (eq active "employees")}}true{{else if (eq active "attendance")}}true{{else if (eq active "payroll")}}true{{else}}false{{/if}}">
+      <button class="flex items-center justify-between w-full px-2.5 h-[34px] rounded {{#if (eq active "employees")}}text-white font-medium{{else if (eq active "attendance")}}text-white font-medium{{else if (eq active "payroll")}}text-white font-medium{{else}}text-navy-fg hover:bg-navy-hover hover:text-white{{/if}} [&[data-layout=rail]_&]:justify-center [&[data-layout=rail]_&]:px-0" onclick="toggleNavGroup(this)">
+        <div class="flex items-center gap-2.5">
+          <svg class="w-4 h-4 stroke-2 shrink-0"><use href="#i-contact"/></svg>
+          <span class="whitespace-nowrap overflow-hidden [&[data-layout=rail]_&]:hidden">HR & Payroll</span>
+        </div>
+        <svg class="w-3 h-3 stroke-2 transition-transform duration-150 [&[data-layout=rail]_&]:hidden group-data-[open=true]:rotate-180"><use href="#i-chevron-down"/></svg>
+      </button>
+      <div class="nav-sub hidden group-data-[open=true]:flex flex-col gap-0.5 pl-7 pr-1 py-1 text-xs text-navy-mute [&[data-layout=rail]_&]:hidden">
+        <a href="/employees.html" class="px-2 py-1.5 rounded {{#if (eq active "employees")}}bg-indigo text-white font-medium{{else}}hover:text-white hover:bg-navy-hover{{/if}} truncate">Staff Management</a>
+        <a href="/attendance.html" class="px-2 py-1.5 rounded {{#if (eq active "attendance")}}bg-indigo text-white font-medium{{else}}hover:text-white hover:bg-navy-hover{{/if}} truncate">Attendance</a>
+        <a href="/payroll.html" class="px-2 py-1.5 rounded {{#if (eq active "payroll")}}bg-indigo text-white font-medium{{else}}hover:text-white hover:bg-navy-hover{{/if}} truncate">Manage Payslips</a>
+        <a href="/departments.html" class="px-2 py-1.5 rounded hover:text-white hover:bg-navy-hover truncate">Departments</a>
+        <a href="/salary_scales.html" class="px-2 py-1.5 rounded hover:text-white hover:bg-navy-hover truncate">Salary Pay Scale</a>
+      </div>
+      <!-- Rail flyout -->
+      <div class="hidden [&[data-layout=rail]_.group:hover_&]:flex flex-col gap-1 absolute left-[calc(100%+8px)] top-0 bg-ink text-white text-xs p-2 rounded-lg shadow-xl min-w-[160px] z-50">
+        <div class="font-semibold px-2 py-1 text-[11px] text-muted border-b border-line uppercase">HR & Payroll</div>
+        <a href="/employees.html" class="px-2 py-1 rounded hover:bg-th hover:text-ink">Staff Management</a>
+        <a href="/attendance.html" class="px-2 py-1 rounded hover:bg-th hover:text-ink">Attendance</a>
+        <a href="/payroll.html" class="px-2 py-1 rounded hover:bg-th hover:text-ink">Manage Payslips</a>
+      </div>
+    </div>
 
-  <button class="mt-auto flex items-center gap-2.5 px-2 h-[34px] rounded text-navy-mute hover:bg-navy-hover hover:text-white w-full text-left [&[data-layout=rail]_&]:justify-center [&[data-layout=rail]_&]:px-0 group" id="railBtn2">
-    <svg class="w-5 h-5 stroke-2 shrink-0" aria-hidden="true"><use href="#i-panel-left-close"/></svg>
-    <span class="[&[data-layout=rail]_&]:hidden">Collapse</span>
+    <!-- Reports Group -->
+    <div class="nav-group relative group" data-group="reports">
+      <button class="flex items-center justify-between w-full px-2.5 h-[34px] rounded text-navy-fg hover:bg-navy-hover hover:text-white [&[data-layout=rail]_&]:justify-center [&[data-layout=rail]_&]:px-0" onclick="toggleNavGroup(this)">
+        <div class="flex items-center gap-2.5">
+          <svg class="w-4 h-4 stroke-2 shrink-0"><use href="#i-file-bar-chart"/></svg>
+          <span class="whitespace-nowrap overflow-hidden [&[data-layout=rail]_&]:hidden">Reports</span>
+        </div>
+        <svg class="w-3 h-3 stroke-2 transition-transform duration-150 [&[data-layout=rail]_&]:hidden group-data-[open=true]:rotate-180"><use href="#i-chevron-down"/></svg>
+      </button>
+      <div class="nav-sub hidden group-data-[open=true]:flex flex-col gap-0.5 pl-7 pr-1 py-1 text-xs text-navy-mute [&[data-layout=rail]_&]:hidden">
+        <a href="/reports_account_balances.html" class="px-2 py-1.5 rounded hover:text-white hover:bg-navy-hover truncate">Account Balances</a>
+        <a href="/reports_profit_loss.html" class="px-2 py-1.5 rounded hover:text-white hover:bg-navy-hover truncate">Profit & Loss</a>
+        <a href="/reports_customer_income.html" class="px-2 py-1.5 rounded hover:text-white hover:bg-navy-hover truncate">Income by Customer</a>
+        <a href="/reports_vendor_purchases.html" class="px-2 py-1.5 rounded hover:text-white hover:bg-navy-hover truncate">Purchases by Vendor</a>
+        <a href="/reports_tax.html" class="px-2 py-1.5 rounded hover:text-white hover:bg-navy-hover truncate">Tax Report</a>
+      </div>
+      <!-- Rail flyout -->
+      <div class="hidden [&[data-layout=rail]_.group:hover_&]:flex flex-col gap-1 absolute left-[calc(100%+8px)] top-0 bg-ink text-white text-xs p-2 rounded-lg shadow-xl min-w-[160px] z-50">
+        <div class="font-semibold px-2 py-1 text-[11px] text-muted border-b border-line uppercase">Reports</div>
+        <a href="/reports_profit_loss.html" class="px-2 py-1 rounded hover:bg-th hover:text-ink">Profit & Loss</a>
+        <a href="/reports_tax.html" class="px-2 py-1 rounded hover:bg-th hover:text-ink">Tax Report</a>
+      </div>
+    </div>
+
+    <!-- Settings / Business Management -->
+    <a href="/settings.html" class="flex items-center gap-2.5 px-2.5 h-[34px] rounded {{#if (eq active "settings")}}bg-indigo text-white font-medium{{else}}text-navy-fg hover:bg-navy-hover hover:text-white{{/if}} w-full relative group [&[data-layout=rail]_&]:justify-center [&[data-layout=rail]_&]:px-0" data-label="Settings">
+      <svg class="w-4 h-4 stroke-2 shrink-0"><use href="#i-settings"/></svg>
+      <span class="whitespace-nowrap overflow-hidden [&[data-layout=rail]_&]:hidden">Business Settings</span>
+      <div class="hidden [&[data-layout=rail]_.group:hover_&]:block absolute left-[calc(100%+8px)] bg-ink text-white text-xs px-2.5 py-1.5 rounded shadow-lg whitespace-nowrap z-50">Settings</div>
+    </a>
+  </nav>
+
+  <!-- Collapse Rail Button -->
+  <button class="mt-auto flex items-center gap-2.5 px-2.5 h-[34px] rounded text-navy-mute hover:bg-navy-hover hover:text-white w-full text-left [&[data-layout=rail]_&]:justify-center [&[data-layout=rail]_&]:px-0 group" id="railBtn2" title="Toggle sidebar">
+    <svg class="w-4 h-4 stroke-2 shrink-0"><use href="#i-panel-left-close"/></svg>
+    <span class="text-xs [&[data-layout=rail]_&]:hidden">Collapse sidebar</span>
   </button>
 </aside>

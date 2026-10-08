@@ -188,3 +188,83 @@
       });
     });
   </script>
+
+  <!-- App-wide Universal Interactions (Nav groups, Quick menu, Notifications, Screen transitions) -->
+  <script>
+    // Sidebar Nav Group Accordion Toggle
+    function toggleNavGroup(btn) {
+      const group = btn.closest('.nav-group');
+      if (!group) return;
+      const isOpen = group.getAttribute('data-open') === 'true';
+      group.setAttribute('data-open', isOpen ? 'false' : 'true');
+    }
+
+    // Quick Actions Menu Toggle
+    const quickMenuBtn = document.getElementById('quickMenuBtn');
+    const quickMenuDropdown = document.getElementById('quickMenuDropdown');
+    if (quickMenuBtn && quickMenuDropdown) {
+      quickMenuBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isOpen = !quickMenuDropdown.classList.contains('hidden');
+        if (notifPanel) notifPanel.classList.add('hidden');
+        quickMenuDropdown.classList.toggle('hidden', isOpen);
+      });
+    }
+
+    // Notifications Panel Toggle & Tab Switching
+    const notifBellBtn = document.getElementById('notifBellBtn');
+    const notifPanel = document.getElementById('notifPanel');
+    if (notifBellBtn && notifPanel) {
+      notifBellBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isOpen = !notifPanel.classList.contains('hidden');
+        if (quickMenuDropdown) quickMenuDropdown.classList.add('hidden');
+        notifPanel.classList.toggle('hidden', isOpen);
+      });
+
+      // Notification tabs
+      document.querySelectorAll('[data-notif-tab]').forEach(tabBtn => {
+        tabBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const target = tabBtn.dataset.notifTab;
+          document.querySelectorAll('[data-notif-tab]').forEach(b => {
+            const isTarget = b.dataset.notifTab === target;
+            b.classList.toggle('border-indigo', isTarget);
+            b.classList.toggle('text-indigo', isTarget);
+            b.classList.toggle('font-semibold', isTarget);
+            b.classList.toggle('border-transparent', !isTarget);
+            b.classList.toggle('text-muted', !isTarget);
+          });
+          const tabOwed = document.getElementById('tab-owed-to-you');
+          const tabYouOwe = document.getElementById('tab-you-owe');
+          if (tabOwed) tabOwed.classList.toggle('hidden', target !== 'owed-to-you');
+          if (tabYouOwe) tabYouOwe.classList.toggle('hidden', target !== 'you-owe');
+        });
+      });
+    }
+
+    // Close topbar popups when clicking outside
+    document.addEventListener('click', (e) => {
+      if (quickMenuDropdown && !quickMenuDropdown.contains(e.target) && e.target !== quickMenuBtn) {
+        quickMenuDropdown.classList.add('hidden');
+      }
+      if (notifPanel && !notifPanel.contains(e.target) && !notifBellBtn.contains(e.target)) {
+        notifPanel.classList.add('hidden');
+      }
+    });
+
+    // Global Screen Switching (List, Editor, View, Profile)
+    document.addEventListener('click', (e) => {
+      const btn = e.target.closest('[data-goto]');
+      if (!btn) return;
+      const target = btn.dataset.goto;
+      const screens = ['s-list', 's-editor', 's-view', 's-profile'];
+      screens.forEach(sId => {
+        const el = document.getElementById(sId);
+        if (el) {
+          el.classList.toggle('hidden', sId !== `s-${target}`);
+        }
+      });
+      window.scrollTo({ top: 0, behavior: 'instant' });
+    });
+  </script>

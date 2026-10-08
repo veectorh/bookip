@@ -1,0 +1,204 @@
+{
+  "business": {
+    "name": "Acme Dynamics Ltd",
+    "country": "Nigeria",
+    "currency": "NGN",
+    "currency_symbol": "₦",
+    "email": "finance@acmedynamics.ng",
+    "phone": "+234 802 555 0199",
+    "address": "Plot 14, Commercial Avenue, Victoria Island, Lagos"
+  },
+  "customers": [
+    {
+      "id": "CUST-001",
+      "name": "Charles Business LLC",
+      "company": "Charles Logistics & Trade",
+      "email": "charles@charlesbiz.ng",
+      "phone": "+234 803 214 9901",
+      "currency": "NGN",
+      "balance": "₦ 106,500.00",
+      "status": "Active",
+      "overdue_count": 1
+    },
+    {
+      "id": "CUST-002",
+      "name": "Ann Kingsley",
+      "company": "Kingsley Studio",
+      "email": "ann@kingsleystudio.com",
+      "phone": "+234 809 443 1122",
+      "currency": "NGN",
+      "balance": "₦ 0.00",
+      "status": "Active",
+      "overdue_count": 0
+    },
+    {
+      "id": "CUST-003",
+      "name": "Osas Enterprises",
+      "company": "Osas Wholesale Ltd",
+      "email": "info@osaswholesale.ng",
+      "phone": "+234 701 888 2345",
+      "currency": "NGN",
+      "balance": "₦ 340,000.00",
+      "status": "Active",
+      "overdue_count": 1
+    }
+  ],
+  "vendors": [
+    {
+      "id": "VEN-001",
+      "name": "Prime Tech Hardware",
+      "company": "Prime Technology Solutions Ltd",
+      "email": "sales@primetech.ng",
+      "phone": "+234 805 111 2233",
+      "currency": "NGN",
+      "balance_owed": "₦ 913,750.00",
+      "overdue_count": 1
+    },
+    {
+      "id": "VEN-002",
+      "name": "Swift Office Supplies",
+      "company": "Swift Stationery & Logistics",
+      "email": "orders@swiftoffice.ng",
+      "phone": "+234 803 999 4455",
+      "currency": "NGN",
+      "balance_owed": "₦ 45,000.00",
+      "overdue_count": 0
+    }
+  ],
+  "invoices": [
+    {
+      "number": "INV-0012",
+      "customer": "Charles Business LLC",
+      "date": "04 Sep 2026",
+      "due_date": "18 Sep 2026",
+      "grand_total": "195,937.50",
+      "amount_due": "106,500.00",
+      "status": "Overdue",
+      "status_variant": "overdue",
+      "items": [
+        {"name": "Website retainer", "tax": "VAT 7.5%", "qty": 1, "price": "150,000.00", "amount": "161,250.00"},
+        {"name": "Hosting — 12 months", "tax": "None", "qty": 1, "price": "45,000.00", "amount": "45,000.00"}
+      ]
+    },
+    {
+      "number": "INV-0011",
+      "customer": "Osas Enterprises",
+      "date": "28 Aug 2026",
+      "due_date": "11 Sep 2026",
+      "grand_total": "340,000.00",
+      "amount_due": "340,000.00",
+      "status": "Overdue",
+      "status_variant": "overdue",
+      "items": [
+        {"name": "Cloud ERP Implementation Phase 1", "tax": "None", "qty": 1, "price": "340,000.00", "amount": "340,000.00"}
+      ]
+    },
+    {
+      "number": "INV-0010",
+      "customer": "Ann Kingsley",
+      "date": "15 Aug 2026",
+      "due_date": "29 Aug 2026",
+      "grand_total": "250,000.00",
+      "amount_due": "0.00",
+      "status": "Paid",
+      "status_variant": "paid",
+      "items": [
+        {"name": "Brand Identity Design", "tax": "None", "qty": 1, "price": "250,000.00", "amount": "250,000.00"}
+      ]
+    },
+    {
+      "number": "INV-0013",
+      "customer": "Charles Business LLC",
+      "date": "04 Oct 2026",
+      "due_date": "18 Oct 2026",
+      "grand_total": "75,000.00",
+      "amount_due": "75,000.00",
+      "status": "Draft",
+      "status_variant": "draft",
+      "items": [
+        {"name": "Security audit", "tax": "None", "qty": 1, "price": "75,000.00", "amount": "75,000.00"}
+      ]
+    }
+  ],
+  "purchases": [
+    {
+      "number": "PUR-0001",
+      "vendor": "Prime Tech Hardware",
+      "date": "10 Sep 2026",
+      "due_date": "17 Sep 2026",
+      "grand_total": "913,750.00",
+      "amount_due": "913,750.00",
+      "status": "Overdue",
+      "status_variant": "overdue",
+      "items": [
+        {"name": "Server Equipment & Rack", "tax": "VAT 7.5%", "qty": 1, "price": "850,000.00", "amount": "913,750.00"}
+      ]
+    },
+    {
+      "number": "PUR-0002",
+      "vendor": "Swift Office Supplies",
+      "date": "02 Oct 2026",
+      "due_date": "16 Oct 2026",
+      "grand_total": "45,000.00",
+      "amount_due": "45,000.00",
+      "status": "Unpaid",
+      "status_variant": "draft",
+      "items": [
+        {"name": "Paper & Printer Cartridges", "tax": "None", "qty": 1, "price": "45,000.00", "amount": "45,000.00"}
+      ]
+    }
+  ],
+  "quotations": [
+    {
+      "number": "QUO-0011",
+      "customer": "Charles Business LLC",
+      "date": "10 Jul 2026",
+      "expiry_date": "10 Aug 2026",
+      "grand_total": "450,000.00",
+      "status": "Draft",
+      "status_variant": "draft"
+    }
+  ],
+  "employees": [
+    {
+      "id": "EMP-001",
+      "name": "John Doe",
+      "initials": "JD",
+      "department": "Engineering",
+      "designation": "Senior Developer",
+      "salary": "450,000.00",
+      "email": "john.doe@acmedynamics.ng",
+      "phone": "+234 803 111 0022",
+      "joining_date": "12 Jan 2024"
+    },
+    {
+      "id": "EMP-002",
+      "name": "Jane Smith",
+      "initials": "JS",
+      "department": "Design",
+      "designation": "Lead UI Designer",
+      "salary": "380,000.00",
+      "email": "jane.smith@acmedynamics.ng",
+      "phone": "+234 802 777 4411",
+      "joining_date": "01 Mar 2024"
+    }
+  ],
+  "credit_summary": {
+    "owed_to_you": {
+      "total": "₦ 446,500.00",
+      "count": 2,
+      "items": [
+        {"entity": "Charles Business LLC", "doc": "INV-0012", "amount": "₦ 106,500.00", "days_overdue": 20, "urgency": "overdue"},
+        {"entity": "Osas Enterprises", "doc": "INV-0011", "amount": "₦ 340,000.00", "days_overdue": 27, "urgency": "overdue"}
+      ]
+    },
+    "you_owe": {
+      "total": "₦ 958,750.00",
+      "count": 2,
+      "items": [
+        {"entity": "Prime Tech Hardware", "doc": "PUR-0001", "amount": "₦ 913,750.00", "days_overdue": 21, "urgency": "overdue"},
+        {"entity": "Swift Office Supplies", "doc": "PUR-0002", "amount": "₦ 45,000.00", "days_due_in": 8, "urgency": "due_soon"}
+      ]
+    }
+  }
+}
