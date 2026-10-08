@@ -1,0 +1,150 @@
+[
+  {
+    "text": "Dashboard",
+    "href": "https://otuevbo.techmarho.ng/dashboard"
+  },
+  {
+    "text": "Packages",
+    "href": "javascript: void(0);"
+  },
+  {
+    "text": "All Packages",
+    "href": "https://otuevbo.techmarho.ng/admin/packages"
+  },
+  {
+    "text": "Add New",
+    "href": "https://otuevbo.techmarho.ng/admin/packages/create"
+  },
+  {
+    "text": "Users",
+    "href": "javascript: void(0);"
+  },
+  {
+    "text": "All Users",
+    "href": "https://otuevbo.techmarho.ng/admin/users"
+  },
+  {
+    "text": "Add User",
+    "href": "https://otuevbo.techmarho.ng/admin/users/create"
+  },
+  {
+    "text": "Payments",
+    "href": "javascript: void(0);"
+  },
+  {
+    "text": "Payment History",
+    "href": "https://otuevbo.techmarho.ng/admin/subscription_payments"
+  },
+  {
+    "text": "Add Offline Payment",
+    "href": "https://otuevbo.techmarho.ng/admin/subscription_payments/create"
+  },
+  {
+    "text": "Payment Gateways",
+    "href": "https://otuevbo.techmarho.ng/admin/payment_gateways"
+  },
+  {
+    "text": "Invoice Templates",
+    "href": "https://otuevbo.techmarho.ng/admin/admin_invoice_templates"
+  },
+  {
+    "text": "Affiliate Management",
+    "href": "javascript: void(0);"
+  },
+  {
+    "text": "Affiliate Settings",
+    "href": "https://otuevbo.techmarho.ng/admin/affiliate/settings"
+  },
+  {
+    "text": "Referral History",
+    "href": "https://otuevbo.techmarho.ng/admin/affiliate/referrals"
+  },
+  {
+    "text": "Payout Requests",
+    "href": "https://otuevbo.techmarho.ng/admin/affiliate/payout_requests"
+  },
+  {
+    "text": "Payout Methods",
+    "href": "https://otuevbo.techmarho.ng/admin/affiliate_payout_methods"
+  },
+  {
+    "text": "Website Management",
+    "href": "javascript: void(0);"
+  },
+  {
+    "text": "Default Pages",
+    "href": "https://otuevbo.techmarho.ng/admin/pages/default_pages"
+  },
+  {
+    "text": "Custom Pages",
+    "href": "https://otuevbo.techmarho.ng/admin/pages"
+  },
+  {
+    "text": "Manage Faq",
+    "href": "https://otuevbo.techmarho.ng/admin/faqs"
+  },
+  {
+    "text": "Manage Features",
+    "href": "https://otuevbo.techmarho.ng/admin/features"
+  },
+  {
+    "text": "Manage Testimonials",
+    "href": "https://otuevbo.techmarho.ng/admin/testimonials"
+  },
+  {
+    "text": "Blog Posts",
+    "href": "https://otuevbo.techmarho.ng/admin/posts"
+  },
+  {
+    "text": "Manage Teams",
+    "href": "https://otuevbo.techmarho.ng/admin/teams"
+  },
+  {
+    "text": "Header & Footer Settings",
+    "href": "https://otuevbo.techmarho.ng/admin/pages/default_pages/header_footer"
+  },
+  {
+    "text": "GDPR Cookie Consent",
+    "href": "https://otuevbo.techmarho.ng/admin/pages/default_pages/gdpr_cookie_consent"
+  },
+  {
+    "text": "Languages",
+    "href": "javascript: void(0);"
+  },
+  {
+    "text": "All Language",
+    "href": "https://otuevbo.techmarho.ng/admin/languages"
+  },
+  {
+    "text": "Add New",
+    "href": "https://otuevbo.techmarho.ng/admin/languages/create"
+  },
+  {
+    "text": "Business Types",
+    "href": "https://otuevbo.techmarho.ng/admin/business_types"
+  },
+  {
+    "text": "Email Subscribers",
+    "href": "https://otuevbo.techmarho.ng/admin/email_subscribers"
+  },
+  {
+    "text": "Contact Messages",
+    "href": "https://otuevbo.techmarho.ng/admin/contact_messages"
+  },
+  {
+    "text": "System Settings",
+    "href": "https://otuevbo.techmarho.ng/admin/administration/general_settings"
+  },
+  {
+    "text": "Currency Management",
+    "href": "https://otuevbo.techmarho.ng/admin/currency"
+  },
+  {
+    "text": "Notification Templates",
+    "href": "https://otuevbo.techmarho.ng/admin/notification_templates"
+  },
+  {
+    "text": "Database Backup",
+    "href": "https://otuevbo.techmarho.ng/admin/administration/database_backup_list"
+  }
+]

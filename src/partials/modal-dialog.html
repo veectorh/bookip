@@ -1,0 +1,27 @@
+<div id="{{id}}" class="fixed inset-0 z-50 flex items-center justify-center pointer-events-none hidden group/modal">
+  <!-- Scrim -->
+  <div class="absolute inset-0 bg-ink/20 pointer-events-auto opacity-0 group-data-[open=true]/modal:opacity-100 transition-opacity" data-modal-close="{{id}}"></div>
+  
+  <!-- Dialog -->
+  <div class="w-full max-w-sm bg-surface rounded-xl shadow-2xl pointer-events-auto scale-95 opacity-0 group-data-[open=true]/modal:scale-100 group-data-[open=true]/modal:opacity-100 transition-all flex flex-col z-10 duration-200">
+    
+    <!-- Header -->
+    <div class="flex items-center px-4 py-3 border-b border-line shrink-0">
+      <h2 class="m-0 text-[15px] font-semibold tracking-tight">{{title}}</h2>
+      <button class="ml-auto w-7 h-7 rounded flex items-center justify-center text-muted hover:bg-th hover:text-ink -mr-1" data-modal-close="{{id}}">
+        <svg class="w-4 h-4 stroke-2" aria-hidden="true"><use href="#i-x-circle"/></svg>
+      </button>
+    </div>
+    
+    <!-- Body -->
+    <div class="p-4 text-[13px]">
+      {{> @partial-block }}
+    </div>
+    
+    <!-- Footer -->
+    <div class="px-4 py-3 border-t border-line bg-canvas/50 rounded-b-xl flex gap-2 justify-end shrink-0">
+      <button class="inline-flex items-center justify-center gap-1.5 h-control px-3.5 rounded border border-line-strong text-[13px] font-medium bg-surface hover:bg-th" data-modal-close="{{id}}">Cancel</button>
+      <button class="inline-flex items-center justify-center gap-1.5 h-control px-3.5 rounded border border-transparent text-[13px] font-medium bg-indigo text-white hover:bg-indigo-hover" data-modal-close="{{id}}">{{action_label}}</button>
+    </div>
+  </div>
+</div>

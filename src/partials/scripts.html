@@ -1,0 +1,190 @@
+<script>
+  // Shared layout interactions & Responsive handling
+  const app = document.getElementById('app');
+  const device = document.getElementById('device');
+  let railed = false;
+
+  function getAutoLayout() {
+    const w = window.innerWidth;
+    if (w < 768) return { width: 'mobile', layout: 'mob' };
+    if (w < 1024) return { width: 'tablet', layout: 'rail' };
+    return { width: 'desktop', layout: railed ? 'rail' : 'desktop' };
+  }
+
+  function apply() {
+    const auto = getAutoLayout();
+    const layout = auto.layout;
+
+    app.setAttribute('data-layout', layout);
+
+    const isCollapsed = layout === 'rail';
+    document.querySelectorAll('#railBtn, #railBtn2').forEach(b => {
+      const use = b.querySelector('use');
+      if (use) use.setAttribute('href', isCollapsed ? '#i-panel-left-open' : '#i-panel-left-close');
+    });
+    const topBtnText = document.querySelector('#railBtn span');
+    if (topBtnText) topBtnText.textContent = isCollapsed ? 'Expand menu' : 'Collapse menu';
+  }
+
+  // Rail toggle
+  document.querySelectorAll('#railBtn, #railBtn2').forEach(b => {
+    b.onclick = () => { railed = !railed; apply(); };
+  });
+
+  // Window resize listener for natural responsiveness
+  window.addEventListener('resize', apply);
+
+  // Close overlays
+  function closePopovers() {
+    document.querySelectorAll('.popover, .scrim, .sheetwrap, .drawerwrap, .mobilenavwrap').forEach(e => e.remove());
+  }
+  
+  function createScrim() {
+    const s = document.createElement('div');
+    s.className = 'scrim fixed inset-0 z-40 bg-transparent';
+    s.onclick = closePopovers;
+    document.body.appendChild(s);
+    return s;
+  }
+
+  // Business switcher dropdown
+  const switcherBtn = document.getElementById('switcherBtn');
+  if (switcherBtn) {
+    switcherBtn.onclick = e => {
+      if (document.querySelector('.popover')) return closePopovers();
+      createScrim();
+      const r = e.currentTarget.getBoundingClientRect();
+      const p = document.createElement('div');
+      p.className = 'popover absolute z-50 bg-surface border border-line-strong rounded shadow-[0_8px_24px_rgba(16,20,50,0.12)] min-w-[264px] p-1.5';
+      p.style.top = (r.bottom + window.scrollY + 6) + 'px';
+      p.style.left = (r.left + window.scrollX) + 'px';
+      p.innerHTML = `
+        <div class="text-[11px] font-semibold text-muted px-3 pt-2 pb-1.5 uppercase tracking-wider">Your businesses</div>
+        <button class="flex items-center gap-2.5 w-full bg-transparent border-0 px-3 py-2.5 rounded text-left text-[13px] hover:bg-th transition-colors">
+          <svg class="w-4 h-4 stroke-[1.75] shrink-0 text-muted" aria-hidden="true"><use href="#i-building-2"/></svg>
+          <span class="leading-tight"><b class="font-medium text-ink block">Otuevbo Development</b><span class="text-muted text-xs">Owner</span></span>
+          <svg class="w-4 h-4 stroke-[1.75] ml-auto text-indigo shrink-0" aria-hidden="true"><use href="#i-check"/></svg>
+        </button>
+        <button class="flex items-center gap-2.5 w-full bg-transparent border-0 px-3 py-2.5 rounded text-left text-[13px] hover:bg-th transition-colors">
+          <svg class="w-4 h-4 stroke-[1.75] shrink-0 text-muted" aria-hidden="true"><use href="#i-building-2"/></svg>
+          <span class="leading-tight"><b class="font-medium text-ink block">Awufafro Store</b><span class="text-muted text-xs">Accountant</span></span>
+        </button>
+        <hr class="border-0 border-t border-line my-1.5">
+        <button class="flex items-center gap-2.5 w-full bg-transparent border-0 px-3 py-2 rounded text-left text-[13px] text-muted hover:text-ink hover:bg-th transition-colors">
+          <svg class="w-4 h-4 stroke-[1.75] shrink-0" aria-hidden="true"><use href="#i-plus"/></svg> Create a business
+        </button>
+        <button class="flex items-center gap-2.5 w-full bg-transparent border-0 px-3 py-2 rounded text-left text-[13px] text-muted hover:text-ink hover:bg-th transition-colors">
+          <svg class="w-4 h-4 stroke-[1.75] shrink-0" aria-hidden="true"><use href="#i-settings"/></svg> Business settings
+        </button>
+      `;
+      document.body.appendChild(p);
+    };
+  }
+
+  // Mobile menu button opens off-canvas sidebar
+  const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+  if (mobileMenuBtn) {
+    mobileMenuBtn.onclick = () => {
+      closePopovers();
+      const sidebarContent = document.getElementById('sidebar');
+      if (!sidebarContent) return;
+      const w = document.createElement('div');
+      w.className = 'mobilenavwrap fixed inset-0 z-50 flex justify-start before:content-[""] before:absolute before:inset-0 before:bg-[rgba(16,20,50,0.5)]';
+      w.onclick = ev => { if (ev.target === w) closePopovers(); };
+      w.innerHTML = `
+        <div class="relative w-[260px] max-w-[80vw] h-full bg-navy text-navy-fg p-2 flex flex-col shadow-2xl animate-[slideInLeft_0.2s_ease-out]">
+          <div class="flex items-center justify-between px-2 py-3 mb-2 border-b border-navy-hover text-white">
+            <div class="flex items-center gap-2.5">
+              <span class="w-[26px] h-[26px] rounded-[5px] bg-white text-navy flex items-center justify-center font-semibold text-sm shrink-0">B</span>
+              <span class="font-semibold tracking-tight text-[15px]">Bookkip</span>
+            </div>
+            <button class="w-7 h-7 flex items-center justify-center text-navy-fg hover:text-white" onclick="closePopovers()">
+              <svg class="w-5 h-5 stroke-2"><use href="#i-x-circle"/></svg>
+            </button>
+          </div>
+          <div class="flex-1 overflow-y-auto flex flex-col gap-px">
+            <a href="/dashboard" class="flex items-center gap-2.5 px-2.5 h-[36px] rounded text-navy-fg hover:bg-navy-hover hover:text-white text-[13px] font-medium"><svg class="w-5 h-5 stroke-2 shrink-0"><use href="#i-layout-dashboard"/></svg> Dashboard</a>
+            <div class="text-[11px] text-navy-mute px-2.5 pt-3 pb-1 uppercase font-semibold">Sales</div>
+            <a href="/" class="flex items-center gap-2.5 px-2.5 h-[36px] rounded text-navy-fg hover:bg-navy-hover hover:text-white text-[13px] font-medium"><svg class="w-5 h-5 stroke-2 shrink-0"><use href="#i-file-text"/></svg> Invoices <span class="ml-auto text-xs text-navy-mute">4</span></a>
+            <a href="/quotations.html" class="flex items-center gap-2.5 px-2.5 h-[36px] rounded text-navy-fg hover:bg-navy-hover hover:text-white text-[13px] font-medium"><svg class="w-5 h-5 stroke-2 shrink-0"><use href="#i-file-clock"/></svg> Quotations</a>
+            <a href="/customers.html" class="flex items-center gap-2.5 px-2.5 h-[36px] rounded text-navy-fg hover:bg-navy-hover hover:text-white text-[13px] font-medium"><svg class="w-5 h-5 stroke-2 shrink-0"><use href="#i-users"/></svg> Customers</a>
+            <div class="text-[11px] text-navy-mute px-2.5 pt-3 pb-1 uppercase font-semibold">Purchasing</div>
+            <a href="/purchases.html" class="flex items-center gap-2.5 px-2.5 h-[36px] rounded text-navy-fg hover:bg-navy-hover hover:text-white text-[13px] font-medium"><svg class="w-5 h-5 stroke-2 shrink-0"><use href="#i-shopping-bag"/></svg> Purchases</a>
+            <a href="/vendors.html" class="flex items-center gap-2.5 px-2.5 h-[36px] rounded text-navy-fg hover:bg-navy-hover hover:text-white text-[13px] font-medium"><svg class="w-5 h-5 stroke-2 shrink-0"><use href="#i-truck"/></svg> Vendors</a>
+            <div class="text-[11px] text-navy-mute px-2.5 pt-3 pb-1 uppercase font-semibold">People</div>
+            <a href="/employees.html" class="flex items-center gap-2.5 px-2.5 h-[36px] rounded text-navy-fg hover:bg-navy-hover hover:text-white text-[13px] font-medium"><svg class="w-5 h-5 stroke-2 shrink-0"><use href="#i-contact"/></svg> Employees</a>
+            <a href="/attendance.html" class="flex items-center gap-2.5 px-2.5 h-[36px] rounded text-navy-fg hover:bg-navy-hover hover:text-white text-[13px] font-medium"><svg class="w-5 h-5 stroke-2 shrink-0"><use href="#i-calendar-check"/></svg> Attendance</a>
+            <a href="/payroll.html" class="flex items-center gap-2.5 px-2.5 h-[36px] rounded text-navy-fg hover:bg-navy-hover hover:text-white text-[13px] font-medium"><svg class="w-5 h-5 stroke-2 shrink-0"><use href="#i-banknote"/></svg> Payroll</a>
+          </div>
+        </div>
+      `;
+      if (!document.getElementById('slideInLeft-style')) {
+        const s = document.createElement('style');
+        s.id = 'slideInLeft-style';
+        s.textContent = '@keyframes slideInLeft { from { transform: translateX(-100%); } to { transform: translateX(0); } }';
+        document.head.appendChild(s);
+      }
+      document.body.appendChild(w);
+    };
+  }
+
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closePopovers(); });
+  apply();
+</script>
+
+  <!-- Global Modals & Drawers Logic -->
+  <script>
+    // Open drawer
+    document.querySelectorAll('[data-drawer-target]').forEach(b => {
+      b.addEventListener('click', e => {
+        e.preventDefault();
+        const id = b.dataset.drawerTarget;
+        const el = document.getElementById(id);
+        if(el) {
+          el.classList.remove('hidden');
+          // small delay to allow display block to render before opacity transition
+          setTimeout(() => el.setAttribute('data-open', 'true'), 10);
+        }
+      });
+    });
+    
+    // Close drawer
+    document.querySelectorAll('[data-drawer-close]').forEach(b => {
+      b.addEventListener('click', e => {
+        e.preventDefault();
+        const id = b.dataset.drawerClose;
+        const el = document.getElementById(id);
+        if(el) {
+          el.setAttribute('data-open', 'false');
+          // wait for transition to end before hiding
+          setTimeout(() => el.classList.add('hidden'), 200); 
+        }
+      });
+    });
+
+    // Open modal
+    document.querySelectorAll('[data-modal-target]').forEach(b => {
+      b.addEventListener('click', e => {
+        e.preventDefault();
+        const id = b.dataset.modalTarget;
+        const el = document.getElementById(id);
+        if(el) {
+          el.classList.remove('hidden');
+          setTimeout(() => el.setAttribute('data-open', 'true'), 10);
+        }
+      });
+    });
+    
+    // Close modal
+    document.querySelectorAll('[data-modal-close]').forEach(b => {
+      b.addEventListener('click', e => {
+        e.preventDefault();
+        const id = b.dataset.modalClose;
+        const el = document.getElementById(id);
+        if(el) {
+          el.setAttribute('data-open', 'false');
+          setTimeout(() => el.classList.add('hidden'), 200);
+        }
+      });
+    });
+  </script>

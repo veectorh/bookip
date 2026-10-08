@@ -1,0 +1,982 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bookkip — demo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0F1340; --navy-2:#1E2460; --navy-mute:#6F76A8; --navy-fg:#B9BEDC;
+  --indigo:#4353E0; --indigo-bg:#EDEFFC; --indigo-line:#DCE0FA; --indigo-ink:#2F3CB8;
+  --ink:#161A2E; --mute:#5F6478;
+  --bg:#F3F4F8; --surface:#FFFFFF; --line:#E4E6EE; --line-strong:#CBCFDC; --th:#F8F9FC;
+  --n-bg:#F1F2F6;--n-fg:#454A5E;--n-dot:#8B90A6;--n-line:#E4E6EE;
+  --w-bg:#FFF6E5;--w-fg:#8A5A00;--w-dot:#D98E00;--w-line:#F6E3B7;
+  --s-bg:#E9F7EF;--s-fg:#146A3E;--s-dot:#1E9A5A;--s-line:#C8EAD6;
+  --d-bg:#FDECEA;--d-fg:#9A2A1F;--d-dot:#D0432F;--d-line:#F5CFC9;
+  --imp-bg:#FFF3D6;--imp-fg:#5C4300;--imp-line:#F0DFAF;
+  --r:4px; --h:32px; --row:40px;
+  --rail:56px; --side:220px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);
+  font:14px/1.5 Inter,system-ui,-apple-system,sans-serif;
+  font-feature-settings:"tnum" 1,"cv11" 1;-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit;cursor:pointer}
+[hidden]{display:none !important}
+.i,.i20{fill:none;stroke:currentColor;stroke-linecap:round;stroke-linejoin:round}
+.i{width:16px;height:16px;stroke-width:1.75;flex:none}
+.i20{width:20px;height:20px;stroke-width:2;flex:none}
+
+/* ---------------- demo chrome ---------------- */
+.demobar{position:sticky;top:0;z-index:60;background:#fff;border-bottom:1px solid var(--line-strong);
+  display:flex;gap:16px;align-items:center;padding:10px 16px;flex-wrap:wrap}
+.demobar .lbl{font-size:12px;color:var(--mute)}
+.demobar .sp{margin-left:auto}
+.seg{display:inline-flex;border:1px solid var(--line-strong);border-radius:var(--r);overflow:hidden}
+.seg button{border:0;background:#fff;padding:7px 12px;font-size:13px;font-weight:500;color:var(--mute)}
+.seg button[aria-pressed=true]{background:var(--ink);color:#fff}
+.seg button:focus-visible{outline:2px solid var(--indigo);outline-offset:-2px}
+.note{max-width:1400px;margin:0 auto;padding:14px 16px 0;color:var(--mute);font-size:13px}
+.note b{color:var(--ink);font-weight:600}
+
+.viewport{max-width:1400px;margin:0 auto;padding:14px 16px 60px}
+.device{border:1px solid var(--line-strong);border-radius:8px;overflow:hidden;background:var(--surface);
+  margin-inline:auto;transition:max-width .28s ease}
+.device.w-desktop{max-width:100%}
+.device.w-tablet{max-width:860px}
+.device.w-mobile{max-width:390px}
+@media (prefers-reduced-motion:reduce){.device{transition:none}}
+
+/* ---------------- app shell ---------------- */
+.app{display:grid;grid-template-columns:var(--side) 1fr;min-height:640px}
+.app.rail{grid-template-columns:var(--rail) 1fr}
+.app.mob{grid-template-columns:1fr}
+
+aside{background:var(--navy);color:var(--navy-fg);display:flex;flex-direction:column;padding:10px 8px;gap:1px;overflow:hidden}
+.app.mob aside{display:none}
+.brandrow{display:flex;align-items:center;gap:10px;padding:8px 8px 14px;color:#fff}
+.mark{width:26px;height:26px;border-radius:5px;background:#fff;color:var(--navy);display:grid;place-items:center;
+  font-weight:600;font-size:14px;flex:none}
+.brandtxt{font-weight:600;letter-spacing:-.01em;font-size:15px;white-space:nowrap}
+.grp{font-size:11px;color:var(--navy-mute);padding:14px 8px 4px;white-space:nowrap}
+.grpline{height:1px;background:#252B6B;margin:10px 10px 6px;display:none}
+.nav{display:flex;align-items:center;gap:10px;padding:0 8px;height:34px;border-radius:var(--r);
+  color:var(--navy-fg);background:none;border:0;width:100%;text-align:left;position:relative}
+.nav span{white-space:nowrap;overflow:hidden}
+.nav .badge{margin-left:auto;font-size:11px;color:var(--navy-mute)}
+.nav:hover{background:#191E51;color:#fff}
+.nav[aria-current=page]{background:var(--indigo);color:#fff}
+.nav:focus-visible{outline:2px solid #fff;outline-offset:-2px}
+.app.rail .brandtxt,.app.rail .nav span,.app.rail .nav .badge,.app.rail .grp{display:none}
+.app.rail .grpline{display:block}
+.app.rail .nav{justify-content:center;padding:0}
+.app.rail .nav:hover::after{content:attr(data-label);position:absolute;left:calc(100% + 8px);
+  background:var(--ink);color:#fff;font-size:12px;padding:4px 8px;border-radius:var(--r);white-space:nowrap;z-index:40}
+.railtoggle{margin-top:auto;display:flex;align-items:center;gap:10px;padding:0 8px;height:34px;
+  border-radius:var(--r);background:none;border:0;color:var(--navy-mute);width:100%}
+.railtoggle:hover{color:#fff;background:#191E51}
+.app.rail .railtoggle{justify-content:center;padding:0}
+.app.rail .railtoggle span{display:none}
+
+main{min-width:0;background:var(--bg);display:flex;flex-direction:column}
+.topbar{display:flex;align-items:center;gap:10px;padding:8px 16px;background:var(--surface);border-bottom:1px solid var(--line)}
+.burger{display:none;background:none;border:0;padding:4px}
+.app.mob .burger{display:inline-flex}
+.switcher{display:flex;align-items:center;gap:8px;background:none;border:1px solid transparent;border-radius:var(--r);
+  padding:5px 8px;font-weight:600;font-size:13px}
+.switcher:hover{border-color:var(--line-strong);background:var(--th)}
+.switcher .chev{color:var(--mute)}
+.who{margin-left:auto;display:flex;align-items:center;gap:8px;color:var(--mute);font-size:13px}
+.app.mob .who .nm{display:none}
+.av{width:26px;height:26px;border-radius:50%;background:var(--indigo);color:#fff;display:grid;place-items:center;
+  font-size:11px;font-weight:600}
+
+.popover{position:absolute;z-index:50;background:var(--surface);border:1px solid var(--line-strong);
+  border-radius:var(--r);box-shadow:0 8px 24px rgba(16,20,50,.12);min-width:264px;padding:4px}
+.popover .ph{font-size:11px;color:var(--mute);padding:8px 10px 4px}
+.popover button{display:flex;align-items:center;gap:10px;width:100%;background:none;border:0;
+  padding:9px 10px;border-radius:var(--r);text-align:left;font-size:13px}
+.popover button:hover{background:var(--th)}
+.popover .sub{color:var(--mute);font-size:12px}
+.popover .tick{margin-left:auto;color:var(--indigo)}
+.popover hr{border:0;border-top:1px solid var(--line);margin:4px 0}
+.scrim{position:fixed;inset:0;z-index:45}
+
+.imp{display:flex;align-items:center;gap:10px;background:var(--imp-bg);color:var(--imp-fg);
+  border-bottom:1px solid var(--imp-line);padding:7px 16px;font-size:12px}
+.imp b{font-weight:600}
+.imp a{margin-left:auto;color:inherit;text-decoration:underline;text-underline-offset:2px}
+
+.content{padding:16px;overflow:auto}
+.crumb{font-size:12px;color:var(--mute);margin-bottom:8px;display:flex;gap:6px;align-items:center}
+.pagehead{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+h1{margin:0;font-size:18px;font-weight:600;letter-spacing:-.01em}
+.pagehead .sp{margin-left:auto;display:flex;gap:8px}
+
+.btn{display:inline-flex;align-items:center;gap:6px;height:var(--h);padding:0 12px;border-radius:var(--r);
+  border:1px solid transparent;font-size:13px;font-weight:500;background:var(--surface)}
+.btn.pri{background:var(--indigo);color:#fff}
+.btn.pri:hover{background:#3948C7}
+.btn.sec{border-color:var(--line-strong)}
+.btn.sec:hover{background:var(--th)}
+.btn.ghost{background:none;color:var(--mute)}
+.btn.ghost:hover{color:var(--ink);background:var(--th)}
+.btn:focus-visible{outline:2px solid var(--indigo);outline-offset:2px}
+.btn.icon{width:var(--h);padding:0;justify-content:center}
+
+.stats{display:grid;grid-template-columns:repeat(4,1fr);background:var(--surface);
+  border:1px solid var(--line);border-radius:var(--r);overflow:hidden;margin-bottom:14px}
+.stat{padding:11px 14px;border-right:1px solid var(--line)}
+.stat:last-child{border-right:0}
+.stat .l{font-size:12px;color:var(--mute)}
+.stat .v{font-size:18px;font-weight:600;letter-spacing:-.01em;margin-top:2px;white-space:nowrap}
+.stat .v.neg{color:#B4372A}
+
+.filters{display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap}
+.field{display:flex;align-items:center;gap:8px;height:var(--h);padding:0 10px;background:var(--surface);
+  border:1px solid var(--line-strong);border-radius:var(--r);font-size:13px;color:var(--ink)}
+.field:focus-within{border-color:var(--indigo);box-shadow:0 0 0 3px var(--indigo-line)}
+.field input,.field select{border:0;outline:0;background:none;font:inherit;color:inherit;width:100%;min-width:0}
+.field input::placeholder{color:var(--mute)}
+.field.grow{flex:1;min-width:180px}
+.field .ic{color:var(--mute)}
+
+.tablewrap{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{text-align:left;padding:0 12px;height:var(--row);border-bottom:1px solid var(--line);white-space:nowrap}
+th{font-size:12px;font-weight:500;color:var(--mute);background:var(--th)}
+th.num,td.num{text-align:right;font-variant-numeric:tabular-nums}
+tbody tr:last-child td{border-bottom:0}
+tbody tr:hover{background:#FAFBFD}
+td .lnk{color:var(--ink);font-weight:500;text-decoration:none}
+tbody tr:hover td .lnk{color:var(--indigo-ink);text-decoration:underline;text-underline-offset:2px}
+.rowmenu{width:26px;height:26px;border-radius:var(--r);border:1px solid transparent;background:none;
+  color:var(--mute);display:inline-grid;place-items:center}
+.rowmenu:hover{background:var(--th);border-color:var(--line-strong);color:var(--ink)}
+.tfoot{display:flex;align-items:center;gap:12px;padding:10px 12px;border-top:1px solid var(--line);
+  font-size:12px;color:var(--mute);background:var(--surface)}
+.tfoot .sp{margin-left:auto;display:flex;gap:4px;align-items:center}
+.pg{min-width:26px;height:26px;border-radius:var(--r);border:1px solid var(--line-strong);background:var(--surface);
+  font-size:12px;display:inline-grid;place-items:center;padding:0 6px}
+.pg[aria-current=page]{background:var(--ink);color:#fff;border-color:var(--ink)}
+
+.chip{display:inline-flex;align-items:center;gap:6px;height:22px;padding:0 8px;border-radius:3px;
+  font-size:12px;font-weight:500;background:var(--c-bg);color:var(--c-fg);border:1px solid var(--c-line);white-space:nowrap}
+.chip::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--c-dot);flex:none}
+.chip.draft{--c-bg:var(--n-bg);--c-fg:var(--n-fg);--c-dot:var(--n-dot);--c-line:var(--n-line)}
+.chip.part{--c-bg:var(--w-bg);--c-fg:var(--w-fg);--c-dot:var(--w-dot);--c-line:var(--w-line)}
+.chip.paid{--c-bg:var(--s-bg);--c-fg:var(--s-fg);--c-dot:var(--s-dot);--c-line:var(--s-line)}
+.chip.over{--c-bg:var(--d-bg);--c-fg:var(--d-fg);--c-dot:var(--d-dot);--c-line:var(--d-line)}
+
+/* mobile list */
+.mfilters{display:flex;gap:6px;overflow:auto;padding-bottom:2px;margin-bottom:10px;-webkit-overflow-scrolling:touch}
+.mfilters button{flex:none;font-size:12px;padding:6px 11px;border-radius:999px;border:1px solid var(--line-strong);
+  background:var(--surface);color:var(--mute)}
+.mfilters button[aria-pressed=true]{background:var(--ink);color:#fff;border-color:var(--ink)}
+.mlist{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.mrow{display:grid;grid-template-columns:1fr auto;gap:3px 12px;width:100%;background:none;border:0;
+  border-bottom:1px solid var(--line);padding:11px 12px;text-align:left;min-height:56px;align-items:center}
+.mrow:last-child{border-bottom:0}
+.mrow:active{background:var(--th)}
+.mrow .a{font-weight:500}
+.mrow .amt{text-align:right;font-weight:500;font-variant-numeric:tabular-nums}
+.mrow .b{color:var(--mute);font-size:12px}
+.mrow .st{justify-self:end}
+.fab{position:sticky;bottom:12px;display:flex;justify-content:flex-end;margin-top:12px;pointer-events:none}
+.fab .btn{pointer-events:auto;height:44px;padding:0 18px;border-radius:999px;box-shadow:0 6px 18px rgba(67,83,224,.35)}
+
+.sheetwrap{position:fixed;inset:0;z-index:70;display:flex;align-items:flex-end;justify-content:center}
+.sheetwrap::before{content:"";position:absolute;inset:0;background:rgba(16,20,50,.4)}
+.sheet{position:relative;width:100%;max-width:390px;background:var(--surface);
+  border-radius:12px 12px 0 0;padding:8px 0 12px}
+.sheet .grab{width:36px;height:4px;border-radius:2px;background:var(--line-strong);margin:4px auto 8px}
+.sheet .h{padding:4px 16px 8px;font-size:12px;color:var(--mute);border-bottom:1px solid var(--line);margin-bottom:4px}
+.sheet button{display:flex;align-items:center;gap:12px;width:100%;background:none;border:0;padding:13px 16px;
+  font-size:14px;font-weight:500;text-align:left}
+.sheet button:active{background:var(--th)}
+.sheet button.dz{color:#B4372A}
+
+/* editor */
+.editor{display:grid;grid-template-columns:1fr 280px;gap:14px;align-items:start}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r)}
+.card .hd{padding:12px 14px;border-bottom:1px solid var(--line);font-weight:600;font-size:13px}
+.card .bd{padding:14px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+label{display:block;font-size:12px;font-weight:500;color:var(--mute);margin-bottom:5px}
+.req{color:#B4372A}
+.lines{width:100%;border-collapse:collapse;font-size:13px}
+.lines th{background:var(--th);font-size:12px}
+.lines td{height:44px;border-bottom:1px solid var(--line);white-space:normal}
+.lines .field{height:28px}
+.lines td.num{text-align:right;font-variant-numeric:tabular-nums}
+.addline{margin-top:10px}
+.totals{margin-left:auto;width:280px;font-size:13px}
+.totals div{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--line)}
+.totals div:last-child{border-bottom:0;font-weight:600;font-size:15px;padding-top:10px}
+.totals span:last-child{font-variant-numeric:tabular-nums}
+.hint{font-size:12px;color:var(--mute);margin-top:6px}
+.side-actions{display:flex;flex-direction:column;gap:8px}
+.app.narrow .editor{grid-template-columns:1fr}
+.app.narrow .stats{grid-template-columns:1fr 1fr}
+.app.narrow .stat:nth-child(2n){border-right:0}
+.app.narrow .stat:nth-child(-n+2){border-bottom:1px solid var(--line)}
+.app.narrow .totals{width:100%}
+.app.narrow .grid2{grid-template-columns:1fr}
+.app.narrow .imp{align-items:flex-start}
+@media (max-width:900px){
+  .editor{grid-template-columns:1fr}
+  .stats{grid-template-columns:1fr 1fr}
+  .stat:nth-child(2n){border-right:0}
+  .stat:nth-child(-n+2){border-bottom:1px solid var(--line)}
+  .totals{width:100%}
+  .grid2{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true"><symbol id="i-arrow-left" viewBox="0 0 24 24"><svg
+  class="lucide lucide-arrow-left"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="m12 19-7-7 7-7" />
+  <path d="M19 12H5" /></symbol><symbol id="i-banknote" viewBox="0 0 24 24"><svg
+  class="lucide lucide-banknote"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <rect width="20" height="12" x="2" y="6" rx="2" />
+  <circle cx="12" cy="12" r="2" />
+  <path d="M6 12h.01M18 12h.01" /></symbol><symbol id="i-building-2" viewBox="0 0 24 24"><svg
+  class="lucide lucide-building-2"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M10 12h4" />
+  <path d="M10 8h4" />
+  <path d="M14 21v-3a2 2 0 0 0-4 0v3" />
+  <path d="M6 10H4a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-2" />
+  <path d="M6 21V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v16" /></symbol><symbol id="i-calendar" viewBox="0 0 24 24"><svg
+  class="lucide lucide-calendar"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M8 2v3" />
+  <path d="M16 2v3" />
+  <rect x="3" y="3" width="18" height="18" rx="2" />
+  <path d="M3 9h18" /></symbol><symbol id="i-calendar-check" viewBox="0 0 24 24"><svg
+  class="lucide lucide-calendar-check"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M8 2v3" />
+  <path d="M16 2v3" />
+  <rect x="3" y="3" width="18" height="18" rx="2" />
+  <path d="M3 9h18" />
+  <path d="m9 15 2 2 4-4" /></symbol><symbol id="i-check" viewBox="0 0 24 24"><svg
+  class="lucide lucide-check"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M20 6 9 17l-5-5" /></symbol><symbol id="i-chevron-left" viewBox="0 0 24 24"><svg
+  class="lucide lucide-chevron-left"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="m15 18-6-6 6-6" /></symbol><symbol id="i-chevron-right" viewBox="0 0 24 24"><svg
+  class="lucide lucide-chevron-right"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="m9 18 6-6-6-6" /></symbol><symbol id="i-chevrons-up-down" viewBox="0 0 24 24"><svg
+  class="lucide lucide-chevrons-up-down"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="m7 15 5 5 5-5" />
+  <path d="m7 9 5-5 5 5" /></symbol><symbol id="i-contact" viewBox="0 0 24 24"><svg
+  class="lucide lucide-contact"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M16 2v2" />
+  <path d="M7 21v-2a2 2 0 012-2h6a2 2 0 012 2v2" />
+  <path d="M8 2v2" />
+  <circle cx="12" cy="10" r="3" />
+  <rect x="3" y="3" width="18" height="18" rx="2" /></symbol><symbol id="i-download" viewBox="0 0 24 24"><svg
+  class="lucide lucide-download"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M12 15V3" />
+  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+  <path d="m7 10 5 5 5-5" /></symbol><symbol id="i-eye" viewBox="0 0 24 24"><svg
+  class="lucide lucide-eye"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0" />
+  <circle cx="12" cy="12" r="3" /></symbol><symbol id="i-file-clock" viewBox="0 0 24 24"><svg
+  class="lucide lucide-file-clock"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M16 22h2a2 2 0 0 0 2-2V8a2.4 2.4 0 0 0-.706-1.706l-3.588-3.588A2.4 2.4 0 0 0 14 2H6a2 2 0 0 0-2 2v2.85" />
+  <path d="M14 2v5a1 1 0 0 0 1 1h5" />
+  <path d="M8 14v2.2l1.6 1" />
+  <circle cx="8" cy="16" r="6" /></symbol><symbol id="i-file-text" viewBox="0 0 24 24"><svg
+  class="lucide lucide-file-text"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z" />
+  <path d="M14 2v5a1 1 0 0 0 1 1h5" />
+  <path d="M10 9H8" />
+  <path d="M16 13H8" />
+  <path d="M16 17H8" /></symbol><symbol id="i-layout-dashboard" viewBox="0 0 24 24"><svg
+  class="lucide lucide-layout-dashboard"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <rect width="7" height="9" x="3" y="3" rx="1" />
+  <rect width="7" height="5" x="14" y="3" rx="1" />
+  <rect width="7" height="9" x="14" y="12" rx="1" />
+  <rect width="7" height="5" x="3" y="16" rx="1" /></symbol><symbol id="i-menu" viewBox="0 0 24 24"><svg
+  class="lucide lucide-menu"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M4 5h16" />
+  <path d="M4 12h16" />
+  <path d="M4 19h16" /></symbol><symbol id="i-more-horizontal" viewBox="0 0 24 24"><svg
+  class="lucide lucide-more-horizontal"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="1" />
+  <circle cx="19" cy="12" r="1" />
+  <circle cx="5" cy="12" r="1" /></symbol><symbol id="i-panel-left-close" viewBox="0 0 24 24"><svg
+  class="lucide lucide-panel-left-close"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <rect width="18" height="18" x="3" y="3" rx="2" />
+  <path d="M9 3v18" />
+  <path d="m16 15-3-3 3-3" /></symbol><symbol id="i-plus" viewBox="0 0 24 24"><svg
+  class="lucide lucide-plus"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M5 12h14" />
+  <path d="M12 5v14" /></symbol><symbol id="i-save" viewBox="0 0 24 24"><svg
+  class="lucide lucide-save"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M15.2 3a2 2 0 0 1 1.4.6l3.8 3.8a2 2 0 0 1 .6 1.4V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z" />
+  <path d="M17 21v-7a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v7" />
+  <path d="M7 3v4a1 1 0 0 0 1 1h7" /></symbol><symbol id="i-search" viewBox="0 0 24 24"><svg
+  class="lucide lucide-search"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="m21 21-4.34-4.34" />
+  <circle cx="11" cy="11" r="8" /></symbol><symbol id="i-send" viewBox="0 0 24 24"><svg
+  class="lucide lucide-send"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z" />
+  <path d="m21.854 2.147-10.94 10.939" /></symbol><symbol id="i-settings" viewBox="0 0 24 24"><svg
+  class="lucide lucide-settings"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915" />
+  <circle cx="12" cy="12" r="3" /></symbol><symbol id="i-shopping-bag" viewBox="0 0 24 24"><svg
+  class="lucide lucide-shopping-bag"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M16 10a4 4 0 0 1-8 0" />
+  <path d="M3.103 6.034h17.794" />
+  <path d="M3.4 5.467a2 2 0 0 0-.4 1.2V20a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6.667a2 2 0 0 0-.4-1.2l-2-2.667A2 2 0 0 0 17 2H7a2 2 0 0 0-1.6.8z" /></symbol><symbol id="i-trash-2" viewBox="0 0 24 24"><svg
+  class="lucide lucide-trash-2"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M10 11v6" />
+  <path d="M14 11v6" />
+  <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6" />
+  <path d="M3 6h18" />
+  <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" /></symbol><symbol id="i-truck" viewBox="0 0 24 24"><svg
+  class="lucide lucide-truck"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2" />
+  <path d="M15 18H9" />
+  <path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14" />
+  <circle cx="17" cy="18" r="2" />
+  <circle cx="7" cy="18" r="2" /></symbol><symbol id="i-user" viewBox="0 0 24 24"><svg
+  class="lucide lucide-user"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
+  <circle cx="12" cy="7" r="4" /></symbol><symbol id="i-users" viewBox="0 0 24 24"><svg
+  class="lucide lucide-users"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+  <path d="M16 3.128a4 4 0 0 1 0 7.744" />
+  <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+  <circle cx="9" cy="7" r="4" /></symbol><symbol id="i-wallet" viewBox="0 0 24 24"><svg
+  class="lucide lucide-wallet"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1" />
+  <path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4" /></symbol><symbol id="i-x-circle" viewBox="0 0 24 24"><svg
+  class="lucide lucide-x-circle"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="m15 9-6 6" />
+  <path d="m9 9 6 6" /></symbol></svg>
+
+<div class="demobar">
+  <span class="lbl">Screen</span>
+  <div class="seg" id="screens">
+    <button data-screen="list" aria-pressed="true">Invoices</button>
+    <button data-screen="editor" aria-pressed="false">New invoice</button>
+  </div>
+  <span class="lbl">Width</span>
+  <div class="seg" id="widths">
+    <button data-w="desktop" aria-pressed="true">Desktop</button>
+    <button data-w="tablet" aria-pressed="false">Tablet</button>
+    <button data-w="mobile" aria-pressed="false">Mobile</button>
+  </div>
+  <span class="sp"></span>
+  <button class="btn sec" id="railBtn"><svg class="i" data-lucide="panel-left-close" aria-hidden="true"><use href="#i-panel-left-close"/></svg> Collapse menu</button>
+</div>
+
+<p class="note"><b>Look-and-feel demo.</b> Real interactions, placeholder data. Try the width switch, the menu collapse, the business name in the top bar, and a row menu — on mobile the row menu opens as a sheet.</p>
+
+<div class="viewport">
+<div class="device w-desktop" id="device">
+  <div class="app" id="app">
+
+    <aside>
+      <div class="brandrow"><span class="mark">B</span><span class="brandtxt">Bookkip</span></div>
+      <button class="nav" data-label="Dashboard"><svg class="i20" data-lucide="layout-dashboard" aria-hidden="true"><use href="#i-layout-dashboard"/></svg><span>Dashboard</span></button>
+      <div class="grp">Sales</div><div class="grpline"></div>
+      <button class="nav" aria-current="page" data-label="Invoices"><svg class="i20" data-lucide="file-text" aria-hidden="true"><use href="#i-file-text"/></svg><span>Invoices</span><span class="badge">4</span></button>
+      <button class="nav" data-label="Quotations"><svg class="i20" data-lucide="file-clock" aria-hidden="true"><use href="#i-file-clock"/></svg><span>Quotations</span></button>
+      <button class="nav" data-label="Customers"><svg class="i20" data-lucide="users" aria-hidden="true"><use href="#i-users"/></svg><span>Customers</span></button>
+      <div class="grp">Purchasing</div><div class="grpline"></div>
+      <button class="nav" data-label="Purchases"><svg class="i20" data-lucide="shopping-bag" aria-hidden="true"><use href="#i-shopping-bag"/></svg><span>Purchases</span></button>
+      <button class="nav" data-label="Vendors"><svg class="i20" data-lucide="truck" aria-hidden="true"><use href="#i-truck"/></svg><span>Vendors</span></button>
+      <div class="grp">People</div><div class="grpline"></div>
+      <button class="nav" data-label="Employees"><svg class="i20" data-lucide="contact" aria-hidden="true"><use href="#i-contact"/></svg><span>Employees</span></button>
+      <button class="nav" data-label="Attendance"><svg class="i20" data-lucide="calendar-check" aria-hidden="true"><use href="#i-calendar-check"/></svg><span>Attendance</span></button>
+      <button class="nav" data-label="Payroll"><svg class="i20" data-lucide="banknote" aria-hidden="true"><use href="#i-banknote"/></svg><span>Payroll</span></button>
+      <button class="railtoggle" id="railBtn2"><svg class="i20" data-lucide="panel-left-close" aria-hidden="true"><use href="#i-panel-left-close"/></svg><span>Collapse</span></button>
+    </aside>
+
+    <main>
+      <div class="topbar">
+        <button class="burger" id="burger"><svg class="i20" data-lucide="menu" aria-hidden="true"><use href="#i-menu"/></svg></button>
+        <button class="switcher" id="switcherBtn">
+          <svg class="i" data-lucide="building-2" aria-hidden="true"><use href="#i-building-2"/></svg> Otuevbo Development
+          <svg class="i chev" data-lucide="chevrons-up-down" aria-hidden="true"><use href="#i-chevrons-up-down"/></svg>
+        </button>
+        <span class="who"><span class="nm">Test User</span><span class="av">TU</span></span>
+      </div>
+
+      <div class="imp">
+        <svg class="i" data-lucide="eye" aria-hidden="true"><use href="#i-eye"/></svg>
+        <span>Working inside <b>Otuevbo Development</b> as Super Admin</span>
+        <a href="#" onclick="return false">Leave</a>
+      </div>
+
+      <!-- ============ LIST ============ -->
+      <div class="content" id="s-list">
+        <div class="crumb">Sales <svg class="i" data-lucide="chevron-right" aria-hidden="true"><use href="#i-chevron-right"/></svg> Invoices</div>
+        <div class="pagehead">
+          <h1>Invoices</h1>
+          <span class="sp">
+            <button class="btn sec desk-only"><svg class="i" data-lucide="download" aria-hidden="true"><use href="#i-download"/></svg> Export</button>
+            <button class="btn pri desk-only" data-goto="editor"><svg class="i" data-lucide="plus" aria-hidden="true"><use href="#i-plus"/></svg> New invoice</button>
+          </span>
+        </div>
+
+        <div class="stats">
+          <div class="stat"><div class="l">Outstanding</div><div class="v">₦ 106,500.00</div></div>
+          <div class="stat"><div class="l">Overdue</div><div class="v neg">₦ 81,500.00</div></div>
+          <div class="stat"><div class="l">Paid this month</div><div class="v">₦ 6,500.00</div></div>
+          <div class="stat"><div class="l">Drafts</div><div class="v">1</div></div>
+        </div>
+
+        <!-- desktop filters -->
+        <div class="filters desk-only">
+          <div class="field grow"><svg class="i ic" data-lucide="search" aria-hidden="true"><use href="#i-search"/></svg><input placeholder="Search number or customer"></div>
+          <div class="field"><select><option>All customers</option><option>Ann</option><option>Charles</option><option>Osas</option></select></div>
+          <div class="field"><select><option>All statuses</option><option>Draft</option><option>Overdue</option><option>Partially paid</option><option>Paid</option></select></div>
+          <div class="field"><svg class="i ic" data-lucide="calendar" aria-hidden="true"><use href="#i-calendar"/></svg><input placeholder="Any date"></div>
+        </div>
+
+        <!-- mobile filters -->
+        <div class="mob-only">
+          <div class="field grow" style="margin-bottom:10px"><svg class="i ic" data-lucide="search" aria-hidden="true"><use href="#i-search"/></svg><input placeholder="Search"></div>
+          <div class="mfilters">
+            <button aria-pressed="true">All</button><button>Draft</button><button>Overdue</button>
+            <button>Partially paid</button><button>Paid</button>
+          </div>
+        </div>
+
+        <div class="tablewrap desk-only">
+          <table>
+            <thead><tr>
+              <th>Number</th><th>Customer</th><th>Issued</th><th>Due</th>
+              <th class="num">Total</th><th class="num">Amount due</th><th>Status</th><th></th>
+            </tr></thead>
+            <tbody>
+              <tr><td><a class="lnk" href="#" onclick="return false">INV-0012</a></td><td>Charles</td><td>30 Jun 2026</td><td>30 Jun 2026</td>
+                <td class="num">25,000.00</td><td class="num">25,000.00</td><td><span class="chip draft">Draft</span></td>
+                <td><button class="rowmenu" data-menu="INV-0012 · Charles"><svg class="i" data-lucide="more-horizontal" aria-hidden="true"><use href="#i-more-horizontal"/></svg></button></td></tr>
+              <tr><td><a class="lnk" href="#" onclick="return false">INV-0004</a></td><td>Ann</td><td>6 Jun 2026</td><td>27 Jun 2026</td>
+                <td class="num">75,000.00</td><td class="num">75,000.00</td><td><span class="chip over">Overdue 69d</span></td>
+                <td><button class="rowmenu" data-menu="INV-0004 · Ann"><svg class="i" data-lucide="more-horizontal" aria-hidden="true"><use href="#i-more-horizontal"/></svg></button></td></tr>
+              <tr><td><a class="lnk" href="#" onclick="return false">INV-0003</a></td><td>Osas</td><td>6 Jun 2026</td><td>6 Jun 2026</td>
+                <td class="num">117,000.00</td><td class="num">40,000.00</td><td><span class="chip part">Partially paid</span></td>
+                <td><button class="rowmenu" data-menu="INV-0003 · Osas"><svg class="i" data-lucide="more-horizontal" aria-hidden="true"><use href="#i-more-horizontal"/></svg></button></td></tr>
+              <tr><td><a class="lnk" href="#" onclick="return false">INV-0001</a></td><td>Charles</td><td>4 Jun 2026</td><td>4 Jun 2026</td>
+                <td class="num">6,500.00</td><td class="num">0.00</td><td><span class="chip paid">Paid</span></td>
+                <td><button class="rowmenu" data-menu="INV-0001 · Charles"><svg class="i" data-lucide="more-horizontal" aria-hidden="true"><use href="#i-more-horizontal"/></svg></button></td></tr>
+            </tbody>
+          </table>
+          <div class="tfoot">
+            <span>4 invoices</span>
+            <span class="sp">
+              <button class="pg"><svg class="i" data-lucide="chevron-left" aria-hidden="true"><use href="#i-chevron-left"/></svg></button>
+              <button class="pg" aria-current="page">1</button>
+              <button class="pg"><svg class="i" data-lucide="chevron-right" aria-hidden="true"><use href="#i-chevron-right"/></svg></button>
+            </span>
+          </div>
+        </div>
+
+        <div class="mob-only">
+          <div class="mlist">
+            <button class="mrow" data-menu="INV-0012 · Charles"><span class="a">Charles</span><span class="amt">25,000.00</span>
+              <span class="b">INV-0012 · due 30 Jun</span><span class="st"><span class="chip draft">Draft</span></span></button>
+            <button class="mrow" data-menu="INV-0004 · Ann"><span class="a">Ann</span><span class="amt">75,000.00</span>
+              <span class="b">INV-0004 · due 27 Jun</span><span class="st"><span class="chip over">Overdue</span></span></button>
+            <button class="mrow" data-menu="INV-0003 · Osas"><span class="a">Osas</span><span class="amt">40,000.00</span>
+              <span class="b">INV-0003 · of 117,000.00</span><span class="st"><span class="chip part">Partial</span></span></button>
+            <button class="mrow" data-menu="INV-0001 · Charles"><span class="a">Charles</span><span class="amt">0.00</span>
+              <span class="b">INV-0001 · paid 4 Jun</span><span class="st"><span class="chip paid">Paid</span></span></button>
+          </div>
+          <div class="fab"><button class="btn pri" data-goto="editor"><svg class="i" data-lucide="plus" aria-hidden="true"><use href="#i-plus"/></svg> New invoice</button></div>
+        </div>
+      </div>
+
+      <!-- ============ EDITOR ============ -->
+      <div class="content" id="s-editor" hidden>
+        <div class="crumb">Sales <svg class="i" data-lucide="chevron-right" aria-hidden="true"><use href="#i-chevron-right"/></svg>
+          <a href="#" class="lnk" data-goto="list" onclick="return false">Invoices</a>
+          <svg class="i" data-lucide="chevron-right" aria-hidden="true"><use href="#i-chevron-right"/></svg> New</div>
+        <div class="pagehead">
+          <button class="btn ghost icon" data-goto="list"><svg class="i" data-lucide="arrow-left" aria-hidden="true"><use href="#i-arrow-left"/></svg></button>
+          <h1>New invoice</h1>
+          <span class="chip draft">Draft</span>
+          <span class="sp desk-only">
+            <button class="btn sec" data-goto="list">Cancel</button>
+            <button class="btn sec"><svg class="i" data-lucide="save" aria-hidden="true"><use href="#i-save"/></svg> Save draft</button>
+            <button class="btn pri"><svg class="i" data-lucide="send" aria-hidden="true"><use href="#i-send"/></svg> Issue and send</button>
+          </span>
+        </div>
+
+        <div class="editor">
+          <div style="display:flex;flex-direction:column;gap:14px">
+            <div class="card"><div class="bd">
+              <div class="grid2">
+                <div><label>Customer <span class="req">*</span></label>
+                  <div class="field"><svg class="i ic" data-lucide="user" aria-hidden="true"><use href="#i-user"/></svg>
+                    <select><option>Choose a customer</option><option>Ann</option><option selected>Charles</option><option>Osas</option></select></div>
+                  <p class="hint">Not listed? Add them without leaving this invoice.</p>
+                </div>
+                <div><label>Invoice number</label>
+                  <div class="field"><input value="INV-0013"></div>
+                  <p class="hint">Suggested next number. Assigned for good when you issue.</p>
+                </div>
+                <div><label>Invoice date <span class="req">*</span></label>
+                  <div class="field"><svg class="i ic" data-lucide="calendar" aria-hidden="true"><use href="#i-calendar"/></svg><input value="4 Sep 2026"></div></div>
+                <div><label>Due date <span class="req">*</span></label>
+                  <div class="field"><svg class="i ic" data-lucide="calendar" aria-hidden="true"><use href="#i-calendar"/></svg><input value="18 Sep 2026"></div></div>
+                <div><label>Sales order number</label><div class="field"><input placeholder="Optional"></div></div>
+                <div><label>Template</label><div class="field"><select><option>Default</option><option>Minimal</option></select></div></div>
+              </div>
+            </div></div>
+
+            <div class="card">
+              <div class="hd">Items</div>
+              <div class="bd" style="padding:0">
+                <table class="lines">
+                  <thead><tr><th style="width:38%">Item</th><th style="width:18%">Tax</th>
+                    <th class="num" style="width:12%">Qty</th><th class="num" style="width:16%">Price</th>
+                    <th class="num" style="width:16%">Amount</th><th style="width:36px"></th></tr></thead>
+                  <tbody>
+                    <tr>
+                      <td><div class="field"><select><option>Website retainer</option></select></div></td>
+                      <td><div class="field"><select><option>VAT 7.5%</option><option>None</option></select></div></td>
+                      <td class="num"><div class="field"><input value="1" style="text-align:right"></div></td>
+                      <td class="num"><div class="field"><input value="150,000.00" style="text-align:right"></div></td>
+                      <td class="num">161,250.00</td>
+                      <td><button class="rowmenu"><svg class="i" data-lucide="trash-2" aria-hidden="true"><use href="#i-trash-2"/></svg></button></td>
+                    </tr>
+                    <tr>
+                      <td><div class="field"><select><option>Hosting — 12 months</option></select></div></td>
+                      <td><div class="field"><select><option>None</option><option>VAT 7.5%</option></select></div></td>
+                      <td class="num"><div class="field"><input value="1" style="text-align:right"></div></td>
+                      <td class="num"><div class="field"><input value="45,000.00" style="text-align:right"></div></td>
+                      <td class="num">45,000.00</td>
+                      <td><button class="rowmenu"><svg class="i" data-lucide="trash-2" aria-hidden="true"><use href="#i-trash-2"/></svg></button></td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div class="bd" style="padding:12px 14px">
+                  <button class="btn sec addline" style="margin:0"><svg class="i" data-lucide="plus" aria-hidden="true"><use href="#i-plus"/></svg> Add item</button>
+                  <div class="totals" style="margin-top:14px">
+                    <div><span>Subtotal</span><span>195,000.00</span></div>
+                    <div><span>Tax</span><span>11,250.00</span></div>
+                    <div><span>Discount (5%)</span><span>−10,312.50</span></div>
+                    <div><span>Total</span><span>₦ 195,937.50</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card"><div class="bd">
+              <label>Notes</label>
+              <div class="field" style="height:auto;padding:8px 10px"><input placeholder="Shown on the invoice"></div>
+            </div></div>
+          </div>
+
+          <div class="card"><div class="bd side-actions">
+            <div><label>Discount</label>
+              <div style="display:flex;gap:8px">
+                <div class="field" style="width:78px"><select><option>%</option><option>₦</option></select></div>
+                <div class="field" style="flex:1"><input value="5"></div>
+              </div>
+              <p class="hint">Applied to the invoice after line taxes.</p>
+            </div>
+            <hr style="border:0;border-top:1px solid var(--line);margin:2px 0">
+            <button class="btn pri"><svg class="i" data-lucide="send" aria-hidden="true"><use href="#i-send"/></svg> Issue and send</button>
+            <button class="btn sec"><svg class="i" data-lucide="save" aria-hidden="true"><use href="#i-save"/></svg> Save draft</button>
+            <button class="btn ghost" data-goto="list">Cancel</button>
+            <p class="hint">Issuing assigns the number and locks the invoice. Corrections are made by cancelling and reissuing.</p>
+          </div></div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+</div>
+
+<script>
+const app=document.getElementById('app'), device=document.getElementById('device');
+let width='desktop', railed=false, mobile=false;
+
+function apply(){
+  device.className='device w-'+width;
+  mobile = width==='mobile';
+  app.classList.toggle('mob', mobile);
+  app.classList.toggle('rail', railed && !mobile);
+  app.classList.toggle('narrow', width!=='desktop');
+  document.querySelectorAll('.desk-only').forEach(e=>e.hidden=mobile);
+  document.querySelectorAll('.mob-only').forEach(e=>e.hidden=!mobile);
+  const collapsed = railed && !mobile;
+  document.querySelectorAll('#railBtn,#railBtn2').forEach(b=>{
+    b.querySelector('use').setAttribute('href', collapsed?'#i-panel-left-open':'#i-panel-left-close');
+  });
+  document.querySelector('#railBtn').lastChild.textContent = collapsed?' Expand menu':' Collapse menu';
+  const t=document.querySelector('#railBtn2 span'); if(t) t.textContent = collapsed?'Expand':'Collapse';
+}
+document.querySelectorAll('#widths button').forEach(b=>b.onclick=()=>{
+  width=b.dataset.w;
+  document.querySelectorAll('#widths button').forEach(x=>x.setAttribute('aria-pressed',x===b));
+  if(width==='tablet') railed=true; if(width==='desktop') railed=false;
+  apply();
+});
+document.querySelectorAll('#screens button').forEach(b=>b.onclick=()=>go(b.dataset.screen));
+function go(s){
+  document.getElementById('s-list').hidden = s!=='list';
+  document.getElementById('s-editor').hidden = s!=='editor';
+  document.querySelectorAll('#screens button').forEach(x=>x.setAttribute('aria-pressed',x.dataset.screen===s));
+}
+document.addEventListener('click',e=>{
+  const g=e.target.closest('[data-goto]'); if(g){e.preventDefault();go(g.dataset.goto);}
+});
+document.querySelectorAll('#railBtn,#railBtn2').forEach(b=>b.onclick=()=>{railed=!railed;apply();});
+
+/* popovers */
+function close(){document.querySelectorAll('.popover,.scrim,.sheetwrap').forEach(e=>e.remove());}
+function scrim(){const s=document.createElement('div');s.className='scrim';s.onclick=close;document.body.appendChild(s);return s;}
+
+document.getElementById('switcherBtn').onclick=e=>{
+  if(document.querySelector('.popover')) return close();
+  scrim();
+  const r=e.currentTarget.getBoundingClientRect();
+  const p=document.createElement('div');p.className='popover';
+  p.style.top=(r.bottom+window.scrollY+6)+'px';p.style.left=(r.left+window.scrollX)+'px';
+  p.innerHTML=`<div class="ph">Your businesses</div>
+    <button><svg class="i" data-lucide="building-2" aria-hidden="true"><use href="#i-building-2"/></svg><span>Otuevbo Development<br><span class="sub">Owner</span></span><svg class="i tick" data-lucide="check" aria-hidden="true"><use href="#i-check"/></svg></button>
+    <button><svg class="i" data-lucide="building-2" aria-hidden="true"><use href="#i-building-2"/></svg><span>Awufafro Store<br><span class="sub">Accountant</span></span></button>
+    <hr><button><svg class="i" data-lucide="plus" aria-hidden="true"><use href="#i-plus"/></svg>Create a business</button>
+    <button><svg class="i" data-lucide="settings" aria-hidden="true"><use href="#i-settings"/></svg>Business settings</button>`;
+  document.body.appendChild(p);};
+
+document.addEventListener('click',e=>{
+  const b=e.target.closest('[data-menu]'); if(!b) return;
+  close();
+  const items=`<button><svg class="i" data-lucide="eye" aria-hidden="true"><use href="#i-eye"/></svg>View invoice</button>
+    <button><svg class="i" data-lucide="wallet" aria-hidden="true"><use href="#i-wallet"/></svg>Record payment</button>
+    <button><svg class="i" data-lucide="send" aria-hidden="true"><use href="#i-send"/></svg>Send again</button>
+    <button><svg class="i" data-lucide="download" aria-hidden="true"><use href="#i-download"/></svg>Download PDF</button>
+    <hr><button class="dz"><svg class="i" data-lucide="x-circle" aria-hidden="true"><use href="#i-x-circle"/></svg>Cancel invoice</button>`;
+  if(mobile){
+    const w=document.createElement('div');w.className='sheetwrap';w.onclick=ev=>{if(ev.target===w)close();};
+    w.innerHTML=`<div class="sheet"><div class="grab"></div><div class="h">${b.dataset.menu}</div>${items}</div>`;
+    document.body.appendChild(w);
+  }else{
+    scrim();
+    const r=b.getBoundingClientRect();
+    const p=document.createElement('div');p.className='popover';p.style.minWidth='200px';
+    p.style.top=(r.bottom+window.scrollY+4)+'px';p.style.left=(r.right+window.scrollX-200)+'px';
+    p.innerHTML=items;document.body.appendChild(p);
+  }
+});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')close();});
+
+apply();
+</script>
+</body>
+</html>

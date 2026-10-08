@@ -1,0 +1,429 @@
+<!doctype html>
+<html lang="en">
+<head>
+  {{> head}}
+</head>
+<body class="bg-canvas text-ink font-sans text-[14px] leading-[1.5]">
+  
+  {{> icons}}
+
+  <!-- Layout Container -->
+  <div class="device w-full min-h-screen bg-surface" id="device">
+    <div class="grid grid-cols-1 md:grid-cols-[var(--sidebar-width,220px)_1fr] min-h-screen  [&[data-layout=rail]]:grid-cols-[56px_1fr]" id="app" data-layout="desktop">
+        
+        {{> sidebar active_invoices=true}}
+
+        <!-- Main Area -->
+        <main class="min-w-0 bg-canvas flex flex-col h-full relative">
+          {{> topbar}}
+
+          <!-- Content: Invoices List -->
+          <div class="p-4 overflow-auto flex-1" id="s-list">
+            <div class="text-xs text-muted mb-2 flex items-center gap-1.5">
+              Sales <svg class="w-4 h-4 stroke-[1.75]" aria-hidden="true"><use href="#i-chevron-right"/></svg> Invoices
+            </div>
+            
+            <div class="flex items-center gap-3 mb-3.5">
+              <h1 class="m-0 text-xl font-semibold tracking-tight">Invoices</h1>
+              <div class="ml-auto flex gap-2">
+                <button class="inline-flex items-center gap-1.5 h-control px-2 md:px-3 rounded border border-line-strong text-[13px] font-medium bg-surface hover:bg-th">
+                  <svg class="w-4 h-4 stroke-[1.75]" aria-hidden="true"><use href="#i-download"/></svg> <span class="hidden md:inline">Export</span>
+                </button>
+                <button class="inline-flex items-center gap-1.5 h-control px-2 md:px-3 rounded border border-transparent text-[13px] font-medium bg-indigo text-white hover:bg-indigo-hover" data-goto="editor">
+                  <svg class="w-4 h-4 stroke-[1.75]" aria-hidden="true"><use href="#i-plus"/></svg> <span class="hidden md:inline">New invoice</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Stats -->
+            <div class="grid grid-cols-2 lg:grid-cols-4 bg-surface border border-line rounded mb-3.5 overflow-hidden stats-grid">
+              <div class="p-3 border-r border-b lg:border-b-0 border-line">
+                <div class="text-xs text-muted">Outstanding</div>
+                <div class="text-xl font-semibold tracking-tight mt-0.5 whitespace-nowrap">₦ 106,500.00</div>
+              </div>
+              <div class="p-3 border-b lg:border-r lg:border-b-0 border-line">
+                <div class="text-xs text-muted">Overdue</div>
+                <div class="text-xl font-semibold tracking-tight mt-0.5 whitespace-nowrap text-[#B4372A]">₦ 81,500.00</div>
+              </div>
+              <div class="p-3 border-r lg:border-b-0 border-line">
+                <div class="text-xs text-muted">Paid this month</div>
+                <div class="text-xl font-semibold tracking-tight mt-0.5 whitespace-nowrap">₦ 6,500.00</div>
+              </div>
+              <div class="p-3">
+                <div class="text-xs text-muted">Drafts</div>
+                <div class="text-xl font-semibold tracking-tight mt-0.5 whitespace-nowrap">1</div>
+              </div>
+            </div>
+
+            <!-- Desktop Filters -->
+            <div class="flex gap-2 mb-2.5 flex-wrap hidden md:flex">
+              <div class="flex-1 min-w-[180px] flex items-center gap-2 h-control px-2.5 bg-surface border border-line-strong rounded text-[13px] focus-within:border-indigo focus-within:ring-[3px] focus-within:ring-indigo-line">
+                <svg class="w-4 h-4 stroke-[1.75] text-muted shrink-0" aria-hidden="true"><use href="#i-search"/></svg>
+                <input type="text" placeholder="Search number or customer" class="bg-transparent border-0 outline-none w-full placeholder-muted">
+              </div>
+              <div class="flex items-center h-control px-2.5 bg-surface border border-line-strong rounded text-[13px] focus-within:border-indigo focus-within:ring-[3px] focus-within:ring-indigo-line">
+                <select class="bg-transparent border-0 outline-none w-full"><option>All customers</option><option>Ann</option><option>Charles</option><option>Osas</option></select>
+              </div>
+              <div class="flex items-center h-control px-2.5 bg-surface border border-line-strong rounded text-[13px] focus-within:border-indigo focus-within:ring-[3px] focus-within:ring-indigo-line">
+                <select class="bg-transparent border-0 outline-none w-full"><option>All statuses</option><option>Draft</option><option>Overdue</option><option>Partially paid</option><option>Paid</option></select>
+              </div>
+              <div class="flex items-center gap-2 h-control px-2.5 bg-surface border border-line-strong rounded text-[13px] focus-within:border-indigo focus-within:ring-[3px] focus-within:ring-indigo-line">
+                <input type="date" class="bg-transparent border-0 outline-none w-full placeholder-muted text-muted">
+              </div>
+            </div>
+
+            <!-- Mobile Filters -->
+            <div class="block md:hidden">
+              {{> list-mobile-filters }}
+            </div>
+
+            <!-- Table (Desktop) -->
+            <div class="bg-surface border border-line rounded overflow-x-auto hidden md:block">
+              <table class="w-full border-collapse text-[13px] min-w-[700px]">
+                <thead>
+                  <tr class="bg-th text-muted font-medium text-xs">
+                    <th class="px-3.5 py-2.5 text-left border-b border-line whitespace-nowrap font-medium">Number</th>
+                    <th class="px-3.5 py-2.5 text-left border-b border-line whitespace-nowrap font-medium">Customer</th>
+                    <th class="px-3.5 py-2.5 text-left border-b border-line whitespace-nowrap font-medium">Issued</th>
+                    <th class="px-3.5 py-2.5 text-left border-b border-line whitespace-nowrap font-medium">Due</th>
+                    <th class="px-3.5 py-2.5 text-right border-b border-line whitespace-nowrap font-medium font-variant-numeric:tabular-nums">Total</th>
+                    <th class="px-3.5 py-2.5 text-right border-b border-line whitespace-nowrap font-medium font-variant-numeric:tabular-nums">Amount due</th>
+                    <th class="px-3.5 py-2.5 text-left border-b border-line whitespace-nowrap font-medium">Status</th>
+                    <th class="px-3.5 py-2.5 border-b border-line w-9"></th>
+                  </tr>
+                </thead>
+                <tbody class="[&_tr:last-child_td]:border-b-0">
+                  <tr class="hover:bg-[#FAFBFD] group transition-colors">
+                    <td class="px-3.5 py-3 border-b border-line whitespace-nowrap"><a href="#" class="font-medium text-ink group-hover:text-indigo-ink group-hover:underline underline-offset-2">INV-0012</a></td>
+                    <td class="px-3.5 py-3 border-b border-line whitespace-nowrap">Charles</td>
+                    <td class="px-3.5 py-3 border-b border-line whitespace-nowrap">30 Jun 2026</td>
+                    <td class="px-3.5 py-3 border-b border-line whitespace-nowrap">30 Jun 2026</td>
+                    <td class="px-3.5 py-3 border-b border-line whitespace-nowrap text-right font-medium" style="font-variant-numeric: tabular-nums;">25,000.00</td>
+                    <td class="px-3.5 py-3 border-b border-line whitespace-nowrap text-right font-medium" style="font-variant-numeric: tabular-nums;">25,000.00</td>
+                    <td class="px-3.5 py-3 border-b border-line whitespace-nowrap"><span class="inline-flex items-center gap-1.5 h-[22px] px-2 rounded-[3px] text-xs font-medium whitespace-nowrap bg-status-draft-bg text-status-draft-text border border-status-draft-border before:content-[''] before:w-1.5 before:h-1.5 before:rounded-full before:bg-status-draft-dot before:shrink-0">Draft</span></td>
+                    <td class="px-3.5 py-3 border-b border-line whitespace-nowrap"><button class="w-[26px] h-[26px] rounded flex items-center justify-center text-muted hover:bg-th hover:border-line-strong hover:text-ink border border-transparent" data-menu="INV-0012 · Charles"><svg class="w-4 h-4 stroke-[1.75]" aria-hidden="true"><use href="#i-more-horizontal"/></svg></button></td>
+                  </tr>
+                  <tr class="hover:bg-[#FAFBFD] group transition-colors">
+                    <td class="px-3.5 py-3 border-b border-line whitespace-nowrap"><a href="#" class="font-medium text-ink group-hover:text-indigo-ink group-hover:underline underline-offset-2">INV-0004</a></td>
+                    <td class="px-3.5 py-3 border-b border-line whitespace-nowrap">Ann</td>
+                    <td class="px-3.5 py-3 border-b border-line whitespace-nowrap">6 Jun 2026</td>
+                    <td class="px-3.5 py-3 border-b border-line whitespace-nowrap">27 Jun 2026</td>
+                    <td class="px-3.5 py-3 border-b border-line whitespace-nowrap text-right font-medium" style="font-variant-numeric: tabular-nums;">75,000.00</td>
+                    <td class="px-3.5 py-3 border-b border-line whitespace-nowrap text-right font-medium" style="font-variant-numeric: tabular-nums;">75,000.00</td>
+                    <td class="px-3.5 py-3 border-b border-line whitespace-nowrap"><span class="inline-flex items-center gap-1.5 h-[22px] px-2 rounded-[3px] text-xs font-medium whitespace-nowrap bg-status-overdue-bg text-status-overdue-text border border-status-overdue-border before:content-[''] before:w-1.5 before:h-1.5 before:rounded-full before:bg-status-overdue-dot before:shrink-0">Overdue 69d</span></td>
+                    <td class="px-3.5 py-3 border-b border-line whitespace-nowrap"><button class="w-[26px] h-[26px] rounded flex items-center justify-center text-muted hover:bg-th hover:border-line-strong hover:text-ink border border-transparent" data-menu="INV-0004 · Ann"><svg class="w-4 h-4 stroke-[1.75]" aria-hidden="true"><use href="#i-more-horizontal"/></svg></button></td>
+                  </tr>
+                  <tr class="hover:bg-[#FAFBFD] group transition-colors">
+                    <td class="px-3.5 py-3 border-b border-line whitespace-nowrap"><a href="#" class="font-medium text-ink group-hover:text-indigo-ink group-hover:underline underline-offset-2">INV-0003</a></td>
+                    <td class="px-3.5 py-3 border-b border-line whitespace-nowrap">Osas</td>
+                    <td class="px-3.5 py-3 border-b border-line whitespace-nowrap">6 Jun 2026</td>
+                    <td class="px-3.5 py-3 border-b border-line whitespace-nowrap">6 Jun 2026</td>
+                    <td class="px-3.5 py-3 border-b border-line whitespace-nowrap text-right font-medium" style="font-variant-numeric: tabular-nums;">117,000.00</td>
+                    <td class="px-3.5 py-3 border-b border-line whitespace-nowrap text-right font-medium" style="font-variant-numeric: tabular-nums;">40,000.00</td>
+                    <td class="px-3.5 py-3 border-b border-line whitespace-nowrap"><span class="inline-flex items-center gap-1.5 h-[22px] px-2 rounded-[3px] text-xs font-medium whitespace-nowrap bg-status-partiallyPaid-bg text-status-partiallyPaid-text border border-status-partiallyPaid-border before:content-[''] before:w-1.5 before:h-1.5 before:rounded-full before:bg-status-partiallyPaid-dot before:shrink-0">Partially paid</span></td>
+                    <td class="px-3.5 py-3 border-b border-line whitespace-nowrap"><button class="w-[26px] h-[26px] rounded flex items-center justify-center text-muted hover:bg-th hover:border-line-strong hover:text-ink border border-transparent" data-menu="INV-0003 · Osas"><svg class="w-4 h-4 stroke-[1.75]" aria-hidden="true"><use href="#i-more-horizontal"/></svg></button></td>
+                  </tr>
+                  <tr class="hover:bg-[#FAFBFD] group transition-colors">
+                    <td class="px-3.5 py-3 border-b border-line whitespace-nowrap"><a href="#" class="font-medium text-ink group-hover:text-indigo-ink group-hover:underline underline-offset-2">INV-0001</a></td>
+                    <td class="px-3.5 py-3 border-b border-line whitespace-nowrap">Charles</td>
+                    <td class="px-3.5 py-3 border-b border-line whitespace-nowrap">4 Jun 2026</td>
+                    <td class="px-3.5 py-3 border-b border-line whitespace-nowrap">4 Jun 2026</td>
+                    <td class="px-3.5 py-3 border-b border-line whitespace-nowrap text-right font-medium" style="font-variant-numeric: tabular-nums;">6,500.00</td>
+                    <td class="px-3.5 py-3 border-b border-line whitespace-nowrap text-right font-medium" style="font-variant-numeric: tabular-nums;">0.00</td>
+                    <td class="px-3.5 py-3 border-b border-line whitespace-nowrap"><span class="inline-flex items-center gap-1.5 h-[22px] px-2 rounded-[3px] text-xs font-medium whitespace-nowrap bg-status-paid-bg text-status-paid-text border border-status-paid-border before:content-[''] before:w-1.5 before:h-1.5 border before:bg-status-paid-dot before:shrink-0">Paid</span></td>
+                    <td class="px-3.5 py-3 border-b border-line whitespace-nowrap"><button class="w-[26px] h-[26px] rounded flex items-center justify-center text-muted hover:bg-th hover:border-line-strong hover:text-ink border border-transparent" data-menu="INV-0001 · Charles"><svg class="w-4 h-4 stroke-[1.75]" aria-hidden="true"><use href="#i-more-horizontal"/></svg></button></td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="flex items-center gap-3 px-3.5 py-2.5 border-t border-line text-xs text-muted bg-surface">
+                <span>4 invoices</span>
+                <div class="ml-auto flex items-center gap-1">
+                  <button class="w-[26px] h-[26px] rounded border border-line-strong bg-surface flex items-center justify-center hover:bg-th"><svg class="w-4 h-4 stroke-[1.75]" aria-hidden="true"><use href="#i-chevron-left"/></svg></button>
+                  <button class="w-[26px] h-[26px] rounded border border-ink bg-ink text-white flex items-center justify-center font-medium">1</button>
+                  <button class="w-[26px] h-[26px] rounded border border-line-strong bg-surface flex items-center justify-center hover:bg-th"><svg class="w-4 h-4 stroke-[1.75]" aria-hidden="true"><use href="#i-chevron-right"/></svg></button>
+                </div>
+              </div>
+            </div>
+
+            <!-- List (Mobile) -->
+            <div class="block md:hidden">
+              <div class="bg-surface border border-line rounded overflow-hidden">
+                <button class="w-full text-left bg-transparent border-0 border-b border-line px-3 py-2.5 grid grid-cols-[1fr_auto] gap-x-3 gap-y-[3px] items-center min-h-row-mob last:border-b-0 active:bg-th" data-menu="INV-0012 · Charles">
+                  <span class="font-medium text-ink">Charles</span>
+                  <span class="text-right font-medium text-ink font-variant-numeric:tabular-nums">25,000.00</span>
+                  <span class="text-xs text-muted">INV-0012 · due 30 Jun</span>
+                  <span class="justify-self-end"><span class="inline-flex items-center gap-1.5 h-[22px] px-2 rounded-[3px] text-xs font-medium whitespace-nowrap bg-status-draft-bg text-status-draft-text border border-status-draft-border before:content-[''] before:w-1.5 before:h-1.5 before:rounded-full before:bg-status-draft-dot before:shrink-0">Draft</span></span>
+                </button>
+                <button class="w-full text-left bg-transparent border-0 border-b border-line px-3 py-2.5 grid grid-cols-[1fr_auto] gap-x-3 gap-y-[3px] items-center min-h-row-mob last:border-b-0 active:bg-th" data-menu="INV-0004 · Ann">
+                  <span class="font-medium text-ink">Ann</span>
+                  <span class="text-right font-medium text-ink font-variant-numeric:tabular-nums">75,000.00</span>
+                  <span class="text-xs text-muted">INV-0004 · due 27 Jun</span>
+                  <span class="justify-self-end"><span class="inline-flex items-center gap-1.5 h-[22px] px-2 rounded-[3px] text-xs font-medium whitespace-nowrap bg-status-overdue-bg text-status-overdue-text border border-status-overdue-border before:content-[''] before:w-1.5 before:h-1.5 before:rounded-full before:bg-status-overdue-dot before:shrink-0">Overdue</span></span>
+                </button>
+                <button class="w-full text-left bg-transparent border-0 border-b border-line px-3 py-2.5 grid grid-cols-[1fr_auto] gap-x-3 gap-y-[3px] items-center min-h-row-mob last:border-b-0 active:bg-th" data-menu="INV-0003 · Osas">
+                  <span class="font-medium text-ink">Osas</span>
+                  <span class="text-right font-medium text-ink font-variant-numeric:tabular-nums">40,000.00</span>
+                  <span class="text-xs text-muted">INV-0003 · of 117,000.00</span>
+                  <span class="justify-self-end"><span class="inline-flex items-center gap-1.5 h-[22px] px-2 rounded-[3px] text-xs font-medium whitespace-nowrap bg-status-partiallyPaid-bg text-status-partiallyPaid-text border border-status-partiallyPaid-border before:content-[''] before:w-1.5 before:h-1.5 before:rounded-full before:bg-status-partiallyPaid-dot before:shrink-0">Partial</span></span>
+                </button>
+                <button class="w-full text-left bg-transparent border-0 border-b border-line px-3 py-2.5 grid grid-cols-[1fr_auto] gap-x-3 gap-y-[3px] items-center min-h-row-mob last:border-b-0 active:bg-th" data-menu="INV-0001 · Charles">
+                  <span class="font-medium text-ink">Charles</span>
+                  <span class="text-right font-medium text-ink font-variant-numeric:tabular-nums">0.00</span>
+                  <span class="text-xs text-muted">INV-0001 · paid 4 Jun</span>
+                  <span class="justify-self-end"><span class="inline-flex items-center gap-1.5 h-[22px] px-2 rounded-[3px] text-xs font-medium whitespace-nowrap bg-status-paid-bg text-status-paid-text border border-status-paid-border before:content-[''] before:w-1.5 before:h-1.5 before:rounded-full before:bg-status-paid-dot before:shrink-0">Paid</span></span>
+                </button>
+              </div>
+              <div class="sticky bottom-3 flex justify-end mt-3 pointer-events-none">
+                <button class="pointer-events-auto inline-flex items-center gap-1.5 h-[44px] px-[18px] rounded-pill border border-transparent text-[13px] font-medium bg-indigo text-white shadow-[0_6px_18px_rgba(67,83,224,0.35)]" data-goto="editor">
+                  <svg class="w-4 h-4 stroke-[1.75]" aria-hidden="true"><use href="#i-plus"/></svg> New invoice
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Content: Editor -->
+          <div class="p-4 overflow-auto flex-1 hidden" id="s-editor">
+            <div class="text-xs text-muted mb-2 flex items-center gap-1.5">
+              Sales <svg class="w-4 h-4 stroke-[1.75]" aria-hidden="true"><use href="#i-chevron-right"/></svg>
+              <a href="#" class="font-medium text-ink underline-offset-2 hover:text-indigo-ink hover:underline" data-goto="list">Invoices</a>
+              <svg class="w-4 h-4 stroke-[1.75]" aria-hidden="true"><use href="#i-chevron-right"/></svg> New
+            </div>
+            
+            <div class="flex items-center gap-3 mb-3.5">
+              <button class="inline-flex items-center justify-center w-control h-control rounded bg-transparent text-muted hover:bg-th hover:text-ink" data-goto="list"><svg class="w-4 h-4 stroke-[1.75]" aria-hidden="true"><use href="#i-arrow-left"/></svg></button>
+              <h1 class="m-0 text-xl font-semibold tracking-tight">New invoice</h1>
+              <span class="inline-flex items-center gap-1.5 h-[22px] px-2 rounded-[3px] text-xs font-medium whitespace-nowrap bg-status-draft-bg text-status-draft-text border border-status-draft-border before:content-[''] before:w-1.5 before:h-1.5 before:rounded-full before:bg-status-draft-dot before:shrink-0">Draft</span>
+              <div class="ml-auto flex gap-2 hidden md:flex">
+                <button class="inline-flex items-center gap-1.5 h-control px-3 rounded border border-line-strong text-[13px] font-medium bg-surface hover:bg-th" data-goto="list">Cancel</button>
+                <button class="inline-flex items-center gap-1.5 h-control px-3 rounded border border-line-strong text-[13px] font-medium bg-surface hover:bg-th"><svg class="w-4 h-4 stroke-[1.75]" aria-hidden="true"><use href="#i-save"/></svg> Save draft</button>
+                <button class="inline-flex items-center gap-1.5 h-control px-3 rounded border border-transparent text-[13px] font-medium bg-indigo text-white hover:bg-indigo-hover"><svg class="w-4 h-4 stroke-[1.75]" aria-hidden="true"><use href="#i-send"/></svg> Issue and send</button>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-[1fr_280px] gap-3.5 items-start">
+              <div class="flex flex-col gap-3.5">
+                <div class="bg-surface border border-line rounded">
+                  <div class="p-3.5">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                      <div>
+                        <label class="block text-xs font-medium text-muted mb-1.25">Customer <span class="text-[#B4372A]">*</span></label>
+                        <div class="flex items-center gap-2 h-control px-2.5 bg-surface border border-line-strong rounded text-[13px] focus-within:border-indigo focus-within:ring-[3px] focus-within:ring-indigo-line">
+                          <svg class="w-4 h-4 stroke-[1.75] text-muted shrink-0" aria-hidden="true"><use href="#i-user"/></svg>
+                          <select class="bg-transparent border-0 outline-none w-full"><option>Choose a customer</option><option>Ann</option><option selected>Charles</option><option>Osas</option></select>
+                        </div>
+                        <p class="text-xs text-muted mt-1.5">Not listed? Add them without leaving this invoice.</p>
+                      </div>
+                      <div>
+                        <label class="block text-xs font-medium text-muted mb-1.25">Invoice number</label>
+                        <div class="flex items-center gap-2 h-control px-2.5 bg-surface border border-line-strong rounded text-[13px] focus-within:border-indigo focus-within:ring-[3px] focus-within:ring-indigo-line">
+                          <input type="text" class="bg-transparent border-0 outline-none w-full" value="INV-0013">
+                        </div>
+                        <p class="text-xs text-muted mt-1.5">Suggested next number. Assigned for good when you issue.</p>
+                      </div>
+                      <div>
+                        <label class="block text-xs font-medium text-muted mb-1.25">Invoice date <span class="text-[#B4372A]">*</span></label>
+                        <div class="flex items-center gap-2 h-control px-2.5 bg-surface border border-line-strong rounded text-[13px] focus-within:border-indigo focus-within:ring-[3px] focus-within:ring-indigo-line">
+                          <input type="date" class="bg-transparent border-0 outline-none w-full text-ink" value="2026-09-04">
+                        </div>
+                      </div>
+                      <div>
+                        <label class="block text-xs font-medium text-muted mb-1.25">Due date <span class="text-[#B4372A]">*</span></label>
+                        <div class="flex items-center gap-2 h-control px-2.5 bg-surface border border-line-strong rounded text-[13px] focus-within:border-indigo focus-within:ring-[3px] focus-within:ring-indigo-line">
+                          <input type="date" class="bg-transparent border-0 outline-none w-full text-ink" value="2026-09-18">
+                        </div>
+                      </div>
+                      <div>
+                        <label class="block text-xs font-medium text-muted mb-1.25">Sales order number</label>
+                        <div class="flex items-center gap-2 h-control px-2.5 bg-surface border border-line-strong rounded text-[13px] focus-within:border-indigo focus-within:ring-[3px] focus-within:ring-indigo-line">
+                          <input type="text" class="bg-transparent border-0 outline-none w-full placeholder-muted" placeholder="Optional">
+                        </div>
+                      </div>
+                      <div>
+                        <label class="block text-xs font-medium text-muted mb-1.25">Template</label>
+                        <div class="flex items-center gap-2 h-control px-2.5 bg-surface border border-line-strong rounded text-[13px] focus-within:border-indigo focus-within:ring-[3px] focus-within:ring-indigo-line">
+                          <select class="bg-transparent border-0 outline-none w-full"><option>Default</option><option>Minimal</option></select>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="bg-surface border border-line rounded">
+                  <div class="px-3.5 py-3 border-b border-line font-semibold text-[13px]">Items</div>
+                  <div class="hidden md:block p-0 overflow-x-auto">
+                    <table class="w-full border-collapse text-[13px] min-w-[600px]">
+                      <thead>
+                        <tr class="bg-th text-xs text-muted font-medium">
+                          <th class="px-3 font-medium text-left w-[38%]">Item</th>
+                          <th class="px-3 font-medium text-left w-[18%]">Tax</th>
+                          <th class="px-3 font-medium text-right w-[12%]">Qty</th>
+                          <th class="px-3 font-medium text-right w-[16%]">Price</th>
+                          <th class="px-3 font-medium text-right w-[16%]">Amount</th>
+                          <th class="px-3 font-medium w-9"></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                                                {{> editor-item-desktop name="Website retainer" tax="VAT 7.5%" qty="1" price="150,000.00" amount="161,250.00" }}
+                        {{> editor-item-desktop name="Hosting — 12 months" tax="None" qty="1" price="45,000.00" amount="45,000.00" }}
+                      </tbody>
+                      <tfoot class="border-t border-line bg-surface">
+                        <tr>
+                          <td colspan="2" class="px-3 py-3">
+                            <button class="inline-flex items-center gap-1.5 h-control px-3 rounded border border-line-strong text-[13px] font-medium bg-surface hover:bg-th"><svg class="w-4 h-4 stroke-[1.75]" aria-hidden="true"><use href="#i-plus"/></svg> Add item</button>
+                          </td>
+                          <td colspan="2" class="px-3 py-1.5 text-right font-medium">Subtotal</td>
+                          <td class="px-3 py-1.5 text-right font-variant-numeric:tabular-nums">195,000.00</td>
+                          <td></td>
+                        </tr>
+                        <tr>
+                          <td colspan="2"></td>
+                          <td colspan="2" class="px-3 py-1.5 text-right text-muted">Tax</td>
+                          <td class="px-3 py-1.5 text-right font-variant-numeric:tabular-nums text-muted">11,250.00</td>
+                          <td></td>
+                        </tr>
+                        <tr>
+                          <td colspan="2"></td>
+                          <td colspan="2" class="px-3 py-1.5 text-right text-muted">Discount (5%)</td>
+                          <td class="px-3 py-1.5 text-right font-variant-numeric:tabular-nums text-muted">−10,312.50</td>
+                          <td></td>
+                        </tr>
+                        <tr>
+                          <td colspan="2"></td>
+                          <td colspan="2" class="px-3 py-3 text-right font-semibold text-[15px]">Total</td>
+                          <td class="px-3 py-3 text-right font-semibold text-[15px] font-variant-numeric:tabular-nums">₦ 195,937.50</td>
+                          <td></td>
+                        </tr>
+                      </tfoot>
+                    </table>
+                  </div>
+
+                  <!-- Mobile Items List -->
+                  <div class="block md:hidden p-3 flex flex-col gap-2 border-b border-line">
+                                        {{> editor-item-mobile name="Website retainer" tax="VAT 7.5%" qty="1" price="150,000.00" amount="161,250.00" }}
+                    {{> editor-item-mobile name="Hosting — 12 months" tax="None" qty="1" price="45,000.00" amount="45,000.00" }}
+                  </div>
+                  
+                  <!-- Mobile Footer -->
+                  <div class="block md:hidden px-3.5 py-3">
+                    <button class="inline-flex items-center gap-1.5 w-full justify-center h-control px-3 rounded border border-line-strong text-[13px] font-medium bg-surface hover:bg-th mt-1 mb-3"><svg class="w-4 h-4 stroke-[1.75]" aria-hidden="true"><use href="#i-plus"/></svg> Add item</button>
+                    <div class="flex flex-col gap-1.5 text-[13px]">
+                      <div class="flex justify-between py-1 border-b border-line"><span>Subtotal</span><span class="font-variant-numeric:tabular-nums">195,000.00</span></div>
+                      <div class="flex justify-between py-1 border-b border-line text-muted"><span>Tax</span><span class="font-variant-numeric:tabular-nums">11,250.00</span></div>
+                      <div class="flex justify-between py-1 border-b border-line text-muted"><span>Discount (5%)</span><span class="font-variant-numeric:tabular-nums">−10,312.50</span></div>
+                      <div class="flex justify-between pt-1.5 font-semibold text-[15px]"><span>Total</span><span class="font-variant-numeric:tabular-nums">₦ 195,937.50</span></div>
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="bg-surface border border-line rounded">
+                  <div class="p-3.5">
+                    <label class="block text-xs font-medium text-muted mb-1.25">Notes</label>
+                    <div class="flex items-center gap-2 h-auto py-2 px-2.5 bg-surface border border-line-strong rounded text-[13px] focus-within:border-indigo focus-within:ring-[3px] focus-within:ring-indigo-line">
+                      <input type="text" class="bg-transparent border-0 outline-none w-full placeholder-muted" placeholder="Shown on the invoice">
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Right Panel -->
+              <div class="bg-surface border border-line rounded">
+                <div class="p-3.5 flex flex-col gap-2">
+                  <div>
+                    <label class="block text-xs font-medium text-muted mb-1.25">Discount</label>
+                    <div class="flex gap-2">
+                      <div class="flex items-center gap-2 h-control px-2.5 bg-surface border border-line-strong rounded text-[13px] focus-within:border-indigo focus-within:ring-[3px] focus-within:ring-indigo-line w-[78px]">
+                        <select class="bg-transparent border-0 outline-none w-full"><option>%</option><option>₦</option></select>
+                      </div>
+                      <div class="flex-1 flex items-center gap-2 h-control px-2.5 bg-surface border border-line-strong rounded text-[13px] focus-within:border-indigo focus-within:ring-[3px] focus-within:ring-indigo-line">
+                        <input type="text" class="bg-transparent border-0 outline-none w-full" value="5">
+                      </div>
+                    </div>
+                    <p class="text-xs text-muted mt-1.5">Applied to the invoice after line taxes.</p>
+                  </div>
+                  <hr class="border-0 border-t border-line my-0.5">
+                  <button class="inline-flex items-center justify-center gap-1.5 h-control px-3 rounded border border-transparent text-[13px] font-medium bg-indigo text-white hover:bg-indigo-hover"><svg class="w-4 h-4 stroke-[1.75]" aria-hidden="true"><use href="#i-send"/></svg> Issue and send</button>
+                  <button class="inline-flex items-center justify-center gap-1.5 h-control px-3 rounded border border-line-strong text-[13px] font-medium bg-surface hover:bg-th"><svg class="w-4 h-4 stroke-[1.75]" aria-hidden="true"><use href="#i-save"/></svg> Save draft</button>
+                  <button class="inline-flex items-center justify-center gap-1.5 h-control px-3 rounded border border-transparent text-[13px] font-medium bg-transparent text-muted hover:bg-th hover:text-ink" data-goto="list">Cancel</button>
+                  <p class="text-xs text-muted mt-1.5">Issuing assigns the number and locks the invoice. Corrections are made by cancelling and reissuing.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </main>
+  </div>
+
+  {{> scripts}}
+  
+  <script>
+    document.querySelectorAll('[data-goto]').forEach(b => {
+      b.addEventListener('click', e => {
+        e.preventDefault();
+        const target = b.dataset.goto;
+        document.querySelectorAll('#screens button').forEach(x => {
+          x.setAttribute('aria-pressed', x.dataset.screen === target);
+        });
+        document.getElementById('s-list').classList.toggle('hidden', target !== 'list');
+        document.getElementById('s-editor').classList.toggle('hidden', target !== 'editor');
+        const v = document.getElementById('s-view'); if(v) v.classList.toggle('hidden', target !== 'view');
+      });
+    });
+
+    document.querySelectorAll('#screens button').forEach(b => {
+      b.onclick = () => {
+        document.querySelectorAll('#screens button').forEach(x => x.setAttribute('aria-pressed', x === b));
+        document.getElementById('s-list').classList.toggle('hidden', b.dataset.screen !== 'list');
+        document.getElementById('s-editor').classList.toggle('hidden', b.dataset.screen !== 'editor');
+      };
+    });
+
+    document.addEventListener('click', e => {
+      const b = e.target.closest('[data-menu]');
+      if (!b) return;
+      closePopovers();
+      const isMobile = document.getElementById('app').getAttribute('data-layout') === 'mob' || window.innerWidth < 768;
+      const items = `
+        <button class="flex items-center gap-3 w-full bg-transparent border-0 px-3 py-3 text-[13px] font-medium text-left rounded hover:bg-th active:bg-th transition-colors">
+          <svg class="w-4 h-4 stroke-[1.75] shrink-0 text-muted" aria-hidden="true"><use href="#i-eye"/></svg> View invoice
+        </button>
+        <button class="flex items-center gap-3 w-full bg-transparent border-0 px-3 py-3 text-[13px] font-medium text-left rounded hover:bg-th active:bg-th transition-colors">
+          <svg class="w-4 h-4 stroke-[1.75] shrink-0 text-muted" aria-hidden="true"><use href="#i-wallet"/></svg> Record payment
+        </button>
+        <button class="flex items-center gap-3 w-full bg-transparent border-0 px-3 py-3 text-[13px] font-medium text-left rounded hover:bg-th active:bg-th transition-colors">
+          <svg class="w-4 h-4 stroke-[1.75] shrink-0 text-muted" aria-hidden="true"><use href="#i-send"/></svg> Send again
+        </button>
+        <button class="flex items-center gap-3 w-full bg-transparent border-0 px-3 py-3 text-[13px] font-medium text-left rounded hover:bg-th active:bg-th transition-colors">
+          <svg class="w-4 h-4 stroke-[1.75] shrink-0 text-muted" aria-hidden="true"><use href="#i-download"/></svg> Download PDF
+        </button>
+        <hr class="border-0 border-t border-line my-1">
+        <button class="flex items-center gap-3 w-full bg-transparent border-0 px-3 py-3 text-[13px] font-medium text-left rounded text-[#B4372A] hover:bg-th active:bg-th transition-colors">
+          <svg class="w-4 h-4 stroke-[1.75] shrink-0" aria-hidden="true"><use href="#i-x-circle"/></svg> Cancel invoice
+        </button>
+      `;
+      if (isMobile) {
+        const w = document.createElement('div');
+        w.className = 'sheetwrap fixed inset-0 z-50 flex items-end justify-center before:content-[""] before:absolute before:inset-0 before:bg-[rgba(16,20,50,0.4)]';
+        w.onclick = ev => { if (ev.target === w) closePopovers(); };
+        w.innerHTML = `
+          <div class="sheet relative w-full max-w-[390px] bg-surface rounded-t-xl pt-2 pb-3">
+            <div class="w-9 h-1 rounded-sm bg-line-strong mx-auto my-1 mb-2"></div>
+            <div class="px-4 py-1 pb-2 text-xs text-muted border-b border-line mb-1">${b.dataset.menu}</div>
+            ${items.replace(/py-3 text-\[13px\]/g, 'py-3 text-sm px-4')}
+          </div>
+        `;
+        document.body.appendChild(w);
+      } else {
+        createScrim();
+        const r = b.getBoundingClientRect();
+        const p = document.createElement('div');
+        p.className = 'popover absolute z-50 bg-surface border border-line-strong rounded shadow-[0_8px_24px_rgba(16,20,50,0.12)] min-w-[200px] p-1.5';
+        p.style.top = (r.bottom + window.scrollY + 4) + 'px';
+        p.style.left = (r.right + window.scrollX - 200) + 'px';
+        p.innerHTML = items;
+        document.body.appendChild(p);
+      }
+    });
+  </script>
+</body>
+</html>

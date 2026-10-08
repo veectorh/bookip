@@ -1,0 +1,17 @@
+              <div class="flex flex-col gap-2.5 mb-2.5">
+                <div class="flex items-center gap-2 h-control px-2.5 bg-surface border border-line-strong rounded text-[13px] focus-within:border-indigo focus-within:ring-[3px] focus-within:ring-indigo-line">
+                  <svg class="w-4 h-4 stroke-[1.75] text-muted shrink-0" aria-hidden="true"><use href="#i-search"/></svg>
+                  <input type="text" placeholder="Search" class="bg-transparent border-0 outline-none w-full placeholder-muted">
+                </div>
+                <button class="flex items-center justify-center gap-2 h-control px-2.5 bg-surface border border-line-strong rounded text-[13px] font-medium hover:bg-th">
+                  <svg class="w-4 h-4 stroke-[1.75] text-muted shrink-0" aria-hidden="true"><use href="#i-filter"/></svg>
+                  Filters
+                </button>
+              </div>
+              <div class="flex gap-1.5 overflow-auto pb-0.5 mb-2.5" style="-webkit-overflow-scrolling:touch">
+                <button class="shrink-0 text-xs px-2.5 py-1.5 rounded-pill border border-ink bg-ink text-white" aria-pressed="true">All</button>
+                <button class="shrink-0 text-xs px-2.5 py-1.5 rounded-pill border border-line-strong bg-surface text-muted">Draft</button>
+                <button class="shrink-0 text-xs px-2.5 py-1.5 rounded-pill border border-line-strong bg-surface text-muted">Overdue</button>
+                <button class="shrink-0 text-xs px-2.5 py-1.5 rounded-pill border border-line-strong bg-surface text-muted">Partially paid</button>
+                <button class="shrink-0 text-xs px-2.5 py-1.5 rounded-pill border border-line-strong bg-surface text-muted">Paid</button>
+              </div>

@@ -1,0 +1,1232 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>BookKip</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="csrf-token" content="dWpovcWfAVdaS72xnuAthTRT0aRMrVXPzlhO6gtx">
+
+		<!-- App favicon -->
+        <link rel="shortcut icon" href="https://otuevbo.techmarho.ng/public/uploads/media/file_6366065781777536421.png">
+		<link href="https://otuevbo.techmarho.ng/public/backend/plugins/dropify/css/dropify.min.css" rel="stylesheet">
+		<link href="https://otuevbo.techmarho.ng/public/backend/plugins/sweet-alert2/css/sweetalert2.min.css" rel="stylesheet" type="text/css">
+        <link href="https://otuevbo.techmarho.ng/public/backend/plugins/animate/animate.css" rel="stylesheet" type="text/css">
+		<link href="https://otuevbo.techmarho.ng/public/backend/plugins/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
+	    <link href="https://otuevbo.techmarho.ng/public/backend/plugins/jquery-toast-plugin/jquery.toast.min.css" rel="stylesheet" />
+		<link href="https://otuevbo.techmarho.ng/public/backend/plugins/daterangepicker/daterangepicker.css" rel="stylesheet" />
+
+		<!-- App Css -->
+        <link rel="stylesheet" href="https://otuevbo.techmarho.ng/public/backend/plugins/bootstrap/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://otuevbo.techmarho.ng/public/backend/assets/css/fontawesome.css">
+		<link rel="stylesheet" href="https://otuevbo.techmarho.ng/public/backend/assets/css/themify-icons.css">
+		<link rel="stylesheet" href="https://otuevbo.techmarho.ng/public/backend/plugins/metisMenu/metisMenu.css">
+
+							
+		<!-- Conditionals CSS -->
+		
+		<!-- Others css -->
+		<link rel="stylesheet" href="https://otuevbo.techmarho.ng/public/backend/assets/css/typography.css">
+		<link rel="stylesheet" href="https://otuevbo.techmarho.ng/public/backend/assets/css/default-css.css">
+		<link rel="stylesheet" href="https://otuevbo.techmarho.ng/public/backend/assets/css/styles.css?v=1.4">
+		<link rel="stylesheet" href="https://otuevbo.techmarho.ng/public/backend/assets/css/responsive.css?v=1.0">
+
+		<!-- Modernizr -->
+		<script src="https://otuevbo.techmarho.ng/public/backend/assets/js/vendor/modernizr-3.6.0.min.js"></script>
+
+
+							
+		<script type="text/javascript">
+	var _url = "https://otuevbo.techmarho.ng";
+	var _admin_url = "https://otuevbo.techmarho.ng/admin";
+	var _user_url = "https://otuevbo.techmarho.ng/user";
+	var _media_url = "https://otuevbo.techmarho.ng/media/get_table_data";
+	var _date_format = "Y-m-d";
+	var _backend_direction = "ltr";
+	var _currency = "NGN";
+	var _currency_symbol = "₦";
+	var _admin_currency_symbol = "₦";
+
+	var $lang_alert_title = "Are you sure?";
+	var $lang_alert_message = "Once deleted, you will not be able to recover this data !";
+	var $lang_confirm_button_text = "Yes, delete it!";
+	var $lang_yes_button_text = "Yes";
+	var $lang_cancel_button_text = "Cancel";
+    var $lang_no_data_found = "No Data Found";
+	var $lang_showing = "Showing";
+	var $lang_to = "to";
+	var $lang_of = "of";
+	var $lang_entries = "Entries";
+	var $lang_showing_0_to_0_of_0_entries = "Showing 0 To 0 Of 0 Entries";
+	var $lang_show = "Show";
+	var $lang_loading = "Loading...";
+	var $lang_processing = "Processing...";
+	var $lang_search = "Search";
+	var $lang_no_matching_records_found = "No matching records found";
+	var $lang_first = "First";
+	var $lang_last = "Last";
+	var $lang_next = "Next";
+	var $lang_previous = "Previous";
+	var $lang_copy = "Copy";
+	var $lang_excel = "Excel";
+	var $lang_pdf = "PDF";
+	var $lang_print = "Print";
+	var $lang_add_new = "Add New";
+	var $lang_select_one = "Select One";
+	var $lang_choose_customer = "Choose Customer";
+	var $lang_expense_overview = "Expense Overview";
+	var $lang_income = "Income";
+	var $lang_expense = "Expense";
+	var $lang_balance = "Balance";
+	var $lang_revenue = "Revenue";
+	var $lang_stock_out = "Sorry, No more stock available !";
+</script>    </head>
+
+    <body>
+		<!-- Main Modal -->
+		<div id="main_modal" class="modal" tabindex="-1" role="dialog">
+		    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+				<div class="modal-content">
+				    <div class="modal-header">
+						<h5 class="modal-title ml-2"></h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						  <span aria-hidden="true"><i class="ti-close text-danger"></i></span>
+						</button>
+				    </div>
+
+				    <div class="alert alert-danger d-none mt-3 mx-4 mb-0"></div>
+				    <div class="alert alert-primary d-none mt-3 mx-4 mb-0"></div>
+				    <div class="modal-body overflow-hidden"></div>
+
+				</div>
+		    </div>
+		</div>
+
+		<!-- Secondary Modal -->
+		<div id="secondary_modal" class="modal" tabindex="-1" role="dialog">
+		    <div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+				    <div class="modal-header">
+						<h5 class="modal-title ml-2"></h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						  <span aria-hidden="true"><i class="ti-close text-danger"></i></span>
+						</button>
+				    </div>
+
+				    <div class="alert alert-danger d-none mt-3 mx-4 mb-0"></div>
+				    <div class="alert alert-primary d-none mt-3 mx-4 mb-0"></div>
+				    <div class="modal-body overflow-hidden"></div>
+				</div>
+		    </div>
+		</div>
+
+		<!-- Preloader area start -->
+		<div id="preloader">
+			<div class="lds-spinner"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+		</div>
+		<!-- Preloader area end -->
+
+		
+		<div class="page-container">
+		    <!-- sidebar menu area start -->
+			<div class="sidebar-menu">
+								<div class="extra-details">
+					<img class="sidebar-logo" src="https://otuevbo.techmarho.ng/public/uploads/media/default/default-company-logo.png" alt="logo">
+
+					<div class="sidebar-header d-flex justify-content-center">
+						<a href="https://otuevbo.techmarho.ng/dashboard" class="dropdown-toggle business-switch" data-toggle="dropdown">
+							<h4 class="text-white d-flex align-items-center"><span>Otuevbo Development</span><i class="fa fa-angle-down ml-1"></i></h4>
+						</a>
+						<div class="dropdown-menu">
+																					<a class="dropdown-item" href="https://otuevbo.techmarho.ng/business/switch_business/7">
+								<i class="fas fa-check-circle text-primary"></i>
+								<span class="ml-2 text-primary font-weight-bold">Otuevbo Development</span>
+							</a>
+													</div>
+					</div>
+				</div>
+				
+				<div class="main-menu">
+					<div class="menu-inner">
+						<nav>
+							<ul class="metismenu " id="menu">
+															<li>
+	<a href="https://otuevbo.techmarho.ng/dashboard"><i class="fas fa-th-large"></i><span>Dashboard</span></a>
+</li>
+
+<li>
+	<a href="https://otuevbo.techmarho.ng/user/customers"><i class="fas fa-user-friends"></i><span>Customers</span></a>
+</li>
+
+<li>
+	<a href="javascript: void(0);"><i class="fas fa-box"></i><span>Product &amp; Services</span><span class="menu-arrow"><i class="mdi mdi-chevron-right"></i></span></a>
+	<ul class="nav-second-level" aria-expanded="false">
+        <li class="nav-item"><a class="nav-link" href="https://otuevbo.techmarho.ng/user/products">Product &amp; Services</a></li>
+        <li class="nav-item"><a class="nav-link" href="https://otuevbo.techmarho.ng/user/product_units">Product Units</a></li>
+	</ul>
+</li>
+
+<li>
+	<a href="https://otuevbo.techmarho.ng/user/vendors"><i class="fas fa-user-friends"></i><span>Vendors</span></a>
+</li>
+
+<li>
+	<a href="javascript: void(0);"><i class="fas fa-shopping-basket"></i><span>Sales</span><span class="menu-arrow"><i class="mdi mdi-chevron-right"></i></span></a>
+	<ul class="nav-second-level" aria-expanded="false">
+        <li class="nav-item"><a class="nav-link" href="https://otuevbo.techmarho.ng/user/invoices">Invoices</a></li>
+        <li class="nav-item"><a class="nav-link" href="https://otuevbo.techmarho.ng/user/quotations">Quotations</a></li>
+		        <li class="nav-item"><a class="nav-link" href="https://otuevbo.techmarho.ng/user/recurring_invoices">Recurring Invoices</a></li>
+			</ul>
+</li>
+
+<li>
+	<a href="javascript: void(0);"><i class="fas fa-shopping-bag"></i><span>Purchases</span><span class="menu-arrow"><i class="mdi mdi-chevron-right"></i></span></a>
+	<ul class="nav-second-level" aria-expanded="false">
+        <li class="nav-item"><a class="nav-link" href="https://otuevbo.techmarho.ng/user/purchases/create">New Purchase</a></li>
+        <li class="nav-item"><a class="nav-link" href="https://otuevbo.techmarho.ng/user/purchases">Purchase History</a></li>
+	</ul>
+</li>
+
+<li>
+	<a href="https://otuevbo.techmarho.ng/user/invoice_templates"><i class="fas fa-palette"></i><span>Invoice Templates</span></a>
+</li>
+
+<li>
+	<a href="javascript: void(0);"><i class="fas fa-university"></i><span>Accounting</span><span class="menu-arrow"><i class="mdi mdi-chevron-right"></i></span></a>
+	<ul class="nav-second-level" aria-expanded="false">
+        <li class="nav-item"><a class="nav-link" href="https://otuevbo.techmarho.ng/user/accounts">Bank &amp; Cash Accounts</a></li>
+        <li class="nav-item"><a class="nav-link" href="https://otuevbo.techmarho.ng/user/transactions">Transactions</a></li>
+        <li class="nav-item"><a class="nav-link" href="https://otuevbo.techmarho.ng/user/transaction_categories">Transaction Categories</a></li>
+        <li class="nav-item"><a class="nav-link" href="https://otuevbo.techmarho.ng/user/transaction_methods">Transaction Methods</a></li>
+	</ul>
+</li>
+
+<li>
+	<a href="javascript: void(0);"><i class="fas fa-money-check-alt"></i><span>HR &amp; Payroll</span><span class="menu-arrow"><i class="mdi mdi-chevron-right"></i></span></a>
+	<ul class="nav-second-level" aria-expanded="false">
+		<li class="nav-item"><a class="nav-link" href="https://otuevbo.techmarho.ng/user/staffs">Staff Management</a></li>
+		<li class="nav-item"><a class="nav-link" href="https://otuevbo.techmarho.ng/user/departments">Departments</a></li>
+		<li class="nav-item"><a class="nav-link" href="https://otuevbo.techmarho.ng/user/attendance">Staff Attendance</a></li>
+		<li class="nav-item"><a class="nav-link" href="https://otuevbo.techmarho.ng/user/salary_scales">Salary Pay Scale</a></li>
+		<li class="nav-item"><a class="nav-link" href="https://otuevbo.techmarho.ng/user/payslips">Manage Payslip</a></li>
+		<li class="nav-item"><a class="nav-link" href="https://otuevbo.techmarho.ng/user/payslips/make_payment">Make Payment</a></li>
+		<li class="nav-item"><a class="nav-link" href="https://otuevbo.techmarho.ng/user/employee_expenses">Employee Expenses</a></li>
+		<li class="nav-item"><a class="nav-link" href="https://otuevbo.techmarho.ng/user/holidays">Holidays</a></li>
+		<li class="nav-item"><a class="nav-link" href="https://otuevbo.techmarho.ng/user/leaves">Leaves</a></li>
+		<li class="nav-item"><a class="nav-link" href="https://otuevbo.techmarho.ng/user/awards">Awards</a></li>
+    </ul>
+</li>
+
+<li>
+	<a href="javascript: void(0);"><i class="far fa-chart-bar"></i><span>Reports</span><span class="menu-arrow"><i class="mdi mdi-chevron-right"></i></span></a>
+	<ul class="nav-second-level" aria-expanded="false">
+		<li class="nav-item"><a class="nav-link" href="https://otuevbo.techmarho.ng/user/reports/account_balances">Account Balances</a></li>
+		<li class="nav-item"><a class="nav-link" href="https://otuevbo.techmarho.ng/user/reports/account_statement">Account Statement</a></li>
+		<li class="nav-item"><a class="nav-link" href="https://otuevbo.techmarho.ng/user/reports/profit_and_loss">Profit &amp; Loss Report</a></li>
+		<li class="nav-item"><a class="nav-link" href="https://otuevbo.techmarho.ng/user/reports/transactions_report">Transaction Report</a></li>
+		<li class="nav-item"><a class="nav-link" href="https://otuevbo.techmarho.ng/user/reports/income_by_customer">Income by Customer</a></li>
+		<li class="nav-item"><a class="nav-link" href="https://otuevbo.techmarho.ng/user/reports/purchase_by_vendor">Purchases by Vendor</a></li>
+				<li class="nav-item"><a class="nav-link" href="https://otuevbo.techmarho.ng/user/reports/attendance_report">Attendance Report</a></li>
+		<li class="nav-item"><a class="nav-link" href="https://otuevbo.techmarho.ng/user/reports/payroll_report">Payroll Report</a></li>
+        		<li class="nav-item"><a class="nav-link" href="https://otuevbo.techmarho.ng/user/reports/tax_report">Tax Report</a></li>
+    </ul>
+</li>
+
+<li>
+	<a href="https://otuevbo.techmarho.ng/user/taxes"><i class="fas fa-percentage"></i><span>Tax Settings</span></a>
+</li>
+
+<li>
+	<a href="javascript: void(0);"><i class="fas fa-building"></i><span>Business Management</span><span class="menu-arrow"><i class="mdi mdi-chevron-right"></i></span></a>
+	<ul class="nav-second-level" aria-expanded="false">
+		<li class="nav-item"><a class="nav-link" href="https://otuevbo.techmarho.ng/user/business">Manage Business</a></li>
+		<li class="nav-item"><a class="nav-link" href="https://otuevbo.techmarho.ng/user/roles">Roles &amp; Permission</a></li>
+    </ul>
+</li>
+
+<li>
+	<a href="https://otuevbo.techmarho.ng/user/business/7/settings"><i class="fas fa-tools"></i><span>Business Settings</span></a>
+</li>
+														</ul>
+						</nav>
+					</div>
+				</div>
+			</div>
+			<!-- sidebar menu area end -->
+
+			<!-- main content area start -->
+			<div class="main-content">
+				<!-- header area start -->
+				<div class="header-area">
+					<div class="row align-items-center">
+						<!-- nav and search button -->
+						<div class="col-lg-6 col-4 clearfix rtl-2">
+							<div class="nav-btn float-left">
+								<span></span>
+								<span></span>
+								<span></span>
+							</div>
+						</div>
+
+						<!-- profile info & task notification -->
+						<div class="col-lg-6 col-8 clearfix rtl-1">
+
+							<ul class="notification-area float-right d-flex align-items-center">
+	                            <li class="dropdown d-none d-sm-inline-block">
+									<div class="dropdown">
+									  <a class="dropdown-toggle d-flex align-items-center" type="button" id="selectLanguage" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+										<img class="avatar avatar-xss avatar-circle mr-1" src="https://otuevbo.techmarho.ng/public/backend/plugins/flag-icon-css/flags/1x1/us.svg">
+										<span class="d-none d-md-inline-block">English</span>
+										<i class="fa fa-angle-down ml-1"></i>
+									  </a>
+									  <div class="dropdown-menu" aria-labelledby="selectLanguage">
+																					<a class="dropdown-item" href="https://otuevbo.techmarho.ng/switch_language?language=English---us"><img class="avatar avatar-xss avatar-circle mr-1" src="https://otuevbo.techmarho.ng/public/backend/plugins/flag-icon-css/flags/1x1/us.svg"> English</a>
+																					<a class="dropdown-item" href="https://otuevbo.techmarho.ng/switch_language?language=Spanish---es"><img class="avatar avatar-xss avatar-circle mr-1" src="https://otuevbo.techmarho.ng/public/backend/plugins/flag-icon-css/flags/1x1/es.svg"> Spanish</a>
+																			  </div>
+									</div>
+								</li>
+
+								<li>
+									<div class="user-profile">
+										<h4 class="user-name dropdown-toggle" data-toggle="dropdown">
+											<img class="avatar user-thumb" id="my-profile-img" src="https://otuevbo.techmarho.ng/public/backend/images/avatar.png" alt="avatar"> Test User <i class="fa fa-angle-down"></i>
+										</h4>
+										<div class="dropdown-menu">
+																						<a class="dropdown-item" href="https://otuevbo.techmarho.ng/membership/active_subscription"><i class="ti-crown text-muted mr-2"></i>My Subscription</a>
+											
+											<a class="dropdown-item" href="https://otuevbo.techmarho.ng/profile/edit"><i class="ti-pencil text-muted mr-2"></i>Profile Settings</a>
+											<a class="dropdown-item" href="https://otuevbo.techmarho.ng/profile/change_password"><i class="ti-exchange-vertical text-muted mr-2"></i></i>Change Password</a>
+
+											
+											<div class="dropdown-divider"></div>
+											<a class="dropdown-item" href="https://otuevbo.techmarho.ng/logout"><i class="ti-power-off text-muted mr-2"></i>Logout</a>
+										</div>
+									</div>
+	                            </li>
+
+	                        </ul>
+
+						</div>
+					</div>
+				</div><!-- header area end -->
+
+				<!-- page title area start -->
+				
+				<div class="main-content-inner mt-4">
+					<div class="row">
+						<div class="col-lg-8 offset-lg-2">
+							<div class="alert alert-success alert-dismissible" id="main_alert" role="alert">
+								<button type="button" id="close_alert" class="close">
+									<span aria-hidden="true"><i class="far fa-times-circle"></i></span>
+								</button>
+								<span class="msg"></span>
+							</div>
+						</div>
+					</div>
+
+										<div class="row">
+						<div class="col-lg-8 offset-lg-2">
+							<div class="alert alert-warning" role="alert">
+								<span><i class="fas fa-info-circle mr-2"></i>Back to admin portal? <a href="https://otuevbo.techmarho.ng/users/back_to_admin">Click Here</a></span>
+							</div>
+						</div>
+					</div>
+					
+					<div class="row">
+	<div class="col-lg-8 offset-lg-2">
+		<div class="card">
+			<div class="card-header text-center">
+				<span class="panel-title">Add New Customer</span>
+			</div>
+			<div class="card-body">
+			    <form method="post" class="validate" autocomplete="off" action="https://otuevbo.techmarho.ng/user/customers" enctype="multipart/form-data">
+					<input type="hidden" name="_token" value="dWpovcWfAVdaS72xnuAthTRT0aRMrVXPzlhO6gtx" autocomplete="off">
+					<div class="row">
+
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">Name</label>						
+								<input type="text" class="form-control" name="name" value="" required>
+							</div>
+						</div>
+
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">Company Name</label>						
+								<input type="text" class="form-control" name="company_name" value="">
+							</div>
+						</div>
+
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">Email</label>						
+								<input type="text" class="form-control" name="email" value="">
+							</div>
+						</div>
+
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">Mobile</label>						
+								<input type="text" class="form-control" name="mobile" value="">
+							</div>
+						</div>
+
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">Country</label>						
+								<select class="form-control auto-select select2" data-selected="" name="country">
+									<option value="">Select One</option>
+									<option value="Afghanistan">Afghanistan</option>
+<option value="Albania">Albania</option>
+<option value="Algeria">Algeria</option>
+<option value="American Samoa">American Samoa</option>
+<option value="Andorra">Andorra</option>
+<option value="Angola">Angola</option>
+<option value="Anguilla">Anguilla</option>
+<option value="Antigua &amp; Barbuda">Antigua &amp; Barbuda</option>
+<option value="Argentina">Argentina</option>
+<option value="Armenia">Armenia</option>
+<option value="Aruba">Aruba</option>
+<option value="Australia">Australia</option>
+<option value="Austria">Austria</option>
+<option value="Azerbaijan">Azerbaijan</option>
+<option value="Bahamas">Bahamas</option>
+<option value="Bahrain">Bahrain</option>
+<option value="Bangladesh">Bangladesh</option>
+<option value="Barbados">Barbados</option>
+<option value="Belarus">Belarus</option>
+<option value="Belgium">Belgium</option>
+<option value="Belize">Belize</option>
+<option value="Benin">Benin</option>
+<option value="Bermuda">Bermuda</option>
+<option value="Bhutan">Bhutan</option>
+<option value="Bolivia">Bolivia</option>
+<option value="Bonaire">Bonaire</option>
+<option value="Bosnia &amp; Herzegovina">Bosnia &amp; Herzegovina</option>
+<option value="Botswana">Botswana</option>
+<option value="Brazil">Brazil</option>
+<option value="British Indian Ocean Ter">British Indian Ocean Ter</option>
+<option value="Brunei">Brunei</option>
+<option value="Bulgaria">Bulgaria</option>
+<option value="Burkina Faso">Burkina Faso</option>
+<option value="Burundi">Burundi</option>
+<option value="Cambodia">Cambodia</option>
+<option value="Cameroon">Cameroon</option>
+<option value="Canada">Canada</option>
+<option value="Canary Islands">Canary Islands</option>
+<option value="Cape Verde">Cape Verde</option>
+<option value="Cayman Islands">Cayman Islands</option>
+<option value="Central African Republic">Central African Republic</option>
+<option value="Chad">Chad</option>
+<option value="Channel Islands">Channel Islands</option>
+<option value="Chile">Chile</option>
+<option value="China">China</option>
+<option value="Christmas Island">Christmas Island</option>
+<option value="Cocos Island">Cocos Island</option>
+<option value="Colombia">Colombia</option>
+<option value="Comoros">Comoros</option>
+<option value="Congo">Congo</option>
+<option value="Cook Islands">Cook Islands</option>
+<option value="Costa Rica">Costa Rica</option>
+<option value="Cote D'Ivoire">Cote D'Ivoire</option>
+<option value="Croatia">Croatia</option>
+<option value="Cuba">Cuba</option>
+<option value="Curacao">Curacao</option>
+<option value="Cyprus">Cyprus</option>
+<option value="Czech Republic">Czech Republic</option>
+<option value="Denmark">Denmark</option>
+<option value="Djibouti">Djibouti</option>
+<option value="Dominica">Dominica</option>
+<option value="Dominican Republic">Dominican Republic</option>
+<option value="East Timor">East Timor</option>
+<option value="Ecuador">Ecuador</option>
+<option value="Egypt">Egypt</option>
+<option value="El Salvador">El Salvador</option>
+<option value="Equatorial Guinea">Equatorial Guinea</option>
+<option value="Eritrea">Eritrea</option>
+<option value="Estonia">Estonia</option>
+<option value="Ethiopia">Ethiopia</option>
+<option value="Falkland Islands">Falkland Islands</option>
+<option value="Faroe Islands">Faroe Islands</option>
+<option value="Fiji">Fiji</option>
+<option value="Finland">Finland</option>
+<option value="France">France</option>
+<option value="French Guiana">French Guiana</option>
+<option value="French Polynesia">French Polynesia</option>
+<option value="French Southern Ter">French Southern Ter</option>
+<option value="Gabon">Gabon</option>
+<option value="Gambia">Gambia</option>
+<option value="Georgia">Georgia</option>
+<option value="Germany">Germany</option>
+<option value="Ghana">Ghana</option>
+<option value="Gibraltar">Gibraltar</option>
+<option value="Great Britain">Great Britain</option>
+<option value="Greece">Greece</option>
+<option value="Greenland">Greenland</option>
+<option value="Grenada">Grenada</option>
+<option value="Guadeloupe">Guadeloupe</option>
+<option value="Guam">Guam</option>
+<option value="Guatemala">Guatemala</option>
+<option value="Guinea">Guinea</option>
+<option value="Guyana">Guyana</option>
+<option value="Haiti">Haiti</option>
+<option value="Hawaii">Hawaii</option>
+<option value="Honduras">Honduras</option>
+<option value="Hong Kong">Hong Kong</option>
+<option value="Hungary">Hungary</option>
+<option value="Iceland">Iceland</option>
+<option value="India">India</option>
+<option value="Indonesia">Indonesia</option>
+<option value="Iran">Iran</option>
+<option value="Iraq">Iraq</option>
+<option value="Ireland">Ireland</option>
+<option value="Isle of Man">Isle of Man</option>
+<option value="Israel">Israel</option>
+<option value="Italy">Italy</option>
+<option value="Jamaica">Jamaica</option>
+<option value="Japan">Japan</option>
+<option value="Jordan">Jordan</option>
+<option value="Kazakhstan">Kazakhstan</option>
+<option value="Kenya">Kenya</option>
+<option value="Kiribati">Kiribati</option>
+<option value="Korea North">Korea North</option>
+<option value="Korea South">Korea South</option>
+<option value="Kuwait">Kuwait</option>
+<option value="Kyrgyzstan">Kyrgyzstan</option>
+<option value="Laos">Laos</option>
+<option value="Latvia">Latvia</option>
+<option value="Lebanon">Lebanon</option>
+<option value="Lesotho">Lesotho</option>
+<option value="Liberia">Liberia</option>
+<option value="Libya">Libya</option>
+<option value="Liechtenstein">Liechtenstein</option>
+<option value="Lithuania">Lithuania</option>
+<option value="Luxembourg">Luxembourg</option>
+<option value="Macau">Macau</option>
+<option value="Macedonia">Macedonia</option>
+<option value="Madagascar">Madagascar</option>
+<option value="Malaysia">Malaysia</option>
+<option value="Malawi">Malawi</option>
+<option value="Maldives">Maldives</option>
+<option value="Mali">Mali</option>
+<option value="Malta">Malta</option>
+<option value="Marshall Islands">Marshall Islands</option>
+<option value="Martinique">Martinique</option>
+<option value="Mauritania">Mauritania</option>
+<option value="Mauritius">Mauritius</option>
+<option value="Mayotte">Mayotte</option>
+<option value="Mexico">Mexico</option>
+<option value="Midway Islands">Midway Islands</option>
+<option value="Moldova">Moldova</option>
+<option value="Monaco">Monaco</option>
+<option value="Mongolia">Mongolia</option>
+<option value="Montserrat">Montserrat</option>
+<option value="Morocco">Morocco</option>
+<option value="Mozambique">Mozambique</option>
+<option value="Myanmar">Myanmar</option>
+<option value="Nambia">Nambia</option>
+<option value="Nauru">Nauru</option>
+<option value="Nepal">Nepal</option>
+<option value="Netherland Antilles">Netherland Antilles</option>
+<option value="Netherlands (Holland, Europe)">Netherlands (Holland, Europe)</option>
+<option value="Nevis">Nevis</option>
+<option value="New Caledonia">New Caledonia</option>
+<option value="New Zealand">New Zealand</option>
+<option value="Nicaragua">Nicaragua</option>
+<option value="Niger">Niger</option>
+<option value="Nigeria">Nigeria</option>
+<option value="Niue">Niue</option>
+<option value="Norfolk Island">Norfolk Island</option>
+<option value="Norway">Norway</option>
+<option value="Oman">Oman</option>
+<option value="Pakistan">Pakistan</option>
+<option value="Palau Island">Palau Island</option>
+<option value="Palestine">Palestine</option>
+<option value="Panama">Panama</option>
+<option value="Papua New Guinea">Papua New Guinea</option>
+<option value="Paraguay">Paraguay</option>
+<option value="Peru">Peru</option>
+<option value="Philippines">Philippines</option>
+<option value="Pitcairn Island">Pitcairn Island</option>
+<option value="Poland">Poland</option>
+<option value="Portugal">Portugal</option>
+<option value="Puerto Rico">Puerto Rico</option>
+<option value="Qatar">Qatar</option>
+<option value="Republic of Montenegro">Republic of Montenegro</option>
+<option value="Republic of Serbia">Republic of Serbia</option>
+<option value="Reunion">Reunion</option>
+<option value="Romania">Romania</option>
+<option value="Russia">Russia</option>
+<option value="Rwanda">Rwanda</option>
+<option value="St Barthelemy">St Barthelemy</option>
+<option value="St Eustatius">St Eustatius</option>
+<option value="St Helena">St Helena</option>
+<option value="St Kitts-Nevis">St Kitts-Nevis</option>
+<option value="St Lucia">St Lucia</option>
+<option value="St Maarten">St Maarten</option>
+<option value="St Pierre &amp; Miquelon">St Pierre &amp; Miquelon</option>
+<option value="St Vincent &amp; Grenadines">St Vincent &amp; Grenadines</option>
+<option value="Saipan">Saipan</option>
+<option value="Samoa">Samoa</option>
+<option value="Samoa American">Samoa American</option>
+<option value="San Marino">San Marino</option>
+<option value="Sao Tome &amp; Principe">Sao Tome &amp; Principe</option>
+<option value="Saudi Arabia">Saudi Arabia</option>
+<option value="Senegal">Senegal</option>
+<option value="Serbia">Serbia</option>
+<option value="Seychelles">Seychelles</option>
+<option value="Sierra Leone">Sierra Leone</option>
+<option value="Singapore">Singapore</option>
+<option value="Slovakia">Slovakia</option>
+<option value="Slovenia">Slovenia</option>
+<option value="Solomon Islands">Solomon Islands</option>
+<option value="Somalia">Somalia</option>
+<option value="South Africa">South Africa</option>
+<option value="Spain">Spain</option>
+<option value="Sri Lanka">Sri Lanka</option>
+<option value="Sudan">Sudan</option>
+<option value="Suriname">Suriname</option>
+<option value="Swaziland">Swaziland</option>
+<option value="Sweden">Sweden</option>
+<option value="Switzerland">Switzerland</option>
+<option value="Syria">Syria</option>
+<option value="Tahiti">Tahiti</option>
+<option value="Taiwan">Taiwan</option>
+<option value="Tajikistan">Tajikistan</option>
+<option value="Tanzania">Tanzania</option>
+<option value="Thailand">Thailand</option>
+<option value="Togo">Togo</option>
+<option value="Tokelau">Tokelau</option>
+<option value="Tonga">Tonga</option>
+<option value="Trinidad &amp; Tobago">Trinidad &amp; Tobago</option>
+<option value="Tunisia">Tunisia</option>
+<option value="Turkey">Turkey</option>
+<option value="Turkmenistan">Turkmenistan</option>
+<option value="Turks &amp; Caicos Is">Turks &amp; Caicos Is</option>
+<option value="Tuvalu">Tuvalu</option>
+<option value="Uganda">Uganda</option>
+<option value="Ukraine">Ukraine</option>
+<option value="United Arab Emirates">United Arab Emirates</option>
+<option value="United Kingdom">United Kingdom</option>
+<option value="United States of America">United States of America</option>
+<option value="Uruguay">Uruguay</option>
+<option value="Uzbekistan">Uzbekistan</option>
+<option value="Vanuatu">Vanuatu</option>
+<option value="Vatican City State">Vatican City State</option>
+<option value="Venezuela">Venezuela</option>
+<option value="Vietnam">Vietnam</option>
+<option value="Virgin Islands (Brit)">Virgin Islands (Brit)</option>
+<option value="Virgin Islands (USA)">Virgin Islands (USA)</option>
+<option value="Wake Island">Wake Island</option>
+<option value="Wallis &amp; Futana Is">Wallis &amp; Futana Is</option>
+<option value="Yemen">Yemen</option>
+<option value="Zaire">Zaire</option>
+<option value="Zambia">Zambia</option>
+<option value="Zimbabwe">Zimbabwe</option>
+								</select>
+							</div>
+						</div>
+
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">Currency</label>						
+								<select class="form-control auto-select select2" data-selected="" name="currency" required>
+									<option value="">Select One</option>
+									﻿<option value="EUR">
+	Euro - EUR (€)
+</option>
+<option value="AED">
+	United Arab Emirates - AED (د.إ)
+</option>
+<option value="AFN">
+	Afghan afghani - AFN (؋)
+</option>
+<option value="XCD">
+	East Caribbean dolla - XCD ($)
+</option>
+<option value="XCD">
+	East Caribbean dolla - XCD ($)
+</option>
+<option value="ALL">
+	Albanian lek - ALL (L)
+</option>
+<option value="AMD">
+	Armenian dram - AMD (֏)
+</option>
+<option value="AOA">
+	Angolan kwanza - AOA (Kz)
+</option>
+<option value="ARS">
+	Argentine peso - ARS ($)
+</option>
+<option value="AUD">
+	Australian dollar - AUD ($)
+</option>
+<option value="AWG">
+	Aruban florin - AWG (ƒ)
+</option>
+<option value="AZN">
+	Azerbaijani manat - AZN ()
+</option>
+<option value="BBD">
+	Barbadian dollar - BBD ($)
+</option>
+<option value="BDT">
+	Bangladeshi taka - BDT (৳)
+</option>
+<option value="XOF">
+	West African CFA fra - XOF (Fr)
+</option>
+<option value="BGN">
+	Bulgarian lev - BGN (лв)
+</option>
+<option value="BHD">
+	Bahraini dinar - BHD (.د.ب)
+</option>
+<option value="BIF">
+	Burundian franc - BIF (Fr)
+</option>
+<option value="XOF">
+	West African CFA fra - XOF (Fr)
+</option>
+<option value="BMD">
+	Bermudian dollar - BMD ($)
+</option>
+<option value="BRL">
+	Brazilian real - BRL (R$)
+</option>
+<option value="BTN">
+	Bhutanese ngultrum - BTN (Nu.)
+</option>
+<option value="BWP">
+	Botswana pula - BWP (P)
+</option>
+<option value="BYR">
+	Belarusian ruble - BYR (Br)
+</option>
+<option value="BZD">
+	Belize dollar - BZD ($)
+</option>
+<option value="CAD">
+	Canadian dollar - CAD ($)
+</option>
+<option value="CHF">
+	Swiss franc - CHF (Fr)
+</option>
+<option value="XOF">
+	West African CFA fra - XOF (Fr)
+</option>
+<option value="NZD">
+	New Zealand dollar - NZD ($)
+</option>
+<option value="CLP">
+	Chilean peso - CLP ($)
+</option>
+<option value="XAF">
+	Central African CFA - XAF (Fr)
+</option>
+<option value="CNY">
+	Chinese yuan - CNY (¥ or 元)
+</option>
+<option value="COP">
+	Colombian peso - COP ($)
+</option>
+<option value="CRC">
+	Costa Rican colón - CRC (₡)
+</option>
+<option value="CUC">
+	Cuban convertible pe - CUC ($)
+</option>
+<option value="CVE">
+	Cape Verdean escudo - CVE (Esc or $)
+</option>
+<option value="CZK">
+	Czech koruna - CZK (Kč)
+</option>
+<option value="DJF">
+	Djiboutian franc - DJF (Fr)
+</option>
+<option value="DKK">
+	Danish krone - DKK (kr)
+</option>
+<option value="XCD">
+	East Caribbean dolla - XCD ($)
+</option>
+<option value="DOP">
+	Dominican peso - DOP ($)
+</option>
+<option value="DZD">
+	Algerian dinar - DZD (د.ج)
+</option>
+<option value="USD">
+	United States dollar - USD ($)
+</option>
+<option value="EGP">
+	Egyptian pound - EGP (£ or ج.م)
+</option>
+<option value="ERN">
+	Eritrean nakfa - ERN (Nfk)
+</option>
+<option value="ETB">
+	Ethiopian birr - ETB (Br)
+</option>
+<option value="FJD">
+	Fijian dollar - FJD ($)
+</option>
+<option value="DKK">
+	Danish krone - DKK (kr)
+</option>
+<option value="XAF">
+	Central African CFA - XAF (Fr)
+</option>
+<option value="GBP">
+	British pound - GBP (£)
+</option>
+<option value="XCD">
+	East Caribbean dolla - XCD ($)
+</option>
+<option value="GEL">
+	Georgian lari - GEL (ლ)
+</option>
+<option value="GBP">
+	British pound - GBP (£)
+</option>
+<option value="GHS">
+	Ghana cedi - GHS (₵)
+</option>
+<option value="GIP">
+	Gibraltar pound - GIP (£)
+</option>
+<option value="GNF">
+	Guinean franc - GNF (Fr)
+</option>
+<option value="XAF">
+	Central African CFA - XAF (Fr)
+</option>
+<option value="GTQ">
+	Guatemalan quetzal - GTQ (Q)
+</option>
+<option value="XOF">
+	West African CFA fra - XOF (Fr)
+</option>
+<option value="GYD">
+	Guyanese dollar - GYD ($)
+</option>
+<option value="HKD">
+	Hong Kong dollar - HKD ($)
+</option>
+<option value="HNL">
+	Honduran lempira - HNL (L)
+</option>
+<option value="HRK">
+	Croatian kuna - HRK (kn)
+</option>
+<option value="HTG">
+	Haitian gourde - HTG (G)
+</option>
+<option value="HUF">
+	Hungarian forint - HUF (Ft)
+</option>
+<option value="IDR">
+	Indonesian rupiah - IDR (Rp)
+</option>
+<option value="ILS">
+	Israeli new shekel - ILS (₪)
+</option>
+<option value="GBP">
+	British pound - GBP (£)
+</option>
+<option value="INR">
+	Indian rupee - INR (₹)
+</option>
+<option value="IQD">
+	Iraqi dinar - IQD (ع.د)
+</option>
+<option value="ISK">
+	Icelandic króna - ISK (kr)
+</option>
+<option value="GBP">
+	British pound - GBP (£)
+</option>
+<option value="JMD">
+	Jamaican dollar - JMD ($)
+</option>
+<option value="JOD">
+	Jordanian dinar - JOD (د.ا)
+</option>
+<option value="JPY">
+	Japanese yen - JPY (¥)
+</option>
+<option value="KES">
+	Kenyan shilling - KES (Sh)
+</option>
+<option value="KGS">
+	Kyrgyzstani som - KGS (лв)
+</option>
+<option value="KHR">
+	Cambodian riel - KHR (៛)
+</option>
+<option value="KMF">
+	Comorian franc - KMF (Fr)
+</option>
+<option value="KWD">
+	Kuwaiti dinar - KWD (د.ك)
+</option>
+<option value="KYD">
+	Cayman Islands dolla - KYD ($)
+</option>
+<option value="KZT">
+	Kazakhstani tenge - KZT (₸)
+</option>
+<option value="LAK">
+	Lao kip - LAK (₭)
+</option>
+<option value="LBP">
+	Lebanese pound - LBP (ل.ل)
+</option>
+<option value="XCD">
+	East Caribbean dolla - XCD ($)
+</option>
+<option value="CHF">
+	Swiss franc - CHF (Fr)
+</option>
+<option value="LKR">
+	Sri Lankan rupee - LKR (Rs or රු)
+</option>
+<option value="LRD">
+	Liberian dollar - LRD ($)
+</option>
+<option value="LSL">
+	Lesotho loti - LSL (L)
+</option>
+<option value="MAD">
+	Moroccan dirham - MAD (د.م.)
+</option>
+<option value="MDL">
+	Moldovan leu - MDL (L)
+</option>
+<option value="MGA">
+	Malagasy ariary - MGA (Ar)
+</option>
+<option value="XOF">
+	West African CFA fra - XOF (Fr)
+</option>
+<option value="MMK">
+	Burmese kyat - MMK (Ks)
+</option>
+<option value="MNT">
+	Mongolian tögrög - MNT (₮)
+</option>
+<option value="MRO">
+	Mauritanian ouguiya - MRO (UM)
+</option>
+<option value="XCD">
+	East Caribbean dolla - XCD ($)
+</option>
+<option value="MUR">
+	Mauritian rupee - MUR (₨)
+</option>
+<option value="MVR">
+	Maldivian rufiyaa - MVR (.ރ)
+</option>
+<option value="MWK">
+	Malawian kwacha - MWK (MK)
+</option>
+<option value="MXN">
+	Mexican peso - MXN ($)
+</option>
+<option value="MYR">
+	Malaysian ringgit - MYR (RM)
+</option>
+<option value="SGD">
+	Singapore Dollar - SGD (S$)
+</option>
+<option value="MZN">
+	Mozambican metical - MZN (MT)
+</option>
+<option value="NAD">
+	Namibian dollar - NAD ($)
+</option>
+<option value="XPF">
+	CFP franc - XPF (Fr)
+</option>
+<option value="XOF">
+	West African CFA fra - XOF (Fr)
+</option>
+<option value="NGN">
+	Nigerian naira - NGN (₦)
+</option>
+<option value="NIO">
+	Nicaraguan córdoba - NIO (C$)
+</option>
+<option value="NOK">
+	Norwegian krone - NOK (kr)
+</option>
+<option value="NPR">
+	Nepalese rupee - NPR (₨)
+</option>
+<option value="NZD">
+	New Zealand dollar - NZD ($)
+</option>
+<option value="NZD">
+	New Zealand dollar - NZD ($)
+</option>
+<option value="OMR">
+	Omani rial - OMR (ر.ع.)
+</option>
+<option value="PAB">
+	Panamanian balboa - PAB (B/.)
+</option>
+<option value="PEN">
+	Peruvian nuevo sol - PEN (S/.)
+</option>
+<option value="XPF">
+	CFP franc - XPF (Fr)
+</option>
+<option value="PGK">
+	Papua New Guinean ki - PGK (K)
+</option>
+<option value="PHP">
+	Philippine peso - PHP (₱)
+</option>
+<option value="PKR">
+	Pakistani rupee - PKR (₨)
+</option>
+<option value="PLN">
+	Polish z?oty - PLN (zł)
+</option>
+<option value="">
+	Palauan dollar - ($)
+</option>
+<option value="PYG">
+	Paraguayan guaraní - PYG (₲)
+</option>
+<option value="QAR">
+	Qatari riyal - QAR (ر.ق)
+</option>
+<option value="RON">
+	Romanian leu - RON (lei)
+</option>
+<option value="RSD">
+	Serbian dinar - RSD (дин. or din.)
+</option>
+<option value="RUB">
+	Russian ruble - RUB (₽)
+</option>
+<option value="RWF">
+	Rwandan franc - RWF (Fr)
+</option>
+<option value="SAR">
+	Saudi riyal - SAR (ر.س)
+</option>
+<option value="SBD">
+	Solomon Islands doll - SBD ($)
+</option>
+<option value="SCR">
+	Seychellois rupee - SCR (₨)
+</option>
+<option value="SDG">
+	Sudanese pound - SDG (ج.س.)
+</option>
+<option value="SEK">
+	Swedish krona - SEK (kr)
+</option>
+<option value="BND">
+	Brunei dollar - BND ($)
+</option>
+<option value="SLL">
+	Sierra Leonean leone - SLL (Le)
+</option>
+<option value="XOF">
+	West African CFA fra - XOF (Fr)
+</option>
+<option value="SOS">
+	Somali shilling - SOS (Sh)
+</option>
+<option value="SRD">
+	Surinamese dollar - SRD ($)
+</option>
+<option value="SZL">
+	Swazi lilangeni - SZL (L)
+</option>
+<option value="XAF">
+	Central African CFA - XAF (Fr)
+</option>
+<option value="XOF">
+	West African CFA fra - XOF (Fr)
+</option>
+<option value="THB">
+	Thai baht - THB (฿)
+</option>
+<option value="TJS">
+	Tajikistani somoni - TJS (ЅМ)
+</option>
+<option value="TMT">
+	Turkmenistan manat - TMT (m)
+</option>
+<option value="TND">
+	Tunisian dinar - TND (د.ت)
+</option>
+<option value="TOP">
+	Tongan pa?anga - TOP (T$)
+</option>
+<option value="TRY">
+	Turkish lira - TRY (₺)
+</option>
+<option value="TTD">
+	Trinidad and Tobago - TTD ($)
+</option>
+<option value="TWD">
+	New Taiwan dollar - TWD ($)
+</option>
+<option value="UAH">
+	Ukrainian hryvnia - UAH (₴)
+</option>
+<option value="UGX">
+	Ugandan shilling - UGX (Sh)
+</option>
+<option value="UYU">
+	Uruguayan peso - UYU ($)
+</option>
+<option value="UZS">
+	Uzbekistani som - UZS ()
+</option>
+<option value="VND">
+	Vietnamese ??ng - VND (₫)
+</option>
+<option value="VUV">
+	Vanuatu vatu - VUV (Vt)
+</option>
+<option value="XPF">
+	CFP franc - XPF (Fr)
+</option>
+<option value="WST">
+	Samoan t?l? - WST (T)
+</option>
+<option value="YER">
+	Yemeni rial - YER (﷼)
+</option>
+<option value="ZAR">
+	South African rand - ZAR (R)
+</option>
+<option value="ZMW">
+	Zambian kwacha - ZMW (ZK)
+</option>
+<option value="BWP">
+	Botswana pula - BWP (P)
+</option>
+								</select>
+								<small class="text-danger"><i class="fas fa-exclamation-circle mr-1"></i>You will be not able to change this currency !</small>
+							</div>
+						</div>
+
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">Vat ID</label>						
+								<input type="text" class="form-control" name="vat_id" value="">
+							</div>
+						</div>
+
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">Reg No</label>						
+								<input type="text" class="form-control" name="reg_no" value="">
+							</div>
+						</div>
+
+						<div class="col-md-12">
+							<div class="form-group">
+								<label class="control-label">City</label>						
+								<input type="text" class="form-control" name="city" value="">
+							</div>
+						</div>
+
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">State</label>						
+								<input type="text" class="form-control" name="state" value="">
+							</div>
+						</div>
+
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">ZIP</label>						
+								<input type="text" class="form-control" name="zip" value="">
+							</div>
+						</div>
+
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">Address</label>						
+								<textarea class="form-control" name="address"></textarea>
+							</div>
+						</div>
+
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">Remarks</label>						
+								<textarea class="form-control" name="remarks"></textarea>
+							</div>
+						</div>
+
+						<div class="col-md-12">
+							<div class="form-group">
+								<label class="control-label">Profile Picture</label>						
+								<input type="file" class="form-control dropify" name="profile_picture" >
+							</div>
+						</div>
+							
+						<div class="col-md-12 mt-2">
+							<div class="form-group">
+								<button type="submit" class="btn btn-primary"><i class="ti-check-box mr-2"></i>Save Changes</button>
+							</div>
+						</div>
+					</div>
+			    </form>
+			</div>
+		</div>
+    </div>
+</div>
+				</div><!--End main content Inner-->
+
+			</div><!--End main content-->
+
+		</div><!--End Page Container-->
+
+        <!-- jQuery  -->
+		<script src="https://otuevbo.techmarho.ng/public/backend/assets/js/vendor/jquery-3.6.1.min.js"></script>
+		<script src="https://otuevbo.techmarho.ng/public/backend/assets/js/popper.min.js"></script>
+		<script src="https://otuevbo.techmarho.ng/public/backend/plugins/bootstrap/js/bootstrap.min.js"></script>
+		<script src="https://otuevbo.techmarho.ng/public/backend/plugins/metisMenu/metisMenu.min.js"></script>
+		<script src="https://otuevbo.techmarho.ng/public/backend/assets/js/print.js"></script>
+		<script src="https://otuevbo.techmarho.ng/public/backend/plugins/pace/pace.min.js"></script>
+        <script src="https://otuevbo.techmarho.ng/public/backend/plugins/moment/moment.js"></script>
+
+		<!-- Conditional JS -->
+        
+		<script src="https://otuevbo.techmarho.ng/public/backend/plugins/dropify/js/dropify.min.js"></script>
+		<script src="https://otuevbo.techmarho.ng/public/backend/plugins/sweet-alert2/js/sweetalert2.min.js"></script>
+		<script src="https://otuevbo.techmarho.ng/public/backend/plugins/select2/js/select2.min.js"></script>
+		<script src="https://otuevbo.techmarho.ng/public/backend/plugins/parsleyjs/parsley.min.js"></script>
+		<script src="https://otuevbo.techmarho.ng/public/backend/plugins/jquery-toast-plugin/jquery.toast.min.js"></script>
+		<script src="https://otuevbo.techmarho.ng/public/backend/plugins/daterangepicker/daterangepicker.js"></script>
+
+        <!-- App js -->
+        <script src="https://otuevbo.techmarho.ng/public/backend/assets/js/scripts.js?v=1.2"></script>
+
+		<script>
+(function($) {
+    "use strict";
+
+    //Show success message
+        
+    //Show error message
+    
+
+    
+})(jQuery);
+
+</script>
+		<!-- Custom JS -->
+		    </body>
+</html>

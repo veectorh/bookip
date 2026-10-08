@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+{{> head title="Payroll" }}
+<body class="bg-canvas text-ink font-sans antialiased selection:bg-indigo-light">
+  {{> icons}}
+
+  <div id="app" class="flex h-screen overflow-hidden" data-layout="rail">
+    {{> sidebar active_payroll=true}}
+
+    <div class="flex-1 flex flex-col min-w-0">
+      {{> topbar title="Payroll"}}
+
+      <main class="flex-1 overflow-y-auto overflow-x-hidden relative">
+        <div id="screens">
+          <!-- Content: List -->
+          <div id="s-list" class="p-4 md:p-6 pb-24 md:pb-6" data-screen="list">
+            
+            <div class="flex gap-2 mb-2.5 flex-wrap hidden md:flex">
+              <div class="flex items-center gap-2 h-control px-2.5 bg-surface border border-line-strong rounded text-[13px] focus-within:border-indigo focus-within:ring-[3px] focus-within:ring-indigo-line w-[180px]">
+                <input type="month" class="bg-transparent border-0 outline-none w-full text-ink">
+              </div>
+              <div class="ml-auto flex gap-2 hidden md:flex">
+                <button class="inline-flex items-center gap-1.5 h-control px-3 rounded border border-transparent text-[13px] font-medium bg-indigo text-white hover:bg-indigo-hover" data-modal-target="payroll-modal"><svg class="w-4 h-4 stroke-[1.75]" aria-hidden="true"><use href="#i-plus"/></svg> Generate Payslip</button>
+              </div>
+            </div>
+
+            <!-- Table (Desktop) -->
+            <div class="bg-surface border border-line rounded overflow-x-auto hidden md:block">
+              <table class="w-full border-collapse text-[13px] min-w-[700px]">
+                <thead>
+                  <tr class="bg-th text-muted font-medium text-xs">
+                    <th class="px-3.5 py-2.5 text-left border-b border-line whitespace-nowrap font-medium">Employee ID</th>
+                    <th class="px-3.5 py-2.5 text-left border-b border-line whitespace-nowrap font-medium">Name</th>
+                    <th class="px-3.5 py-2.5 text-left border-b border-line whitespace-nowrap font-medium">Month</th>
+                    <th class="px-3.5 py-2.5 text-left border-b border-line whitespace-nowrap font-medium">Year</th>
+                    <th class="px-3.5 py-2.5 text-right border-b border-line whitespace-nowrap font-medium font-variant-numeric:tabular-nums">Net Salary</th>
+                    <th class="px-3.5 py-2.5 text-left border-b border-line whitespace-nowrap font-medium">Status</th>
+                    <th class="px-3.5 py-2.5 border-b border-line w-9"></th>
+                  </tr>
+                </thead>
+                <tbody class="[&_tr:last-child_td]:border-b-0">
+                  <tr class="hover:bg-[#FAFBFD] transition-colors cursor-pointer" data-goto="view">
+                    <td class="px-3.5 py-3 border-b border-line font-medium text-muted">EMP-001</td>
+                    <td class="px-3.5 py-3 border-b border-line">
+                      <div class="font-medium text-ink">John Doe</div>
+                    </td>
+                    <td class="px-3.5 py-3 border-b border-line">September</td>
+                    <td class="px-3.5 py-3 border-b border-line">2026</td>
+                    <td class="px-3.5 py-3 border-b border-line text-right font-medium" style="font-variant-numeric: tabular-nums;">450,000.00</td>
+                    <td class="px-3.5 py-3 border-b border-line whitespace-nowrap"><span class="inline-flex items-center gap-1.5 h-[22px] px-2 rounded-[3px] text-xs font-medium whitespace-nowrap bg-status-paid-bg text-status-paid-text border border-status-paid-border before:content-[''] before:w-1.5 before:h-1.5 before:rounded-full before:bg-status-paid-dot before:shrink-0">Paid</span></td>
+                    <td class="px-3.5 py-3 border-b border-line whitespace-nowrap"><button class="w-[26px] h-[26px] rounded flex items-center justify-center text-muted hover:bg-th hover:border-line-strong hover:text-ink border border-transparent"><svg class="w-4 h-4 stroke-[1.75]" aria-hidden="true"><use href="#i-download"/></svg></button></td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="flex items-center gap-3 px-3.5 py-2.5 border-t border-line text-xs text-muted bg-surface">
+                <span>1 record found</span>
+              </div>
+            </div>
+
+            <!-- List (Mobile) -->
+            <div class="block md:hidden">
+              <div class="bg-surface border border-line rounded overflow-hidden">
+                <button class="w-full text-left bg-transparent border-0 border-b border-line px-3 py-2.5 flex items-center gap-3 min-h-row-mob last:border-b-0 active:bg-th" data-goto="view">
+                  <div class="flex-1 min-w-0">
+                    <div class="font-medium text-ink truncate">John Doe</div>
+                    <div class="text-[11px] text-muted flex gap-2 mt-0.5">
+                      September 2026 • EMP-001
+                    </div>
+                  </div>
+                  <div class="text-right shrink-0">
+                    <div class="font-medium text-ink font-variant-numeric:tabular-nums">450,000.00</div>
+                  </div>
+                </button>
+              </div>
+              <div class="sticky bottom-3 flex justify-end mt-3 pointer-events-none">
+                <button class="pointer-events-auto inline-flex items-center gap-1.5 h-[44px] px-[18px] rounded-pill border border-transparent text-[13px] font-medium bg-indigo text-white shadow-[0_6px_18px_rgba(67,83,224,0.35)]" data-modal-target="payroll-modal">
+                  <svg class="w-4 h-4 stroke-[1.75]" aria-hidden="true"><use href="#i-plus"/></svg> Generate
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  {{> modal-dialog id="payroll-modal" title="Generate Payslip" action_label="Generate" }}
+    <div class="flex flex-col gap-3">
+      <p class="text-muted text-xs">Select the month and year to generate employee payslips.</p>
+      <div class="grid grid-cols-2 gap-3">
+        <div>
+          <label class="block text-xs font-medium text-muted mb-1.25">Month</label>
+          <div class="flex items-center gap-2 h-control px-2.5 bg-surface border border-line-strong rounded text-[13px] focus-within:border-indigo focus-within:ring-[3px] focus-within:ring-indigo-line">
+            <select class="bg-transparent border-0 outline-none w-full">
+              <option>January</option>
+              <option>February</option>
+              <option>March</option>
+              <option>April</option>
+              <option>May</option>
+              <option>June</option>
+              <option>July</option>
+              <option>August</option>
+              <option selected>September</option>
+              <option>October</option>
+              <option>November</option>
+              <option>December</option>
+            </select>
+          </div>
+        </div>
+        <div>
+          <label class="block text-xs font-medium text-muted mb-1.25">Year</label>
+          <div class="flex items-center gap-2 h-control px-2.5 bg-surface border border-line-strong rounded text-[13px] focus-within:border-indigo focus-within:ring-[3px] focus-within:ring-indigo-line">
+            <select class="bg-transparent border-0 outline-none w-full">
+              <option>2025</option>
+              <option selected>2026</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+  {{/modal-dialog}}
+
+  {{> scripts}}
+</body>
+</html>

@@ -1,0 +1,75 @@
+<aside class="bg-navy text-navy-fg flex flex-col px-2 py-2.5 gap-px overflow-hidden hidden md:flex" id="sidebar">
+  <div class="flex items-center gap-2.5 px-2 py-2 pb-3.5 text-white">
+    <span class="w-[26px] h-[26px] rounded-[5px] bg-white text-navy flex items-center justify-center font-semibold text-sm shrink-0">B</span>
+    <span class="font-semibold tracking-tight text-[15px] whitespace-nowrap [&[data-layout=rail]_&]:hidden">Bookkip</span>
+  </div>
+  
+  <a href="/dashboard" class="flex items-center gap-2.5 px-2 h-[34px] rounded text-navy-fg hover:bg-navy-hover hover:text-white w-full text-left relative group [&[data-layout=rail]_&]:justify-center [&[data-layout=rail]_&]:px-0" data-label="Dashboard">
+    <svg class="w-5 h-5 stroke-2 shrink-0" aria-hidden="true"><use href="#i-layout-dashboard"/></svg>
+    <span class="whitespace-nowrap overflow-hidden [&[data-layout=rail]_&]:hidden">Dashboard</span>
+    <div class="hidden [&[data-layout=rail]_.group:hover_&]:block absolute left-[calc(100%+8px)] bg-ink text-white text-xs px-2 py-1 rounded whitespace-nowrap z-40">Dashboard</div>
+  </a>
+
+  <div class="text-[11px] text-navy-mute px-2 pt-3.5 pb-1 whitespace-nowrap [&[data-layout=rail]_&]:hidden">Sales</div>
+  <div class="h-px bg-[#252B6B] mx-2.5 my-1.5 hidden [&[data-layout=rail]_&]:block"></div>
+
+  <a href="/" class="flex items-center gap-2.5 px-2 h-[34px] rounded {{#if active_invoices}}bg-indigo text-white{{else}}text-navy-fg hover:bg-navy-hover hover:text-white{{/if}} w-full text-left relative group [&[data-layout=rail]_&]:justify-center [&[data-layout=rail]_&]:px-0" data-label="Invoices">
+    <svg class="w-5 h-5 stroke-2 shrink-0" aria-hidden="true"><use href="#i-file-text"/></svg>
+    <span class="whitespace-nowrap overflow-hidden [&[data-layout=rail]_&]:hidden">Invoices</span>
+    <span class="ml-auto text-[11px] text-navy-mute [&[data-layout=rail]_&]:hidden">4</span>
+    <div class="hidden [&[data-layout=rail]_.group:hover_&]:block absolute left-[calc(100%+8px)] bg-ink text-white text-xs px-2 py-1 rounded whitespace-nowrap z-40">Invoices</div>
+  </a>
+  
+  <a href="/quotations.html" class="flex items-center gap-2.5 px-2 h-[34px] rounded {{#if active_quotations}}bg-indigo text-white{{else}}text-navy-fg hover:bg-navy-hover hover:text-white{{/if}} w-full text-left relative group [&[data-layout=rail]_&]:justify-center [&[data-layout=rail]_&]:px-0" data-label="Quotations">
+    <svg class="w-5 h-5 stroke-2 shrink-0" aria-hidden="true"><use href="#i-file-clock"/></svg>
+    <span class="whitespace-nowrap overflow-hidden [&[data-layout=rail]_&]:hidden">Quotations</span>
+    <div class="hidden [&[data-layout=rail]_.group:hover_&]:block absolute left-[calc(100%+8px)] bg-ink text-white text-xs px-2 py-1 rounded whitespace-nowrap z-40">Quotations</div>
+  </a>
+
+  <a href="/customers.html" class="flex items-center gap-2.5 px-2 h-[34px] rounded {{#if active_customers}}bg-indigo text-white{{else}}text-navy-fg hover:bg-navy-hover hover:text-white{{/if}} w-full text-left relative group [&[data-layout=rail]_&]:justify-center [&[data-layout=rail]_&]:px-0" data-label="Customers">
+    <svg class="w-5 h-5 stroke-2 shrink-0" aria-hidden="true"><use href="#i-users"/></svg>
+    <span class="whitespace-nowrap overflow-hidden [&[data-layout=rail]_&]:hidden">Customers</span>
+    <div class="hidden [&[data-layout=rail]_.group:hover_&]:block absolute left-[calc(100%+8px)] bg-ink text-white text-xs px-2 py-1 rounded whitespace-nowrap z-40">Customers</div>
+  </a>
+
+  <div class="text-[11px] text-navy-mute px-2 pt-3.5 pb-1 whitespace-nowrap [&[data-layout=rail]_&]:hidden">Purchasing</div>
+  <div class="h-px bg-[#252B6B] mx-2.5 my-1.5 hidden [&[data-layout=rail]_&]:block"></div>
+
+  <a href="/purchases.html" class="flex items-center gap-2.5 px-2 h-[34px] rounded {{#if active_purchases}}bg-indigo text-white{{else}}text-navy-fg hover:bg-navy-hover hover:text-white{{/if}} w-full text-left relative group [&[data-layout=rail]_&]:justify-center [&[data-layout=rail]_&]:px-0" data-label="Purchases">
+    <svg class="w-5 h-5 stroke-2 shrink-0" aria-hidden="true"><use href="#i-shopping-bag"/></svg>
+    <span class="whitespace-nowrap overflow-hidden [&[data-layout=rail]_&]:hidden">Purchases</span>
+    <div class="hidden [&[data-layout=rail]_.group:hover_&]:block absolute left-[calc(100%+8px)] bg-ink text-white text-xs px-2 py-1 rounded whitespace-nowrap z-40">Purchases</div>
+  </a>
+  
+  <a href="/vendors.html" class="flex items-center gap-2.5 px-2 h-[34px] rounded {{#if active_vendors}}bg-indigo text-white{{else}}text-navy-fg hover:bg-navy-hover hover:text-white{{/if}} w-full text-left relative group [&[data-layout=rail]_&]:justify-center [&[data-layout=rail]_&]:px-0" data-label="Vendors">
+    <svg class="w-5 h-5 stroke-2 shrink-0" aria-hidden="true"><use href="#i-truck"/></svg>
+    <span class="whitespace-nowrap overflow-hidden [&[data-layout=rail]_&]:hidden">Vendors</span>
+    <div class="hidden [&[data-layout=rail]_.group:hover_&]:block absolute left-[calc(100%+8px)] bg-ink text-white text-xs px-2 py-1 rounded whitespace-nowrap z-40">Vendors</div>
+  </a>
+
+  <div class="text-[11px] text-navy-mute px-2 pt-3.5 pb-1 whitespace-nowrap [&[data-layout=rail]_&]:hidden">People</div>
+  <div class="h-px bg-[#252B6B] mx-2.5 my-1.5 hidden [&[data-layout=rail]_&]:block"></div>
+
+  <a href="/employees.html" class="flex items-center gap-2.5 px-2 h-[34px] rounded {{#if active_employees}}bg-indigo text-white{{else}}text-navy-fg hover:bg-navy-hover hover:text-white{{/if}} w-full text-left relative group [&[data-layout=rail]_&]:justify-center [&[data-layout=rail]_&]:px-0" data-label="Employees">
+    <svg class="w-5 h-5 stroke-2 shrink-0" aria-hidden="true"><use href="#i-contact"/></svg>
+    <span class="whitespace-nowrap overflow-hidden [&[data-layout=rail]_&]:hidden">Employees</span>
+    <div class="hidden [&[data-layout=rail]_.group:hover_&]:block absolute left-[calc(100%+8px)] bg-ink text-white text-xs px-2 py-1 rounded whitespace-nowrap z-40">Employees</div>
+  </a>
+  
+  <a href="/attendance.html" class="flex items-center gap-2.5 px-2 h-[34px] rounded {{#if active_attendance}}bg-indigo text-white{{else}}text-navy-fg hover:bg-navy-hover hover:text-white{{/if}} w-full text-left relative group [&[data-layout=rail]_&]:justify-center [&[data-layout=rail]_&]:px-0" data-label="Attendance">
+    <svg class="w-5 h-5 stroke-2 shrink-0" aria-hidden="true"><use href="#i-calendar-check"/></svg>
+    <span class="whitespace-nowrap overflow-hidden [&[data-layout=rail]_&]:hidden">Attendance</span>
+    <div class="hidden [&[data-layout=rail]_.group:hover_&]:block absolute left-[calc(100%+8px)] bg-ink text-white text-xs px-2 py-1 rounded whitespace-nowrap z-40">Attendance</div>
+  </a>
+
+  <a href="/payroll.html" class="flex items-center gap-2.5 px-2 h-[34px] rounded {{#if active_payroll}}bg-indigo text-white{{else}}text-navy-fg hover:bg-navy-hover hover:text-white{{/if}} w-full text-left relative group [&[data-layout=rail]_&]:justify-center [&[data-layout=rail]_&]:px-0" data-label="Payroll">
+    <svg class="w-5 h-5 stroke-2 shrink-0" aria-hidden="true"><use href="#i-banknote"/></svg>
+    <span class="whitespace-nowrap overflow-hidden [&[data-layout=rail]_&]:hidden">Payroll</span>
+    <div class="hidden [&[data-layout=rail]_.group:hover_&]:block absolute left-[calc(100%+8px)] bg-ink text-white text-xs px-2 py-1 rounded whitespace-nowrap z-40">Payroll</div>
+  </a>
+
+  <button class="mt-auto flex items-center gap-2.5 px-2 h-[34px] rounded text-navy-mute hover:bg-navy-hover hover:text-white w-full text-left [&[data-layout=rail]_&]:justify-center [&[data-layout=rail]_&]:px-0 group" id="railBtn2">
+    <svg class="w-5 h-5 stroke-2 shrink-0" aria-hidden="true"><use href="#i-panel-left-close"/></svg>
+    <span class="[&[data-layout=rail]_&]:hidden">Collapse</span>
+  </button>
+</aside>

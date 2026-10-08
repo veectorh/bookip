@@ -1,0 +1,16 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bookkip — Demo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="/src/style.css" rel="stylesheet">
+<style>
+  /* For the demo interactions */
+  [hidden] { display: none !important; }
+  .device { transition: max-width .28s ease; margin-inline: auto; }
+  .device.w-desktop { max-width: 100%; }
+  .device.w-tablet { max-width: 860px; }
+  .device.w-mobile { max-width: 390px; }
+  @media (prefers-reduced-motion:reduce){.device{transition:none}}
+</style>
