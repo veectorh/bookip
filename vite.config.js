@@ -32,6 +32,7 @@ export default defineConfig({
       },
       helpers: {
         eq: (a, b) => a === b,
+        or: (...args) => args.slice(0, -1).some(Boolean),
       },
     }),
   ],

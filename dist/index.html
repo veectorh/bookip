@@ -16,7 +16,7 @@
     .device.w-mobile { max-width: 390px; }
     @media (prefers-reduced-motion:reduce){.device{transition:none}}
   </style>
-  <link rel="stylesheet" crossorigin href="/assets/style-DV_jP9z6.css">
+  <link rel="stylesheet" crossorigin href="/assets/style-Dum9eOW_.css">
 </head>
 <body class="bg-canvas text-ink font-sans text-[14px] leading-[1.5]">
   
@@ -68,69 +68,48 @@
   <div class="device w-full min-h-screen bg-surface" id="device">
     <div class="grid grid-cols-1 md:grid-cols-[var(--sidebar-width,220px)_1fr] min-h-screen  [&[data-layout=rail]]:grid-cols-[56px_1fr]" id="app" data-layout="desktop">
         
-        <aside class="bg-navy text-navy-fg flex flex-col px-2 py-2.5 gap-0.5 overflow-y-auto overflow-x-hidden hidden md:flex shrink-0 w-60 [&[data-layout=rail]_&]:w-[58px] transition-all duration-200" id="sidebar">
+        <aside class="bg-navy text-navy-fg flex flex-col px-2.5 py-3 gap-0.5 overflow-y-auto overflow-x-hidden [scrollbar-width:none] [&::-webkit-scrollbar]:hidden hidden md:flex shrink-0 w-60 [&[data-layout=rail]_&]:w-[58px] transition-all duration-200" id="sidebar">
           <!-- Brand -->
-          <div class="flex items-center gap-2.5 px-2 py-1.5 pb-3 text-white">
+          <div class="flex items-center gap-2.5 px-2 py-1 pb-3 text-white">
             <span class="w-[28px] h-[28px] rounded-[6px] bg-white text-navy flex items-center justify-center font-bold text-sm shrink-0 shadow-sm">B</span>
             <span class="font-bold tracking-tight text-[15px] whitespace-nowrap [&[data-layout=rail]_&]:hidden">Bookkip</span>
           </div>
         
-          <nav class="flex-1 flex flex-col gap-0.5 text-[13px]">
+          <nav class="flex-1 flex flex-col gap-0.5 text-[13px] w-full">
             <!-- Dashboard -->
-            <a href="/index.html" class="flex items-center gap-2.5 px-2.5 h-[34px] rounded text-navy-fg hover:bg-navy-hover hover:text-white w-full relative group [&[data-layout=rail]_&]:justify-center [&[data-layout=rail]_&]:px-0" data-label="Dashboard">
+            <a href="/index.html" class="flex items-center gap-2.5 px-2.5 h-[34px] rounded-md text-navy-fg hover:bg-navy-hover hover:text-white w-full relative group [&[data-layout=rail]_&]:justify-center [&[data-layout=rail]_&]:px-0" data-label="Dashboard">
               <svg class="w-4 h-4 stroke-2 shrink-0"><use href="#i-layout-dashboard"/></svg>
               <span class="whitespace-nowrap overflow-hidden [&[data-layout=rail]_&]:hidden">Dashboard</span>
               <div class="hidden [&[data-layout=rail]_.group:hover_&]:block absolute left-[calc(100%+8px)] bg-ink text-white text-xs px-2.5 py-1.5 rounded shadow-lg whitespace-nowrap z-50">Dashboard</div>
             </a>
         
             <!-- Customers -->
-            <a href="/customers.html" class="flex items-center gap-2.5 px-2.5 h-[34px] rounded text-navy-fg hover:bg-navy-hover hover:text-white w-full relative group [&[data-layout=rail]_&]:justify-center [&[data-layout=rail]_&]:px-0" data-label="Customers">
+            <a href="/customers.html" class="flex items-center gap-2.5 px-2.5 h-[34px] rounded-md text-navy-fg hover:bg-navy-hover hover:text-white w-full relative group [&[data-layout=rail]_&]:justify-center [&[data-layout=rail]_&]:px-0" data-label="Customers">
               <svg class="w-4 h-4 stroke-2 shrink-0"><use href="#i-users"/></svg>
               <span class="whitespace-nowrap overflow-hidden [&[data-layout=rail]_&]:hidden">Customers</span>
               <div class="hidden [&[data-layout=rail]_.group:hover_&]:block absolute left-[calc(100%+8px)] bg-ink text-white text-xs px-2.5 py-1.5 rounded shadow-lg whitespace-nowrap z-50">Customers</div>
             </a>
         
-            <!-- Product & Services Group -->
-            <div class="nav-group relative group" data-group="products">
-              <button class="flex items-center justify-between w-full px-2.5 h-[34px] rounded text-navy-fg hover:bg-navy-hover hover:text-white [&[data-layout=rail]_&]:justify-center [&[data-layout=rail]_&]:px-0" onclick="toggleNavGroup(this)">
-                <div class="flex items-center gap-2.5">
-                  <svg class="w-4 h-4 stroke-2 shrink-0"><use href="#i-package"/></svg>
-                  <span class="whitespace-nowrap overflow-hidden [&[data-layout=rail]_&]:hidden">Product & Services</span>
-                </div>
-                <svg class="w-3 h-3 stroke-2 transition-transform duration-150 [&[data-layout=rail]_&]:hidden group-data-[open=true]:rotate-180"><use href="#i-chevron-down"/></svg>
-              </button>
-              <div class="nav-sub hidden group-data-[open=true]:flex flex-col gap-0.5 pl-7 pr-1 py-1 text-xs text-navy-mute [&[data-layout=rail]_&]:hidden">
-                <a href="/products.html" class="px-2 py-1.5 rounded hover:text-white hover:bg-navy-hover truncate">Products</a>
-                <a href="/product_units.html" class="px-2 py-1.5 rounded hover:text-white hover:bg-navy-hover truncate">Product Units</a>
-              </div>
-              <!-- Rail flyout -->
-              <div class="hidden [&[data-layout=rail]_.group:hover_&]:flex flex-col gap-1 absolute left-[calc(100%+8px)] top-0 bg-ink text-white text-xs p-2 rounded-lg shadow-xl min-w-[150px] z-50">
-                <div class="font-semibold px-2 py-1 text-[11px] text-muted border-b border-line uppercase">Product & Services</div>
-                <a href="/products.html" class="px-2 py-1 rounded hover:bg-th hover:text-ink">Products</a>
-                <a href="/product_units.html" class="px-2 py-1 rounded hover:bg-th hover:text-ink">Product Units</a>
-              </div>
-            </div>
-        
             <!-- Vendors -->
-            <a href="/vendors.html" class="flex items-center gap-2.5 px-2.5 h-[34px] rounded text-navy-fg hover:bg-navy-hover hover:text-white w-full relative group [&[data-layout=rail]_&]:justify-center [&[data-layout=rail]_&]:px-0" data-label="Vendors">
+            <a href="/vendors.html" class="flex items-center gap-2.5 px-2.5 h-[34px] rounded-md text-navy-fg hover:bg-navy-hover hover:text-white w-full relative group [&[data-layout=rail]_&]:justify-center [&[data-layout=rail]_&]:px-0" data-label="Vendors">
               <svg class="w-4 h-4 stroke-2 shrink-0"><use href="#i-truck"/></svg>
               <span class="whitespace-nowrap overflow-hidden [&[data-layout=rail]_&]:hidden">Vendors</span>
               <div class="hidden [&[data-layout=rail]_.group:hover_&]:block absolute left-[calc(100%+8px)] bg-ink text-white text-xs px-2.5 py-1.5 rounded shadow-lg whitespace-nowrap z-50">Vendors</div>
             </a>
         
             <!-- Sales Group (Invoices, Quotations, Recurring) -->
-            <div class="nav-group relative group" data-group="sales" data-open="false">
-              <button class="flex items-center justify-between w-full px-2.5 h-[34px] rounded text-navy-fg hover:bg-navy-hover hover:text-white [&[data-layout=rail]_&]:justify-center [&[data-layout=rail]_&]:px-0" onclick="toggleNavGroup(this)">
+            <div class="nav-group relative group" data-group="sales" data-open="true">
+              <button class="flex items-center justify-between w-full px-2.5 h-[34px] rounded-md text-white font-medium bg-navy-hover/40 [&[data-layout=rail]_&]:justify-center [&[data-layout=rail]_&]:px-0" onclick="toggleNavGroup(this)">
                 <div class="flex items-center gap-2.5">
                   <svg class="w-4 h-4 stroke-2 shrink-0"><use href="#i-file-text"/></svg>
                   <span class="whitespace-nowrap overflow-hidden [&[data-layout=rail]_&]:hidden">Sales</span>
                 </div>
                 <svg class="w-3 h-3 stroke-2 transition-transform duration-150 [&[data-layout=rail]_&]:hidden group-data-[open=true]:rotate-180"><use href="#i-chevron-down"/></svg>
               </button>
-              <div class="nav-sub hidden group-data-[open=true]:flex flex-col gap-0.5 pl-7 pr-1 py-1 text-xs text-navy-mute [&[data-layout=rail]_&]:hidden">
-                <a href="/index.html" class="px-2 py-1.5 rounded hover:text-white hover:bg-navy-hover truncate">Invoices</a>
-                <a href="/quotations.html" class="px-2 py-1.5 rounded hover:text-white hover:bg-navy-hover truncate">Quotations</a>
-                <a href="/recurring_invoices.html" class="px-2 py-1.5 rounded hover:text-white hover:bg-navy-hover truncate">Recurring Invoices</a>
+              <div class="nav-sub hidden group-data-[open=true]:flex flex-col gap-0.5 pl-6 pr-1 py-1 text-xs text-navy-mute [&[data-layout=rail]_&]:hidden">
+                <a href="/index.html" class="px-2.5 py-1.5 rounded-md bg-indigo text-white font-medium truncate">Invoices</a>
+                <a href="/quotations.html" class="px-2.5 py-1.5 rounded-md hover:text-white hover:bg-navy-hover truncate">Quotations</a>
+                <a href="/recurring_invoices.html" class="px-2.5 py-1.5 rounded-md hover:text-white hover:bg-navy-hover truncate">Recurring Invoices</a>
               </div>
               <!-- Rail flyout -->
               <div class="hidden [&[data-layout=rail]_.group:hover_&]:flex flex-col gap-1 absolute left-[calc(100%+8px)] top-0 bg-ink text-white text-xs p-2 rounded-lg shadow-xl min-w-[150px] z-50">
@@ -141,39 +120,48 @@
               </div>
             </div>
         
-            <!-- Purchases Group -->
-            <div class="nav-group relative group" data-group="purchases" data-open="false">
-              <button class="flex items-center justify-between w-full px-2.5 h-[34px] rounded text-navy-fg hover:bg-navy-hover hover:text-white [&[data-layout=rail]_&]:justify-center [&[data-layout=rail]_&]:px-0" onclick="toggleNavGroup(this)">
+            <!-- Purchases (Direct single link, no single-item submenu) -->
+            <a href="/purchases.html" class="flex items-center gap-2.5 px-2.5 h-[34px] rounded-md text-navy-fg hover:bg-navy-hover hover:text-white w-full relative group [&[data-layout=rail]_&]:justify-center [&[data-layout=rail]_&]:px-0" data-label="Purchases">
+              <svg class="w-4 h-4 stroke-2 shrink-0"><use href="#i-shopping-bag"/></svg>
+              <span class="whitespace-nowrap overflow-hidden [&[data-layout=rail]_&]:hidden">Purchases</span>
+              <div class="hidden [&[data-layout=rail]_.group:hover_&]:block absolute left-[calc(100%+8px)] bg-ink text-white text-xs px-2.5 py-1.5 rounded shadow-lg whitespace-nowrap z-50">Purchases</div>
+            </a>
+        
+            <!-- Product & Services Group -->
+            <div class="nav-group relative group" data-group="products">
+              <button class="flex items-center justify-between w-full px-2.5 h-[34px] rounded-md text-navy-fg hover:bg-navy-hover hover:text-white [&[data-layout=rail]_&]:justify-center [&[data-layout=rail]_&]:px-0" onclick="toggleNavGroup(this)">
                 <div class="flex items-center gap-2.5">
-                  <svg class="w-4 h-4 stroke-2 shrink-0"><use href="#i-shopping-bag"/></svg>
-                  <span class="whitespace-nowrap overflow-hidden [&[data-layout=rail]_&]:hidden">Purchases</span>
+                  <svg class="w-4 h-4 stroke-2 shrink-0"><use href="#i-package"/></svg>
+                  <span class="whitespace-nowrap overflow-hidden [&[data-layout=rail]_&]:hidden">Product & Services</span>
                 </div>
                 <svg class="w-3 h-3 stroke-2 transition-transform duration-150 [&[data-layout=rail]_&]:hidden group-data-[open=true]:rotate-180"><use href="#i-chevron-down"/></svg>
               </button>
-              <div class="nav-sub hidden group-data-[open=true]:flex flex-col gap-0.5 pl-7 pr-1 py-1 text-xs text-navy-mute [&[data-layout=rail]_&]:hidden">
-                <a href="/purchases.html" class="px-2 py-1.5 rounded hover:text-white hover:bg-navy-hover truncate">Purchase History</a>
+              <div class="nav-sub hidden group-data-[open=true]:flex flex-col gap-0.5 pl-6 pr-1 py-1 text-xs text-navy-mute [&[data-layout=rail]_&]:hidden">
+                <a href="/products.html" class="px-2.5 py-1.5 rounded-md hover:text-white hover:bg-navy-hover truncate">Products</a>
+                <a href="/product_units.html" class="px-2.5 py-1.5 rounded-md hover:text-white hover:bg-navy-hover truncate">Product Units</a>
               </div>
               <!-- Rail flyout -->
               <div class="hidden [&[data-layout=rail]_.group:hover_&]:flex flex-col gap-1 absolute left-[calc(100%+8px)] top-0 bg-ink text-white text-xs p-2 rounded-lg shadow-xl min-w-[150px] z-50">
-                <div class="font-semibold px-2 py-1 text-[11px] text-muted border-b border-line uppercase">Purchases</div>
-                <a href="/purchases.html" class="px-2 py-1 rounded hover:bg-th hover:text-ink">Purchase History</a>
+                <div class="font-semibold px-2 py-1 text-[11px] text-muted border-b border-line uppercase">Product & Services</div>
+                <a href="/products.html" class="px-2 py-1 rounded hover:bg-th hover:text-ink">Products</a>
+                <a href="/product_units.html" class="px-2 py-1 rounded hover:bg-th hover:text-ink">Product Units</a>
               </div>
             </div>
         
             <!-- Accounting Group -->
             <div class="nav-group relative group" data-group="accounting" data-open="false">
-              <button class="flex items-center justify-between w-full px-2.5 h-[34px] rounded text-navy-fg hover:bg-navy-hover hover:text-white [&[data-layout=rail]_&]:justify-center [&[data-layout=rail]_&]:px-0" onclick="toggleNavGroup(this)">
+              <button class="flex items-center justify-between w-full px-2.5 h-[34px] rounded-md text-navy-fg hover:bg-navy-hover hover:text-white [&[data-layout=rail]_&]:justify-center [&[data-layout=rail]_&]:px-0" onclick="toggleNavGroup(this)">
                 <div class="flex items-center gap-2.5">
                   <svg class="w-4 h-4 stroke-2 shrink-0"><use href="#i-landmark"/></svg>
                   <span class="whitespace-nowrap overflow-hidden [&[data-layout=rail]_&]:hidden">Accounting</span>
                 </div>
                 <svg class="w-3 h-3 stroke-2 transition-transform duration-150 [&[data-layout=rail]_&]:hidden group-data-[open=true]:rotate-180"><use href="#i-chevron-down"/></svg>
               </button>
-              <div class="nav-sub hidden group-data-[open=true]:flex flex-col gap-0.5 pl-7 pr-1 py-1 text-xs text-navy-mute [&[data-layout=rail]_&]:hidden">
-                <a href="/accounts.html" class="px-2 py-1.5 rounded hover:text-white hover:bg-navy-hover truncate">Bank & Cash Accounts</a>
-                <a href="/transactions.html" class="px-2 py-1.5 rounded hover:text-white hover:bg-navy-hover truncate">Transactions</a>
-                <a href="/transaction_categories.html" class="px-2 py-1.5 rounded hover:text-white hover:bg-navy-hover truncate">Transaction Categories</a>
-                <a href="/transaction_methods.html" class="px-2 py-1.5 rounded hover:text-white hover:bg-navy-hover truncate">Transaction Methods</a>
+              <div class="nav-sub hidden group-data-[open=true]:flex flex-col gap-0.5 pl-6 pr-1 py-1 text-xs text-navy-mute [&[data-layout=rail]_&]:hidden">
+                <a href="/accounts.html" class="px-2.5 py-1.5 rounded-md hover:text-white hover:bg-navy-hover truncate">Bank & Cash Accounts</a>
+                <a href="/transactions.html" class="px-2.5 py-1.5 rounded-md hover:text-white hover:bg-navy-hover truncate">Transactions</a>
+                <a href="/transaction_categories.html" class="px-2.5 py-1.5 rounded-md hover:text-white hover:bg-navy-hover truncate">Transaction Categories</a>
+                <a href="/transaction_methods.html" class="px-2.5 py-1.5 rounded-md hover:text-white hover:bg-navy-hover truncate">Transaction Methods</a>
               </div>
               <!-- Rail flyout -->
               <div class="hidden [&[data-layout=rail]_.group:hover_&]:flex flex-col gap-1 absolute left-[calc(100%+8px)] top-0 bg-ink text-white text-xs p-2 rounded-lg shadow-xl min-w-[160px] z-50">
@@ -185,19 +173,19 @@
         
             <!-- HR & Payroll Group -->
             <div class="nav-group relative group" data-group="hr" data-open="false">
-              <button class="flex items-center justify-between w-full px-2.5 h-[34px] rounded text-navy-fg hover:bg-navy-hover hover:text-white [&[data-layout=rail]_&]:justify-center [&[data-layout=rail]_&]:px-0" onclick="toggleNavGroup(this)">
+              <button class="flex items-center justify-between w-full px-2.5 h-[34px] rounded-md text-navy-fg hover:bg-navy-hover hover:text-white [&[data-layout=rail]_&]:justify-center [&[data-layout=rail]_&]:px-0" onclick="toggleNavGroup(this)">
                 <div class="flex items-center gap-2.5">
                   <svg class="w-4 h-4 stroke-2 shrink-0"><use href="#i-contact"/></svg>
                   <span class="whitespace-nowrap overflow-hidden [&[data-layout=rail]_&]:hidden">HR & Payroll</span>
                 </div>
                 <svg class="w-3 h-3 stroke-2 transition-transform duration-150 [&[data-layout=rail]_&]:hidden group-data-[open=true]:rotate-180"><use href="#i-chevron-down"/></svg>
               </button>
-              <div class="nav-sub hidden group-data-[open=true]:flex flex-col gap-0.5 pl-7 pr-1 py-1 text-xs text-navy-mute [&[data-layout=rail]_&]:hidden">
-                <a href="/employees.html" class="px-2 py-1.5 rounded hover:text-white hover:bg-navy-hover truncate">Staff Management</a>
-                <a href="/attendance.html" class="px-2 py-1.5 rounded hover:text-white hover:bg-navy-hover truncate">Attendance</a>
-                <a href="/payroll.html" class="px-2 py-1.5 rounded hover:text-white hover:bg-navy-hover truncate">Manage Payslips</a>
-                <a href="/departments.html" class="px-2 py-1.5 rounded hover:text-white hover:bg-navy-hover truncate">Departments</a>
-                <a href="/salary_scales.html" class="px-2 py-1.5 rounded hover:text-white hover:bg-navy-hover truncate">Salary Pay Scale</a>
+              <div class="nav-sub hidden group-data-[open=true]:flex flex-col gap-0.5 pl-6 pr-1 py-1 text-xs text-navy-mute [&[data-layout=rail]_&]:hidden">
+                <a href="/employees.html" class="px-2.5 py-1.5 rounded-md hover:text-white hover:bg-navy-hover truncate">Staff Management</a>
+                <a href="/attendance.html" class="px-2.5 py-1.5 rounded-md hover:text-white hover:bg-navy-hover truncate">Attendance</a>
+                <a href="/payroll.html" class="px-2.5 py-1.5 rounded-md hover:text-white hover:bg-navy-hover truncate">Manage Payslips</a>
+                <a href="/departments.html" class="px-2.5 py-1.5 rounded-md hover:text-white hover:bg-navy-hover truncate">Departments</a>
+                <a href="/salary_scales.html" class="px-2.5 py-1.5 rounded-md hover:text-white hover:bg-navy-hover truncate">Salary Pay Scale</a>
               </div>
               <!-- Rail flyout -->
               <div class="hidden [&[data-layout=rail]_.group:hover_&]:flex flex-col gap-1 absolute left-[calc(100%+8px)] top-0 bg-ink text-white text-xs p-2 rounded-lg shadow-xl min-w-[160px] z-50">
@@ -209,20 +197,20 @@
             </div>
         
             <!-- Reports Group -->
-            <div class="nav-group relative group" data-group="reports">
-              <button class="flex items-center justify-between w-full px-2.5 h-[34px] rounded text-navy-fg hover:bg-navy-hover hover:text-white [&[data-layout=rail]_&]:justify-center [&[data-layout=rail]_&]:px-0" onclick="toggleNavGroup(this)">
+            <div class="nav-group relative group" data-group="reports" data-open="false">
+              <button class="flex items-center justify-between w-full px-2.5 h-[34px] rounded-md text-navy-fg hover:bg-navy-hover hover:text-white [&[data-layout=rail]_&]:justify-center [&[data-layout=rail]_&]:px-0" onclick="toggleNavGroup(this)">
                 <div class="flex items-center gap-2.5">
                   <svg class="w-4 h-4 stroke-2 shrink-0"><use href="#i-file-bar-chart"/></svg>
                   <span class="whitespace-nowrap overflow-hidden [&[data-layout=rail]_&]:hidden">Reports</span>
                 </div>
                 <svg class="w-3 h-3 stroke-2 transition-transform duration-150 [&[data-layout=rail]_&]:hidden group-data-[open=true]:rotate-180"><use href="#i-chevron-down"/></svg>
               </button>
-              <div class="nav-sub hidden group-data-[open=true]:flex flex-col gap-0.5 pl-7 pr-1 py-1 text-xs text-navy-mute [&[data-layout=rail]_&]:hidden">
-                <a href="/reports_account_balances.html" class="px-2 py-1.5 rounded hover:text-white hover:bg-navy-hover truncate">Account Balances</a>
-                <a href="/reports_profit_loss.html" class="px-2 py-1.5 rounded hover:text-white hover:bg-navy-hover truncate">Profit & Loss</a>
-                <a href="/reports_customer_income.html" class="px-2 py-1.5 rounded hover:text-white hover:bg-navy-hover truncate">Income by Customer</a>
-                <a href="/reports_vendor_purchases.html" class="px-2 py-1.5 rounded hover:text-white hover:bg-navy-hover truncate">Purchases by Vendor</a>
-                <a href="/reports_tax.html" class="px-2 py-1.5 rounded hover:text-white hover:bg-navy-hover truncate">Tax Report</a>
+              <div class="nav-sub hidden group-data-[open=true]:flex flex-col gap-0.5 pl-6 pr-1 py-1 text-xs text-navy-mute [&[data-layout=rail]_&]:hidden">
+                <a href="/reports_account_balances.html" class="px-2.5 py-1.5 rounded-md hover:text-white hover:bg-navy-hover truncate">Account Balances</a>
+                <a href="/reports_profit_loss.html" class="px-2.5 py-1.5 rounded-md hover:text-white hover:bg-navy-hover truncate">Profit & Loss</a>
+                <a href="/reports_customer_income.html" class="px-2.5 py-1.5 rounded-md hover:text-white hover:bg-navy-hover truncate">Income by Customer</a>
+                <a href="/reports_vendor_purchases.html" class="px-2.5 py-1.5 rounded-md hover:text-white hover:bg-navy-hover truncate">Purchases by Vendor</a>
+                <a href="/reports_tax.html" class="px-2.5 py-1.5 rounded-md hover:text-white hover:bg-navy-hover truncate">Tax Report</a>
               </div>
               <!-- Rail flyout -->
               <div class="hidden [&[data-layout=rail]_.group:hover_&]:flex flex-col gap-1 absolute left-[calc(100%+8px)] top-0 bg-ink text-white text-xs p-2 rounded-lg shadow-xl min-w-[160px] z-50">
@@ -233,7 +221,7 @@
             </div>
         
             <!-- Settings / Business Management -->
-            <a href="/settings.html" class="flex items-center gap-2.5 px-2.5 h-[34px] rounded text-navy-fg hover:bg-navy-hover hover:text-white w-full relative group [&[data-layout=rail]_&]:justify-center [&[data-layout=rail]_&]:px-0" data-label="Settings">
+            <a href="/settings.html" class="flex items-center gap-2.5 px-2.5 h-[34px] rounded-md text-navy-fg hover:bg-navy-hover hover:text-white w-full relative group [&[data-layout=rail]_&]:justify-center [&[data-layout=rail]_&]:px-0" data-label="Settings">
               <svg class="w-4 h-4 stroke-2 shrink-0"><use href="#i-settings"/></svg>
               <span class="whitespace-nowrap overflow-hidden [&[data-layout=rail]_&]:hidden">Business Settings</span>
               <div class="hidden [&[data-layout=rail]_.group:hover_&]:block absolute left-[calc(100%+8px)] bg-ink text-white text-xs px-2.5 py-1.5 rounded shadow-lg whitespace-nowrap z-50">Settings</div>
@@ -241,7 +229,7 @@
           </nav>
         
           <!-- Collapse Rail Button -->
-          <button class="mt-auto flex items-center gap-2.5 px-2.5 h-[34px] rounded text-navy-mute hover:bg-navy-hover hover:text-white w-full text-left [&[data-layout=rail]_&]:justify-center [&[data-layout=rail]_&]:px-0 group" id="railBtn2" title="Toggle sidebar">
+          <button class="mt-auto flex items-center gap-2.5 px-2.5 h-[34px] rounded-md text-navy-mute hover:bg-navy-hover hover:text-white w-full text-left [&[data-layout=rail]_&]:justify-center [&[data-layout=rail]_&]:px-0 group" id="railBtn2" title="Toggle sidebar">
             <svg class="w-4 h-4 stroke-2 shrink-0"><use href="#i-panel-left-close"/></svg>
             <span class="text-xs [&[data-layout=rail]_&]:hidden">Collapse sidebar</span>
           </button>
@@ -262,21 +250,7 @@
               <svg class="w-3.5 h-3.5 stroke-[1.75] text-muted shrink-0" aria-hidden="true"><use href="#i-chevrons-up-down"/></svg>
             </button>
           
-            <!-- QUICK ACTION SHORTCUTS (Hot buttons / links on task bar) -->
-            <div class="hidden lg:flex items-center gap-1.5 ml-2 pl-3 border-l border-line">
-              <a href="/index.html" data-goto-direct="editor" class="inline-flex items-center gap-1 h-7 px-2 rounded text-xs font-medium text-ink bg-canvas hover:bg-th hover:text-indigo border border-line transition-colors" title="Create a new sales invoice">
-                <svg class="w-3.5 h-3.5 stroke-2 text-indigo shrink-0" aria-hidden="true"><use href="#i-plus"/></svg>
-                <span>+ Invoice</span>
-              </a>
-              <a href="/quotations.html" class="inline-flex items-center gap-1 h-7 px-2 rounded text-xs font-medium text-ink bg-canvas hover:bg-th hover:text-indigo border border-line transition-colors" title="Create a quotation">
-                <svg class="w-3.5 h-3.5 stroke-2 text-indigo shrink-0" aria-hidden="true"><use href="#i-plus"/></svg>
-                <span>+ Quotation</span>
-              </a>
-              <a href="/customers.html" class="inline-flex items-center gap-1 h-7 px-2 rounded text-xs font-medium text-ink bg-canvas hover:bg-th hover:text-indigo border border-line transition-colors" title="Add a new customer">
-                <svg class="w-3.5 h-3.5 stroke-2 text-indigo shrink-0" aria-hidden="true"><use href="#i-plus"/></svg>
-                <span>+ Customer</span>
-              </a>
-            </div>
+          
           
             <div class="ml-auto flex items-center gap-1.5 md:gap-2">
               <!-- Quick Create Dropdown Button (Hot menu) -->
@@ -851,6 +825,144 @@
                   <button class="inline-flex items-center justify-center gap-1.5 h-control px-3 rounded border border-line-strong text-[13px] font-medium bg-surface hover:bg-th"><svg class="w-4 h-4 stroke-[1.75]" aria-hidden="true"><use href="#i-save"/></svg> Save draft</button>
                   <button class="inline-flex items-center justify-center gap-1.5 h-control px-3 rounded border border-transparent text-[13px] font-medium bg-transparent text-muted hover:bg-th hover:text-ink" data-goto="list">Cancel</button>
                   <p class="text-xs text-muted mt-1.5">Issuing assigns the number and locks the invoice. Corrections are made by cancelling and reissuing.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Content: View (Read-Only A4 Document) -->
+          <div id="s-view" class="hidden p-4 md:p-6 overflow-auto flex-1" data-screen="view">
+            <div class="flex items-center gap-3 mb-4">
+              <button class="inline-flex items-center justify-center w-control h-control rounded bg-transparent text-muted hover:bg-th hover:text-ink" data-goto="list"><svg class="w-4 h-4 stroke-[1.75]" aria-hidden="true"><use href="#i-arrow-left"/></svg></button>
+              <h1 class="m-0 text-xl font-semibold tracking-tight">INV-0012</h1>
+              <span class="inline-flex items-center gap-1.5 h-[22px] px-2 rounded-[3px] text-xs font-medium whitespace-nowrap bg-status-overdue-bg text-status-overdue-text border border-status-overdue-border before:content-[''] before:w-1.5 before:h-1.5 before:rounded-full before:bg-status-overdue-dot before:shrink-0">Overdue</span>
+              
+              <div class="ml-auto flex gap-2">
+                <button class="inline-flex items-center gap-1.5 h-control px-3 rounded border border-line-strong text-[13px] font-medium bg-surface hover:bg-th" data-goto="editor"><svg class="w-4 h-4 stroke-[1.75]" aria-hidden="true"><use href="#i-edit-2"/></svg> Edit invoice</button>
+                <button class="inline-flex items-center gap-1.5 h-control px-3 rounded border border-transparent text-[13px] font-medium bg-indigo text-white hover:bg-indigo-hover"><svg class="w-4 h-4 stroke-[1.75]" aria-hidden="true"><use href="#i-send"/></svg> Send reminder</button>
+              </div>
+            </div>
+
+            <!-- Overdue Alert Banner in Context -->
+            <div class="bg-[#FDEEED] border border-[#F0A9A4] text-[#801F18] px-4 py-3 rounded-lg mb-4 text-xs flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <svg class="w-4 h-4 stroke-2 shrink-0"><use href="#i-alert-triangle"/></svg>
+                <span><b>Payment is 20 days overdue.</b> Due date was 18 Sep 2026. Balance due: ₦ 106,500.00</span>
+              </div>
+              <button class="font-bold underline hover:no-underline">Record ₦ 106,500.00 payment</button>
+            </div>
+
+            <!-- A4 Document Container -->
+            <div class="flex justify-center py-4">
+              <div class="w-full max-w-[820px] bg-white border border-line-strong shadow-[0_8px_30px_rgba(16,20,50,0.08)] rounded-xl p-8 sm:p-12 md:p-14 text-[13px] text-ink flex flex-col gap-8">
+                <!-- Document Header -->
+                <div class="flex flex-col sm:flex-row justify-between items-start gap-4">
+                  <div>
+                    <span class="text-xs font-bold uppercase tracking-widest text-indigo">Sales Invoice</span>
+                    <h2 class="text-3xl font-extrabold tracking-tight text-ink mt-1">INVOICE</h2>
+                    <div class="text-sm font-semibold text-muted mt-0.5"># INV-0012</div>
+                  </div>
+                  <div class="sm:text-right">
+                    <div class="font-bold text-base text-ink">Acme Dynamics Ltd</div>
+                    <div class="text-xs text-muted leading-relaxed mt-1">
+                      Plot 14, Commercial Avenue, Victoria Island, Lagos<br>
+                      finance@acmedynamics.ng<br>
+                      +234 802 555 0199
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Meta Details Block -->
+                <div class="py-5 px-6 bg-canvas/60 border border-line rounded-lg grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs">
+                  <div>
+                    <div class="text-muted font-medium mb-1">Invoice Date</div>
+                    <div class="font-semibold text-ink text-[13px]">04 Sep 2026</div>
+                  </div>
+                  <div>
+                    <div class="text-muted font-medium mb-1">Due Date</div>
+                    <div class="font-bold text-[#B4372A] text-[13px]">18 Sep 2026</div>
+                  </div>
+                  <div class="sm:col-span-2">
+                    <div class="text-muted font-medium mb-1">Billed To</div>
+                    <div class="font-bold text-ink text-[13px]">Charles Business LLC</div>
+                    <div class="text-muted text-xs">charles@charlesbiz.ng · +234 803 214 9901</div>
+                  </div>
+                </div>
+
+                <!-- Items Table with generous cell padding and enclosed borders -->
+                <div class="border border-line rounded-lg overflow-hidden">
+                  <table class="w-full text-left text-xs border-collapse">
+                    <thead class="bg-th/70 text-muted font-semibold uppercase tracking-wider border-b border-line">
+                      <tr>
+                        <th class="px-5 py-3.5">Item & Description</th>
+                        <th class="px-4 py-3.5 text-right w-20">Qty</th>
+                        <th class="px-4 py-3.5 text-right w-32">Unit Price</th>
+                        <th class="px-5 py-3.5 text-right w-36">Total Amount</th>
+                      </tr>
+                    </thead>
+                    <tbody class="divide-y divide-line text-[13px]">
+                      <tr class="hover:bg-canvas/30">
+                        <td class="px-5 py-4">
+                          <div class="font-semibold text-ink">Website retainer</div>
+                          <div class="text-xs text-muted mt-0.5 leading-relaxed">Monthly technical maintenance, backups, and security monitoring</div>
+                        </td>
+                        <td class="px-4 py-4 text-right font-medium text-ink">1</td>
+                        <td class="px-4 py-4 text-right font-variant-numeric:tabular-nums text-muted">150,000.00</td>
+                        <td class="px-5 py-4 text-right font-semibold text-ink font-variant-numeric:tabular-nums">161,250.00</td>
+                      </tr>
+                      <tr class="hover:bg-canvas/30">
+                        <td class="px-5 py-4">
+                          <div class="font-semibold text-ink">Hosting — 12 months</div>
+                          <div class="text-xs text-muted mt-0.5 leading-relaxed">Cloud VPS high-performance server allocation</div>
+                        </td>
+                        <td class="px-4 py-4 text-right font-medium text-ink">1</td>
+                        <td class="px-4 py-4 text-right font-variant-numeric:tabular-nums text-muted">45,000.00</td>
+                        <td class="px-5 py-4 text-right font-semibold text-ink font-variant-numeric:tabular-nums">45,000.00</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <!-- Totals Section -->
+                <div class="flex justify-end pt-2">
+                  <div class="w-full max-w-[320px] bg-canvas/40 border border-line rounded-lg p-5 space-y-2.5 text-xs">
+                    <div class="flex justify-between text-muted">
+                      <span>Subtotal</span>
+                      <span class="font-variant-numeric:tabular-nums font-medium text-ink">195,000.00</span>
+                    </div>
+                    <div class="flex justify-between text-muted">
+                      <span>Tax (VAT 7.5%)</span>
+                      <span class="font-variant-numeric:tabular-nums font-medium text-ink">11,250.00</span>
+                    </div>
+                    <div class="flex justify-between text-muted">
+                      <span>Discount (5%)</span>
+                      <span class="font-variant-numeric:tabular-nums font-medium text-ink">−10,312.50</span>
+                    </div>
+                    <div class="border-t border-line pt-3 flex justify-between text-sm font-bold text-ink">
+                      <span>Grand Total</span>
+                      <span class="font-variant-numeric:tabular-nums text-base">₦ 195,937.50</span>
+                    </div>
+                    <div class="flex justify-between text-xs font-semibold text-[#106A43] pt-1">
+                      <span>Paid so far</span>
+                      <span class="font-variant-numeric:tabular-nums">− 89,437.50</span>
+                    </div>
+                    <div class="border-t border-line pt-2 flex justify-between text-sm font-bold text-[#B4372A]">
+                      <span>Amount Due</span>
+                      <span class="font-variant-numeric:tabular-nums text-base">₦ 106,500.00</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Notes & Payment details -->
+                <div class="pt-6 border-t border-line grid grid-cols-1 md:grid-cols-2 gap-6 text-xs text-muted">
+                  <div>
+                    <div class="font-semibold text-ink text-xs mb-1">Bank Payment Details</div>
+                    <p class="leading-relaxed">Guaranty Trust Bank (GTBank)<br>Account Name: Acme Dynamics Ltd<br>Account Number: 0123456789</p>
+                  </div>
+                  <div class="md:text-right">
+                    <div class="font-semibold text-ink text-xs mb-1">Invoice Terms</div>
+                    <p class="leading-relaxed">Payment was due within 14 days. Please process balance payment promptly to avoid service disruption.</p>
+                  </div>
                 </div>
               </div>
             </div>
