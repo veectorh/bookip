@@ -8,35 +8,50 @@
   {{> icons}}
 
   <div id="app" class="flex h-screen overflow-hidden" data-layout="rail">
-    {{> sidebar active_vendors=true}}
+    {{> sidebar active_vendors=true active="vendors"}}
 
     <div class="flex-1 flex flex-col min-w-0">
       {{> topbar title="Vendors" active_vendors=true}}
 
       <main class="flex-1 overflow-y-auto overflow-x-hidden relative bg-canvas">
 
-          <div class="p-4 overflow-auto flex-1">
-            <div class="text-xs text-muted mb-2 flex items-center gap-1.5">
-              Sales <svg class="w-4 h-4 stroke-[1.75]" aria-hidden="true"><use href="#i-chevron-right"/></svg> Vendors
+          <!-- 1. Screen: Vendors List -->
+          <div class="p-4 md:p-6 overflow-auto flex-1" id="s-list">
+            <div class="text-xs text-muted mb-2 flex items-center gap-1.5 font-medium">
+              Purchasing <svg class="w-4 h-4 stroke-[1.75]" aria-hidden="true"><use href="#i-chevron-right"/></svg> Vendors
             </div>
             
-            <div class="flex items-center gap-3 mb-3.5">
-              <h1 class="m-0 text-xl font-semibold tracking-tight">Vendors</h1>
-              <div class="ml-auto flex gap-2">
-                <button class="inline-flex items-center gap-1.5 h-control px-2 md:px-3 rounded border border-line-strong text-[13px] font-medium bg-surface hover:bg-th">
+            <div class="flex items-center justify-between gap-3 mb-3.5">
+              <div class="flex items-center gap-2.5">
+                <h1 class="m-0 text-xl font-semibold tracking-tight text-ink">Vendors</h1>
+                <span class="text-xs text-muted font-medium bg-surface px-2 py-0.5 rounded border border-line">{{seed.vendors.length}} vendors</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <button class="inline-flex items-center gap-1.5 h-control px-2.5 md:px-3 rounded border border-line-strong text-[13px] font-medium bg-surface hover:bg-th transition-colors shadow-sm" title="Export CSV">
                   <svg class="w-4 h-4 stroke-[1.75]" aria-hidden="true"><use href="#i-download"/></svg> <span class="hidden md:inline">Export</span>
                 </button>
-                <button class="inline-flex items-center gap-1.5 h-control px-2 md:px-3 rounded border border-transparent text-[13px] font-medium bg-indigo text-white hover:bg-indigo-hover" onclick="openDrawer()">
-                  <svg class="w-4 h-4 stroke-[1.75]" aria-hidden="true"><use href="#i-plus"/></svg> <span class="hidden md:inline">Add vendor</span>
+                <button class="inline-flex items-center gap-1.5 h-control px-2.5 md:px-3 rounded border border-transparent text-[13px] font-medium bg-indigo text-white hover:bg-indigo-hover transition-colors shadow-sm" data-drawer-target="vendorDrawer">
+                  <svg class="w-4 h-4 stroke-[2]" aria-hidden="true"><use href="#i-plus"/></svg> <span class="hidden sm:inline">Add vendor</span>
                 </button>
               </div>
             </div>
+
+            <!-- Stats Strip -->
+            {{> stats-strip 
+              label1="Total Vendors" value1="2"
+              label2="Active Suppliers" value2="2" success2=true
+              label3="Total Payables" value3="₦ 958,750.00" danger3=true subtext3="2 open bills"
+              label4="Overdue Bills" value4="1" danger4=true subtext4="Prime Tech Hardware"
+            }}
 
             <!-- Desktop Filters -->
             <div class="flex gap-2 mb-2.5 flex-wrap hidden md:flex">
               <div class="flex-1 min-w-[240px] flex items-center gap-2 h-control px-2.5 bg-surface border border-line-strong rounded text-[13px] focus-within:border-indigo focus-within:ring-[3px] focus-within:ring-indigo-line">
                 <svg class="w-4 h-4 stroke-[1.75] text-muted shrink-0" aria-hidden="true"><use href="#i-search"/></svg>
-                <input type="text" placeholder="Search name, company, or email" class="bg-transparent border-0 outline-none w-full placeholder-muted">
+                <input type="text" placeholder="Search vendor name, company, email, or phone" class="bg-transparent border-0 outline-none w-full placeholder-muted">
+              </div>
+              <div class="flex items-center h-control px-2.5 bg-surface border border-line-strong rounded text-[13px] focus-within:border-indigo focus-within:ring-[3px] focus-within:ring-indigo-line">
+                <select class="bg-transparent border-0 outline-none w-full text-ink"><option>All statuses</option><option>Active</option><option>Has balance</option></select>
               </div>
             </div>
 
@@ -44,203 +59,268 @@
             <div class="block md:hidden">
               <div class="flex items-center gap-2 h-control px-2.5 bg-surface border border-line-strong rounded text-[13px] focus-within:border-indigo focus-within:ring-[3px] focus-within:ring-indigo-line mb-2.5">
                 <svg class="w-4 h-4 stroke-[1.75] text-muted shrink-0" aria-hidden="true"><use href="#i-search"/></svg>
-                <input type="text" placeholder="Search" class="bg-transparent border-0 outline-none w-full placeholder-muted">
+                <input type="text" placeholder="Search vendor" class="bg-transparent border-0 outline-none w-full placeholder-muted">
               </div>
             </div>
 
-            <!-- Empty State -->
-            <div class="bg-surface border border-line rounded flex items-center justify-center min-h-[400px]">
-              {{> list-empty-state icon="#i-users" title="No vendors found" description="You haven't added any vendors yet. Create your first vendor to start logging purchases." action_label="Add vendor" action_attr="data-drawer-target=\"vendor-drawer\"" }}
-            </div></div>
+            <!-- Table (Desktop) -->
+            <div class="bg-surface border border-line rounded overflow-x-auto hidden md:block">
+              <table class="w-full border-collapse text-[13px] min-w-[760px]">
+                <thead>
+                  <tr class="bg-th text-muted font-medium text-xs">
+                    <th class="px-3.5 py-2.5 text-left border-b border-line whitespace-nowrap font-medium">Vendor</th>
+                    <th class="px-3.5 py-2.5 text-left border-b border-line whitespace-nowrap font-medium">Company Name</th>
+                    <th class="px-3.5 py-2.5 text-left border-b border-line whitespace-nowrap font-medium">Contact Details</th>
+                    <th class="px-3.5 py-2.5 text-right border-b border-line whitespace-nowrap font-medium">Balance Owed (₦)</th>
+                    <th class="px-3.5 py-2.5 text-left border-b border-line whitespace-nowrap font-medium">Status</th>
+                    <th class="px-3.5 py-2.5 border-b border-line w-9"></th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-line">
+                  {{#each seed.vendors}}
+                  <tr class="hover:bg-[#FAFBFD] group transition-colors">
+                    <td class="px-3.5 py-3 whitespace-nowrap">
+                      <div class="flex items-center gap-2.5">
+                        <div class="w-7 h-7 rounded-full bg-[#146A3E]/10 text-[#146A3E] flex items-center justify-center text-xs font-bold shrink-0">
+                          {{#if (eq this.id "VEN-001")}}P{{else}}S{{/if}}
+                        </div>
+                        <a href="#" class="font-medium text-ink group-hover:text-indigo-ink group-hover:underline underline-offset-2" data-goto="profile">{{this.name}}</a>
+                      </div>
+                    </td>
+                    <td class="px-3.5 py-3 whitespace-nowrap text-ink">{{this.company}}</td>
+                    <td class="px-3.5 py-3 whitespace-nowrap">
+                      <div class="text-ink font-medium">{{this.email}}</div>
+                      <div class="text-xs text-muted">{{this.phone}}</div>
+                    </td>
+                    <td class="px-3.5 py-3 whitespace-nowrap text-right font-medium {{#if (ne this.balance_owed "₦ 0.00")}}text-[#B4372A]{{else}}text-muted{{/if}}" style="font-variant-numeric: tabular-nums;">
+                      {{this.balance_owed}}
+                    </td>
+                    <td class="px-3.5 py-3 whitespace-nowrap">
+                      {{#if (ne this.overdue_count 0)}}
+                        {{> status-badge status="overdue" label="Overdue"}}
+                      {{else}}
+                        {{> status-badge status="pending" label="Due soon"}}
+                      {{/if}}
+                    </td>
+                    <td class="px-3.5 py-3 whitespace-nowrap">
+                      {{> row-actions title=this.name type="vendor" id=this.id}}
+                    </td>
+                  </tr>
+                  {{/each}}
+                </tbody>
+              </table>
+              <div class="flex items-center gap-3 px-3.5 py-2.5 border-t border-line text-xs text-muted bg-surface">
+                <span>2 suppliers registered</span>
+              </div>
+            </div>
+
+            <!-- List (Mobile) -->
+            <div class="block md:hidden">
+              <div class="bg-surface border border-line rounded overflow-hidden">
+                {{#each seed.vendors}}
+                <button class="w-full text-left bg-transparent border-0 border-b border-line px-3.5 py-3 grid grid-cols-[1fr_auto] gap-x-3 gap-y-[3px] items-center min-h-row-mob last:border-b-0 active:bg-th" data-menu="{{this.name}}" data-menu-type="vendor">
+                  <span class="font-medium text-ink">{{this.name}}</span>
+                  <span class="text-right font-medium text-[#B4372A] font-variant-numeric:tabular-nums">{{this.balance_owed}}</span>
+                  <span class="text-xs text-muted">{{this.company}}</span>
+                  <span class="justify-self-end">
+                    {{#if (ne this.overdue_count 0)}}
+                      {{> status-badge status="overdue" label="Overdue"}}
+                    {{else}}
+                      {{> status-badge status="pending" label="Due soon"}}
+                    {{/if}}
+                  </span>
+                </button>
+                {{/each}}
+              </div>
+            </div>
           </div>
 
-        </main>
+          <!-- 2. Screen: Vendor Profile & Bills Ledger -->
+          <div class="p-4 md:p-6 overflow-auto flex-1 hidden" id="s-profile">
+            <!-- Breadcrumb & Top Bar -->
+            <div class="flex items-center gap-3 mb-4">
+              <button class="inline-flex items-center justify-center w-control h-control rounded bg-transparent text-muted hover:bg-th hover:text-ink transition-colors" data-goto="list">
+                <svg class="w-4 h-4 stroke-[1.75]" aria-hidden="true"><use href="#i-arrow-left"/></svg>
+              </button>
+              <div>
+                <div class="text-xs text-muted flex items-center gap-1.5 font-medium">
+                  Vendors <svg class="w-3.5 h-3.5 stroke-[1.75]"><use href="#i-chevron-right"/></svg> Supplier Profile
+                </div>
+                <h1 class="m-0 text-xl font-bold tracking-tight text-ink mt-0.5">Prime Tech Hardware</h1>
+              </div>
+              <div class="ml-auto flex items-center gap-2">
+                <button type="button" class="inline-flex items-center gap-1.5 h-control px-3 rounded border border-line-strong text-[13px] font-medium bg-surface hover:bg-th transition-colors shadow-sm" onclick="window.showToast({ title: 'Ledger Exported', message: 'Supplier ledger exported to CSV.', type: 'info' });">
+                  <svg class="w-4 h-4 stroke-[1.75]"><use href="#i-download"/></svg> Export Ledger
+                </button>
+                <button type="button" class="inline-flex items-center gap-1.5 h-control px-3 rounded border border-transparent text-[13px] font-medium bg-indigo text-white hover:bg-indigo-hover transition-colors shadow-sm" onclick="window.location.href='/purchases.html'">
+                  <svg class="w-4 h-4 stroke-[2]"><use href="#i-plus"/></svg> New Bill
+                </button>
+                <button type="button" class="inline-flex items-center gap-1.5 h-control px-3 rounded border border-line-strong text-[13px] font-medium bg-surface hover:bg-th transition-colors shadow-sm" data-drawer-target="vendorDrawer">
+                  <svg class="w-4 h-4 stroke-[1.75]"><use href="#i-edit-2"/></svg> Edit
+                </button>
+              </div>
+            </div>
+
+            <!-- Overdue Warning Alert -->
+            <div class="p-4 bg-[#FDECEA] border border-[#F5CFC9] rounded-xl flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5">
+              <div class="flex items-start gap-3">
+                <div class="w-8 h-8 rounded-full bg-[#F5CFC9] text-[#D0432F] flex items-center justify-center shrink-0 mt-0.5">
+                  <svg class="w-4 h-4 stroke-[2]"><use href="#i-alert-circle"/></svg>
+                </div>
+                <div>
+                  <h4 class="m-0 text-[14px] font-bold text-[#9A2A1F]">Payable Overdue: ₦ 913,750.00</h4>
+                  <p class="text-xs text-[#9A2A1F]/80 m-0 mt-0.5">Bill PUR-0001 (Server Equipment) is overdue by 21 days. Due date was 17 Sep 2026.</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-2 shrink-0">
+                <button type="button" class="inline-flex items-center gap-1.5 h-control px-3.5 rounded border border-transparent text-[13px] font-medium bg-[#D0432F] text-white hover:bg-[#B4372A] transition-colors shadow-sm" data-modal-target="recordPaymentModal">
+                  <svg class="w-3.5 h-3.5 stroke-[2]"><use href="#i-wallet"/></svg> Settle Bill
+                </button>
+              </div>
+            </div>
+
+            <!-- 2-Column Grid: Vendor Info & Purchase Bills Ledger -->
+            <div class="grid grid-cols-1 lg:grid-cols-[300px_1fr] gap-5">
+              <!-- Left Sidebar: Vendor Info & Bank Settlement Account -->
+              <div class="space-y-4">
+                <div class="bg-surface border border-line rounded-xl p-4 space-y-3.5 shadow-sm text-xs">
+                  <h3 class="font-bold text-ink text-sm m-0 border-b border-line pb-2.5">Supplier Details</h3>
+                  <div>
+                    <span class="text-muted block mb-0.5 font-medium">Company Name</span>
+                    <span class="font-semibold text-ink text-[13px]">Prime Technology Solutions Ltd</span>
+                  </div>
+                  <div>
+                    <span class="text-muted block mb-0.5 font-medium">Representative</span>
+                    <span class="font-medium text-ink text-[13px]">Engr. Emeka Obi</span>
+                  </div>
+                  <div>
+                    <span class="text-muted block mb-0.5 font-medium">Email Address</span>
+                    <span class="font-medium text-indigo text-[13px]">sales@primetech.ng</span>
+                  </div>
+                  <div>
+                    <span class="text-muted block mb-0.5 font-medium">Phone Number</span>
+                    <span class="font-medium text-ink text-[13px]">+234 805 111 2233</span>
+                  </div>
+                  <div>
+                    <span class="text-muted block mb-0.5 font-medium">Office Address</span>
+                    <span class="font-medium text-ink leading-relaxed block">12 Saka Tinubu Street, Victoria Island, Lagos</span>
+                  </div>
+                </div>
+
+                <div class="bg-surface border border-line rounded-xl p-4 space-y-2.5 shadow-sm text-xs">
+                  <h3 class="font-bold text-ink text-sm m-0 border-b border-line pb-2">Settlement Bank Account</h3>
+                  <div>
+                    <span class="text-muted block font-medium">Bank Name</span>
+                    <span class="font-semibold text-ink">Zenith Bank Plc</span>
+                  </div>
+                  <div>
+                    <span class="text-muted block font-medium">Account Number</span>
+                    <span class="font-mono font-bold text-ink text-[13px]">1012345678</span>
+                  </div>
+                  <div>
+                    <span class="text-muted block font-medium">Account Name</span>
+                    <span class="font-medium text-ink">Prime Technology Solutions</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Right: Purchase Bills Table -->
+              <div class="space-y-4">
+                <div class="bg-surface border border-line rounded-xl shadow-sm overflow-hidden">
+                  <div class="px-5 py-3.5 border-b border-line flex items-center justify-between">
+                    <div>
+                      <h3 class="m-0 text-[15px] font-semibold tracking-tight text-ink">Purchase Bills Ledger</h3>
+                      <div class="text-xs text-muted">All vendor invoices, delivery orders, and settlement status</div>
+                    </div>
+                  </div>
+
+                  <div class="overflow-x-auto">
+                    <table class="w-full border-collapse text-[13px] min-w-[650px]">
+                      <thead>
+                        <tr class="bg-th text-muted font-medium text-xs">
+                          <th class="px-4 py-2.5 text-left border-b border-line font-medium">Bill #</th>
+                          <th class="px-4 py-2.5 text-left border-b border-line font-medium">Purchase Date</th>
+                          <th class="px-4 py-2.5 text-left border-b border-line font-medium">Due Date</th>
+                          <th class="px-4 py-2.5 text-right border-b border-line font-medium">Bill Amount</th>
+                          <th class="px-4 py-2.5 text-right border-b border-line font-medium">Amount Due</th>
+                          <th class="px-4 py-2.5 text-left border-b border-line font-medium">Status</th>
+                        </tr>
+                      </thead>
+                      <tbody class="divide-y divide-line">
+                        <tr class="hover:bg-[#FAFBFD] transition-colors">
+                          <td class="px-4 py-3 whitespace-nowrap font-medium text-ink">
+                            <a href="/purchases.html" class="text-indigo hover:underline">PUR-0001</a>
+                          </td>
+                          <td class="px-4 py-3 whitespace-nowrap text-muted">10 Sep 2026</td>
+                          <td class="px-4 py-3 whitespace-nowrap text-muted">17 Sep 2026</td>
+                          <td class="px-4 py-3 whitespace-nowrap text-right font-medium text-ink" style="font-variant-numeric: tabular-nums;">₦ 913,750.00</td>
+                          <td class="px-4 py-3 whitespace-nowrap text-right font-bold text-[#B4372A]" style="font-variant-numeric: tabular-nums;">₦ 913,750.00</td>
+                          <td class="px-4 py-3 whitespace-nowrap">
+                            {{> status-badge status="overdue" label="Overdue 21d"}}
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- Slide-Over Drawer: Add / Edit Vendor -->
+  {{#> slide-over id="vendorDrawer" title="Vendor Information" save_label="Save vendor"}}
+    <div>
+      <div class="text-xs font-semibold text-muted uppercase tracking-wider mb-2.5">Vendor Information</div>
+      <div class="space-y-3">
+        <div>
+          <label class="block text-xs font-medium text-muted mb-1">Contact Person <span class="text-[#B4372A]">*</span></label>
+          <input type="text" placeholder="e.g. Engr. Emeka Obi" class="w-full h-control px-2.5 bg-surface border border-line-strong rounded focus:border-indigo focus:ring-[3px] focus:ring-indigo-line outline-none text-[13px]">
+        </div>
+        <div>
+          <label class="block text-xs font-medium text-muted mb-1">Company / Supplier Name <span class="text-[#B4372A]">*</span></label>
+          <input type="text" placeholder="e.g. Prime Technology Solutions Ltd" class="w-full h-control px-2.5 bg-surface border border-line-strong rounded focus:border-indigo focus:ring-[3px] focus:ring-indigo-line outline-none text-[13px]">
+        </div>
+        <div class="grid grid-cols-2 gap-2.5">
+          <div>
+            <label class="block text-xs font-medium text-muted mb-1">Email</label>
+            <input type="email" placeholder="sales@primetech.ng" class="w-full h-control px-2.5 bg-surface border border-line-strong rounded focus:border-indigo focus:ring-[3px] focus:ring-indigo-line outline-none text-[13px]">
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-muted mb-1">Phone Number</label>
+            <input type="tel" placeholder="+234 805 000 0000" class="w-full h-control px-2.5 bg-surface border border-line-strong rounded focus:border-indigo focus:ring-[3px] focus:ring-indigo-line outline-none text-[13px]">
+          </div>
+        </div>
       </div>
     </div>
 
-  {{> scripts}}
-  
-  <script>
-    // Row action menu
-    document.addEventListener('click', e => {
-      const b = e.target.closest('[data-menu]');
-      if (!b) return;
-      closePopovers();
-      const isMobile = document.getElementById('app').getAttribute('data-layout') === 'mob' || window.innerWidth < 768;
-      const items = `
-        <button class="flex items-center gap-3 w-full bg-transparent border-0 px-3 py-3 text-[13px] font-medium text-left rounded hover:bg-th active:bg-th transition-colors" onclick="openDrawer()">
-          <svg class="w-4 h-4 stroke-[1.75] shrink-0 text-muted" aria-hidden="true"><use href="#i-settings"/></svg> Edit vendor
-        </button>
-        <button class="flex items-center gap-3 w-full bg-transparent border-0 px-3 py-3 text-[13px] font-medium text-left rounded hover:bg-th active:bg-th transition-colors">
-          <svg class="w-4 h-4 stroke-[1.75] shrink-0 text-muted" aria-hidden="true"><use href="#i-file-text"/></svg> View invoices
-        </button>
-        <hr class="border-0 border-t border-line my-1">
-        <button class="flex items-center gap-3 w-full bg-transparent border-0 px-3 py-3 text-[13px] font-medium text-left rounded text-[#B4372A] hover:bg-th active:bg-th transition-colors">
-          <svg class="w-4 h-4 stroke-[1.75] shrink-0" aria-hidden="true"><use href="#i-trash-2"/></svg> Delete
-        </button>
-      `;
-      if (isMobile) {
-        const w = document.createElement('div');
-        w.className = 'sheetwrap fixed inset-0 z-50 flex items-end justify-center before:content-[""] before:absolute before:inset-0 before:bg-[rgba(16,20,50,0.4)]';
-        w.onclick = ev => { if (ev.target === w) closePopovers(); };
-        w.innerHTML = `
-          <div class="sheet relative w-full max-w-[390px] bg-surface rounded-t-xl pt-2 pb-3">
-            <div class="w-9 h-1 rounded-sm bg-line-strong mx-auto my-1 mb-2"></div>
-            <div class="px-4 py-1 pb-2 text-xs text-muted border-b border-line mb-1">${b.dataset.menu}</div>
-            ${items.replace(/py-3 text-\[13px\]/g, 'py-3 text-sm px-4')}
+    <div class="border-t border-line pt-3">
+      <div class="text-xs font-semibold text-muted uppercase tracking-wider mb-2.5">Settlement & Bank Details</div>
+      <div class="space-y-3">
+        <div>
+          <label class="block text-xs font-medium text-muted mb-1">Bank Name</label>
+          <input type="text" placeholder="e.g. Zenith Bank Plc" class="w-full h-control px-2.5 bg-surface border border-line-strong rounded focus:border-indigo focus:ring-[3px] focus:ring-indigo-line outline-none text-[13px]">
+        </div>
+        <div class="grid grid-cols-2 gap-2.5">
+          <div>
+            <label class="block text-xs font-medium text-muted mb-1">Account Number</label>
+            <input type="text" placeholder="10-digit NUBAN" class="w-full h-control px-2.5 bg-surface border border-line-strong rounded focus:border-indigo focus:ring-[3px] focus:ring-indigo-line outline-none text-[13px]">
           </div>
-        `;
-        document.body.appendChild(w);
-      } else {
-        createScrim();
-        const r = b.getBoundingClientRect();
-        const p = document.createElement('div');
-        p.className = 'popover absolute z-50 bg-surface border border-line-strong rounded shadow-[0_8px_24px_rgba(16,20,50,0.12)] min-w-[170px] p-1.5';
-        p.style.top = (r.bottom + window.scrollY + 4) + 'px';
-        p.style.left = (r.right + window.scrollX - 170) + 'px';
-        p.innerHTML = items;
-        document.body.appendChild(p);
-      }
-    });
-
-    // Side panel (drawer) logic
-    function openDrawer() {
-      closePopovers();
-      const w = document.createElement('div');
-      w.className = 'drawerwrap fixed inset-0 z-50 flex justify-end before:content-[""] before:absolute before:inset-0 before:bg-[rgba(16,20,50,0.4)]';
-      w.onclick = ev => { if (ev.target === w) closePopovers(); };
-      
-      w.innerHTML = `
-        <div class="drawer relative w-[400px] max-w-[100vw] h-full bg-surface shadow-[-8px_0_24px_rgba(16,20,50,0.12)] flex flex-col translate-x-full animate-[slideIn_0.2s_ease-out_forwards]">
-          <div class="flex items-center px-4 py-3 border-b border-line shrink-0">
-            <h2 class="m-0 text-lg font-semibold tracking-tight">Add Vendor</h2>
-            <button class="ml-auto w-8 h-8 rounded flex items-center justify-center text-muted hover:bg-th hover:text-ink -mr-2" onclick="closePopovers()">
-              <svg class="w-5 h-5 stroke-2" aria-hidden="true"><use href="#i-x-circle"/></svg>
-            </button>
-          </div>
-          
-          <div class="p-4 overflow-y-auto flex-1 flex flex-col gap-4 text-[13px]">
-            <!-- Basic Info -->
-            <div>
-              <div class="text-xs font-semibold text-muted uppercase tracking-wider mb-3">Basic Info</div>
-              <div class="flex flex-col gap-3">
-                <div class="flex items-center gap-3">
-                  <div class="w-12 h-12 rounded-full bg-canvas border border-line-strong flex items-center justify-center text-muted"><svg class="w-5 h-5 stroke-[1.5]"><use href="#i-user"/></svg></div>
-                  <button class="text-indigo font-medium hover:underline underline-offset-2">Upload picture</button>
-                </div>
-                <div>
-                  <label class="block text-xs font-medium text-muted mb-1.25">Name <span class="text-[#B4372A]">*</span></label>
-                  <input type="text" class="w-full h-control px-2.5 bg-surface border border-line-strong rounded focus:border-indigo focus:ring-[3px] focus:ring-indigo-line outline-none">
-                </div>
-                <div>
-                  <label class="block text-xs font-medium text-muted mb-1.25">Company Name</label>
-                  <input type="text" class="w-full h-control px-2.5 bg-surface border border-line-strong rounded focus:border-indigo focus:ring-[3px] focus:ring-indigo-line outline-none">
-                </div>
-                <div class="grid grid-cols-2 gap-3">
-                  <div>
-                    <label class="block text-xs font-medium text-muted mb-1.25">Email</label>
-                    <input type="email" class="w-full h-control px-2.5 bg-surface border border-line-strong rounded focus:border-indigo focus:ring-[3px] focus:ring-indigo-line outline-none">
-                  </div>
-                  <div>
-                    <label class="block text-xs font-medium text-muted mb-1.25">Mobile</label>
-                    <input type="tel" class="w-full h-control px-2.5 bg-surface border border-line-strong rounded focus:border-indigo focus:ring-[3px] focus:ring-indigo-line outline-none">
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <hr class="border-0 border-t border-line my-1">
-            
-            <!-- Billing Details -->
-            <div>
-              <div class="text-xs font-semibold text-muted uppercase tracking-wider mb-3">Billing Details</div>
-              <div class="flex flex-col gap-3">
-                <div>
-                  <label class="block text-xs font-medium text-muted mb-1.25">Currency</label>
-                  <select class="w-full h-control px-2.5 bg-surface border border-line-strong rounded focus:border-indigo focus:ring-[3px] focus:ring-indigo-line outline-none">
-                    <option>NGN (Naira)</option>
-                    <option>USD (US Dollar)</option>
-                  </select>
-                </div>
-                <div class="grid grid-cols-2 gap-3">
-                  <div>
-                    <label class="block text-xs font-medium text-muted mb-1.25">VAT ID</label>
-                    <input type="text" class="w-full h-control px-2.5 bg-surface border border-line-strong rounded focus:border-indigo focus:ring-[3px] focus:ring-indigo-line outline-none">
-                  </div>
-                  <div>
-                    <label class="block text-xs font-medium text-muted mb-1.25">Reg No</label>
-                    <input type="text" class="w-full h-control px-2.5 bg-surface border border-line-strong rounded focus:border-indigo focus:ring-[3px] focus:ring-indigo-line outline-none">
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <hr class="border-0 border-t border-line my-1">
-            
-            <!-- Address -->
-            <div>
-              <div class="text-xs font-semibold text-muted uppercase tracking-wider mb-3">Address</div>
-              <div class="flex flex-col gap-3">
-                <div>
-                  <label class="block text-xs font-medium text-muted mb-1.25">Street Address</label>
-                  <input type="text" class="w-full h-control px-2.5 bg-surface border border-line-strong rounded focus:border-indigo focus:ring-[3px] focus:ring-indigo-line outline-none">
-                </div>
-                <div class="grid grid-cols-2 gap-3">
-                  <div>
-                    <label class="block text-xs font-medium text-muted mb-1.25">City</label>
-                    <input type="text" class="w-full h-control px-2.5 bg-surface border border-line-strong rounded focus:border-indigo focus:ring-[3px] focus:ring-indigo-line outline-none">
-                  </div>
-                  <div>
-                    <label class="block text-xs font-medium text-muted mb-1.25">State</label>
-                    <input type="text" class="w-full h-control px-2.5 bg-surface border border-line-strong rounded focus:border-indigo focus:ring-[3px] focus:ring-indigo-line outline-none">
-                  </div>
-                  <div>
-                    <label class="block text-xs font-medium text-muted mb-1.25">ZIP / Postal Code</label>
-                    <input type="text" class="w-full h-control px-2.5 bg-surface border border-line-strong rounded focus:border-indigo focus:ring-[3px] focus:ring-indigo-line outline-none">
-                  </div>
-                  <div>
-                    <label class="block text-xs font-medium text-muted mb-1.25">Country</label>
-                    <select class="w-full h-control px-2.5 bg-surface border border-line-strong rounded focus:border-indigo focus:ring-[3px] focus:ring-indigo-line outline-none">
-                      <option>Nigeria</option>
-                      <option>Ghana</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-            </div>
-            
-            <hr class="border-0 border-t border-line my-1">
-            
-            <!-- Other -->
-            <div>
-              <div class="flex flex-col gap-3">
-                <div>
-                  <label class="block text-xs font-medium text-muted mb-1.25">Remarks</label>
-                  <textarea class="w-full p-2.5 bg-surface border border-line-strong rounded focus:border-indigo focus:ring-[3px] focus:ring-indigo-line outline-none min-h-[80px] resize-y" placeholder="Internal notes about this vendor"></textarea>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          <div class="p-4 border-t border-line bg-surface shrink-0 flex gap-2 justify-end">
-            <button class="inline-flex items-center justify-center gap-1.5 h-control px-4 rounded border border-line-strong text-[13px] font-medium bg-surface hover:bg-th" onclick="closePopovers()">Cancel</button>
-            <button class="inline-flex items-center justify-center gap-1.5 h-control px-4 rounded border border-transparent text-[13px] font-medium bg-indigo text-white hover:bg-indigo-hover" onclick="closePopovers()">Save vendor</button>
+          <div>
+            <label class="block text-xs font-medium text-muted mb-1">Account Name</label>
+            <input type="text" placeholder="Registered Name" class="w-full h-control px-2.5 bg-surface border border-line-strong rounded focus:border-indigo focus:ring-[3px] focus:ring-indigo-line outline-none text-[13px]">
           </div>
         </div>
-      `;
-      
-      // Inject slide-in animation
-      if (!document.getElementById('anim-style')) {
-        const style = document.createElement('style');
-        style.id = 'anim-style';
-        style.textContent = \`
-          @keyframes slideIn { from { transform: translateX(100%); } to { transform: translateX(0); } }
-        \`;
-        document.head.appendChild(style);
-      }
-      
-      document.body.appendChild(w);
-    }
-  </script>
+      </div>
+    </div>
+  {{/slide-over}}
+
+  {{> record-payment-modal}}
+  {{> confirm-dialog id="confirmModal" title="Archive Vendor" message="Are you sure you want to archive this vendor? All purchase history and ledger records will be retained." confirm_label="Yes, archive"}}
+  {{> toast}}
+  {{> scripts}}
 </body>
 </html>

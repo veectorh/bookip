@@ -1,125 +1,297 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-{{> head title="Payroll" }}
-<body class="bg-canvas text-ink font-sans antialiased selection:bg-indigo-light">
+<head>
+  {{> head}}
+</head>
+<body class="bg-canvas text-ink font-sans text-[14px] leading-[1.5]">
+  
   {{> icons}}
 
   <div id="app" class="flex h-screen overflow-hidden" data-layout="rail">
-    {{> sidebar active_payroll=true}}
+    {{> sidebar active_payroll=true active="payroll"}}
 
     <div class="flex-1 flex flex-col min-w-0">
-      {{> topbar title="Payroll"}}
+      {{> topbar title="Payroll" active_payroll=true}}
 
-      <main class="flex-1 overflow-y-auto overflow-x-hidden relative">
-        <div id="screens">
-          <!-- Content: List -->
-          <div id="s-list" class="p-4 md:p-6 pb-24 md:pb-6" data-screen="list">
+      <main class="flex-1 overflow-y-auto overflow-x-hidden relative bg-canvas">
+
+          <!-- 1. Screen: Payroll List -->
+          <div id="s-list" class="p-4 md:p-6 overflow-auto flex-1" data-screen="list">
+            <div class="text-xs text-muted mb-2 flex items-center gap-1.5 font-medium">
+              People <svg class="w-4 h-4 stroke-[1.75]" aria-hidden="true"><use href="#i-chevron-right"/></svg> Payroll
+            </div>
             
-            <div class="flex gap-2 mb-2.5 flex-wrap hidden md:flex">
-              <div class="flex items-center gap-2 h-control px-2.5 bg-surface border border-line-strong rounded text-[13px] focus-within:border-indigo focus-within:ring-[3px] focus-within:ring-indigo-line w-[180px]">
-                <input type="month" class="bg-transparent border-0 outline-none w-full text-ink">
+            <div class="flex items-center justify-between gap-3 mb-3.5">
+              <div class="flex items-center gap-2.5">
+                <h1 class="m-0 text-xl font-semibold tracking-tight text-ink">Payroll & Payslips</h1>
+                <span class="text-xs text-muted font-medium bg-surface px-2 py-0.5 rounded border border-line">September 2026</span>
               </div>
-              <div class="ml-auto flex gap-2 hidden md:flex">
-                <button class="inline-flex items-center gap-1.5 h-control px-3 rounded border border-transparent text-[13px] font-medium bg-indigo text-white hover:bg-indigo-hover" data-modal-target="payroll-modal"><svg class="w-4 h-4 stroke-[1.75]" aria-hidden="true"><use href="#i-plus"/></svg> Generate Payslip</button>
+              <div class="flex items-center gap-2">
+                <button class="inline-flex items-center gap-1.5 h-control px-2.5 md:px-3 rounded border border-line-strong text-[13px] font-medium bg-surface hover:bg-th transition-colors shadow-sm" title="Export CSV">
+                  <svg class="w-4 h-4 stroke-[1.75]" aria-hidden="true"><use href="#i-download"/></svg> <span class="hidden md:inline">Export</span>
+                </button>
+                <button class="inline-flex items-center gap-1.5 h-control px-2.5 md:px-3 rounded border border-transparent text-[13px] font-medium bg-indigo text-white hover:bg-indigo-hover transition-colors shadow-sm" data-modal-target="makePaymentModal">
+                  <svg class="w-4 h-4 stroke-[2]" aria-hidden="true"><use href="#i-banknote"/></svg> <span class="hidden sm:inline">Make Payment</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Stats Strip -->
+            {{> stats-strip 
+              label1="Total Disbursed" value1="₦ 765,000.00"
+              label2="Payslips Issued" value2="2"
+              label3="Disbursed (Paid)" value3="₦ 415,000.00" success3=true subtext3="John Doe settled"
+              label4="Pending Payout" value4="₦ 350,000.00" subtext4="Jane Smith"
+            }}
+
+            <!-- Desktop Filters -->
+            <div class="flex gap-2 mb-2.5 flex-wrap hidden md:flex items-center">
+              <div class="flex items-center gap-2 h-control px-2.5 bg-surface border border-line-strong rounded text-[13px] focus-within:border-indigo focus-within:ring-[3px] focus-within:ring-indigo-line w-[180px]">
+                <input type="month" value="2026-09" class="bg-transparent border-0 outline-none w-full text-ink cursor-pointer">
+              </div>
+              <div class="flex items-center h-control px-2.5 bg-surface border border-line-strong rounded text-[13px] focus-within:border-indigo focus-within:ring-[3px] focus-within:ring-indigo-line">
+                <select class="bg-transparent border-0 outline-none w-full text-ink cursor-pointer"><option>All statuses</option><option>Paid</option><option>Pending</option></select>
               </div>
             </div>
 
             <!-- Table (Desktop) -->
             <div class="bg-surface border border-line rounded overflow-x-auto hidden md:block">
-              <table class="w-full border-collapse text-[13px] min-w-[700px]">
+              <table class="w-full border-collapse text-[13px] min-w-[760px]">
                 <thead>
                   <tr class="bg-th text-muted font-medium text-xs">
-                    <th class="px-3.5 py-2.5 text-left border-b border-line whitespace-nowrap font-medium">Employee ID</th>
-                    <th class="px-3.5 py-2.5 text-left border-b border-line whitespace-nowrap font-medium">Name</th>
-                    <th class="px-3.5 py-2.5 text-left border-b border-line whitespace-nowrap font-medium">Month</th>
-                    <th class="px-3.5 py-2.5 text-left border-b border-line whitespace-nowrap font-medium">Year</th>
-                    <th class="px-3.5 py-2.5 text-right border-b border-line whitespace-nowrap font-medium font-variant-numeric:tabular-nums">Net Salary</th>
+                    <th class="px-3.5 py-2.5 text-left border-b border-line whitespace-nowrap font-medium">Employee</th>
+                    <th class="px-3.5 py-2.5 text-left border-b border-line whitespace-nowrap font-medium">Department</th>
+                    <th class="px-3.5 py-2.5 text-right border-b border-line whitespace-nowrap font-medium">Gross Pay</th>
+                    <th class="px-3.5 py-2.5 text-right border-b border-line whitespace-nowrap font-medium">Deductions</th>
+                    <th class="px-3.5 py-2.5 text-right border-b border-line whitespace-nowrap font-medium font-semibold">Net Pay (₦)</th>
                     <th class="px-3.5 py-2.5 text-left border-b border-line whitespace-nowrap font-medium">Status</th>
                     <th class="px-3.5 py-2.5 border-b border-line w-9"></th>
                   </tr>
                 </thead>
-                <tbody class="[&_tr:last-child_td]:border-b-0">
+                <tbody class="divide-y divide-line">
                   <tr class="hover:bg-[#FAFBFD] transition-colors cursor-pointer" data-goto="view">
-                    <td class="px-3.5 py-3 border-b border-line font-medium text-muted">EMP-001</td>
-                    <td class="px-3.5 py-3 border-b border-line">
-                      <div class="font-medium text-ink">John Doe</div>
+                    <td class="px-3.5 py-3 whitespace-nowrap">
+                      <div class="flex items-center gap-2.5">
+                        <div class="w-7 h-7 rounded-full bg-indigo/10 text-indigo flex items-center justify-center text-xs font-bold shrink-0">JD</div>
+                        <div>
+                          <div class="font-semibold text-ink">John Doe</div>
+                          <div class="text-xs text-muted">EMP-001 · Senior Developer</div>
+                        </div>
+                      </div>
                     </td>
-                    <td class="px-3.5 py-3 border-b border-line">September</td>
-                    <td class="px-3.5 py-3 border-b border-line">2026</td>
-                    <td class="px-3.5 py-3 border-b border-line text-right font-medium" style="font-variant-numeric: tabular-nums;">450,000.00</td>
-                    <td class="px-3.5 py-3 border-b border-line whitespace-nowrap"><span class="inline-flex items-center gap-1.5 h-[22px] px-2 rounded-[3px] text-xs font-medium whitespace-nowrap bg-status-paid-bg text-status-paid-text border border-status-paid-border before:content-[''] before:w-1.5 before:h-1.5 before:rounded-full before:bg-status-paid-dot before:shrink-0">Paid</span></td>
-                    <td class="px-3.5 py-3 border-b border-line whitespace-nowrap"><button class="w-[26px] h-[26px] rounded flex items-center justify-center text-muted hover:bg-th hover:border-line-strong hover:text-ink border border-transparent"><svg class="w-4 h-4 stroke-[1.75]" aria-hidden="true"><use href="#i-download"/></svg></button></td>
+                    <td class="px-3.5 py-3 whitespace-nowrap text-ink">Engineering</td>
+                    <td class="px-3.5 py-3 whitespace-nowrap text-right font-medium text-ink" style="font-variant-numeric: tabular-nums;">450,000.00</td>
+                    <td class="px-3.5 py-3 whitespace-nowrap text-right font-medium text-muted" style="font-variant-numeric: tabular-nums;">35,000.00</td>
+                    <td class="px-3.5 py-3 whitespace-nowrap text-right font-bold text-ink" style="font-variant-numeric: tabular-nums;">415,000.00</td>
+                    <td class="px-3.5 py-3 whitespace-nowrap">
+                      {{> status-badge status="paid" label="Paid"}}
+                    </td>
+                    <td class="px-3.5 py-3 whitespace-nowrap" onclick="event.stopPropagation()">
+                      <button class="w-[26px] h-[26px] rounded flex items-center justify-center text-muted hover:bg-th hover:text-ink" onclick="window.showToast({ title: 'Downloading Payslip', message: 'Generating payslip PDF for John Doe...', type: 'info' });"><svg class="w-4 h-4 stroke-[1.75]" aria-hidden="true"><use href="#i-download"/></svg></button>
+                    </td>
+                  </tr>
+                  <tr class="hover:bg-[#FAFBFD] transition-colors cursor-pointer" data-goto="view">
+                    <td class="px-3.5 py-3 whitespace-nowrap">
+                      <div class="flex items-center gap-2.5">
+                        <div class="w-7 h-7 rounded-full bg-indigo/10 text-indigo flex items-center justify-center text-xs font-bold shrink-0">JS</div>
+                        <div>
+                          <div class="font-semibold text-ink">Jane Smith</div>
+                          <div class="text-xs text-muted">EMP-002 · Lead UI Designer</div>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="px-3.5 py-3 whitespace-nowrap text-ink">Design</td>
+                    <td class="px-3.5 py-3 whitespace-nowrap text-right font-medium text-ink" style="font-variant-numeric: tabular-nums;">380,000.00</td>
+                    <td class="px-3.5 py-3 whitespace-nowrap text-right font-medium text-muted" style="font-variant-numeric: tabular-nums;">30,000.00</td>
+                    <td class="px-3.5 py-3 whitespace-nowrap text-right font-bold text-ink" style="font-variant-numeric: tabular-nums;">350,000.00</td>
+                    <td class="px-3.5 py-3 whitespace-nowrap">
+                      {{> status-badge status="pending" label="Pending"}}
+                    </td>
+                    <td class="px-3.5 py-3 whitespace-nowrap" onclick="event.stopPropagation()">
+                      <button class="w-[26px] h-[26px] rounded flex items-center justify-center text-muted hover:bg-th hover:text-ink" onclick="window.showToast({ title: 'Downloading Payslip', message: 'Generating payslip PDF for Jane Smith...', type: 'info' });"><svg class="w-4 h-4 stroke-[1.75]" aria-hidden="true"><use href="#i-download"/></svg></button>
+                    </td>
                   </tr>
                 </tbody>
               </table>
               <div class="flex items-center gap-3 px-3.5 py-2.5 border-t border-line text-xs text-muted bg-surface">
-                <span>1 record found</span>
+                <span>2 payslips generated</span>
               </div>
             </div>
 
             <!-- List (Mobile) -->
             <div class="block md:hidden">
               <div class="bg-surface border border-line rounded overflow-hidden">
-                <button class="w-full text-left bg-transparent border-0 border-b border-line px-3 py-2.5 flex items-center gap-3 min-h-row-mob last:border-b-0 active:bg-th" data-goto="view">
+                <button class="w-full text-left bg-transparent border-0 border-b border-line px-3.5 py-3 flex items-center gap-3 min-h-row-mob last:border-b-0 active:bg-th" data-goto="view">
+                  <div class="w-8 h-8 rounded-full bg-indigo/10 text-indigo flex items-center justify-center text-[12px] font-bold shrink-0">JD</div>
                   <div class="flex-1 min-w-0">
                     <div class="font-medium text-ink truncate">John Doe</div>
-                    <div class="text-[11px] text-muted flex gap-2 mt-0.5">
-                      September 2026 • EMP-001
-                    </div>
+                    <div class="text-xs text-muted truncate">Sep 2026 · Net: ₦415,000.00</div>
                   </div>
-                  <div class="text-right shrink-0">
-                    <div class="font-medium text-ink font-variant-numeric:tabular-nums">450,000.00</div>
-                  </div>
+                  {{> status-badge status="paid" label="Paid"}}
                 </button>
-              </div>
-              <div class="sticky bottom-3 flex justify-end mt-3 pointer-events-none">
-                <button class="pointer-events-auto inline-flex items-center gap-1.5 h-[44px] px-[18px] rounded-pill border border-transparent text-[13px] font-medium bg-indigo text-white shadow-[0_6px_18px_rgba(67,83,224,0.35)]" data-modal-target="payroll-modal">
-                  <svg class="w-4 h-4 stroke-[1.75]" aria-hidden="true"><use href="#i-plus"/></svg> Generate
+                <button class="w-full text-left bg-transparent border-0 border-b border-line px-3.5 py-3 flex items-center gap-3 min-h-row-mob last:border-b-0 active:bg-th" data-goto="view">
+                  <div class="w-8 h-8 rounded-full bg-indigo/10 text-indigo flex items-center justify-center text-[12px] font-bold shrink-0">JS</div>
+                  <div class="flex-1 min-w-0">
+                    <div class="font-medium text-ink truncate">Jane Smith</div>
+                    <div class="text-xs text-muted truncate">Sep 2026 · Net: ₦350,000.00</div>
+                  </div>
+                  {{> status-badge status="pending" label="Pending"}}
                 </button>
               </div>
             </div>
           </div>
-        </div>
+
+          <!-- 2. Screen: Printable / A4 Payslip Document View -->
+          <div id="s-view" class="hidden p-4 md:p-6 overflow-auto flex-1" data-screen="view">
+            <div class="flex items-center gap-3 mb-4">
+              <button class="inline-flex items-center justify-center w-control h-control rounded bg-transparent text-muted hover:bg-th hover:text-ink transition-colors" data-goto="list">
+                <svg class="w-4 h-4 stroke-[1.75]" aria-hidden="true"><use href="#i-arrow-left"/></svg>
+              </button>
+              <div>
+                <div class="text-xs text-muted font-medium">Payslip View</div>
+                <h1 class="m-0 text-xl font-bold tracking-tight text-ink">John Doe · September 2026</h1>
+              </div>
+              <div class="ml-auto flex items-center gap-2">
+                <button type="button" class="inline-flex items-center gap-1.5 h-control px-3 rounded border border-line-strong text-[13px] font-medium bg-surface text-ink hover:bg-th transition-colors shadow-sm" onclick="window.print()">
+                  <svg class="w-4 h-4 stroke-[1.75]" aria-hidden="true"><use href="#i-download"/></svg> Print / PDF
+                </button>
+              </div>
+            </div>
+
+            <!-- A4 Printable Payslip Document -->
+            <div class="flex justify-center py-4">
+              <div class="w-full max-w-[760px] bg-white border border-line-strong shadow-md rounded-xl p-8 sm:p-12 text-[13px] text-ink space-y-6">
+                <!-- Header -->
+                <div class="flex justify-between items-start border-b border-line pb-6">
+                  <div>
+                    <h2 class="text-2xl font-black text-ink m-0 tracking-tight">PAYSLIP</h2>
+                    <div class="text-xs font-semibold text-muted uppercase tracking-widest mt-1">Period: September 2026</div>
+                  </div>
+                  <div class="text-right">
+                    <div class="font-bold text-base text-ink">{{seed.business.name}}</div>
+                    <div class="text-xs text-muted">{{seed.business.address}}</div>
+                  </div>
+                </div>
+
+                <!-- Employee & Payment Info Grid -->
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 p-4 bg-canvas/60 border border-line rounded-lg text-xs">
+                  <div>
+                    <span class="text-muted block">Employee Name</span>
+                    <span class="font-bold text-ink text-[13px]">John Doe</span>
+                  </div>
+                  <div>
+                    <span class="text-muted block">Employee ID</span>
+                    <span class="font-semibold text-ink">EMP-001</span>
+                  </div>
+                  <div>
+                    <span class="text-muted block">Department</span>
+                    <span class="font-semibold text-ink">Engineering</span>
+                  </div>
+                  <div>
+                    <span class="text-muted block">Bank Account</span>
+                    <span class="font-semibold text-ink">GTBank · 0129384756</span>
+                  </div>
+                </div>
+
+                <!-- Earnings & Deductions Breakdown -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <!-- Earnings -->
+                  <div class="border border-line rounded-lg overflow-hidden">
+                    <div class="bg-th px-4 py-2 text-xs font-bold uppercase tracking-wider text-muted border-b border-line">Earnings</div>
+                    <div class="divide-y divide-line p-3 text-xs space-y-2">
+                      <div class="flex justify-between py-1">
+                        <span class="text-muted">Basic Salary</span>
+                        <span class="font-medium text-ink">₦ 250,000.00</span>
+                      </div>
+                      <div class="flex justify-between py-1">
+                        <span class="text-muted">Housing Allowance</span>
+                        <span class="font-medium text-ink">₦ 120,000.00</span>
+                      </div>
+                      <div class="flex justify-between py-1">
+                        <span class="text-muted">Transport Allowance</span>
+                        <span class="font-medium text-ink">₦ 80,000.00</span>
+                      </div>
+                      <div class="flex justify-between py-1.5 font-bold border-t border-line text-[13px]">
+                        <span>Gross Earnings</span>
+                        <span>₦ 450,000.00</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Deductions -->
+                  <div class="border border-line rounded-lg overflow-hidden">
+                    <div class="bg-th px-4 py-2 text-xs font-bold uppercase tracking-wider text-muted border-b border-line">Deductions</div>
+                    <div class="divide-y divide-line p-3 text-xs space-y-2">
+                      <div class="flex justify-between py-1">
+                        <span class="text-muted">PAYE Income Tax</span>
+                        <span class="font-medium text-ink">₦ 22,500.00</span>
+                      </div>
+                      <div class="flex justify-between py-1">
+                        <span class="text-muted">Employee Pension (8%)</span>
+                        <span class="font-medium text-ink">₦ 12,500.00</span>
+                      </div>
+                      <div class="flex justify-between py-1.5 font-bold border-t border-line text-[13px]">
+                        <span>Total Deductions</span>
+                        <span>₦ 35,000.00</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Net Pay Banner -->
+                <div class="p-4 bg-navy text-white rounded-xl flex items-center justify-between">
+                  <div>
+                    <div class="text-xs text-navy-fg uppercase tracking-wider font-semibold">Net Pay Disbursed</div>
+                    <div class="text-2xl font-black mt-0.5" style="font-variant-numeric: tabular-nums;">₦ 415,000.00</div>
+                  </div>
+                  {{> status-badge status="paid" label="Paid & Disbursed"}}
+                </div>
+              </div>
+            </div>
+          </div>
+
       </main>
     </div>
   </div>
 
-  {{#> modal-dialog id="payroll-modal" title="Generate Payslip" action_label="Generate" }}
-    <div class="flex flex-col gap-3">
-      <p class="text-muted text-xs">Select the month and year to generate employee payslips.</p>
-      <div class="grid grid-cols-2 gap-3">
-        <div>
-          <label class="block text-xs font-medium text-muted mb-1.25">Month</label>
-          <div class="flex items-center gap-2 h-control px-2.5 bg-surface border border-line-strong rounded text-[13px] focus-within:border-indigo focus-within:ring-[3px] focus-within:ring-indigo-line">
-            <select class="bg-transparent border-0 outline-none w-full">
-              <option>January</option>
-              <option>February</option>
-              <option>March</option>
-              <option>April</option>
-              <option>May</option>
-              <option>June</option>
-              <option>July</option>
-              <option>August</option>
-              <option selected>September</option>
-              <option>October</option>
-              <option>November</option>
-              <option>December</option>
-            </select>
+  <!-- Modal: Bulk Make Payment -->
+  <div id="makePaymentModal" class="fixed inset-0 z-50 flex items-center justify-center pointer-events-none hidden group/modal">
+    <div class="absolute inset-0 bg-ink/30 pointer-events-auto opacity-0 group-data-[open=true]/modal:opacity-100 transition-opacity backdrop-blur-[1px]" data-modal-close="makePaymentModal"></div>
+    <div class="w-full max-w-md bg-surface rounded-xl shadow-2xl pointer-events-auto scale-95 opacity-0 group-data-[open=true]/modal:scale-100 group-data-[open=true]/modal:opacity-100 transition-all flex flex-col z-10 duration-200 border border-line mx-4">
+      <div class="flex items-center px-5 py-3.5 border-b border-line shrink-0">
+        <h2 class="m-0 text-[15px] font-semibold tracking-tight text-ink">Authorize Bulk Payroll Transfer</h2>
+        <button class="ml-auto w-7 h-7 rounded flex items-center justify-center text-muted hover:bg-th -mr-1" data-modal-close="makePaymentModal">
+          <svg class="w-4 h-4 stroke-[2]"><use href="#i-x-circle"/></svg>
+        </button>
+      </div>
+      <div class="p-5 space-y-4 text-[13px]">
+        <div class="p-3 bg-canvas border border-line rounded-lg flex justify-between items-center">
+          <div>
+            <span class="text-xs text-muted block">Pending Payout</span>
+            <span class="font-bold text-ink text-base">₦ 350,000.00</span>
           </div>
+          <span class="text-xs text-indigo font-semibold">1 Employee (Jane Smith)</span>
         </div>
         <div>
-          <label class="block text-xs font-medium text-muted mb-1.25">Year</label>
-          <div class="flex items-center gap-2 h-control px-2.5 bg-surface border border-line-strong rounded text-[13px] focus-within:border-indigo focus-within:ring-[3px] focus-within:ring-indigo-line">
-            <select class="bg-transparent border-0 outline-none w-full">
-              <option>2025</option>
-              <option selected>2026</option>
-            </select>
-          </div>
+          <label class="block text-xs font-semibold text-muted uppercase tracking-wider mb-1.5">Debit Company Account</label>
+          <select class="w-full h-control px-2.5 bg-surface border border-line-strong rounded text-[13px] text-ink focus:border-indigo outline-none">
+            <option>First Bank Corporate - 0123456789 (₦ 2,800,000.00 avail)</option>
+            <option>GTBank Operational - 9876543210 (₦ 620,500.00 avail)</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-muted uppercase tracking-wider mb-1.5">Transfer Narration</label>
+          <input type="text" value="Salaries Sep 2026 - Acme Dynamics" class="w-full h-control px-2.5 bg-surface border border-line-strong rounded text-[13px] text-ink focus:border-indigo outline-none">
         </div>
       </div>
+      <div class="px-5 py-3 border-t border-line bg-canvas/40 rounded-b-xl flex gap-2 justify-end shrink-0">
+        <button type="button" class="inline-flex items-center justify-center gap-1.5 h-control px-3.5 rounded border border-line-strong text-[13px] font-medium bg-surface text-ink hover:bg-th" data-modal-close="makePaymentModal">Cancel</button>
+        <button type="button" class="inline-flex items-center justify-center gap-1.5 h-control px-4 rounded border border-transparent text-[13px] font-medium bg-indigo text-white hover:bg-indigo-hover" data-modal-close="makePaymentModal" onclick="window.showToast({ title: 'Payroll Disbursed', message: 'Bank transfer of ₦ 350,000.00 initiated.', type: 'success' });">Authorize Payout</button>
+      </div>
     </div>
-  {{/modal-dialog}}
+  </div>
 
+  {{> toast}}
   {{> scripts}}
 </body>
 </html>

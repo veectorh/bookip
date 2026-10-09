@@ -23,6 +23,7 @@ export default defineConfig({
         payroll: resolve(__dirname, 'payroll.html'),
         recurring_invoices: resolve(__dirname, 'recurring_invoices.html'),
         components: resolve(__dirname, 'components.html'),
+        dashboard: resolve(__dirname, 'dashboard.html'),
       },
     },
   },
@@ -34,6 +35,7 @@ export default defineConfig({
       },
       helpers: {
         eq: (a, b) => a === b,
+        ne: (a, b) => a !== b,
         or: (...args) => args.slice(0, -1).some(Boolean),
       },
     }),

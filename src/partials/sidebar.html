@@ -7,7 +7,7 @@
 
   <nav class="flex-1 flex flex-col gap-0.5 text-[13px] w-full">
     <!-- Dashboard -->
-    <a href="/index.html" class="flex items-center gap-2.5 px-2.5 h-[34px] rounded-md {{#if (or (eq active "dashboard") active_dashboard)}}bg-indigo text-white font-medium{{else}}text-navy-fg hover:bg-navy-hover hover:text-white{{/if}} w-full relative group [&[data-layout=rail]_&]:justify-center [&[data-layout=rail]_&]:px-0" data-label="Dashboard">
+    <a href="/dashboard.html" class="flex items-center gap-2.5 px-2.5 h-[34px] rounded-md {{#if (or (eq active "dashboard") active_dashboard)}}bg-indigo text-white font-medium{{else}}text-navy-fg hover:bg-navy-hover hover:text-white{{/if}} w-full relative group [&[data-layout=rail]_&]:justify-center [&[data-layout=rail]_&]:px-0" data-label="Dashboard">
       <svg class="w-4 h-4 stroke-2 shrink-0"><use href="#i-layout-dashboard"/></svg>
       <span class="whitespace-nowrap overflow-hidden [&[data-layout=rail]_&]:hidden">Dashboard</span>
       <div class="hidden [&[data-layout=rail]_.group:hover_&]:block absolute left-[calc(100%+8px)] bg-ink text-white text-xs px-2.5 py-1.5 rounded shadow-lg whitespace-nowrap z-50">Dashboard</div>
