@@ -33,19 +33,19 @@
             <!-- Stats -->
             <div class="grid grid-cols-2 lg:grid-cols-4 bg-surface border border-line rounded mb-3.5 overflow-hidden stats-grid">
               <div class="p-3 border-r border-b lg:border-b-0 border-line">
-                <div class="text-xs text-muted">Total Payables</div>
+                <div class="text-xs text-muted">Bills You Owe</div>
                 <div class="text-xl font-semibold tracking-tight mt-0.5 whitespace-nowrap">{{seed.credit_summary.you_owe.total}}</div>
               </div>
               <div class="p-3 border-b lg:border-r lg:border-b-0 border-line">
-                <div class="text-xs text-muted">Overdue</div>
+                <div class="text-xs text-muted">Late Bills (Overdue)</div>
                 <div class="text-xl font-semibold tracking-tight mt-0.5 whitespace-nowrap text-[#B4372A]">₦ 913,750.00</div>
               </div>
               <div class="p-3 border-r lg:border-b-0 border-line">
-                <div class="text-xs text-muted">Paid this month</div>
+                <div class="text-xs text-muted">Paid Out This Month</div>
                 <div class="text-xl font-semibold tracking-tight mt-0.5 whitespace-nowrap">₦ 0.00</div>
               </div>
               <div class="p-3">
-                <div class="text-xs text-muted">Unpaid Bills</div>
+                <div class="text-xs text-muted">Bills Not Yet Paid</div>
                 <div class="text-xl font-semibold tracking-tight mt-0.5 whitespace-nowrap">{{seed.credit_summary.you_owe.count}}</div>
               </div>
             </div>

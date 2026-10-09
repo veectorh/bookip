@@ -44,13 +44,13 @@
           <!-- KPI 1: Inflow -->
           <div class="bg-surface border border-line rounded-xl p-4 shadow-sm flex flex-col justify-between">
             <div class="flex items-center justify-between text-muted text-xs font-medium mb-2">
-              <span>Total Sales & Inflow</span>
+              <span class="font-semibold text-ink">Money In (Sales)</span>
               <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[11px] font-semibold bg-[#E9F7EF] text-[#146A3E] border border-[#C8EAD6]">+12.4%</span>
             </div>
             <div>
               <div class="text-2xl font-bold tracking-tight text-ink" style="font-variant-numeric: tabular-nums;">₦ 860,937.50</div>
               <div class="text-xs text-muted mt-1 flex items-center gap-1">
-                <span class="w-1.5 h-1.5 rounded-full bg-[#1E9A5A]"></span> ₦ 6,500.00 settled this month
+                <span class="w-1.5 h-1.5 rounded-full bg-[#1E9A5A]"></span> ₦ 6,500.00 collected this month
               </div>
             </div>
           </div>
@@ -58,13 +58,13 @@
           <!-- KPI 2: Outflow / Purchases -->
           <div class="bg-surface border border-line rounded-xl p-4 shadow-sm flex flex-col justify-between">
             <div class="flex items-center justify-between text-muted text-xs font-medium mb-2">
-              <span>Total Bills & Purchases</span>
-              <span class="text-xs text-muted">2 vendors</span>
+              <span class="font-semibold text-ink">Money Out (Bills)</span>
+              <span class="text-xs text-muted">2 supplier bills</span>
             </div>
             <div>
               <div class="text-2xl font-bold tracking-tight text-ink" style="font-variant-numeric: tabular-nums;">₦ 958,750.00</div>
               <div class="text-xs text-muted mt-1 flex items-center gap-1">
-                <span class="w-1.5 h-1.5 rounded-full bg-[#D0432F]"></span> ₦ 913,750.00 currently overdue
+                <span class="w-1.5 h-1.5 rounded-full bg-[#D0432F]"></span> ₦ 913,750.00 not yet paid
               </div>
             </div>
           </div>
@@ -72,19 +72,19 @@
           <!-- KPI 3: Net Operating Balance -->
           <div class="bg-surface border border-line rounded-xl p-4 shadow-sm flex flex-col justify-between">
             <div class="flex items-center justify-between text-muted text-xs font-medium mb-2">
-              <span>Net Cashflow Margin</span>
-              <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[11px] font-semibold bg-[#FDECEA] text-[#B4372A] border border-[#F5CFC9]">CapEx heavy</span>
+              <span class="font-semibold text-ink">Money Left (Profit / Loss)</span>
+              <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[11px] font-semibold bg-[#FDECEA] text-[#B4372A] border border-[#F5CFC9]">Equipment buy</span>
             </div>
             <div>
               <div class="text-2xl font-bold tracking-tight text-[#B4372A]" style="font-variant-numeric: tabular-nums;">-₦ 97,812.50</div>
-              <div class="text-xs text-muted mt-1 truncate">Server hardware infrastructure</div>
+              <div class="text-xs text-muted mt-1 truncate">After buying server equipment</div>
             </div>
           </div>
 
           <!-- KPI 4: Liquid Cash Reserves -->
           <div class="bg-surface border border-line rounded-xl p-4 shadow-sm flex flex-col justify-between">
             <div class="flex items-center justify-between text-muted text-xs font-medium mb-2">
-              <span>Bank & Liquid Reserves</span>
+              <span class="font-semibold text-ink">Cash in Bank</span>
               <span class="text-xs text-indigo font-semibold">2 Accounts</span>
             </div>
             <div>
@@ -105,34 +105,39 @@
                   <svg class="w-4 h-4 stroke-[2]"><use href="#i-arrow-down-left"/></svg>
                 </div>
                 <div>
-                  <h3 class="m-0 text-[15px] font-semibold tracking-tight text-ink">Receivables (Owed to You)</h3>
-                  <div class="text-xs text-muted">{{seed.credit_summary.owed_to_you.count}} overdue customer invoices</div>
+                  <h3 class="m-0 text-[15px] font-semibold tracking-tight text-ink">Money Customers Owe You</h3>
+                  <div class="text-xs text-muted">{{seed.credit_summary.owed_to_you.count}} customer invoices not yet paid</div>
                 </div>
               </div>
               <div class="text-right">
                 <div class="text-lg font-bold text-ink" style="font-variant-numeric: tabular-nums;">{{seed.credit_summary.owed_to_you.total}}</div>
-                <span class="text-[11px] font-medium text-[#B4372A]">Action required</span>
+                <span class="text-[11px] font-medium text-[#B4372A]">Follow-up needed</span>
               </div>
             </div>
 
             <!-- List of overdue customers -->
             <div class="space-y-2.5">
               {{#each seed.credit_summary.owed_to_you.items}}
-              <div class="p-3 bg-canvas/60 border border-line rounded-lg flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                <div>
-                  <div class="flex items-center gap-2">
-                    <span class="font-semibold text-ink text-[13px]">{{this.entity}}</span>
-                    <span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[11px] font-medium bg-[#FDECEA] text-[#B4372A] border border-[#F5CFC9]">Overdue {{this.days_overdue}}d</span>
-                  </div>
-                  <div class="text-xs text-muted mt-0.5">Invoice {{this.doc}} · Total Due: <strong class="text-ink">{{this.amount}}</strong></div>
+              <div class="p-3.5 bg-canvas/60 border border-line rounded-lg flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <div class="min-w-0 flex-1 pr-2">
+                  <div class="font-bold text-ink text-[14px] truncate" title="{{this.entity}}">{{this.entity}}</div>
+                  <div class="text-xs text-muted mt-0.5">Invoice {{this.doc}} · Still Owed: <strong class="text-ink text-[13px] font-semibold">{{this.amount}}</strong></div>
                 </div>
-                <div class="flex items-center gap-2 shrink-0">
-                  <button type="button" class="inline-flex items-center gap-1 h-7 px-2.5 rounded border border-line-strong text-xs font-medium bg-surface text-ink hover:bg-th transition-colors" data-modal-target="recordPaymentModal">
-                    <svg class="w-3.5 h-3.5 stroke-[2] text-[#1E9A5A]"><use href="#i-wallet"/></svg> Record Payment
-                  </button>
-                  <button type="button" class="inline-flex items-center gap-1 h-7 px-2 rounded text-xs font-medium text-muted hover:text-ink transition-colors" onclick="window.showToast({ title: 'Reminder Dispatched', message: 'Payment reminder sent to {{this.entity}}.', type: 'success' });">
-                    <svg class="w-3.5 h-3.5 stroke-[2]"><use href="#i-send"/></svg> Remind
-                  </button>
+                <div class="flex flex-col sm:items-end gap-1.5 shrink-0">
+                  <div class="flex items-center gap-2">
+                    <!-- Lower priority button on left -->
+                    <button type="button" class="inline-flex items-center gap-1 h-7 px-2.5 rounded border border-line-strong text-xs font-medium bg-surface text-ink hover:bg-th transition-colors shadow-sm" onclick="window.showToast({ title: 'Reminder Dispatched', message: 'Payment reminder sent to {{this.entity}}.', type: 'success' });">
+                      <svg class="w-3.5 h-3.5 stroke-[2] text-muted"><use href="#i-send"/></svg> Remind
+                    </button>
+                    <!-- Higher priority button on right -->
+                    <button type="button" class="inline-flex items-center gap-1 h-7 px-3 rounded border border-transparent text-xs font-medium bg-indigo text-white hover:bg-indigo-hover transition-colors shadow-sm" data-modal-target="recordPaymentModal">
+                      <svg class="w-3.5 h-3.5 stroke-[2] text-white"><use href="#i-wallet"/></svg> Record Payment
+                    </button>
+                  </div>
+                  <!-- Status badge below buttons -->
+                  <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-semibold bg-[#FDECEA] text-[#B4372A] border border-[#F5CFC9] self-start sm:self-end">
+                    Overdue by {{this.days_overdue}} days
+                  </span>
                 </div>
               </div>
               {{/each}}
@@ -140,7 +145,7 @@
 
             <!-- Aging breakdown pill indicator -->
             <div class="pt-1 flex items-center justify-between text-xs text-muted border-t border-line">
-              <span class="font-medium">Aging: 100% within 0-30 days overdue</span>
+              <span class="font-medium">All overdue invoices are under 30 days late</span>
               <a href="/index.html" class="text-indigo font-semibold hover:underline">View all invoices →</a>
             </div>
           </div>
@@ -153,38 +158,45 @@
                   <svg class="w-4 h-4 stroke-[2]"><use href="#i-arrow-up-right"/></svg>
                 </div>
                 <div>
-                  <h3 class="m-0 text-[15px] font-semibold tracking-tight text-ink">Payables (You Owe)</h3>
-                  <div class="text-xs text-muted">{{seed.credit_summary.you_owe.count}} vendor bills pending</div>
+                  <h3 class="m-0 text-[15px] font-semibold tracking-tight text-ink">Money You Owe Suppliers</h3>
+                  <div class="text-xs text-muted">{{seed.credit_summary.you_owe.count}} supplier bills to be paid</div>
                 </div>
               </div>
               <div class="text-right">
                 <div class="text-lg font-bold text-[#B4372A]" style="font-variant-numeric: tabular-nums;">{{seed.credit_summary.you_owe.total}}</div>
-                <span class="text-[11px] font-medium text-muted">Total outstanding</span>
+                <span class="text-[11px] font-medium text-muted">Total to pay</span>
               </div>
             </div>
 
             <!-- List of pending vendor bills -->
             <div class="space-y-2.5">
               {{#each seed.credit_summary.you_owe.items}}
-              <div class="p-3 bg-canvas/60 border border-line rounded-lg flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                <div>
-                  <div class="flex items-center gap-2">
-                    <span class="font-semibold text-ink text-[13px]">{{this.entity}}</span>
-                    {{#if (eq this.urgency "overdue")}}
-                    <span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[11px] font-medium bg-[#FDECEA] text-[#B4372A] border border-[#F5CFC9]">Overdue {{this.days_overdue}}d</span>
-                    {{else}}
-                    <span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[11px] font-medium bg-[#FFF8E6] text-[#8A5A00] border border-[#FDE6B0]">Due in {{this.days_due_in}}d</span>
-                    {{/if}}
-                  </div>
-                  <div class="text-xs text-muted mt-0.5">Bill {{this.doc}} · Total Owed: <strong class="text-ink">{{this.amount}}</strong></div>
+              <div class="p-3.5 bg-canvas/60 border border-line rounded-lg flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <div class="min-w-0 flex-1 pr-2">
+                  <div class="font-bold text-ink text-[14px] truncate" title="{{this.entity}}">{{this.entity}}</div>
+                  <div class="text-xs text-muted mt-0.5">Bill {{this.doc}} · Bill Amount: <strong class="text-ink text-[13px] font-semibold">{{this.amount}}</strong></div>
                 </div>
-                <div class="flex items-center gap-2 shrink-0">
-                  <button type="button" class="inline-flex items-center gap-1 h-7 px-2.5 rounded border border-transparent text-xs font-medium bg-indigo text-white hover:bg-indigo-hover transition-colors shadow-sm" onclick="window.location.href='/purchases.html'">
-                    Pay Bill Now
-                  </button>
-                  <a href="/purchases.html" class="inline-flex items-center gap-1 h-7 px-2 rounded border border-line-strong text-xs font-medium bg-surface text-ink hover:bg-th transition-colors">
-                    View
-                  </a>
+                <div class="flex flex-col sm:items-end gap-1.5 shrink-0">
+                  <div class="flex items-center gap-2">
+                    <!-- Lower priority button on left -->
+                    <a href="/purchases.html" class="inline-flex items-center gap-1 h-7 px-2.5 rounded border border-line-strong text-xs font-medium bg-surface text-ink hover:bg-th transition-colors shadow-sm">
+                      View Bill
+                    </a>
+                    <!-- Higher priority button on right -->
+                    <button type="button" class="inline-flex items-center gap-1 h-7 px-3 rounded border border-transparent text-xs font-medium bg-indigo text-white hover:bg-indigo-hover transition-colors shadow-sm" onclick="window.location.href='/purchases.html'">
+                      Pay Bill Now
+                    </button>
+                  </div>
+                  <!-- Status badge below buttons -->
+                  {{#if (eq this.urgency "overdue")}}
+                  <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-semibold bg-[#FDECEA] text-[#B4372A] border border-[#F5CFC9] self-start sm:self-end">
+                    Overdue by {{this.days_overdue}} days
+                  </span>
+                  {{else}}
+                  <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-semibold bg-[#FFF8E6] text-[#8A5A00] border border-[#FDE6B0] self-start sm:self-end">
+                    Due in {{this.days_due_in}} days
+                  </span>
+                  {{/if}}
                 </div>
               </div>
               {{/each}}
@@ -192,7 +204,7 @@
 
             <!-- Aging breakdown pill indicator -->
             <div class="pt-1 flex items-center justify-between text-xs text-muted border-t border-line">
-              <span class="font-medium">95.3% due to Prime Tech Hardware</span>
+              <span class="font-medium">95.3% owed to Prime Tech Hardware</span>
               <a href="/purchases.html" class="text-indigo font-semibold hover:underline">View all bills →</a>
             </div>
           </div>
@@ -205,12 +217,12 @@
           <div class="bg-surface border border-line rounded-xl p-4 sm:p-5 shadow-sm lg:col-span-2 space-y-4">
             <div class="flex items-center justify-between">
               <div>
-                <h3 class="m-0 text-[15px] font-semibold tracking-tight text-ink">Cashflow Trend & Revenue</h3>
-                <div class="text-xs text-muted">Monthly comparison of revenue vs operating outflows</div>
+                <h3 class="m-0 text-[15px] font-semibold tracking-tight text-ink">Money In vs Money Out</h3>
+                <div class="text-xs text-muted">Monthly comparison of money collected vs bills paid</div>
               </div>
               <div class="flex items-center gap-3 text-xs font-medium">
-                <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-sm bg-indigo"></span> Inflows</span>
-                <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-sm bg-[#B4372A]"></span> Outflows</span>
+                <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-sm bg-indigo"></span> Money In</span>
+                <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-sm bg-[#B4372A]"></span> Money Out</span>
               </div>
             </div>
 
@@ -225,33 +237,33 @@
 
                 <!-- Monthly Bars (May, Jun, Jul, Aug, Sep, Oct) -->
                 <!-- May -->
-                <rect x="40" y="70" width="18" height="90" rx="3" fill="#4353E0" class="hover:opacity-80 transition-opacity"><title>May Inflow: ₦450k</title></rect>
-                <rect x="62" y="100" width="18" height="60" rx="3" fill="#F5CFC9" class="hover:opacity-80 transition-opacity"><title>May Outflow: ₦300k</title></rect>
+                <rect x="40" y="70" width="18" height="90" rx="3" fill="#4353E0" class="hover:opacity-80 transition-opacity"><title>May Money In: ₦450k</title></rect>
+                <rect x="62" y="100" width="18" height="60" rx="3" fill="#F5CFC9" class="hover:opacity-80 transition-opacity"><title>May Money Out: ₦300k</title></rect>
                 <text x="60" y="176" text-anchor="middle" font-size="11" fill="#6F76A8">May</text>
 
                 <!-- Jun -->
-                <rect x="140" y="50" width="18" height="110" rx="3" fill="#4353E0" class="hover:opacity-80 transition-opacity"><title>Jun Inflow: ₦550k</title></rect>
-                <rect x="162" y="110" width="18" height="50" rx="3" fill="#F5CFC9" class="hover:opacity-80 transition-opacity"><title>Jun Outflow: ₦250k</title></rect>
+                <rect x="140" y="50" width="18" height="110" rx="3" fill="#4353E0" class="hover:opacity-80 transition-opacity"><title>Jun Money In: ₦550k</title></rect>
+                <rect x="162" y="110" width="18" height="50" rx="3" fill="#F5CFC9" class="hover:opacity-80 transition-opacity"><title>Jun Money Out: ₦250k</title></rect>
                 <text x="160" y="176" text-anchor="middle" font-size="11" fill="#6F76A8">Jun</text>
 
                 <!-- Jul -->
-                <rect x="240" y="40" width="18" height="120" rx="3" fill="#4353E0" class="hover:opacity-80 transition-opacity"><title>Jul Inflow: ₦620k</title></rect>
-                <rect x="262" y="90" width="18" height="70" rx="3" fill="#F5CFC9" class="hover:opacity-80 transition-opacity"><title>Jul Outflow: ₦350k</title></rect>
+                <rect x="240" y="40" width="18" height="120" rx="3" fill="#4353E0" class="hover:opacity-80 transition-opacity"><title>Jul Money In: ₦620k</title></rect>
+                <rect x="262" y="90" width="18" height="70" rx="3" fill="#F5CFC9" class="hover:opacity-80 transition-opacity"><title>Jul Money Out: ₦350k</title></rect>
                 <text x="260" y="176" text-anchor="middle" font-size="11" fill="#6F76A8">Jul</text>
 
                 <!-- Aug -->
-                <rect x="340" y="60" width="18" height="100" rx="3" fill="#4353E0" class="hover:opacity-80 transition-opacity"><title>Aug Inflow: ₦500k</title></rect>
-                <rect x="362" y="80" width="18" height="80" rx="3" fill="#F5CFC9" class="hover:opacity-80 transition-opacity"><title>Aug Outflow: ₦400k</title></rect>
+                <rect x="340" y="60" width="18" height="100" rx="3" fill="#4353E0" class="hover:opacity-80 transition-opacity"><title>Aug Money In: ₦500k</title></rect>
+                <rect x="362" y="80" width="18" height="80" rx="3" fill="#F5CFC9" class="hover:opacity-80 transition-opacity"><title>Aug Money Out: ₦400k</title></rect>
                 <text x="360" y="176" text-anchor="middle" font-size="11" fill="#6F76A8">Aug</text>
 
                 <!-- Sep -->
-                <rect x="440" y="30" width="18" height="130" rx="3" fill="#4353E0" class="hover:opacity-80 transition-opacity"><title>Sep Inflow: ₦780k</title></rect>
-                <rect x="462" y="25" width="18" height="135" rx="3" fill="#D0432F" class="hover:opacity-80 transition-opacity"><title>Sep Outflow: ₦820k</title></rect>
+                <rect x="440" y="30" width="18" height="130" rx="3" fill="#4353E0" class="hover:opacity-80 transition-opacity"><title>Sep Money In: ₦780k</title></rect>
+                <rect x="462" y="25" width="18" height="135" rx="3" fill="#D0432F" class="hover:opacity-80 transition-opacity"><title>Sep Money Out: ₦820k</title></rect>
                 <text x="460" y="176" text-anchor="middle" font-size="11" fill="#6F76A8">Sep</text>
 
                 <!-- Oct (Current) -->
-                <rect x="540" y="20" width="18" height="140" rx="3" fill="#4353E0" class="hover:opacity-80 transition-opacity"><title>Oct Inflow: ₦860.9k</title></rect>
-                <rect x="562" y="15" width="18" height="145" rx="3" fill="#D0432F" class="hover:opacity-80 transition-opacity"><title>Oct Outflow: ₦958.7k</title></rect>
+                <rect x="540" y="20" width="18" height="140" rx="3" fill="#4353E0" class="hover:opacity-80 transition-opacity"><title>Oct Money In: ₦860.9k</title></rect>
+                <rect x="562" y="15" width="18" height="145" rx="3" fill="#D0432F" class="hover:opacity-80 transition-opacity"><title>Oct Money Out: ₦958.7k</title></rect>
                 <text x="560" y="176" text-anchor="middle" font-size="11" font-weight="600" fill="#161A2E">Oct</text>
               </svg>
             </div>
@@ -261,7 +273,7 @@
           <div class="bg-surface border border-line rounded-xl p-4 sm:p-5 shadow-sm flex flex-col justify-between space-y-3">
             <div>
               <h3 class="m-0 text-[15px] font-semibold tracking-tight text-ink">Quick Actions</h3>
-              <div class="text-xs text-muted mt-0.5">Frequent operational tasks</div>
+              <div class="text-xs text-muted mt-0.5">Frequent store and sales tasks</div>
             </div>
 
             <div class="grid grid-cols-1 gap-2.5">
@@ -271,7 +283,7 @@
                 </div>
                 <div class="flex-1 min-w-0">
                   <div class="font-semibold text-ink text-[13px] group-hover:text-indigo">Create Invoice</div>
-                  <div class="text-xs text-muted truncate">Issue new bill to customer</div>
+                  <div class="text-xs text-muted truncate">Write bill for customer</div>
                 </div>
                 <svg class="w-4 h-4 text-muted group-hover:text-indigo stroke-[2]"><use href="#i-chevron-right"/></svg>
               </a>
@@ -282,7 +294,7 @@
                 </div>
                 <div class="flex-1 min-w-0">
                   <div class="font-semibold text-ink text-[13px] group-hover:text-indigo">Record Payment</div>
-                  <div class="text-xs text-muted truncate">Log cash/bank transfer received</div>
+                  <div class="text-xs text-muted truncate">Customer paid you money</div>
                 </div>
                 <svg class="w-4 h-4 text-muted group-hover:text-indigo stroke-[2]"><use href="#i-chevron-right"/></svg>
               </button>
@@ -293,7 +305,7 @@
                 </div>
                 <div class="flex-1 min-w-0">
                   <div class="font-semibold text-ink text-[13px] group-hover:text-indigo">New Quotation</div>
-                  <div class="text-xs text-muted truncate">Send cost estimate</div>
+                  <div class="text-xs text-muted truncate">Price estimate for customer</div>
                 </div>
                 <svg class="w-4 h-4 text-muted group-hover:text-indigo stroke-[2]"><use href="#i-chevron-right"/></svg>
               </a>
@@ -303,8 +315,8 @@
                   <svg class="w-4 h-4 stroke-[2]"><use href="#i-shopping-bag"/></svg>
                 </div>
                 <div class="flex-1 min-w-0">
-                  <div class="font-semibold text-ink text-[13px] group-hover:text-indigo">New Vendor Bill</div>
-                  <div class="text-xs text-muted truncate">Record purchase invoice</div>
+                  <div class="font-semibold text-ink text-[13px] group-hover:text-indigo">New Supplier Bill</div>
+                  <div class="text-xs text-muted truncate">Bill from supplier to pay later</div>
                 </div>
                 <svg class="w-4 h-4 text-muted group-hover:text-indigo stroke-[2]"><use href="#i-chevron-right"/></svg>
               </a>
@@ -317,7 +329,7 @@
           <div class="px-5 py-4 border-b border-line flex items-center justify-between">
             <div>
               <h3 class="m-0 text-[15px] font-semibold tracking-tight text-ink">Recent Sales Invoices</h3>
-              <div class="text-xs text-muted">Latest invoicing activity and real-time statuses</div>
+              <div class="text-xs text-muted">Latest sales bills and current payment status</div>
             </div>
             <a href="/index.html" class="text-xs font-semibold text-indigo hover:underline flex items-center gap-1">
               View all invoices <svg class="w-3.5 h-3.5 stroke-[2]"><use href="#i-chevron-right"/></svg>
@@ -333,7 +345,7 @@
                   <th class="px-4 py-2.5 text-left border-b border-line font-medium">Issue Date</th>
                   <th class="px-4 py-2.5 text-left border-b border-line font-medium">Due Date</th>
                   <th class="px-4 py-2.5 text-right border-b border-line font-medium">Total Amount</th>
-                  <th class="px-4 py-2.5 text-right border-b border-line font-medium">Amount Due</th>
+                  <th class="px-4 py-2.5 text-right border-b border-line font-medium">Still Owed</th>
                   <th class="px-4 py-2.5 text-left border-b border-line font-medium">Status</th>
                   <th class="px-4 py-2.5 border-b border-line w-9"></th>
                 </tr>

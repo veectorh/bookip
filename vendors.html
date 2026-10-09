@@ -38,10 +38,10 @@
 
             <!-- Stats Strip -->
             {{> stats-strip 
-              label1="Total Vendors" value1="2"
+              label1="Total Suppliers" value1="2"
               label2="Active Suppliers" value2="2" success2=true
-              label3="Total Payables" value3="₦ 958,750.00" danger3=true subtext3="2 open bills"
-              label4="Overdue Bills" value4="1" danger4=true subtext4="Prime Tech Hardware"
+              label3="Money You Owe Suppliers" value3="₦ 958,750.00" danger3=true subtext3="2 open bills to pay"
+              label4="Late Bills (Overdue)" value4="1" danger4=true subtext4="Prime Tech Hardware"
             }}
 
             <!-- Desktop Filters -->
@@ -71,7 +71,7 @@
                     <th class="px-3.5 py-2.5 text-left border-b border-line whitespace-nowrap font-medium">Vendor</th>
                     <th class="px-3.5 py-2.5 text-left border-b border-line whitespace-nowrap font-medium">Company Name</th>
                     <th class="px-3.5 py-2.5 text-left border-b border-line whitespace-nowrap font-medium">Contact Details</th>
-                    <th class="px-3.5 py-2.5 text-right border-b border-line whitespace-nowrap font-medium">Balance Owed (₦)</th>
+                    <th class="px-3.5 py-2.5 text-right border-b border-line whitespace-nowrap font-medium">Money Owed (₦)</th>
                     <th class="px-3.5 py-2.5 text-left border-b border-line whitespace-nowrap font-medium">Status</th>
                     <th class="px-3.5 py-2.5 border-b border-line w-9"></th>
                   </tr>
@@ -136,7 +136,7 @@
           </div>
 
           <!-- 2. Screen: Vendor Profile & Bills Ledger -->
-          <div class="p-4 md:p-6 overflow-auto flex-1 hidden" id="s-profile">
+          <div class="p-4 md:p-6 overflow-y-auto overflow-x-hidden flex-1 hidden w-full max-w-full" id="s-profile">
             <!-- Breadcrumb & Top Bar -->
             <div class="flex items-center gap-3 mb-4">
               <button class="inline-flex items-center justify-center w-control h-control rounded bg-transparent text-muted hover:bg-th hover:text-ink transition-colors" data-goto="list">
@@ -168,21 +168,21 @@
                   <svg class="w-4 h-4 stroke-[2]"><use href="#i-alert-circle"/></svg>
                 </div>
                 <div>
-                  <h4 class="m-0 text-[14px] font-bold text-[#9A2A1F]">Payable Overdue: ₦ 913,750.00</h4>
-                  <p class="text-xs text-[#9A2A1F]/80 m-0 mt-0.5">Bill PUR-0001 (Server Equipment) is overdue by 21 days. Due date was 17 Sep 2026.</p>
+                  <h4 class="m-0 text-[14px] font-bold text-[#9A2A1F]">Late Bill to Pay: ₦ 913,750.00</h4>
+                  <p class="text-xs text-[#9A2A1F]/80 m-0 mt-0.5">Bill PUR-0001 (Server Equipment) is 21 days late. Due date was 17 Sep 2026.</p>
                 </div>
               </div>
               <div class="flex items-center gap-2 shrink-0">
                 <button type="button" class="inline-flex items-center gap-1.5 h-control px-3.5 rounded border border-transparent text-[13px] font-medium bg-[#D0432F] text-white hover:bg-[#B4372A] transition-colors shadow-sm" data-modal-target="recordPaymentModal">
-                  <svg class="w-3.5 h-3.5 stroke-[2]"><use href="#i-wallet"/></svg> Settle Bill
+                  <svg class="w-3.5 h-3.5 stroke-[2]"><use href="#i-wallet"/></svg> Pay Bill Now
                 </button>
               </div>
             </div>
 
             <!-- 2-Column Grid: Vendor Info & Purchase Bills Ledger -->
-            <div class="grid grid-cols-1 lg:grid-cols-[300px_1fr] gap-5">
+            <div class="grid grid-cols-1 xl:grid-cols-[280px_1fr] lg:grid-cols-[260px_1fr] gap-4 w-full min-w-0">
               <!-- Left Sidebar: Vendor Info & Bank Settlement Account -->
-              <div class="space-y-4">
+              <div class="space-y-4 min-w-0">
                 <div class="bg-surface border border-line rounded-xl p-4 space-y-3.5 shadow-sm text-xs">
                   <h3 class="font-bold text-ink text-sm m-0 border-b border-line pb-2.5">Supplier Details</h3>
                   <div>
@@ -225,37 +225,37 @@
               </div>
 
               <!-- Right: Purchase Bills Table -->
-              <div class="space-y-4">
-                <div class="bg-surface border border-line rounded-xl shadow-sm overflow-hidden">
-                  <div class="px-5 py-3.5 border-b border-line flex items-center justify-between">
+              <div class="space-y-4 min-w-0">
+                <div class="bg-surface border border-line rounded-xl shadow-sm overflow-hidden w-full min-w-0">
+                  <div class="px-4 sm:px-5 py-3.5 border-b border-line flex items-center justify-between">
                     <div>
                       <h3 class="m-0 text-[15px] font-semibold tracking-tight text-ink">Purchase Bills Ledger</h3>
-                      <div class="text-xs text-muted">All vendor invoices, delivery orders, and settlement status</div>
+                      <div class="text-xs text-muted">All supplier invoices, deliveries, and payment status</div>
                     </div>
                   </div>
 
-                  <div class="overflow-x-auto">
-                    <table class="w-full border-collapse text-[13px] min-w-[650px]">
+                  <div class="overflow-x-auto w-full max-w-full">
+                    <table class="w-full border-collapse text-[13px] table-auto">
                       <thead>
                         <tr class="bg-th text-muted font-medium text-xs">
-                          <th class="px-4 py-2.5 text-left border-b border-line font-medium">Bill #</th>
-                          <th class="px-4 py-2.5 text-left border-b border-line font-medium">Purchase Date</th>
-                          <th class="px-4 py-2.5 text-left border-b border-line font-medium">Due Date</th>
-                          <th class="px-4 py-2.5 text-right border-b border-line font-medium">Bill Amount</th>
-                          <th class="px-4 py-2.5 text-right border-b border-line font-medium">Amount Due</th>
-                          <th class="px-4 py-2.5 text-left border-b border-line font-medium">Status</th>
+                          <th class="px-3.5 py-2.5 text-left border-b border-line font-medium whitespace-nowrap">Bill #</th>
+                          <th class="px-3.5 py-2.5 text-left border-b border-line font-medium whitespace-nowrap">Bill Date</th>
+                          <th class="px-3.5 py-2.5 text-left border-b border-line font-medium whitespace-nowrap">Due Date</th>
+                          <th class="px-3.5 py-2.5 text-right border-b border-line font-medium whitespace-nowrap">Bill Total (₦)</th>
+                          <th class="px-3.5 py-2.5 text-right border-b border-line font-medium whitespace-nowrap">You Owe (₦)</th>
+                          <th class="px-3.5 py-2.5 text-left border-b border-line font-medium whitespace-nowrap">Status</th>
                         </tr>
                       </thead>
                       <tbody class="divide-y divide-line">
                         <tr class="hover:bg-[#FAFBFD] transition-colors">
-                          <td class="px-4 py-3 whitespace-nowrap font-medium text-ink">
+                          <td class="px-3.5 py-2.5 whitespace-nowrap font-medium text-ink">
                             <a href="/purchases.html" class="text-indigo hover:underline">PUR-0001</a>
                           </td>
-                          <td class="px-4 py-3 whitespace-nowrap text-muted">10 Sep 2026</td>
-                          <td class="px-4 py-3 whitespace-nowrap text-muted">17 Sep 2026</td>
-                          <td class="px-4 py-3 whitespace-nowrap text-right font-medium text-ink" style="font-variant-numeric: tabular-nums;">₦ 913,750.00</td>
-                          <td class="px-4 py-3 whitespace-nowrap text-right font-bold text-[#B4372A]" style="font-variant-numeric: tabular-nums;">₦ 913,750.00</td>
-                          <td class="px-4 py-3 whitespace-nowrap">
+                          <td class="px-3.5 py-2.5 whitespace-nowrap text-muted">10 Sep 2026</td>
+                          <td class="px-3.5 py-2.5 whitespace-nowrap text-muted">17 Sep 2026</td>
+                          <td class="px-3.5 py-2.5 whitespace-nowrap text-right font-medium text-ink" style="font-variant-numeric: tabular-nums;">913,750.00</td>
+                          <td class="px-3.5 py-2.5 whitespace-nowrap text-right font-bold text-[#B4372A]" style="font-variant-numeric: tabular-nums;">913,750.00</td>
+                          <td class="px-3.5 py-2.5 whitespace-nowrap">
                             {{> status-badge status="overdue" label="Overdue 21d"}}
                           </td>
                         </tr>
