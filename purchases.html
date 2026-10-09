@@ -51,8 +51,32 @@
             </div>
 
             <!-- Desktop Filters -->
-            {{> list-desktop-filters new_button_label="New purchase" }}
-            {{> list-mobile-filters }}
+            <div class="flex gap-2 mb-2.5 flex-wrap hidden md:flex">
+              <div class="flex-1 min-w-[200px] flex items-center gap-2 h-control px-2.5 bg-surface border border-line-strong rounded text-[13px] focus-within:border-indigo focus-within:ring-[3px] focus-within:ring-indigo-line">
+                <svg class="w-4 h-4 stroke-[1.75] text-muted shrink-0" aria-hidden="true"><use href="#i-search"/></svg>
+                <input type="text" placeholder="Search bill number or vendor" class="bg-transparent border-0 outline-none w-full placeholder-muted">
+              </div>
+              <div class="flex items-center h-control px-2.5 bg-surface border border-line-strong rounded text-[13px] focus-within:border-indigo focus-within:ring-[3px] focus-within:ring-indigo-line">
+                <select class="bg-transparent border-0 outline-none w-full text-ink"><option>All vendors</option><option>Prime Tech Hardware</option><option>Swift Office Supplies</option></select>
+              </div>
+              <div class="flex items-center h-control px-2.5 bg-surface border border-line-strong rounded text-[13px] focus-within:border-indigo focus-within:ring-[3px] focus-within:ring-indigo-line">
+                <select class="bg-transparent border-0 outline-none w-full text-ink"><option>All statuses</option><option>Overdue</option><option>Unpaid</option><option>Paid</option></select>
+              </div>
+            </div>
+
+            <!-- Mobile Filters -->
+            <div class="block md:hidden">
+              <div class="flex items-center gap-2 h-control px-2.5 bg-surface border border-line-strong rounded text-[13px] focus-within:border-indigo focus-within:ring-[3px] focus-within:ring-indigo-line mb-2.5">
+                <svg class="w-4 h-4 stroke-[1.75] text-muted shrink-0" aria-hidden="true"><use href="#i-search"/></svg>
+                <input type="text" placeholder="Search bill or vendor" class="bg-transparent border-0 outline-none w-full placeholder-muted">
+              </div>
+              <div class="flex gap-1.5 overflow-auto pb-0.5 mb-2.5" style="-webkit-overflow-scrolling:touch">
+                <button class="shrink-0 text-xs px-2.5 py-1.5 rounded-pill border border-ink bg-ink text-white" aria-pressed="true">All</button>
+                <button class="shrink-0 text-xs px-2.5 py-1.5 rounded-pill border border-line-strong bg-surface text-muted">Overdue</button>
+                <button class="shrink-0 text-xs px-2.5 py-1.5 rounded-pill border border-line-strong bg-surface text-muted">Unpaid</button>
+                <button class="shrink-0 text-xs px-2.5 py-1.5 rounded-pill border border-line-strong bg-surface text-muted">Paid</button>
+              </div>
+            </div>
 
             <!-- Table (Desktop) -->
             <div class="bg-surface border border-line rounded overflow-x-auto hidden md:block">
@@ -84,7 +108,7 @@
                       <span class="inline-flex items-center gap-1.5 h-[22px] px-2 rounded-[3px] text-xs font-medium whitespace-nowrap bg-status-overdue-bg text-status-overdue-text border border-status-overdue-border before:content-[''] before:w-1.5 before:h-1.5 before:rounded-full before:bg-status-overdue-dot before:shrink-0">Overdue</span>
                     </td>
                     <td class="px-3.5 py-3 border-b border-line whitespace-nowrap" onclick="event.stopPropagation()">
-                      <button class="w-[26px] h-[26px] rounded flex items-center justify-center text-muted hover:bg-th hover:border-line-strong hover:text-ink border border-transparent">
+                      <button class="w-[26px] h-[26px] rounded flex items-center justify-center text-muted hover:bg-th hover:border-line-strong hover:text-ink border border-transparent" data-menu="PUR-0001 · Prime Tech Hardware" data-menu-type="purchase">
                         <svg class="w-4 h-4 stroke-[1.75]" aria-hidden="true"><use href="#i-more-horizontal"/></svg>
                       </button>
                     </td>
@@ -104,7 +128,7 @@
                       <span class="inline-flex items-center gap-1.5 h-[22px] px-2 rounded-[3px] text-xs font-medium whitespace-nowrap bg-status-draft-bg text-status-draft-text border border-status-draft-border before:content-[''] before:w-1.5 before:h-1.5 before:rounded-full before:bg-status-draft-dot before:shrink-0">Unpaid</span>
                     </td>
                     <td class="px-3.5 py-3 border-b border-line whitespace-nowrap" onclick="event.stopPropagation()">
-                      <button class="w-[26px] h-[26px] rounded flex items-center justify-center text-muted hover:bg-th hover:border-line-strong hover:text-ink border border-transparent">
+                      <button class="w-[26px] h-[26px] rounded flex items-center justify-center text-muted hover:bg-th hover:border-line-strong hover:text-ink border border-transparent" data-menu="PUR-0002 · Swift Office Supplies" data-menu-type="purchase">
                         <svg class="w-4 h-4 stroke-[1.75]" aria-hidden="true"><use href="#i-more-horizontal"/></svg>
                       </button>
                     </td>
@@ -159,7 +183,7 @@
               
               <div class="ml-auto flex gap-2">
                 <button class="inline-flex items-center gap-1.5 h-control px-3 rounded border border-line-strong text-[13px] font-medium bg-surface hover:bg-th" data-goto="editor"><svg class="w-4 h-4 stroke-[1.75]" aria-hidden="true"><use href="#i-edit-2"/></svg> Edit bill</button>
-                <button class="inline-flex items-center gap-1.5 h-control px-3 rounded border border-transparent text-[13px] font-medium bg-indigo text-white hover:bg-indigo-hover"><svg class="w-4 h-4 stroke-[1.75]" aria-hidden="true"><use href="#i-send"/></svg> Pay bill</button>
+                <button class="inline-flex items-center gap-1.5 h-control px-3 rounded border border-transparent text-[13px] font-medium bg-indigo text-white hover:bg-indigo-hover" data-modal-target="recordPaymentModal"><svg class="w-4 h-4 stroke-[1.75]" aria-hidden="true"><use href="#i-wallet"/></svg> Pay bill</button>
               </div>
             </div>
 
@@ -169,7 +193,7 @@
                 <svg class="w-4 h-4 stroke-2 shrink-0"><use href="#i-alert-triangle"/></svg>
                 <span><b>Payment is 21 days overdue.</b> Due date was 17 Sep 2026.</span>
               </div>
-              <button class="font-bold underline hover:no-underline">Pay ₦ 913,750.00</button>
+              <button class="font-bold underline hover:no-underline cursor-pointer" data-modal-target="recordPaymentModal">Pay ₦ 913,750.00</button>
             </div>
 
             <!-- A4 Document Container -->
@@ -285,9 +309,9 @@
             <div class="flex items-center gap-3 mb-4">
               <button class="inline-flex items-center justify-center w-control h-control rounded bg-transparent text-muted hover:bg-th hover:text-ink" data-goto="list"><svg class="w-4 h-4 stroke-[1.75]" aria-hidden="true"><use href="#i-arrow-left"/></svg></button>
               <h1 class="m-0 text-xl font-semibold tracking-tight">New purchase</h1>
-              <div class="ml-auto flex gap-2 hidden md:flex">
-                <button class="inline-flex items-center gap-1.5 h-control px-3 rounded border border-line-strong text-[13px] font-medium bg-surface hover:bg-th" data-goto="list">Cancel</button>
-                <button class="inline-flex items-center gap-1.5 h-control px-3 rounded border border-transparent text-[13px] font-medium bg-indigo text-white hover:bg-indigo-hover" data-goto="list"><svg class="w-4 h-4 stroke-[1.75]" aria-hidden="true"><use href="#i-save"/></svg> Save purchase</button>
+              <div class="ml-auto hidden md:flex items-center gap-2">
+                <button type="button" class="inline-flex items-center gap-1.5 h-control px-3 rounded border border-line-strong text-[13px] font-medium bg-surface hover:bg-th transition-colors shadow-sm" data-goto="list">Cancel</button>
+                <button type="button" class="inline-flex items-center gap-1.5 h-control px-3 rounded border border-transparent text-[13px] font-medium bg-indigo text-white hover:bg-indigo-hover transition-colors shadow-sm" onclick="window.showToast({ title: 'Bill Saved', message: 'Supplier bill PUR-0003 recorded successfully.', type: 'success' }); document.getElementById('s-editor').classList.add('hidden'); document.getElementById('s-list').classList.remove('hidden');"><svg class="w-4 h-4 stroke-[1.75]" aria-hidden="true"><use href="#i-save"/></svg> Save purchase</button>
               </div>
             </div>
 
@@ -338,7 +362,7 @@
                     <tfoot class="border-t border-line bg-surface">
                       <tr>
                         <td colspan="2" class="px-3 py-3">
-                          <button class="inline-flex items-center gap-1.5 h-control px-3 rounded border border-line-strong text-[13px] font-medium bg-surface hover:bg-th"><svg class="w-4 h-4 stroke-[1.75]" aria-hidden="true"><use href="#i-plus"/></svg> Add item</button>
+                          <button type="button" class="inline-flex items-center gap-1.5 h-control px-3 rounded border border-line-strong text-[13px] font-medium bg-surface hover:bg-th"><svg class="w-4 h-4 stroke-[1.75]" aria-hidden="true"><use href="#i-plus"/></svg> Add item</button>
                         </td>
                         <td colspan="2" class="px-3 py-1.5 text-right font-medium">Subtotal</td>
                         <td class="px-3 py-1.5 text-right font-variant-numeric:tabular-nums">850,000.00</td>
@@ -363,13 +387,39 @@
                   <div class="flex md:hidden flex-col gap-2 p-3 border-b border-line">
                     {{> editor-item-mobile name="Server Equipment & Rack" tax="VAT 7.5%" qty="1" price="850,000.00" amount="913,750.00" }}
                   </div>
+
+                  <!-- Mobile Footer -->
+                  <div class="block md:hidden px-3.5 py-3">
+                    <button type="button" class="inline-flex items-center gap-1.5 w-full justify-center h-control px-3 rounded border border-line-strong text-[13px] font-medium bg-surface hover:bg-th mt-1 mb-3"><svg class="w-4 h-4 stroke-[1.75]" aria-hidden="true"><use href="#i-plus"/></svg> Add item</button>
+                    <div class="flex flex-col gap-1.5 text-[13px]">
+                      <div class="flex justify-between py-1 border-b border-line"><span>Subtotal</span><span class="font-variant-numeric:tabular-nums">850,000.00</span></div>
+                      <div class="flex justify-between py-1 border-b border-line text-muted"><span>Tax (VAT 7.5%)</span><span class="font-variant-numeric:tabular-nums">63,750.00</span></div>
+                      <div class="flex justify-between pt-1.5 font-semibold text-[15px]"><span>Total Due</span><span class="font-variant-numeric:tabular-nums">₦ 913,750.00</span></div>
+                    </div>
+                  </div>
                 </div>
               </div>
 
-              <!-- Right Panel -->
+              <!-- Right Panel: Settlement Details & Mobile-Only Actions -->
               <div class="bg-surface border border-line rounded p-3.5 flex flex-col gap-3">
-                <button class="w-full inline-flex items-center justify-center gap-1.5 h-control px-3 rounded border border-transparent text-[13px] font-medium bg-indigo text-white hover:bg-indigo-hover" data-goto="list"><svg class="w-4 h-4 stroke-[1.75]" aria-hidden="true"><use href="#i-save"/></svg> Save purchase</button>
-                <button class="w-full inline-flex items-center justify-center gap-1.5 h-control px-3 rounded border border-line-strong text-[13px] font-medium bg-surface hover:bg-th" data-goto="list">Cancel</button>
+                <div>
+                  <label class="block text-xs font-medium text-muted mb-1.25">Payment Terms</label>
+                  <select class="w-full h-control px-2.5 bg-surface border border-line-strong rounded text-[13px] text-ink focus:border-indigo outline-none">
+                    <option selected>Net 14 Days</option>
+                    <option>Immediate / On Delivery</option>
+                    <option>Net 30 Days</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="block text-xs font-medium text-muted mb-1.25">Receiving Notes</label>
+                  <textarea rows="3" class="w-full p-2 bg-surface border border-line-strong rounded text-[13px] text-ink focus:border-indigo outline-none placeholder-muted" placeholder="e.g. Received at Lagos warehouse"></textarea>
+                </div>
+
+                <!-- Action button shown strictly on mobile where top header actions are hidden -->
+                <div class="flex md:hidden flex-col gap-2 pt-2 border-t border-line">
+                  <button type="button" class="w-full inline-flex items-center justify-center gap-1.5 h-control px-3 rounded border border-transparent text-[13px] font-medium bg-indigo text-white hover:bg-indigo-hover shadow-sm" onclick="window.showToast({ title: 'Bill Saved', message: 'Supplier bill PUR-0003 recorded successfully.', type: 'success' }); document.getElementById('s-editor').classList.add('hidden'); document.getElementById('s-list').classList.remove('hidden');"><svg class="w-4 h-4 stroke-[1.75]" aria-hidden="true"><use href="#i-save"/></svg> Save purchase</button>
+                  <button type="button" class="w-full inline-flex items-center justify-center gap-1.5 h-control px-3 rounded border border-line-strong text-[13px] font-medium bg-surface hover:bg-th" data-goto="list">Cancel</button>
+                </div>
               </div>
             </div>
           </div>

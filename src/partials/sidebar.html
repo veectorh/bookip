@@ -90,8 +90,6 @@
       <div class="nav-sub hidden group-data-[open=true]:flex flex-col gap-0.5 pl-6 pr-1 py-1 text-xs text-navy-mute [&[data-layout=rail]_&]:hidden">
         <a href="/accounts.html" class="px-2.5 py-1.5 rounded-md {{#if (or (eq active "accounts") active_accounts)}}bg-indigo text-white font-medium{{else}}hover:text-white hover:bg-navy-hover{{/if}} truncate">Bank & Cash Accounts</a>
         <a href="/transactions.html" class="px-2.5 py-1.5 rounded-md {{#if (or (eq active "transactions") active_transactions)}}bg-indigo text-white font-medium{{else}}hover:text-white hover:bg-navy-hover{{/if}} truncate">Transactions</a>
-        <a href="/transaction_categories.html" class="px-2.5 py-1.5 rounded-md hover:text-white hover:bg-navy-hover truncate">Transaction Categories</a>
-        <a href="/transaction_methods.html" class="px-2.5 py-1.5 rounded-md hover:text-white hover:bg-navy-hover truncate">Transaction Methods</a>
       </div>
       <!-- Rail flyout -->
       <div class="hidden [&[data-layout=rail]_.group:hover_&]:flex flex-col gap-1 absolute left-[calc(100%+8px)] top-0 bg-ink text-white text-xs p-2 rounded-lg shadow-xl min-w-[160px] z-50">

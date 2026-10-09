@@ -25,30 +25,30 @@
       <!-- Quick Actions Menu Dropdown -->
       <div id="quickMenuDropdown" class="hidden absolute right-0 top-full mt-1.5 w-56 bg-surface border border-line-strong rounded-lg shadow-xl py-1.5 text-[13px] z-50">
         <div class="px-3 py-1 text-[11px] font-semibold text-muted uppercase tracking-wider">Quick Actions</div>
-        <a href="/index.html" class="flex items-center gap-2.5 px-3 py-2 text-ink hover:bg-th transition-colors">
+        <a href="/index.html?new=1" class="flex items-center gap-2.5 px-3 py-2 text-ink hover:bg-th transition-colors">
           <svg class="w-4 h-4 stroke-[1.75] text-indigo shrink-0" aria-hidden="true"><use href="#i-file-text"/></svg>
           <span class="flex-1">New Invoice</span>
         </a>
-        <a href="/index.html" class="flex items-center gap-2.5 px-3 py-2 text-ink hover:bg-th transition-colors">
+        <a href="/index.html" class="flex items-center gap-2.5 px-3 py-2 text-ink hover:bg-th transition-colors" data-modal-target="recordPaymentModal">
           <svg class="w-4 h-4 stroke-[1.75] text-[#106A43] shrink-0" aria-hidden="true"><use href="#i-arrow-down-left"/></svg>
           <span class="flex-1">Record Payment</span>
           <span class="text-[10px] font-medium text-[#106A43] bg-[#EAF5EF] px-1.5 py-0.5 rounded">Credit in</span>
         </a>
-        <a href="/quotations.html" class="flex items-center gap-2.5 px-3 py-2 text-ink hover:bg-th transition-colors">
+        <a href="/quotations.html?new=1" class="flex items-center gap-2.5 px-3 py-2 text-ink hover:bg-th transition-colors">
           <svg class="w-4 h-4 stroke-[1.75] text-indigo shrink-0" aria-hidden="true"><use href="#i-file-clock"/></svg>
           <span class="flex-1">New Quotation</span>
         </a>
-        <a href="/purchases.html" class="flex items-center gap-2.5 px-3 py-2 text-ink hover:bg-th transition-colors">
+        <a href="/purchases.html?new=1" class="flex items-center gap-2.5 px-3 py-2 text-ink hover:bg-th transition-colors">
           <svg class="w-4 h-4 stroke-[1.75] text-[#B4372A] shrink-0" aria-hidden="true"><use href="#i-arrow-up-right"/></svg>
           <span class="flex-1">Record Bill / Expense</span>
           <span class="text-[10px] font-medium text-[#B4372A] bg-[#FDEEED] px-1.5 py-0.5 rounded">Credit out</span>
         </a>
         <div class="h-px bg-line my-1"></div>
-        <a href="/customers.html" class="flex items-center gap-2.5 px-3 py-2 text-ink hover:bg-th transition-colors">
+        <a href="/customers.html?new=1" class="flex items-center gap-2.5 px-3 py-2 text-ink hover:bg-th transition-colors">
           <svg class="w-4 h-4 stroke-[1.75] text-muted shrink-0" aria-hidden="true"><use href="#i-user"/></svg>
           <span class="flex-1">Add Customer</span>
         </a>
-        <a href="/vendors.html" class="flex items-center gap-2.5 px-3 py-2 text-ink hover:bg-th transition-colors">
+        <a href="/vendors.html?new=1" class="flex items-center gap-2.5 px-3 py-2 text-ink hover:bg-th transition-colors">
           <svg class="w-4 h-4 stroke-[1.75] text-muted shrink-0" aria-hidden="true"><use href="#i-truck"/></svg>
           <span class="flex-1">Add Vendor</span>
         </a>
@@ -96,10 +96,10 @@
               </div>
               <p class="text-xs text-muted mt-0.5">Invoice INV-0012 · <span class="text-[#B4372A] font-medium">Overdue by 20 days</span></p>
               <div class="flex gap-2 mt-2">
-                <a href="/index.html" class="inline-flex items-center gap-1 px-2 py-1 rounded bg-surface border border-line-strong text-xs font-medium text-ink hover:bg-th">
+                <button type="button" class="inline-flex items-center gap-1 px-2 py-1 rounded bg-surface border border-line-strong text-xs font-medium text-ink hover:bg-th" data-modal-target="recordPaymentModal">
                   Record payment
-                </a>
-                <button class="inline-flex items-center gap-1 px-2 py-1 rounded text-xs font-medium text-muted hover:text-ink">
+                </button>
+                <button type="button" class="inline-flex items-center gap-1 px-2 py-1 rounded text-xs font-medium text-muted hover:text-ink cursor-pointer" onclick="window.showToast({ title: 'Reminder sent', message: 'SMS and email reminder dispatched to Charles Business LLC.', type: 'success' });">
                   Send reminder
                 </button>
               </div>
@@ -120,7 +120,7 @@
                 <button type="button" class="inline-flex items-center gap-1 px-2 py-1 rounded bg-surface border border-line-strong text-xs font-medium text-ink hover:bg-th" data-modal-target="recordPaymentModal">
                   Record payment
                 </button>
-                <button type="button" class="inline-flex items-center gap-1 px-2 py-1 rounded text-xs font-medium text-muted hover:text-ink" onclick="window.showToast({ title: 'Reminder sent', message: 'SMS and email reminder dispatched to Ann Kingsley.', type: 'success' });">
+                <button type="button" class="inline-flex items-center gap-1 px-2 py-1 rounded text-xs font-medium text-muted hover:text-ink cursor-pointer" onclick="window.showToast({ title: 'Reminder sent', message: 'SMS and email reminder dispatched to Osas Enterprises.', type: 'success' });">
                   Send reminder
                 </button>
               </div>
@@ -141,9 +141,9 @@
               </div>
               <p class="text-xs text-muted mt-0.5">Bill PUR-0001 · <span class="text-[#B4372A] font-medium">Overdue by 21 days</span></p>
               <div class="flex gap-2 mt-2">
-                <a href="/purchases.html" class="inline-flex items-center gap-1 px-2 py-1 rounded bg-indigo text-white text-xs font-medium hover:bg-indigo-hover">
+                <button type="button" class="inline-flex items-center gap-1 px-2 py-1 rounded bg-indigo text-white text-xs font-medium hover:bg-indigo-hover cursor-pointer" data-modal-target="recordPaymentModal">
                   Pay bill now
-                </a>
+                </button>
               </div>
             </div>
           </div>
@@ -204,5 +204,5 @@
 <div class="flex flex-col md:flex-row items-start md:items-center gap-1.5 md:gap-2.5 bg-imp-bg text-imp-text border-b border-imp-border px-4 py-2 md:py-1.5 text-xs">
   <svg class="w-4 h-4 stroke-[1.75] shrink-0" aria-hidden="true"><use href="#i-eye"/></svg>
   <span>Working inside <b class="font-semibold">{{seed.business.name}}</b> as Super Admin</span>
-  <a href="#" class="ml-auto underline underline-offset-2 hover:text-ink">Leave</a>
+  <button type="button" class="ml-auto underline underline-offset-2 hover:text-ink cursor-pointer bg-transparent border-0 p-0 text-xs text-imp-text" onclick="this.closest('.flex').remove(); window.showToast({ title: 'Exited Impersonation', message: 'Returned to business portal.', type: 'info' });">Leave</button>
 </div>

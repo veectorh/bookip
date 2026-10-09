@@ -257,6 +257,7 @@
     document.addEventListener('click', (e) => {
       const btn = e.target.closest('[data-goto]');
       if (!btn) return;
+      e.preventDefault();
       const target = btn.dataset.goto;
       const screens = ['s-list', 's-editor', 's-view', 's-profile'];
       screens.forEach(sId => {
@@ -266,6 +267,31 @@
         }
       });
       window.scrollTo({ top: 0, behavior: 'instant' });
+    });
+
+    // Auto-open editor or drawer if ?new=1 or ?action=new in URL
+    window.addEventListener('DOMContentLoaded', () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get('new') === '1' || urlParams.get('action') === 'new') {
+        const editorEl = document.getElementById('s-editor');
+        if (editorEl) {
+          const screens = ['s-list', 's-editor', 's-view', 's-profile'];
+          screens.forEach(sId => {
+            const el = document.getElementById(sId);
+            if (el) el.classList.toggle('hidden', sId !== 's-editor');
+          });
+        } else {
+          const customerDrawer = document.getElementById('customerDrawer');
+          const vendorDrawer = document.getElementById('vendorDrawer');
+          if (customerDrawer) {
+            customerDrawer.classList.remove('hidden');
+            setTimeout(() => customerDrawer.setAttribute('data-open', 'true'), 10);
+          } else if (vendorDrawer) {
+            vendorDrawer.classList.remove('hidden');
+            setTimeout(() => vendorDrawer.setAttribute('data-open', 'true'), 10);
+          }
+        }
+      }
     });
 
     // Toast Notification System

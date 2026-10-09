@@ -10,6 +10,9 @@
 }
 
 @media print {
+  @page {
+    margin: 15mm;
+  }
   body {
     background-color: #ffffff !important;
     color: #111827 !important;
