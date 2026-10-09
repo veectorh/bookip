@@ -129,8 +129,8 @@
     </div>
 
     <!-- Reports Group -->
-    <div class="nav-group relative group" data-group="reports" data-open="{{#if (or (eq active "reports") active_reports)}}true{{else}}false{{/if}}">
-      <button class="flex items-center justify-between w-full px-2.5 h-[34px] rounded-md text-navy-fg hover:bg-navy-hover hover:text-white [&[data-layout=rail]_&]:justify-center [&[data-layout=rail]_&]:px-0" onclick="toggleNavGroup(this)">
+    <div class="nav-group relative group" data-group="reports" data-open="{{#if (or (eq active "reports_account_balances") active_reports_account_balances (eq active "reports_profit_loss") active_reports_profit_loss (eq active "reports_customer_income") active_reports_customer_income (eq active "reports_vendor_purchases") active_reports_vendor_purchases (eq active "reports_tax") active_reports_tax (eq active "reports") active_reports)}}true{{else}}false{{/if}}">
+      <button class="flex items-center justify-between w-full px-2.5 h-[34px] rounded-md {{#if (or (eq active "reports_account_balances") active_reports_account_balances (eq active "reports_profit_loss") active_reports_profit_loss (eq active "reports_customer_income") active_reports_customer_income (eq active "reports_vendor_purchases") active_reports_vendor_purchases (eq active "reports_tax") active_reports_tax)}}text-white font-medium bg-navy-hover/40{{else}}text-navy-fg hover:bg-navy-hover hover:text-white{{/if}} [&[data-layout=rail]_&]:justify-center [&[data-layout=rail]_&]:px-0" onclick="toggleNavGroup(this)">
         <div class="flex items-center gap-2.5">
           <svg class="w-4 h-4 stroke-2 shrink-0"><use href="#i-file-bar-chart"/></svg>
           <span class="whitespace-nowrap overflow-hidden [&[data-layout=rail]_&]:hidden">Reports</span>
@@ -138,17 +138,20 @@
         <svg class="w-3 h-3 stroke-2 transition-transform duration-150 [&[data-layout=rail]_&]:hidden group-data-[open=true]:rotate-180"><use href="#i-chevron-down"/></svg>
       </button>
       <div class="nav-sub hidden group-data-[open=true]:flex flex-col gap-0.5 pl-6 pr-1 py-1 text-xs text-navy-mute [&[data-layout=rail]_&]:hidden">
-        <a href="/reports_account_balances.html" class="px-2.5 py-1.5 rounded-md hover:text-white hover:bg-navy-hover truncate">Account Balances</a>
-        <a href="/reports_profit_loss.html" class="px-2.5 py-1.5 rounded-md hover:text-white hover:bg-navy-hover truncate">Profit & Loss</a>
-        <a href="/reports_customer_income.html" class="px-2.5 py-1.5 rounded-md hover:text-white hover:bg-navy-hover truncate">Income by Customer</a>
-        <a href="/reports_vendor_purchases.html" class="px-2.5 py-1.5 rounded-md hover:text-white hover:bg-navy-hover truncate">Purchases by Vendor</a>
-        <a href="/reports_tax.html" class="px-2.5 py-1.5 rounded-md hover:text-white hover:bg-navy-hover truncate">Tax Report</a>
+        <a href="/reports_account_balances.html" class="px-2.5 py-1.5 rounded-md {{#if (or (eq active "reports_account_balances") active_reports_account_balances)}}bg-indigo text-white font-medium{{else}}hover:text-white hover:bg-navy-hover{{/if}} truncate">Account Balances</a>
+        <a href="/reports_profit_loss.html" class="px-2.5 py-1.5 rounded-md {{#if (or (eq active "reports_profit_loss") active_reports_profit_loss)}}bg-indigo text-white font-medium{{else}}hover:text-white hover:bg-navy-hover{{/if}} truncate">Profit & Loss</a>
+        <a href="/reports_customer_income.html" class="px-2.5 py-1.5 rounded-md {{#if (or (eq active "reports_customer_income") active_reports_customer_income)}}bg-indigo text-white font-medium{{else}}hover:text-white hover:bg-navy-hover{{/if}} truncate">Income by Customer</a>
+        <a href="/reports_vendor_purchases.html" class="px-2.5 py-1.5 rounded-md {{#if (or (eq active "reports_vendor_purchases") active_reports_vendor_purchases)}}bg-indigo text-white font-medium{{else}}hover:text-white hover:bg-navy-hover{{/if}} truncate">Purchases by Vendor</a>
+        <a href="/reports_tax.html" class="px-2.5 py-1.5 rounded-md {{#if (or (eq active "reports_tax") active_reports_tax)}}bg-indigo text-white font-medium{{else}}hover:text-white hover:bg-navy-hover{{/if}} truncate">Tax Report</a>
       </div>
       <!-- Rail flyout -->
       <div class="hidden [&[data-layout=rail]_.group:hover_&]:flex flex-col gap-1 absolute left-[calc(100%+8px)] top-0 bg-ink text-white text-xs p-2 rounded-lg shadow-xl min-w-[160px] z-50">
         <div class="font-semibold px-2 py-1 text-[11px] text-muted border-b border-line uppercase">Reports</div>
-        <a href="/reports_profit_loss.html" class="px-2 py-1 rounded hover:bg-th hover:text-ink">Profit & Loss</a>
-        <a href="/reports_tax.html" class="px-2 py-1 rounded hover:bg-th hover:text-ink">Tax Report</a>
+        <a href="/reports_account_balances.html" class="px-2 py-1 rounded {{#if (or (eq active "reports_account_balances") active_reports_account_balances)}}bg-indigo text-white{{else}}hover:bg-th hover:text-ink{{/if}}">Account Balances</a>
+        <a href="/reports_profit_loss.html" class="px-2 py-1 rounded {{#if (or (eq active "reports_profit_loss") active_reports_profit_loss)}}bg-indigo text-white{{else}}hover:bg-th hover:text-ink{{/if}}">Profit & Loss</a>
+        <a href="/reports_customer_income.html" class="px-2 py-1 rounded {{#if (or (eq active "reports_customer_income") active_reports_customer_income)}}bg-indigo text-white{{else}}hover:bg-th hover:text-ink{{/if}}">Income by Customer</a>
+        <a href="/reports_vendor_purchases.html" class="px-2 py-1 rounded {{#if (or (eq active "reports_vendor_purchases") active_reports_vendor_purchases)}}bg-indigo text-white{{else}}hover:bg-th hover:text-ink{{/if}}">Purchases by Vendor</a>
+        <a href="/reports_tax.html" class="px-2 py-1 rounded {{#if (or (eq active "reports_tax") active_reports_tax)}}bg-indigo text-white{{else}}hover:bg-th hover:text-ink{{/if}}">Tax Report</a>
       </div>
     </div>
 

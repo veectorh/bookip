@@ -378,5 +378,150 @@
       "max_salary": "₦ 600,000.00",
       "staff_count": 2
     }
-  ]
+  ],
+  "reports": {
+    "profit_loss": {
+      "period": "January – October 2026 (Year to Date)",
+      "total_income": "₦ 8,375,000.00",
+      "total_cogs": "₦ 2,240,000.00",
+      "gross_profit": "₦ 6,135,000.00",
+      "gross_margin": "73.2%",
+      "total_opex": "₦ 4,610,000.00",
+      "net_profit": "₦ 1,525,000.00",
+      "net_margin": "18.2%",
+      "income_breakdown": [
+        {"item": "Professional IT Services & Consulting", "category": "Sales", "amount": "₦ 4,850,000.00"},
+        {"item": "Server & Network Hardware Sales", "category": "Equipment", "amount": "₦ 2,550,000.00"},
+        {"item": "Monthly Support & Retainers", "category": "Recurring", "amount": "₦ 975,000.00"}
+      ],
+      "cogs_breakdown": [
+        {"item": "Server Hardware Equipment Purchase", "amount": "₦ 1,820,000.00"},
+        {"item": "Hosting & Infrastructure Costs", "amount": "₦ 420,000.00"}
+      ],
+      "opex_breakdown": [
+        {"item": "Staff Salaries & Wages", "amount": "₦ 3,320,000.00"},
+        {"item": "Office Rent & Facility Utilities", "amount": "₦ 750,000.00"},
+        {"item": "Internet, Power & Communications", "amount": "₦ 210,000.00"},
+        {"item": "Office Stationery & Supplies", "amount": "₦ 185,000.00"},
+        {"item": "Local Transport & Logistics", "amount": "₦ 145,000.00"}
+      ]
+    },
+    "account_balances": {
+      "total_balance": "₦ 3,465,500.00",
+      "bank_cash": "₦ 3,420,500.00",
+      "petty_cash": "₦ 45,000.00",
+      "accounts": [
+        {
+          "name": "First Bank Current Account",
+          "bank": "First Bank of Nigeria Plc",
+          "number": "0123456789",
+          "type": "Bank Current",
+          "opening_balance": "₦ 1,500,000.00",
+          "current_balance": "₦ 2,800,000.00",
+          "net_change": "+₦ 1,300,000.00",
+          "share": "80.8%",
+          "status": "Reconciled"
+        },
+        {
+          "name": "GTBank Corporate Account",
+          "bank": "Guaranty Trust Bank (GTB)",
+          "number": "2098765432",
+          "type": "Bank Corporate",
+          "opening_balance": "₦ 850,000.00",
+          "current_balance": "₦ 620,500.00",
+          "net_change": "-₦ 229,500.00",
+          "share": "17.9%",
+          "status": "Reconciled"
+        },
+        {
+          "name": "Office Petty Cash Box",
+          "bank": "Main Office Safe",
+          "number": "CASH-HQ",
+          "type": "Cash on Hand",
+          "opening_balance": "₦ 50,000.00",
+          "current_balance": "₦ 45,000.00",
+          "net_change": "-₦ 5,000.00",
+          "share": "1.3%",
+          "status": "Counted"
+        }
+      ]
+    },
+    "customer_income": {
+      "total_revenue": "₦ 8,375,000.00",
+      "total_invoices": 18,
+      "total_paid": "₦ 7,928,500.00",
+      "total_owed": "₦ 446,500.00",
+      "customers": [
+        {
+          "name": "Charles Business LLC",
+          "company": "Charles Logistics & Trade",
+          "invoices_count": 8,
+          "total_billed": "₦ 4,250,000.00",
+          "paid": "₦ 4,143,500.00",
+          "outstanding": "₦ 106,500.00",
+          "share": "50.7%",
+          "last_invoice": "04 Sep 2026"
+        },
+        {
+          "name": "Osas Enterprises",
+          "company": "Osas Wholesale Ltd",
+          "invoices_count": 6,
+          "total_billed": "₦ 2,850,000.00",
+          "paid": "₦ 2,510,000.00",
+          "outstanding": "₦ 340,000.00",
+          "share": "34.0%",
+          "last_invoice": "28 Aug 2026"
+        },
+        {
+          "name": "Ann Kingsley",
+          "company": "Kingsley Studio",
+          "invoices_count": 4,
+          "total_billed": "₦ 1,275,000.00",
+          "paid": "₦ 1,275,000.00",
+          "outstanding": "₦ 0.00",
+          "share": "15.3%",
+          "last_invoice": "15 Aug 2026"
+        }
+      ]
+    },
+    "vendor_purchases": {
+      "total_purchased": "₦ 2,240,000.00",
+      "total_bills": 9,
+      "total_paid": "₦ 1,281,250.00",
+      "total_owed": "₦ 958,750.00",
+      "vendors": [
+        {
+          "name": "Prime Tech Hardware",
+          "company": "Prime Technology Solutions Ltd",
+          "bills_count": 5,
+          "total_billed": "₦ 1,950,000.00",
+          "paid": "₦ 1,036,250.00",
+          "outstanding": "₦ 913,750.00",
+          "share": "87.1%",
+          "last_bill": "05 Sep 2026"
+        },
+        {
+          "name": "Swift Office Supplies",
+          "company": "Swift Stationery & Logistics",
+          "bills_count": 4,
+          "total_billed": "₦ 290,000.00",
+          "paid": "₦ 245,000.00",
+          "outstanding": "₦ 45,000.00",
+          "share": "12.9%",
+          "last_bill": "01 Sep 2026"
+        }
+      ]
+    },
+    "tax": {
+      "period": "October 2026 (FIRS VAT Return)",
+      "tin": "24589102-0001",
+      "tax_rate": "7.5%",
+      "taxable_sales": "₦ 860,937.50",
+      "output_vat": "₦ 64,570.31",
+      "taxable_purchases": "₦ 850,000.00",
+      "input_vat": "₦ 63,750.00",
+      "net_vat_due": "₦ 820.31",
+      "filing_deadline": "21 Nov 2026"
+    }
+  }
 }

@@ -8,3 +8,25 @@
     font-feature-settings: "tnum" 1, "cv11" 1;
   }
 }
+
+@media print {
+  body {
+    background-color: #ffffff !important;
+    color: #111827 !important;
+  }
+  aside, [data-layout="rail"] > aside, header, .no-print {
+    display: none !important;
+  }
+  #app {
+    display: block !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+  main {
+    overflow: visible !important;
+    padding: 0 !important;
+  }
+  .print-only {
+    display: block !important;
+  }
+}

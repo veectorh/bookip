@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="en">
+<head>
+  {{> head}}
+</head>
+<body class="bg-canvas text-ink font-sans text-[14px] leading-[1.5]">
+  
+  {{> icons}}
+
+  <div id="app" class="flex h-screen overflow-hidden" data-layout="rail">
+    {{> sidebar active_reports_vendor_purchases=true active="reports_vendor_purchases"}}
+
+    <div class="flex-1 flex flex-col min-w-0">
+      {{> topbar title="Vendor Purchases Report" active_reports=true}}
+
+      <main class="flex-1 overflow-y-auto overflow-x-hidden relative bg-canvas">
+
+        <div class="p-4 md:p-6 overflow-auto flex-1 max-w-7xl mx-auto w-full">
+          <!-- Breadcrumb & Header -->
+          <div class="text-xs text-muted mb-2 flex items-center gap-1.5 font-medium no-print">
+            Financial Reports <svg class="w-4 h-4 stroke-[1.75]" aria-hidden="true"><use href="#i-chevron-right"/></svg> Purchases by Vendor
+          </div>
+          
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4 no-print">
+            <div>
+              <div class="flex items-center gap-2.5">
+                <h1 class="m-0 text-xl font-semibold tracking-tight text-ink">Vendor Purchases &amp; Payables Report</h1>
+                <span class="text-xs font-medium bg-[#FFF8EB] text-[#943A14] border border-[#FEE3B8] px-2 py-0.5 rounded">₦ 958k Payables</span>
+              </div>
+              <p class="text-xs text-muted mt-1">Audit of goods and office supplies bought, payments settled, and debt owed to vendors.</p>
+            </div>
+            
+            <div class="flex items-center gap-2 flex-wrap">
+              <!-- Period Dropdown -->
+              <div class="flex items-center h-control px-2.5 bg-surface border border-line-strong rounded text-[13px] shadow-sm">
+                <svg class="w-3.5 h-3.5 stroke-[1.75] text-muted mr-1.5 shrink-0" aria-hidden="true"><use href="#i-calendar"/></svg>
+                <select class="bg-transparent border-0 outline-none text-ink text-xs font-medium cursor-pointer" onchange="window.showToast({ title: 'Vendor Purchases Filtered', message: 'Showing procurement figures for ' + this.value, type: 'info' })">
+                  <option selected>Year to Date (Jan – Oct 2026)</option>
+                  <option>Last 30 Days</option>
+                  <option>This Quarter (Q4 2026)</option>
+                  <option>Last Quarter (Q3 2026)</option>
+                </select>
+              </div>
+
+              <!-- Export CSV -->
+              <button class="inline-flex items-center gap-1.5 h-control px-3 rounded border border-line-strong text-[13px] font-medium bg-surface hover:bg-th transition-colors shadow-sm" onclick="window.showToast({ title: 'CSV Downloaded', message: 'Vendor purchases report exported to CSV.', type: 'info' });">
+                <svg class="w-4 h-4 stroke-[1.75]" aria-hidden="true"><use href="#i-download"/></svg> <span class="hidden md:inline">Export</span>
+              </button>
+
+              <!-- Print Report -->
+              <button class="inline-flex items-center gap-1.5 h-control px-3 rounded border border-transparent text-[13px] font-medium bg-indigo text-white hover:bg-indigo-hover transition-colors shadow-sm" onclick="window.print()">
+                <svg class="w-4 h-4 stroke-[2]" aria-hidden="true"><use href="#i-printer"/></svg> <span>Print Statement</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Reports Hub Navigation Tabs -->
+          <div class="flex items-center gap-1 border-b border-line mb-5 overflow-x-auto no-print scrollbar-none text-xs">
+            <a href="/reports_profit_loss.html" class="px-3 py-2 font-medium text-muted hover:text-ink whitespace-nowrap transition-colors">Profit & Loss</a>
+            <a href="/reports_account_balances.html" class="px-3 py-2 font-medium text-muted hover:text-ink whitespace-nowrap transition-colors">Account Balances</a>
+            <a href="/reports_customer_income.html" class="px-3 py-2 font-medium text-muted hover:text-ink whitespace-nowrap transition-colors">Income by Customer</a>
+            <a href="/reports_vendor_purchases.html" class="px-3 py-2 font-medium text-indigo border-b-2 border-indigo whitespace-nowrap bg-indigo-subtle/30 rounded-t">Purchases by Vendor</a>
+            <a href="/reports_tax.html" class="px-3 py-2 font-medium text-muted hover:text-ink whitespace-nowrap transition-colors">Tax Report (VAT)</a>
+          </div>
+
+          <!-- Plain Store Language KPI Cards -->
+          <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-6 no-print">
+            <div class="bg-surface rounded-lg p-3.5 border border-line shadow-xs">
+              <div class="text-[11px] font-medium uppercase tracking-wider text-muted">Total Goods &amp; Supplies Bought</div>
+              <div class="text-xl font-bold tracking-tight text-ink mt-1">{{seed.reports.vendor_purchases.total_purchased}}</div>
+              <div class="text-[11px] text-muted mt-1">{{seed.reports.vendor_purchases.total_bills}} bills logged from suppliers</div>
+            </div>
+            <div class="bg-surface rounded-lg p-3.5 border border-line shadow-xs">
+              <div class="text-[11px] font-medium uppercase tracking-wider text-muted">Bills Paid to Suppliers</div>
+              <div class="text-xl font-bold tracking-tight text-[#146A3E] mt-1">{{seed.reports.vendor_purchases.total_paid}}</div>
+              <div class="text-[11px] text-[#146A3E] font-medium mt-1">Settled via First Bank &amp; GTBank</div>
+            </div>
+            <div class="bg-surface rounded-lg p-3.5 border border-line shadow-xs">
+              <div class="text-[11px] font-medium uppercase tracking-wider text-muted">Unpaid Bills We Still Owe</div>
+              <div class="text-xl font-bold tracking-tight text-[#B4372A] mt-1">{{seed.reports.vendor_purchases.total_owed}}</div>
+              <div class="text-[11px] text-[#B4372A] font-medium mt-1">Pending payments to 2 vendors</div>
+            </div>
+            <div class="bg-surface rounded-lg p-3.5 border border-line shadow-xs bg-gradient-to-br from-surface to-indigo-subtle/20">
+              <div class="text-[11px] font-medium uppercase tracking-wider text-indigo">Biggest Supplier</div>
+              <div class="text-base font-bold tracking-tight text-indigo mt-1 truncate">Prime Tech Hardware</div>
+              <div class="text-[11px] text-muted mt-1">87.1% of total inventory purchases</div>
+            </div>
+          </div>
+
+          <!-- Printable Statement Sheet -->
+          <div class="bg-surface rounded-xl border border-line shadow-sm overflow-hidden p-6 md:p-8">
+            <!-- Statement Header -->
+            <div class="flex flex-col md:flex-row md:items-start justify-between gap-4 border-b border-line pb-6 mb-6">
+              <div>
+                <div class="flex items-center gap-2 mb-1">
+                  <div class="w-8 h-8 rounded-lg bg-indigo flex items-center justify-center text-white font-bold text-sm">A</div>
+                  <h2 class="text-lg font-bold text-ink tracking-tight">{{seed.business.name}}</h2>
+                </div>
+                <p class="text-xs text-muted">{{seed.business.address}}</p>
+                <p class="text-xs text-muted">Email: {{seed.business.email}} &bull; Phone: {{seed.business.phone}}</p>
+              </div>
+              <div class="text-left md:text-right">
+                <div class="inline-block px-2.5 py-1 bg-surface-raised rounded text-xs font-semibold text-ink border border-line">
+                  VENDOR PURCHASES &amp; EXPENSE SUMMARY
+                </div>
+                <div class="text-xs text-muted mt-2"><strong>Reporting Period:</strong> Jan – Oct 2026 (YTD)</div>
+                <div class="text-xs text-muted"><strong>Registered Suppliers:</strong> {{seed.reports.vendor_purchases.vendors.length}} vendors</div>
+                <div class="text-[11px] text-muted mt-0.5">Basis: Accrual Payables</div>
+              </div>
+            </div>
+
+            <!-- Procurement Spend Share Bars -->
+            <div class="mb-6 p-4 rounded-lg bg-surface-raised border border-line">
+              <div class="flex items-center justify-between text-xs mb-2">
+                <span class="font-medium text-ink">Procurement Spend by Vendor</span>
+                <span class="text-muted font-mono font-medium">Total: {{seed.reports.vendor_purchases.total_purchased}}</span>
+              </div>
+              <div class="w-full h-3 rounded-full bg-line overflow-hidden flex">
+                <div class="bg-indigo h-full" style="width: 87.1%;" title="Prime Tech Hardware (87.1%)"></div>
+                <div class="bg-[#146A3E] h-full" style="width: 12.9%;" title="Swift Office Supplies (12.9%)"></div>
+              </div>
+              <div class="flex items-center gap-4 mt-2.5 text-[11px] text-muted flex-wrap">
+                <div class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-indigo"></span> Prime Tech Hardware (87.1%)</div>
+                <div class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-[#146A3E]"></span> Swift Office Supplies (12.9%)</div>
+              </div>
+            </div>
+
+            <!-- Vendor Purchases Table -->
+            <div class="border border-line rounded-lg overflow-x-auto mb-6">
+              <table class="w-full text-xs text-left">
+                <thead class="bg-th text-muted font-medium border-b border-line">
+                  <tr>
+                    <th class="py-2.5 px-3">Supplier / Vendor</th>
+                    <th class="py-2.5 px-3 text-center">Bills</th>
+                    <th class="py-2.5 px-3 text-right">Total Invoiced</th>
+                    <th class="py-2.5 px-3 text-right">Cash Paid</th>
+                    <th class="py-2.5 px-3 text-right">Still Owed to Vendor</th>
+                    <th class="py-2.5 px-3 text-right">% Spend</th>
+                    <th class="py-2.5 px-3">Last Bill</th>
+                    <th class="py-2.5 px-3 text-center no-print">Action</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-line/60">
+                  {{#each seed.reports.vendor_purchases.vendors}}
+                  <tr class="hover:bg-th/40 transition-colors">
+                    <td class="py-3 px-3">
+                      <div class="font-semibold text-ink">{{this.name}}</div>
+                      <div class="text-[11px] text-muted">{{this.company}}</div>
+                    </td>
+                    <td class="py-3 px-3 text-center font-mono text-muted">{{this.bills_count}}</td>
+                    <td class="py-3 px-3 text-right font-mono font-medium text-ink">{{this.total_billed}}</td>
+                    <td class="py-3 px-3 text-right font-mono font-medium text-[#146A3E]">{{this.paid}}</td>
+                    <td class="py-3 px-3 text-right font-mono font-bold text-[#B4372A]">
+                      {{this.outstanding}}
+                    </td>
+                    <td class="py-3 px-3 text-right font-medium text-muted">{{this.share}}</td>
+                    <td class="py-3 px-3 text-muted">{{this.last_bill}}</td>
+                    <td class="py-3 px-3 text-center no-print">
+                      <a href="/vendors.html" class="inline-flex items-center text-indigo hover:underline font-medium text-[11px]">
+                        Ledger &rarr;
+                      </a>
+                    </td>
+                  </tr>
+                  {{/each}}
+                </tbody>
+                <tfoot class="bg-surface-raised font-semibold border-t-2 border-line">
+                  <tr>
+                    <td class="py-3 px-3 text-ink">Total Purchases Across All Suppliers:</td>
+                    <td class="py-3 px-3 text-center font-mono text-muted">{{seed.reports.vendor_purchases.total_bills}}</td>
+                    <td class="py-3 px-3 text-right font-mono font-bold text-ink">{{seed.reports.vendor_purchases.total_purchased}}</td>
+                    <td class="py-3 px-3 text-right font-mono font-bold text-[#146A3E]">{{seed.reports.vendor_purchases.total_paid}}</td>
+                    <td class="py-3 px-3 text-right font-mono font-bold text-[#B4372A]">{{seed.reports.vendor_purchases.total_owed}}</td>
+                    <td class="py-3 px-3 text-right font-medium text-ink">100.0%</td>
+                    <td colspan="2" class="py-3 px-3"></td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+
+            <!-- Certified Statement Footer -->
+            <div class="mt-8 pt-6 border-t border-line flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-muted">
+              <div>
+                <p class="font-medium text-ink">Procurement &amp; Payables Audit &bull; Bookkip SME System</p>
+                <p class="text-[11px]">Computed on Year to Date 2026 data</p>
+              </div>
+              <div class="text-right flex items-center gap-4">
+                <div>
+                  <div class="text-[11px] uppercase tracking-wider text-muted font-semibold">Procurement Lead</div>
+                  <div class="font-medium text-ink">Swift Operations</div>
+                </div>
+                <div>
+                  <div class="text-[11px] uppercase tracking-wider text-muted font-semibold">Chief Accountant</div>
+                  <div class="font-medium text-ink">Acme Dynamics Ltd</div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  {{> toast}}
+
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      const mobileBtn = document.getElementById('mobileMenuBtn');
+      const sidebar = document.getElementById('sidebar');
+      if (mobileBtn && sidebar) {
+        mobileBtn.addEventListener('click', () => {
+          sidebar.classList.toggle('hidden');
+          sidebar.classList.toggle('flex');
+        });
+      }
+    });
+  </script>
+</body>
+</html>

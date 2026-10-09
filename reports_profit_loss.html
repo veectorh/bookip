@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="en">
+<head>
+  {{> head}}
+</head>
+<body class="bg-canvas text-ink font-sans text-[14px] leading-[1.5]">
+  
+  {{> icons}}
+
+  <div id="app" class="flex h-screen overflow-hidden" data-layout="rail">
+    {{> sidebar active_reports_profit_loss=true active="reports_profit_loss"}}
+
+    <div class="flex-1 flex flex-col min-w-0">
+      {{> topbar title="Profit & Loss Report" active_reports=true}}
+
+      <main class="flex-1 overflow-y-auto overflow-x-hidden relative bg-canvas">
+
+        <div class="p-4 md:p-6 overflow-auto flex-1 max-w-7xl mx-auto w-full">
+          <!-- Breadcrumb & Header -->
+          <div class="text-xs text-muted mb-2 flex items-center gap-1.5 font-medium no-print">
+            Financial Reports <svg class="w-4 h-4 stroke-[1.75]" aria-hidden="true"><use href="#i-chevron-right"/></svg> Profit & Loss Statement
+          </div>
+          
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4 no-print">
+            <div>
+              <div class="flex items-center gap-2.5">
+                <h1 class="m-0 text-xl font-semibold tracking-tight text-ink">Profit & Loss Statement</h1>
+                <span class="text-xs font-medium bg-[#EAF5EF] text-[#146A3E] border border-[#C6E7D2] px-2 py-0.5 rounded">Profitable (+18.2%)</span>
+              </div>
+              <p class="text-xs text-muted mt-1">Simple breakdown of money made, direct item costs, and operating bills.</p>
+            </div>
+            
+            <div class="flex items-center gap-2 flex-wrap">
+              <!-- Period Dropdown -->
+              <div class="flex items-center h-control px-2.5 bg-surface border border-line-strong rounded text-[13px] shadow-sm">
+                <svg class="w-3.5 h-3.5 stroke-[1.75] text-muted mr-1.5 shrink-0" aria-hidden="true"><use href="#i-calendar"/></svg>
+                <select class="bg-transparent border-0 outline-none text-ink text-xs font-medium cursor-pointer" onchange="window.showToast({ title: 'Date Range Updated', message: 'Report recalculated for ' + this.value, type: 'info' })">
+                  <option selected>Year to Date (Jan – Oct 2026)</option>
+                  <option>This Quarter (Q4 2026)</option>
+                  <option>Last Quarter (Q3 2026)</option>
+                  <option>This Month (October 2026)</option>
+                  <option>Full Year 2025</option>
+                </select>
+              </div>
+
+              <!-- Export CSV -->
+              <button class="inline-flex items-center gap-1.5 h-control px-3 rounded border border-line-strong text-[13px] font-medium bg-surface hover:bg-th transition-colors shadow-sm" onclick="window.showToast({ title: 'CSV Downloaded', message: 'Profit & Loss statement exported to CSV.', type: 'info' });">
+                <svg class="w-4 h-4 stroke-[1.75]" aria-hidden="true"><use href="#i-download"/></svg> <span class="hidden md:inline">Export</span>
+              </button>
+
+              <!-- Print Report -->
+              <button class="inline-flex items-center gap-1.5 h-control px-3 rounded border border-transparent text-[13px] font-medium bg-indigo text-white hover:bg-indigo-hover transition-colors shadow-sm" onclick="window.print()">
+                <svg class="w-4 h-4 stroke-[2]" aria-hidden="true"><use href="#i-printer"/></svg> <span>Print Statement</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Reports Hub Navigation Tabs -->
+          <div class="flex items-center gap-1 border-b border-line mb-5 overflow-x-auto no-print scrollbar-none text-xs">
+            <a href="/reports_profit_loss.html" class="px-3 py-2 font-medium text-indigo border-b-2 border-indigo whitespace-nowrap bg-indigo-subtle/30 rounded-t">Profit & Loss</a>
+            <a href="/reports_account_balances.html" class="px-3 py-2 font-medium text-muted hover:text-ink whitespace-nowrap transition-colors">Account Balances</a>
+            <a href="/reports_customer_income.html" class="px-3 py-2 font-medium text-muted hover:text-ink whitespace-nowrap transition-colors">Income by Customer</a>
+            <a href="/reports_vendor_purchases.html" class="px-3 py-2 font-medium text-muted hover:text-ink whitespace-nowrap transition-colors">Purchases by Vendor</a>
+            <a href="/reports_tax.html" class="px-3 py-2 font-medium text-muted hover:text-ink whitespace-nowrap transition-colors">Tax Report (VAT)</a>
+          </div>
+
+          <!-- Plain Store Language KPI Cards -->
+          <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-6 no-print">
+            <div class="bg-surface rounded-lg p-3.5 border border-line shadow-xs">
+              <div class="text-[11px] font-medium uppercase tracking-wider text-muted">Money Made (Sales)</div>
+              <div class="text-xl font-bold tracking-tight text-[#146A3E] mt-1">{{seed.reports.profit_loss.total_income}}</div>
+              <div class="text-[11px] text-muted mt-1">Total revenue from sales & services</div>
+            </div>
+            <div class="bg-surface rounded-lg p-3.5 border border-line shadow-xs">
+              <div class="text-[11px] font-medium uppercase tracking-wider text-muted">Items Cost (COGS)</div>
+              <div class="text-xl font-bold tracking-tight text-[#943A14] mt-1">{{seed.reports.profit_loss.total_cogs}}</div>
+              <div class="text-[11px] text-muted mt-1">Direct equipment & job costs</div>
+            </div>
+            <div class="bg-surface rounded-lg p-3.5 border border-line shadow-xs">
+              <div class="text-[11px] font-medium uppercase tracking-wider text-muted">Running Bills (OPEX)</div>
+              <div class="text-xl font-bold tracking-tight text-[#B4372A] mt-1">{{seed.reports.profit_loss.total_opex}}</div>
+              <div class="text-[11px] text-muted mt-1">Staff salaries, rent, power & supplies</div>
+            </div>
+            <div class="bg-surface rounded-lg p-3.5 border border-line shadow-xs bg-gradient-to-br from-surface to-indigo-subtle/20">
+              <div class="text-[11px] font-medium uppercase tracking-wider text-indigo">Real Take-Home Profit</div>
+              <div class="text-xl font-bold tracking-tight text-indigo mt-1">{{seed.reports.profit_loss.net_profit}}</div>
+              <div class="text-[11px] text-[#146A3E] font-medium mt-1">Net Margin: {{seed.reports.profit_loss.net_margin}}</div>
+            </div>
+          </div>
+
+          <!-- Official Financial Statement Document Sheet (Printable) -->
+          <div class="bg-surface rounded-xl border border-line shadow-sm overflow-hidden p-6 md:p-8">
+            <!-- Statement Header -->
+            <div class="flex flex-col md:flex-row md:items-start justify-between gap-4 border-b border-line pb-6 mb-6">
+              <div>
+                <div class="flex items-center gap-2 mb-1">
+                  <div class="w-8 h-8 rounded-lg bg-indigo flex items-center justify-center text-white font-bold text-sm">A</div>
+                  <h2 class="text-lg font-bold text-ink tracking-tight">{{seed.business.name}}</h2>
+                </div>
+                <p class="text-xs text-muted">{{seed.business.address}}</p>
+                <p class="text-xs text-muted">Email: {{seed.business.email}} &bull; Phone: {{seed.business.phone}}</p>
+              </div>
+              <div class="text-left md:text-right">
+                <div class="inline-block px-2.5 py-1 bg-surface-raised rounded text-xs font-semibold text-ink border border-line">
+                  INCOME STATEMENT (P&amp;L)
+                </div>
+                <div class="text-xs text-muted mt-2"><strong>Reporting Period:</strong> {{seed.reports.profit_loss.period}}</div>
+                <div class="text-xs text-muted"><strong>Base Currency:</strong> Nigerian Naira (NGN - ₦)</div>
+                <div class="text-[11px] text-muted mt-0.5">Basis: Accrual Accounting</div>
+              </div>
+            </div>
+
+            <!-- Financial Table Structure -->
+            <div class="space-y-6">
+              
+              <!-- SECTION 1: OPERATING REVENUE -->
+              <div>
+                <div class="flex items-center justify-between pb-2 border-b border-line-strong">
+                  <h3 class="text-sm font-semibold uppercase tracking-wider text-ink flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-[#146A3E]"></span>
+                    1. Money In (Sales &amp; Operating Revenue)
+                  </h3>
+                  <span class="text-xs font-medium text-muted">Amount (₦)</span>
+                </div>
+                <div class="divide-y divide-line/60 text-xs">
+                  {{#each seed.reports.profit_loss.income_breakdown}}
+                  <div class="py-2.5 flex items-center justify-between">
+                    <div class="flex items-center gap-2">
+                      <span class="text-ink font-medium">{{this.item}}</span>
+                      <span class="text-[10px] bg-surface-raised px-1.5 py-0.5 rounded text-muted">{{this.category}}</span>
+                    </div>
+                    <span class="font-medium text-ink font-mono">{{this.amount}}</span>
+                  </div>
+                  {{/each}}
+                </div>
+                <div class="flex items-center justify-between pt-2.5 pb-2 border-t border-line font-medium text-xs bg-th/40 px-2 rounded">
+                  <span class="text-ink font-semibold">Total Revenue (Gross Money In)</span>
+                  <span class="font-bold text-[#146A3E] font-mono">{{seed.reports.profit_loss.total_income}}</span>
+                </div>
+              </div>
+
+              <!-- SECTION 2: COST OF GOODS SOLD -->
+              <div>
+                <div class="flex items-center justify-between pb-2 border-b border-line-strong">
+                  <h3 class="text-sm font-semibold uppercase tracking-wider text-ink flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-[#943A14]"></span>
+                    2. Cost of Items Sold (Direct Costs / COGS)
+                  </h3>
+                  <span class="text-xs font-medium text-muted">Amount (₦)</span>
+                </div>
+                <div class="divide-y divide-line/60 text-xs">
+                  {{#each seed.reports.profit_loss.cogs_breakdown}}
+                  <div class="py-2.5 flex items-center justify-between">
+                    <span class="text-ink font-medium">{{this.item}}</span>
+                    <span class="font-medium text-ink font-mono">{{this.amount}}</span>
+                  </div>
+                  {{/each}}
+                </div>
+                <div class="flex items-center justify-between pt-2.5 pb-2 border-t border-line font-medium text-xs bg-th/40 px-2 rounded">
+                  <span class="text-ink font-semibold">Total Cost of Items Sold</span>
+                  <span class="font-bold text-[#943A14] font-mono">{{seed.reports.profit_loss.total_cogs}}</span>
+                </div>
+              </div>
+
+              <!-- HIGHLIGHT ROW: GROSS PROFIT -->
+              <div class="p-3.5 rounded-lg bg-surface-raised border border-line-strong flex items-center justify-between">
+                <div>
+                  <div class="text-xs font-bold text-ink uppercase tracking-wide">Gross Profit (Money Left after Item Costs)</div>
+                  <div class="text-[11px] text-muted">Revenue minus direct supplier &amp; hardware costs</div>
+                </div>
+                <div class="text-right">
+                  <div class="text-base font-bold text-ink font-mono">{{seed.reports.profit_loss.gross_profit}}</div>
+                  <div class="text-[11px] text-[#146A3E] font-semibold">Gross Margin: {{seed.reports.profit_loss.gross_margin}}</div>
+                </div>
+              </div>
+
+              <!-- SECTION 3: OPERATING EXPENSES -->
+              <div>
+                <div class="flex items-center justify-between pb-2 border-b border-line-strong">
+                  <h3 class="text-sm font-semibold uppercase tracking-wider text-ink flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-[#B4372A]"></span>
+                    3. Shop Running Expenses (OPEX)
+                  </h3>
+                  <span class="text-xs font-medium text-muted">Amount (₦)</span>
+                </div>
+                <div class="divide-y divide-line/60 text-xs">
+                  {{#each seed.reports.profit_loss.opex_breakdown}}
+                  <div class="py-2.5 flex items-center justify-between">
+                    <span class="text-ink font-medium">{{this.item}}</span>
+                    <span class="font-medium text-ink font-mono">{{this.amount}}</span>
+                  </div>
+                  {{/each}}
+                </div>
+                <div class="flex items-center justify-between pt-2.5 pb-2 border-t border-line font-medium text-xs bg-th/40 px-2 rounded">
+                  <span class="text-ink font-semibold">Total Running Expenses</span>
+                  <span class="font-bold text-[#B4372A] font-mono">{{seed.reports.profit_loss.total_opex}}</span>
+                </div>
+              </div>
+
+              <!-- FINAL NET PROFIT SUMMARY BOX -->
+              <div class="p-4 rounded-xl bg-gradient-to-r from-surface-raised via-indigo-subtle/20 to-surface-raised border-2 border-indigo flex items-center justify-between shadow-xs">
+                <div>
+                  <div class="text-sm font-bold text-ink uppercase tracking-wide">Net Profit Before Tax</div>
+                  <div class="text-xs text-muted">Final profit remaining after all company operating bills</div>
+                </div>
+                <div class="text-right">
+                  <div class="text-xl font-extrabold text-indigo font-mono">{{seed.reports.profit_loss.net_profit}}</div>
+                  <div class="text-xs font-semibold text-[#146A3E]">Net Profit Margin: {{seed.reports.profit_loss.net_margin}}</div>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Certified Statement Footer -->
+            <div class="mt-8 pt-6 border-t border-line flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-muted">
+              <div>
+                <p class="font-medium text-ink">Certified Financial Record &bull; Bookkip SME System</p>
+                <p class="text-[11px]">Computed on {{seed.reports.profit_loss.period}}</p>
+              </div>
+              <div class="text-right flex items-center gap-4">
+                <div>
+                  <div class="text-[11px] uppercase tracking-wider text-muted font-semibold">Prepared By</div>
+                  <div class="font-medium text-ink">Finance Department</div>
+                </div>
+                <div>
+                  <div class="text-[11px] uppercase tracking-wider text-muted font-semibold">Authorized By</div>
+                  <div class="font-medium text-ink">Managing Director</div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  {{> toast}}
+
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      // Setup mobile menu
+      const mobileBtn = document.getElementById('mobileMenuBtn');
+      const sidebar = document.getElementById('sidebar');
+      if (mobileBtn && sidebar) {
+        mobileBtn.addEventListener('click', () => {
+          sidebar.classList.toggle('hidden');
+          sidebar.classList.toggle('flex');
+        });
+      }
+    });
+  </script>
+</body>
+</html>
