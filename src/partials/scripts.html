@@ -267,4 +267,254 @@
       });
       window.scrollTo({ top: 0, behavior: 'instant' });
     });
+
+    // Toast Notification System
+    window.showToast = function({ title, message, type = 'success', duration = 4000, actionLabel, onAction }) {
+      let container = document.getElementById('toastContainer');
+      if (!container) {
+        container = document.createElement('div');
+        container.id = 'toastContainer';
+        container.setAttribute('aria-live', 'polite');
+        container.className = 'fixed bottom-4 right-4 z-50 flex flex-col gap-2 max-w-sm w-full pointer-events-none px-4 sm:px-0';
+        document.body.appendChild(container);
+      }
+
+      const toast = document.createElement('div');
+      toast.className = 'pointer-events-auto flex items-start gap-3 p-3.5 bg-surface border rounded-lg shadow-xl text-[13px] transition-all duration-200 transform translate-y-2 opacity-0';
+      
+      let iconSvg = '<svg class="w-4 h-4 text-[#1E9A5A] shrink-0 mt-0.5 stroke-[2]"><use href="#i-check"/></svg>';
+      let borderClass = 'border-[#C8EAD6]';
+      if (type === 'danger' || type === 'error') {
+        iconSvg = '<svg class="w-4 h-4 text-[#D0432F] shrink-0 mt-0.5 stroke-[2]"><use href="#i-alert-circle"/></svg>';
+        borderClass = 'border-[#F5CFC9]';
+      } else if (type === 'info') {
+        iconSvg = '<svg class="w-4 h-4 text-indigo shrink-0 mt-0.5 stroke-[2]"><use href="#i-bell"/></svg>';
+        borderClass = 'border-indigo-line';
+      }
+
+      toast.classList.add(borderClass);
+
+      toast.innerHTML = `
+        ${iconSvg}
+        <div class="flex-1 min-w-0">
+          ${title ? `<div class="font-semibold text-ink leading-tight mb-0.5">${title}</div>` : ''}
+          <div class="text-muted leading-normal">${message || ''}</div>
+          ${actionLabel ? `<button type="button" class="mt-2 text-xs font-semibold text-indigo hover:text-indigo-hover underline underline-offset-2 action-btn">${actionLabel}</button>` : ''}
+        </div>
+        <button type="button" class="text-muted hover:text-ink -mr-1 -mt-1 p-1 rounded close-btn" aria-label="Dismiss">
+          <svg class="w-3.5 h-3.5 stroke-[2]"><use href="#i-x-circle"/></svg>
+        </button>
+      `;
+
+      container.appendChild(toast);
+
+      setTimeout(() => {
+        toast.classList.remove('translate-y-2', 'opacity-0');
+        toast.classList.add('translate-y-0', 'opacity-100');
+      }, 10);
+
+      const dismiss = () => {
+        toast.classList.add('opacity-0', 'translate-y-2');
+        setTimeout(() => toast.remove(), 200);
+      };
+
+      toast.querySelector('.close-btn').onclick = dismiss;
+
+      if (actionLabel && onAction) {
+        toast.querySelector('.action-btn').onclick = () => {
+          onAction();
+          dismiss();
+        };
+      }
+
+      if (duration > 0) {
+        setTimeout(dismiss, duration);
+      }
+    };
+
+    // Universal Row Actions System
+    document.addEventListener('click', e => {
+      const b = e.target.closest('[data-menu]');
+      if (!b) return;
+      e.stopPropagation();
+      closePopovers();
+
+      const title = b.dataset.menu || 'Actions';
+      const type = b.dataset.menuType || '';
+      const isMobile = document.getElementById('app')?.getAttribute('data-layout') === 'mob' || window.innerWidth < 768;
+
+      let items = '';
+      if (type === 'quotation') {
+        items = `
+          <button class="menu-action-view flex items-center gap-3 w-full bg-transparent border-0 px-3 py-2.5 text-[13px] font-medium text-left rounded hover:bg-th active:bg-th transition-colors">
+            <svg class="w-4 h-4 stroke-[1.75] shrink-0 text-muted" aria-hidden="true"><use href="#i-eye"/></svg> View quotation
+          </button>
+          <button class="menu-action-convert flex items-center gap-3 w-full bg-transparent border-0 px-3 py-2.5 text-[13px] font-medium text-left rounded hover:bg-th active:bg-th transition-colors">
+            <svg class="w-4 h-4 stroke-[1.75] shrink-0 text-indigo" aria-hidden="true"><use href="#i-file-text"/></svg> Convert to Invoice
+          </button>
+          <button class="menu-action-edit flex items-center gap-3 w-full bg-transparent border-0 px-3 py-2.5 text-[13px] font-medium text-left rounded hover:bg-th active:bg-th transition-colors">
+            <svg class="w-4 h-4 stroke-[1.75] shrink-0 text-muted" aria-hidden="true"><use href="#i-settings"/></svg> Edit quotation
+          </button>
+          <button class="menu-action-download flex items-center gap-3 w-full bg-transparent border-0 px-3 py-2.5 text-[13px] font-medium text-left rounded hover:bg-th active:bg-th transition-colors">
+            <svg class="w-4 h-4 stroke-[1.75] shrink-0 text-muted" aria-hidden="true"><use href="#i-download"/></svg> Download PDF
+          </button>
+          <hr class="border-0 border-t border-line my-1">
+          <button class="menu-action-cancel flex items-center gap-3 w-full bg-transparent border-0 px-3 py-2.5 text-[13px] font-medium text-left rounded text-[#B4372A] hover:bg-th active:bg-th transition-colors">
+            <svg class="w-4 h-4 stroke-[1.75] shrink-0" aria-hidden="true"><use href="#i-x-circle"/></svg> Cancel quotation
+          </button>
+        `;
+      } else if (type === 'purchase') {
+        items = `
+          <button class="menu-action-view flex items-center gap-3 w-full bg-transparent border-0 px-3 py-2.5 text-[13px] font-medium text-left rounded hover:bg-th active:bg-th transition-colors">
+            <svg class="w-4 h-4 stroke-[1.75] shrink-0 text-muted" aria-hidden="true"><use href="#i-eye"/></svg> View bill
+          </button>
+          <button class="menu-action-pay flex items-center gap-3 w-full bg-transparent border-0 px-3 py-2.5 text-[13px] font-medium text-left rounded hover:bg-th active:bg-th transition-colors">
+            <svg class="w-4 h-4 stroke-[1.75] shrink-0 text-muted" aria-hidden="true"><use href="#i-wallet"/></svg> Record payment
+          </button>
+          <button class="menu-action-edit flex items-center gap-3 w-full bg-transparent border-0 px-3 py-2.5 text-[13px] font-medium text-left rounded hover:bg-th active:bg-th transition-colors">
+            <svg class="w-4 h-4 stroke-[1.75] shrink-0 text-muted" aria-hidden="true"><use href="#i-settings"/></svg> Edit bill
+          </button>
+          <button class="menu-action-download flex items-center gap-3 w-full bg-transparent border-0 px-3 py-2.5 text-[13px] font-medium text-left rounded hover:bg-th active:bg-th transition-colors">
+            <svg class="w-4 h-4 stroke-[1.75] shrink-0 text-muted" aria-hidden="true"><use href="#i-download"/></svg> Download PDF
+          </button>
+          <hr class="border-0 border-t border-line my-1">
+          <button class="menu-action-cancel flex items-center gap-3 w-full bg-transparent border-0 px-3 py-2.5 text-[13px] font-medium text-left rounded text-[#B4372A] hover:bg-th active:bg-th transition-colors">
+            <svg class="w-4 h-4 stroke-[1.75] shrink-0" aria-hidden="true"><use href="#i-x-circle"/></svg> Void bill
+          </button>
+        `;
+      } else if (type === 'customer' || type === 'vendor') {
+        items = `
+          <button class="menu-action-view flex items-center gap-3 w-full bg-transparent border-0 px-3 py-2.5 text-[13px] font-medium text-left rounded hover:bg-th active:bg-th transition-colors">
+            <svg class="w-4 h-4 stroke-[1.75] shrink-0 text-muted" aria-hidden="true"><use href="#i-eye"/></svg> View profile
+          </button>
+          <button class="menu-action-edit flex items-center gap-3 w-full bg-transparent border-0 px-3 py-2.5 text-[13px] font-medium text-left rounded hover:bg-th active:bg-th transition-colors">
+            <svg class="w-4 h-4 stroke-[1.75] shrink-0 text-muted" aria-hidden="true"><use href="#i-settings"/></svg> Edit details
+          </button>
+          <button class="menu-action-invoice flex items-center gap-3 w-full bg-transparent border-0 px-3 py-2.5 text-[13px] font-medium text-left rounded hover:bg-th active:bg-th transition-colors">
+            <svg class="w-4 h-4 stroke-[1.75] shrink-0 text-muted" aria-hidden="true"><use href="#i-file-text"/></svg> ${type === 'customer' ? 'New Invoice' : 'New Bill'}
+          </button>
+          <hr class="border-0 border-t border-line my-1">
+          <button class="menu-action-cancel flex items-center gap-3 w-full bg-transparent border-0 px-3 py-2.5 text-[13px] font-medium text-left rounded text-[#B4372A] hover:bg-th active:bg-th transition-colors">
+            <svg class="w-4 h-4 stroke-[1.75] shrink-0" aria-hidden="true"><use href="#i-x-circle"/></svg> Archive
+          </button>
+        `;
+      } else {
+        // Default (Invoices)
+        items = `
+          <button class="menu-action-view flex items-center gap-3 w-full bg-transparent border-0 px-3 py-2.5 text-[13px] font-medium text-left rounded hover:bg-th active:bg-th transition-colors">
+            <svg class="w-4 h-4 stroke-[1.75] shrink-0 text-muted" aria-hidden="true"><use href="#i-eye"/></svg> View invoice
+          </button>
+          <button class="menu-action-pay flex items-center gap-3 w-full bg-transparent border-0 px-3 py-2.5 text-[13px] font-medium text-left rounded hover:bg-th active:bg-th transition-colors">
+            <svg class="w-4 h-4 stroke-[1.75] shrink-0 text-muted" aria-hidden="true"><use href="#i-wallet"/></svg> Record payment
+          </button>
+          <button class="menu-action-edit flex items-center gap-3 w-full bg-transparent border-0 px-3 py-2.5 text-[13px] font-medium text-left rounded hover:bg-th active:bg-th transition-colors">
+            <svg class="w-4 h-4 stroke-[1.75] shrink-0 text-muted" aria-hidden="true"><use href="#i-settings"/></svg> Edit invoice
+          </button>
+          <button class="menu-action-download flex items-center gap-3 w-full bg-transparent border-0 px-3 py-2.5 text-[13px] font-medium text-left rounded hover:bg-th active:bg-th transition-colors">
+            <svg class="w-4 h-4 stroke-[1.75] shrink-0 text-muted" aria-hidden="true"><use href="#i-download"/></svg> Download PDF
+          </button>
+          <hr class="border-0 border-t border-line my-1">
+          <button class="menu-action-cancel flex items-center gap-3 w-full bg-transparent border-0 px-3 py-2.5 text-[13px] font-medium text-left rounded text-[#B4372A] hover:bg-th active:bg-th transition-colors">
+            <svg class="w-4 h-4 stroke-[1.75] shrink-0" aria-hidden="true"><use href="#i-x-circle"/></svg> Cancel invoice
+          </button>
+        `;
+      }
+
+      function wireMenuActions(wrapper) {
+        wrapper.querySelector('.menu-action-view')?.addEventListener('click', () => {
+          closePopovers();
+          const viewEl = document.getElementById('s-view');
+          if (viewEl) {
+            document.querySelectorAll('#s-list, #s-editor, #s-view').forEach(s => s.classList.add('hidden'));
+            viewEl.classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'instant' });
+          } else {
+            window.showToast({ title: 'Viewing document', message: title, type: 'info' });
+          }
+        });
+
+        wrapper.querySelector('.menu-action-edit')?.addEventListener('click', () => {
+          closePopovers();
+          const editorEl = document.getElementById('s-editor');
+          if (editorEl) {
+            document.querySelectorAll('#s-list, #s-editor, #s-view').forEach(s => s.classList.add('hidden'));
+            editorEl.classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'instant' });
+          } else {
+            window.showToast({ title: 'Editing document', message: title, type: 'info' });
+          }
+        });
+
+        wrapper.querySelector('.menu-action-pay')?.addEventListener('click', () => {
+          closePopovers();
+          const payModal = document.getElementById('recordPaymentModal');
+          if (payModal) {
+            payModal.classList.remove('hidden');
+            setTimeout(() => payModal.setAttribute('data-open', 'true'), 10);
+          } else {
+            window.showToast({ title: 'Payment recording', message: `Open payment modal for ${title}`, type: 'info' });
+          }
+        });
+
+        wrapper.querySelector('.menu-action-convert')?.addEventListener('click', () => {
+          closePopovers();
+          window.showToast({
+            title: 'Converted to Invoice',
+            message: `${title} has been converted to an official Invoice.`,
+            type: 'success',
+            actionLabel: 'View Invoices',
+            onAction: () => { window.location.href = '/'; }
+          });
+        });
+
+        wrapper.querySelector('.menu-action-download')?.addEventListener('click', () => {
+          closePopovers();
+          window.showToast({ title: 'Downloading PDF', message: `Generating PDF file for ${title}...`, type: 'info' });
+        });
+
+        wrapper.querySelector('.menu-action-cancel')?.addEventListener('click', () => {
+          closePopovers();
+          const confirmModal = document.getElementById('confirmModal');
+          if (confirmModal) {
+            confirmModal.classList.remove('hidden');
+            setTimeout(() => confirmModal.setAttribute('data-open', 'true'), 10);
+          } else {
+            window.showToast({
+              title: 'Action recorded',
+              message: `${title} cancelled.`,
+              type: 'danger',
+              actionLabel: 'Undo',
+              onAction: () => {
+                window.showToast({ title: 'Restored', message: `${title} was restored.`, type: 'success' });
+              }
+            });
+          }
+        });
+      }
+
+      if (isMobile) {
+        const w = document.createElement('div');
+        w.className = 'sheetwrap fixed inset-0 z-50 flex items-end justify-center before:content-[""] before:absolute before:inset-0 before:bg-[rgba(16,20,50,0.4)]';
+        w.onclick = ev => { if (ev.target === w) closePopovers(); };
+        w.innerHTML = `
+          <div class="sheet relative w-full max-w-[390px] bg-surface rounded-t-xl pt-2 pb-3 px-1 animate-[slideUp_0.15s_ease-out]">
+            <div class="w-9 h-1 rounded-sm bg-line-strong mx-auto my-1 mb-2"></div>
+            <div class="px-4 py-1 pb-2 text-xs font-semibold text-muted border-b border-line mb-1">${title}</div>
+            ${items}
+          </div>
+        `;
+        document.body.appendChild(w);
+        wireMenuActions(w);
+      } else {
+        createScrim();
+        const r = b.getBoundingClientRect();
+        const p = document.createElement('div');
+        p.className = 'popover absolute z-50 bg-surface border border-line-strong rounded shadow-[0_8px_24px_rgba(16,20,50,0.12)] min-w-[210px] p-1.5';
+        p.style.top = (r.bottom + window.scrollY + 4) + 'px';
+        p.style.left = Math.max(10, (r.right + window.scrollX - 210)) + 'px';
+        p.innerHTML = items;
+        document.body.appendChild(p);
+        wireMenuActions(p);
+      }
+    });
   </script>

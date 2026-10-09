@@ -21,6 +21,8 @@ export default defineConfig({
         employees: resolve(__dirname, 'employees.html'),
         attendance: resolve(__dirname, 'attendance.html'),
         payroll: resolve(__dirname, 'payroll.html'),
+        recurring_invoices: resolve(__dirname, 'recurring_invoices.html'),
+        components: resolve(__dirname, 'components.html'),
       },
     },
   },

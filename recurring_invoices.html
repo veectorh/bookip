@@ -1,0 +1,345 @@
+<!doctype html>
+<html lang="en">
+<head>
+  {{> head}}
+</head>
+<body class="bg-canvas text-ink font-sans text-[14px] leading-[1.5]">
+  
+  {{> icons}}
+
+  <div id="app" class="flex h-screen overflow-hidden" data-layout="rail">
+    {{> sidebar active_recurring_invoices=true active="recurring_invoices"}}
+
+    <div class="flex-1 flex flex-col min-w-0">
+      {{> topbar title="Recurring Invoices" active_recurring_invoices=true}}
+
+      <main class="flex-1 overflow-y-auto overflow-x-hidden relative bg-canvas">
+
+          <!-- Content: Recurring Invoices List -->
+          <div class="p-4 overflow-auto flex-1" id="s-list">
+            <div class="text-xs text-muted mb-2 flex items-center gap-1.5 font-medium">
+              Sales <svg class="w-4 h-4 stroke-[1.75]" aria-hidden="true"><use href="#i-chevron-right"/></svg> Recurring Invoices
+            </div>
+            
+            <div class="flex items-center justify-between gap-3 mb-3.5">
+              <div class="flex items-center gap-2.5">
+                <h1 class="m-0 text-xl font-semibold tracking-tight text-ink">Recurring Invoices</h1>
+                <span class="text-xs text-muted font-medium bg-surface px-2 py-0.5 rounded border border-line">3 schedules</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <button class="inline-flex items-center gap-1.5 h-control px-2.5 md:px-3 rounded border border-line-strong text-[13px] font-medium bg-surface hover:bg-th transition-colors shadow-sm" title="Export">
+                  <svg class="w-4 h-4 stroke-[1.75]" aria-hidden="true"><use href="#i-download"/></svg> <span class="hidden md:inline">Export</span>
+                </button>
+                <button class="inline-flex items-center gap-1.5 h-control px-2.5 md:px-3 rounded border border-transparent text-[13px] font-medium bg-indigo text-white hover:bg-indigo-hover transition-colors shadow-sm" data-goto="editor">
+                  <svg class="w-4 h-4 stroke-[1.75]" aria-hidden="true"><use href="#i-plus"/></svg> <span class="hidden md:inline">New schedule</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Stats Strip -->
+            {{> stats-strip 
+              label1="Active Schedules" value1="3"
+              label2="Monthly Run Rate" value2="₦ 285,000.00"
+              label3="Next Run" value3="15 Oct 2026" subtext3="Monthly Retainer"
+              label4="Paused / Inactive" value4="0"
+            }}
+
+            <!-- Desktop Filters -->
+            <div class="flex gap-2 mb-2.5 flex-wrap hidden md:flex">
+              <div class="flex-1 min-w-[200px] flex items-center gap-2 h-control px-2.5 bg-surface border border-line-strong rounded text-[13px] focus-within:border-indigo focus-within:ring-[3px] focus-within:ring-indigo-line">
+                <svg class="w-4 h-4 stroke-[1.75] text-muted shrink-0" aria-hidden="true"><use href="#i-search"/></svg>
+                <input type="text" placeholder="Search profile name or customer" class="bg-transparent border-0 outline-none w-full placeholder-muted">
+              </div>
+              <div class="flex items-center h-control px-2.5 bg-surface border border-line-strong rounded text-[13px] focus-within:border-indigo focus-within:ring-[3px] focus-within:ring-indigo-line">
+                <select class="bg-transparent border-0 outline-none w-full"><option>All customers</option><option>Ann Kingsley</option><option>Osas</option><option>Charles</option></select>
+              </div>
+              <div class="flex items-center h-control px-2.5 bg-surface border border-line-strong rounded text-[13px] focus-within:border-indigo focus-within:ring-[3px] focus-within:ring-indigo-line">
+                <select class="bg-transparent border-0 outline-none w-full"><option>All frequencies</option><option>Weekly</option><option>Monthly</option><option>Quarterly</option><option>Annually</option></select>
+              </div>
+              <div class="flex items-center h-control px-2.5 bg-surface border border-line-strong rounded text-[13px] focus-within:border-indigo focus-within:ring-[3px] focus-within:ring-indigo-line">
+                <select class="bg-transparent border-0 outline-none w-full"><option>All statuses</option><option>Active</option><option>Paused</option><option>Completed</option></select>
+              </div>
+            </div>
+
+            <!-- Mobile Filters -->
+            <div class="block md:hidden">
+              <div class="flex flex-col gap-2.5 mb-2.5">
+                <div class="flex items-center gap-2 h-control px-2.5 bg-surface border border-line-strong rounded text-[13px] focus-within:border-indigo focus-within:ring-[3px] focus-within:ring-indigo-line">
+                  <svg class="w-4 h-4 stroke-[1.75] text-muted shrink-0" aria-hidden="true"><use href="#i-search"/></svg>
+                  <input type="text" placeholder="Search schedule..." class="bg-transparent border-0 outline-none w-full placeholder-muted">
+                </div>
+              </div>
+            </div>
+
+            <!-- Table (Desktop) -->
+            <div class="bg-surface border border-line rounded overflow-x-auto hidden md:block">
+              <table class="w-full border-collapse text-[13px] min-w-[760px]">
+                <thead>
+                  <tr class="bg-th text-muted font-medium text-xs">
+                    <th class="px-3.5 py-2.5 text-left border-b border-line whitespace-nowrap font-medium">Profile / Schedule</th>
+                    <th class="px-3.5 py-2.5 text-left border-b border-line whitespace-nowrap font-medium">Customer</th>
+                    <th class="px-3.5 py-2.5 text-left border-b border-line whitespace-nowrap font-medium">Frequency</th>
+                    <th class="px-3.5 py-2.5 text-left border-b border-line whitespace-nowrap font-medium">Last Run</th>
+                    <th class="px-3.5 py-2.5 text-left border-b border-line whitespace-nowrap font-medium">Next Run</th>
+                    <th class="px-3.5 py-2.5 text-right border-b border-line whitespace-nowrap font-medium">Amount (₦)</th>
+                    <th class="px-3.5 py-2.5 text-left border-b border-line whitespace-nowrap font-medium">Status</th>
+                    <th class="px-3.5 py-2.5 border-b border-line w-9"></th>
+                  </tr>
+                </thead>
+                <tbody class="[&_tr:last-child_td]:border-b-0">
+                  <tr class="hover:bg-[#FAFBFD] group transition-colors">
+                    <td class="px-3.5 py-3 border-b border-line whitespace-nowrap">
+                      <a href="#" class="font-medium text-ink group-hover:text-indigo-ink group-hover:underline underline-offset-2" data-goto="view">Monthly Retainer & Cloud Support</a>
+                      <div class="text-xs text-muted">REC-001 · Auto-send enabled</div>
+                    </td>
+                    <td class="px-3.5 py-3 border-b border-line whitespace-nowrap font-medium">Ann Kingsley</td>
+                    <td class="px-3.5 py-3 border-b border-line whitespace-nowrap"><span class="px-2 py-0.5 rounded text-xs bg-canvas border border-line font-medium text-ink">Monthly</span></td>
+                    <td class="px-3.5 py-3 border-b border-line whitespace-nowrap text-muted">15 Sep 2026</td>
+                    <td class="px-3.5 py-3 border-b border-line whitespace-nowrap font-medium text-ink">15 Oct 2026</td>
+                    <td class="px-3.5 py-3 border-b border-line whitespace-nowrap text-right font-medium" style="font-variant-numeric: tabular-nums;">120,000.00</td>
+                    <td class="px-3.5 py-3 border-b border-line whitespace-nowrap">
+                      {{> status-badge status="paid" label="Active"}}
+                    </td>
+                    <td class="px-3.5 py-3 border-b border-line whitespace-nowrap">
+                      <button class="w-[26px] h-[26px] rounded flex items-center justify-center text-muted hover:bg-th hover:border-line-strong hover:text-ink border border-transparent" data-menu="REC-001 · Ann Kingsley"><svg class="w-4 h-4 stroke-[1.75]" aria-hidden="true"><use href="#i-more-horizontal"/></svg></button>
+                    </td>
+                  </tr>
+                  <tr class="hover:bg-[#FAFBFD] group transition-colors">
+                    <td class="px-3.5 py-3 border-b border-line whitespace-nowrap">
+                      <a href="#" class="font-medium text-ink group-hover:text-indigo-ink group-hover:underline underline-offset-2" data-goto="view">Software Maintenance & Backups</a>
+                      <div class="text-xs text-muted">REC-002 · Auto-send enabled</div>
+                    </td>
+                    <td class="px-3.5 py-3 border-b border-line whitespace-nowrap font-medium">Osas</td>
+                    <td class="px-3.5 py-3 border-b border-line whitespace-nowrap"><span class="px-2 py-0.5 rounded text-xs bg-canvas border border-line font-medium text-ink">Monthly</span></td>
+                    <td class="px-3.5 py-3 border-b border-line whitespace-nowrap text-muted">1 Oct 2026</td>
+                    <td class="px-3.5 py-3 border-b border-line whitespace-nowrap font-medium text-ink">1 Nov 2026</td>
+                    <td class="px-3.5 py-3 border-b border-line whitespace-nowrap text-right font-medium" style="font-variant-numeric: tabular-nums;">95,000.00</td>
+                    <td class="px-3.5 py-3 border-b border-line whitespace-nowrap">
+                      {{> status-badge status="paid" label="Active"}}
+                    </td>
+                    <td class="px-3.5 py-3 border-b border-line whitespace-nowrap">
+                      <button class="w-[26px] h-[26px] rounded flex items-center justify-center text-muted hover:bg-th hover:border-line-strong hover:text-ink border border-transparent" data-menu="REC-002 · Osas"><svg class="w-4 h-4 stroke-[1.75]" aria-hidden="true"><use href="#i-more-horizontal"/></svg></button>
+                    </td>
+                  </tr>
+                  <tr class="hover:bg-[#FAFBFD] group transition-colors">
+                    <td class="px-3.5 py-3 border-b border-line whitespace-nowrap">
+                      <a href="#" class="font-medium text-ink group-hover:text-indigo-ink group-hover:underline underline-offset-2" data-goto="view">Weekly Logistics & Stationery</a>
+                      <div class="text-xs text-muted">REC-003 · Draft only</div>
+                    </td>
+                    <td class="px-3.5 py-3 border-b border-line whitespace-nowrap font-medium">Charles Business LLC</td>
+                    <td class="px-3.5 py-3 border-b border-line whitespace-nowrap"><span class="px-2 py-0.5 rounded text-xs bg-canvas border border-line font-medium text-ink">Weekly</span></td>
+                    <td class="px-3.5 py-3 border-b border-line whitespace-nowrap text-muted">2 Oct 2026</td>
+                    <td class="px-3.5 py-3 border-b border-line whitespace-nowrap font-medium text-ink">9 Oct 2026</td>
+                    <td class="px-3.5 py-3 border-b border-line whitespace-nowrap text-right font-medium" style="font-variant-numeric: tabular-nums;">70,000.00</td>
+                    <td class="px-3.5 py-3 border-b border-line whitespace-nowrap">
+                      {{> status-badge status="paid" label="Active"}}
+                    </td>
+                    <td class="px-3.5 py-3 border-b border-line whitespace-nowrap">
+                      <button class="w-[26px] h-[26px] rounded flex items-center justify-center text-muted hover:bg-th hover:border-line-strong hover:text-ink border border-transparent" data-menu="REC-003 · Charles"><svg class="w-4 h-4 stroke-[1.75]" aria-hidden="true"><use href="#i-more-horizontal"/></svg></button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="flex items-center gap-3 px-3.5 py-2.5 border-t border-line text-xs text-muted bg-surface">
+                <span>3 recurring schedules</span>
+              </div>
+            </div>
+
+            <!-- List (Mobile) -->
+            <div class="block md:hidden">
+              <div class="bg-surface border border-line rounded overflow-hidden">
+                <button class="w-full text-left bg-transparent border-0 border-b border-line px-3 py-2.5 grid grid-cols-[1fr_auto] gap-x-3 gap-y-[3px] items-center min-h-row-mob last:border-b-0 active:bg-th" data-menu="REC-001 · Ann Kingsley">
+                  <span class="font-medium text-ink">Monthly Retainer - Ann</span>
+                  <span class="text-right font-medium text-ink font-variant-numeric:tabular-nums">120,000.00</span>
+                  <span class="text-xs text-muted">Next run: 15 Oct 2026</span>
+                  <span class="justify-self-end">{{> status-badge status="paid" label="Active"}}</span>
+                </button>
+                <button class="w-full text-left bg-transparent border-0 border-b border-line px-3 py-2.5 grid grid-cols-[1fr_auto] gap-x-3 gap-y-[3px] items-center min-h-row-mob last:border-b-0 active:bg-th" data-menu="REC-002 · Osas">
+                  <span class="font-medium text-ink">Software Maintenance - Osas</span>
+                  <span class="text-right font-medium text-ink font-variant-numeric:tabular-nums">95,000.00</span>
+                  <span class="text-xs text-muted">Next run: 1 Nov 2026</span>
+                  <span class="justify-self-end">{{> status-badge status="paid" label="Active"}}</span>
+                </button>
+                <button class="w-full text-left bg-transparent border-0 border-b border-line px-3 py-2.5 grid grid-cols-[1fr_auto] gap-x-3 gap-y-[3px] items-center min-h-row-mob last:border-b-0 active:bg-th" data-menu="REC-003 · Charles">
+                  <span class="font-medium text-ink">Weekly Logistics - Charles</span>
+                  <span class="text-right font-medium text-ink font-variant-numeric:tabular-nums">70,000.00</span>
+                  <span class="text-xs text-muted">Next run: 9 Oct 2026</span>
+                  <span class="justify-self-end">{{> status-badge status="paid" label="Active"}}</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Content: Editor (Create / Edit Schedule) -->
+          <div class="p-4 overflow-auto flex-1 hidden" id="s-editor">
+            <div class="text-xs text-muted mb-2 flex items-center gap-1.5 font-medium">
+              Sales <svg class="w-4 h-4 stroke-[1.75]" aria-hidden="true"><use href="#i-chevron-right"/></svg>
+              <a href="#" class="font-medium text-ink underline-offset-2 hover:text-indigo-ink hover:underline" data-goto="list">Recurring Invoices</a>
+              <svg class="w-4 h-4 stroke-[1.75]" aria-hidden="true"><use href="#i-chevron-right"/></svg> Schedule Setup
+            </div>
+
+            <div class="flex items-center gap-3 mb-4">
+              <button class="inline-flex items-center justify-center w-control h-control rounded bg-transparent text-muted hover:bg-th hover:text-ink" data-goto="list"><svg class="w-4 h-4 stroke-[1.75]" aria-hidden="true"><use href="#i-arrow-left"/></svg></button>
+              <h1 class="m-0 text-xl font-semibold tracking-tight text-ink">New Recurring Schedule</h1>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-4 max-w-[1100px]">
+              <div class="space-y-4">
+                <!-- Schedule Configuration Card -->
+                <div class="bg-surface border border-line rounded p-4 space-y-3.5">
+                  <h3 class="font-semibold text-ink text-sm m-0">Schedule Details</h3>
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <div>
+                      <label class="block text-xs font-semibold text-muted uppercase tracking-wider mb-1.5">Profile / Schedule Name</label>
+                      <input type="text" value="Monthly IT & Security Retainer" class="w-full h-control px-3 bg-surface border border-line-strong rounded text-[13px] font-medium text-ink focus:border-indigo focus:ring-[3px] focus:ring-indigo-line outline-none">
+                    </div>
+                    <div>
+                      <label class="block text-xs font-semibold text-muted uppercase tracking-wider mb-1.5">Customer</label>
+                      <select class="w-full h-control px-2.5 bg-surface border border-line-strong rounded text-[13px] text-ink focus:border-indigo focus:ring-[3px] focus:ring-indigo-line outline-none">
+                        <option>Ann Kingsley</option>
+                        <option>Charles Business LLC</option>
+                        <option>Osas</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                    <div>
+                      <label class="block text-xs font-semibold text-muted uppercase tracking-wider mb-1.5">Frequency</label>
+                      <select class="w-full h-control px-2.5 bg-surface border border-line-strong rounded text-[13px] text-ink focus:border-indigo focus:ring-[3px] focus:ring-indigo-line outline-none">
+                        <option>Weekly</option>
+                        <option selected>Monthly</option>
+                        <option>Quarterly</option>
+                        <option>Annually</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label class="block text-xs font-semibold text-muted uppercase tracking-wider mb-1.5">Start Date</label>
+                      <input type="date" value="2026-10-15" class="w-full h-control px-3 bg-surface border border-line-strong rounded text-[13px] text-ink focus:border-indigo focus:ring-[3px] focus:ring-indigo-line outline-none">
+                    </div>
+                    <div>
+                      <label class="block text-xs font-semibold text-muted uppercase tracking-wider mb-1.5">End Date</label>
+                      <select class="w-full h-control px-2.5 bg-surface border border-line-strong rounded text-[13px] text-ink focus:border-indigo focus:ring-[3px] focus:ring-indigo-line outline-none">
+                        <option>Never (Runs indefinitely)</option>
+                        <option>After 12 cycles</option>
+                        <option>Specific end date</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="pt-2">
+                    <label class="flex items-center gap-2 cursor-pointer select-none">
+                      <input type="checkbox" checked class="rounded border-line-strong text-indigo focus:ring-indigo">
+                      <span class="text-xs font-medium text-ink">Automatically email invoice to customer upon generation</span>
+                    </label>
+                  </div>
+                </div>
+
+                <!-- Template Line Items -->
+                <div class="bg-surface border border-line rounded p-4 space-y-3.5">
+                  <div class="flex items-center justify-between">
+                    <h3 class="font-semibold text-ink text-sm m-0">Recurring Line Items</h3>
+                    <button type="button" class="text-xs font-semibold text-indigo hover:text-indigo-hover inline-flex items-center gap-1"><svg class="w-3.5 h-3.5 stroke-[2]"><use href="#i-plus"/></svg> Add line</button>
+                  </div>
+
+                  <div class="border border-line rounded overflow-hidden">
+                    <table class="w-full text-xs text-left">
+                      <thead class="bg-th text-muted font-semibold border-b border-line">
+                        <tr>
+                          <th class="px-3.5 py-2.5">Item & Description</th>
+                          <th class="px-3 py-2.5 text-right w-20">Qty</th>
+                          <th class="px-3 py-2.5 text-right w-28">Price (₦)</th>
+                          <th class="px-3.5 py-2.5 text-right w-28">Amount</th>
+                        </tr>
+                      </thead>
+                      <tbody class="divide-y divide-line text-[13px]">
+                        <tr>
+                          <td class="px-3.5 py-3">
+                            <div class="font-medium text-ink">Cloud Backup & Managed Antivirus</div>
+                            <div class="text-xs text-muted">Weekly offsite snapshot and endpoint threat protection</div>
+                          </td>
+                          <td class="px-3 py-3 text-right">1</td>
+                          <td class="px-3 py-3 text-right font-medium">120,000.00</td>
+                          <td class="px-3.5 py-3 text-right font-semibold">120,000.00</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Sidebar Actions -->
+              <div class="space-y-4">
+                <div class="bg-surface border border-line rounded p-4 flex flex-col gap-2.5">
+                  <button class="w-full inline-flex items-center justify-center gap-1.5 h-control px-3 rounded border border-transparent text-[13px] font-medium bg-indigo text-white hover:bg-indigo-hover transition-colors shadow-sm" onclick="window.showToast({ title: 'Schedule Created', message: 'Recurring invoice profile saved successfully.', type: 'success' }); document.getElementById('s-editor').classList.add('hidden'); document.getElementById('s-list').classList.remove('hidden');"><svg class="w-4 h-4 stroke-[1.75]" aria-hidden="true"><use href="#i-save"/></svg> Activate Schedule</button>
+                  <button class="w-full inline-flex items-center justify-center gap-1.5 h-control px-3 rounded border border-line-strong text-[13px] font-medium bg-surface text-ink hover:bg-th transition-colors shadow-sm" data-goto="list">Save as Draft</button>
+                  <button class="w-full inline-flex items-center justify-center gap-1.5 h-control px-3 rounded border border-transparent text-[13px] font-medium bg-transparent text-muted hover:bg-th hover:text-ink transition-colors" data-goto="list">Cancel</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Content: View Screen -->
+          <div class="p-4 overflow-auto flex-1 hidden" id="s-view">
+            <div class="flex items-center gap-3 mb-4">
+              <button class="inline-flex items-center justify-center w-control h-control rounded bg-transparent text-muted hover:bg-th hover:text-ink" data-goto="list"><svg class="w-4 h-4 stroke-[1.75]" aria-hidden="true"><use href="#i-arrow-left"/></svg></button>
+              <h1 class="m-0 text-xl font-semibold tracking-tight text-ink">REC-001 · Monthly Retainer & Cloud Support</h1>
+              {{> status-badge status="paid" label="Active"}}
+              <div class="ml-auto flex items-center gap-2">
+                <button type="button" class="inline-flex items-center gap-1.5 h-control px-3 rounded border border-indigo text-[13px] font-medium bg-indigo-bg text-indigo-ink hover:bg-indigo-line transition-colors" onclick="window.showToast({ title: 'Invoice Generated', message: 'Invoice INV-0016 generated immediately from REC-001.', type: 'success', actionLabel: 'View Invoices', onAction: () => { window.location.href = '/'; } });"><svg class="w-4 h-4 stroke-[2]" aria-hidden="true"><use href="#i-zap"/></svg> Run Now</button>
+                <button class="inline-flex items-center gap-1.5 h-control px-3 rounded border border-line-strong text-[13px] font-medium bg-surface hover:bg-th" data-goto="editor"><svg class="w-4 h-4 stroke-[1.75]" aria-hidden="true"><use href="#i-edit-2"/></svg> Edit schedule</button>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 max-w-[1000px]">
+              <div class="bg-surface border border-line rounded p-4 lg:col-span-2 space-y-3">
+                <h3 class="font-semibold text-ink text-sm m-0">Recent Invoices Generated</h3>
+                <div class="border border-line rounded overflow-hidden">
+                  <table class="w-full text-xs text-left">
+                    <thead class="bg-th text-muted font-semibold border-b border-line">
+                      <tr>
+                        <th class="px-3.5 py-2">Invoice #</th>
+                        <th class="px-3 py-2">Issued</th>
+                        <th class="px-3 py-2 text-right">Amount</th>
+                        <th class="px-3.5 py-2">Status</th>
+                      </tr>
+                    </thead>
+                    <tbody class="divide-y divide-line text-[13px]">
+                      <tr>
+                        <td class="px-3.5 py-2.5 font-medium"><a href="/" class="text-indigo hover:underline">INV-0004</a></td>
+                        <td class="px-3 py-2.5 text-muted">15 Sep 2026</td>
+                        <td class="px-3 py-2.5 text-right font-medium">₦ 120,000.00</td>
+                        <td class="px-3.5 py-2.5">{{> status-badge status="paid"}}</td>
+                      </tr>
+                      <tr>
+                        <td class="px-3.5 py-2.5 font-medium"><a href="/" class="text-indigo hover:underline">INV-0001</a></td>
+                        <td class="px-3 py-2.5 text-muted">15 Aug 2026</td>
+                        <td class="px-3 py-2.5 text-right font-medium">₦ 120,000.00</td>
+                        <td class="px-3.5 py-2.5">{{> status-badge status="paid"}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <div class="bg-surface border border-line rounded p-4 space-y-3">
+                <h3 class="font-semibold text-ink text-sm m-0">Next Scheduled Run</h3>
+                <div class="p-3 bg-canvas border border-line rounded">
+                  <div class="text-xs text-muted">Scheduled for</div>
+                  <div class="text-base font-bold text-ink mt-0.5">15 Oct 2026</div>
+                  <div class="text-xs text-muted mt-1">Amount: ₦ 120,000.00</div>
+                </div>
+                <button type="button" class="w-full text-xs font-semibold text-[#B4372A] hover:underline text-left pt-2" onclick="window.showToast({ title: 'Schedule Paused', message: 'REC-001 has been paused.', type: 'info' });">Pause this schedule</button>
+              </div>
+            </div>
+          </div>
+
+      </main>
+    </div>
+  </div>
+
+  {{> confirm-dialog id="confirmModal" title="Cancel Recurring Schedule" message="Are you sure you want to cancel this recurring invoice schedule? No further invoices will be generated automatically." confirm_label="Yes, cancel schedule"}}
+  {{> toast}}
+  {{> scripts}}
+</body>
+</html>

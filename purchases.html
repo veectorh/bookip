@@ -378,6 +378,9 @@
     </div>
   </div>
 
+  {{> record-payment-modal}}
+  {{> confirm-dialog id="confirmModal" title="Void Vendor Bill" message="Are you sure you want to void this bill? This will reverse the payable from your account." confirm_label="Yes, void bill"}}
+  {{> toast}}
   {{> scripts}}
 </body>
 </html>

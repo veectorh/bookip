@@ -1,0 +1,29 @@
+{{#if (eq status "paid")}}
+<span class="inline-flex items-center gap-1.5 h-[22px] px-2 rounded-[3px] text-xs font-medium whitespace-nowrap bg-status-paid-bg text-status-paid-text border border-status-paid-border before:content-[''] before:w-1.5 before:h-1.5 before:rounded-full before:bg-status-paid-dot before:shrink-0">
+  {{#if label}}{{label}}{{else}}Paid{{/if}}
+</span>
+{{else if (eq status "overdue")}}
+<span class="inline-flex items-center gap-1.5 h-[22px] px-2 rounded-[3px] text-xs font-medium whitespace-nowrap bg-status-overdue-bg text-status-overdue-text border border-status-overdue-border before:content-[''] before:w-1.5 before:h-1.5 before:rounded-full before:bg-status-overdue-dot before:shrink-0">
+  {{#if label}}{{label}}{{else}}Overdue{{/if}}
+</span>
+{{else if (eq status "partially_paid")}}
+<span class="inline-flex items-center gap-1.5 h-[22px] px-2 rounded-[3px] text-xs font-medium whitespace-nowrap bg-status-partiallyPaid-bg text-status-partiallyPaid-text border border-status-partiallyPaid-border before:content-[''] before:w-1.5 before:h-1.5 before:rounded-full before:bg-status-partiallyPaid-dot before:shrink-0">
+  {{#if label}}{{label}}{{else}}Partially paid{{/if}}
+</span>
+{{else if (eq status "sent")}}
+<span class="inline-flex items-center gap-1.5 h-[22px] px-2 rounded-[3px] text-xs font-medium whitespace-nowrap bg-status-sent-bg text-status-sent-text border border-status-sent-border before:content-[''] before:w-1.5 before:h-1.5 before:rounded-full before:bg-status-sent-dot before:shrink-0">
+  {{#if label}}{{label}}{{else}}Sent{{/if}}
+</span>
+{{else if (eq status "cancelled")}}
+<span class="inline-flex items-center gap-1.5 h-[22px] px-2 rounded-[3px] text-xs font-medium whitespace-nowrap bg-status-cancelled-bg text-status-cancelled-text border border-status-cancelled-border before:content-[''] before:w-1.5 before:h-1.5 before:rounded-full before:bg-status-cancelled-dot before:shrink-0">
+  {{#if label}}{{label}}{{else}}Cancelled{{/if}}
+</span>
+{{else if (eq status "pending")}}
+<span class="inline-flex items-center gap-1.5 h-[22px] px-2 rounded-[3px] text-xs font-medium whitespace-nowrap bg-status-pending-bg text-status-pending-text border border-status-pending-border before:content-[''] before:w-1.5 before:h-1.5 before:rounded-full before:bg-status-pending-dot before:shrink-0">
+  {{#if label}}{{label}}{{else}}Pending{{/if}}
+</span>
+{{else}}
+<span class="inline-flex items-center gap-1.5 h-[22px] px-2 rounded-[3px] text-xs font-medium whitespace-nowrap bg-status-draft-bg text-status-draft-text border border-status-draft-border before:content-[''] before:w-1.5 before:h-1.5 before:rounded-full before:bg-status-draft-dot before:shrink-0">
+  {{#if label}}{{label}}{{else}}Draft{{/if}}
+</span>
+{{/if}}

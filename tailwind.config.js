@@ -35,6 +35,9 @@ export default {
           partiallyPaid: { bg: '#FFF6E5', border: '#F6E3B7', dot: '#D98E00', text: '#8A5A00' },
           paid: { bg: '#E9F7EF', border: '#C8EAD6', dot: '#1E9A5A', text: '#146A3E' },
           overdue: { bg: '#FDECEA', border: '#F5CFC9', dot: '#D0432F', text: '#9A2A1F' },
+          sent: { bg: '#EEF0FC', border: '#DCE0FA', dot: '#4353E0', text: '#2F3CB8' },
+          cancelled: { bg: '#F5F5F7', border: '#E5E5EA', dot: '#8E8E93', text: '#636366' },
+          pending: { bg: '#FFF8E6', border: '#FDE6B0', dot: '#E69900', text: '#8A5A00' },
         },
         imp: {
           bg: '#FFF3D6',

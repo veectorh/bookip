@@ -104,7 +104,7 @@
                     <td class="px-3.5 py-3 border-b border-line whitespace-nowrap">10 Aug 2026</td>
                     <td class="px-3.5 py-3 border-b border-line whitespace-nowrap text-right font-medium" style="font-variant-numeric: tabular-nums;">450,000.00</td>
                     <td class="px-3.5 py-3 border-b border-line whitespace-nowrap"><span class="inline-flex items-center gap-1.5 h-[22px] px-2 rounded-[3px] text-xs font-medium whitespace-nowrap bg-status-draft-bg text-status-draft-text border border-status-draft-border before:content-[''] before:w-1.5 before:h-1.5 before:rounded-full before:bg-status-draft-dot before:shrink-0">Draft</span></td>
-                    <td class="px-3.5 py-3 border-b border-line whitespace-nowrap"><button class="w-[26px] h-[26px] rounded flex items-center justify-center text-muted hover:bg-th hover:border-line-strong hover:text-ink border border-transparent" data-menu="QUO-0010 · Osas"><svg class="w-4 h-4 stroke-[1.75]" aria-hidden="true"><use href="#i-more-horizontal"/></svg></button></td>
+                    <td class="px-3.5 py-3 border-b border-line whitespace-nowrap"><button class="w-[26px] h-[26px] rounded flex items-center justify-center text-muted hover:bg-th hover:border-line-strong hover:text-ink border border-transparent" data-menu="QUO-0010 · Osas" data-menu-type="quotation"><svg class="w-4 h-4 stroke-[1.75]" aria-hidden="true"><use href="#i-more-horizontal"/></svg></button></td>
                   </tr>
                   <tr class="hover:bg-[#FAFBFD] group transition-colors">
                     <td class="px-3.5 py-3 border-b border-line whitespace-nowrap"><a href="#" class="font-medium text-ink group-hover:text-indigo-ink group-hover:underline underline-offset-2">QUO-0009</a></td>
@@ -113,7 +113,7 @@
                     <td class="px-3.5 py-3 border-b border-line whitespace-nowrap">2 Aug 2026</td>
                     <td class="px-3.5 py-3 border-b border-line whitespace-nowrap text-right font-medium" style="font-variant-numeric: tabular-nums;">205,000.00</td>
                     <td class="px-3.5 py-3 border-b border-line whitespace-nowrap"><span class="inline-flex items-center gap-1.5 h-[22px] px-2 rounded-[3px] text-xs font-medium whitespace-nowrap bg-status-paid-bg text-status-paid-text border border-status-paid-border before:content-[''] before:w-1.5 before:h-1.5 before:rounded-full before:bg-status-paid-dot before:shrink-0">Accepted</span></td>
-                    <td class="px-3.5 py-3 border-b border-line whitespace-nowrap"><button class="w-[26px] h-[26px] rounded flex items-center justify-center text-muted hover:bg-th hover:border-line-strong hover:text-ink border border-transparent" data-menu="QUO-0009 · Ann"><svg class="w-4 h-4 stroke-[1.75]" aria-hidden="true"><use href="#i-more-horizontal"/></svg></button></td>
+                    <td class="px-3.5 py-3 border-b border-line whitespace-nowrap"><button class="w-[26px] h-[26px] rounded flex items-center justify-center text-muted hover:bg-th hover:border-line-strong hover:text-ink border border-transparent" data-menu="QUO-0009 · Ann" data-menu-type="quotation"><svg class="w-4 h-4 stroke-[1.75]" aria-hidden="true"><use href="#i-more-horizontal"/></svg></button></td>
                   </tr>
                 </tbody>
               </table>
@@ -125,13 +125,13 @@
             <!-- List (Mobile) -->
             <div class="block md:hidden">
               <div class="bg-surface border border-line rounded overflow-hidden">
-                <button class="w-full text-left bg-transparent border-0 border-b border-line px-3 py-2.5 grid grid-cols-[1fr_auto] gap-x-3 gap-y-[3px] items-center min-h-row-mob last:border-b-0 active:bg-th" data-menu="QUO-0010 · Osas">
+                <button class="w-full text-left bg-transparent border-0 border-b border-line px-3 py-2.5 grid grid-cols-[1fr_auto] gap-x-3 gap-y-[3px] items-center min-h-row-mob last:border-b-0 active:bg-th" data-menu="QUO-0010 · Osas" data-menu-type="quotation">
                   <span class="font-medium text-ink">Osas</span>
                   <span class="text-right font-medium text-ink font-variant-numeric:tabular-nums">450,000.00</span>
                   <span class="text-xs text-muted">QUO-0010 · expires 10 Aug</span>
                   <span class="justify-self-end"><span class="inline-flex items-center gap-1.5 h-[22px] px-2 rounded-[3px] text-xs font-medium whitespace-nowrap bg-status-draft-bg text-status-draft-text border border-status-draft-border before:content-[''] before:w-1.5 before:h-1.5 before:rounded-full before:bg-status-draft-dot before:shrink-0">Draft</span></span>
                 </button>
-                <button class="w-full text-left bg-transparent border-0 border-b border-line px-3 py-2.5 grid grid-cols-[1fr_auto] gap-x-3 gap-y-[3px] items-center min-h-row-mob last:border-b-0 active:bg-th" data-menu="QUO-0009 · Ann">
+                <button class="w-full text-left bg-transparent border-0 border-b border-line px-3 py-2.5 grid grid-cols-[1fr_auto] gap-x-3 gap-y-[3px] items-center min-h-row-mob last:border-b-0 active:bg-th" data-menu="QUO-0009 · Ann" data-menu-type="quotation">
                   <span class="font-medium text-ink">Ann</span>
                   <span class="text-right font-medium text-ink font-variant-numeric:tabular-nums">205,000.00</span>
                   <span class="text-xs text-muted">QUO-0009 · sent 2 Jul</span>
@@ -323,7 +323,10 @@
               <h1 class="m-0 text-xl font-semibold tracking-tight">QUO-0011</h1>
               <span class="inline-flex items-center gap-1.5 h-[22px] px-2 rounded-[3px] text-xs font-medium whitespace-nowrap bg-status-draft-bg text-status-draft-text border border-status-draft-border before:content-[''] before:w-1.5 before:h-1.5 before:rounded-full before:bg-status-draft-dot before:shrink-0">Draft</span>
               
-              <div class="ml-auto flex gap-2">
+              <div class="ml-auto flex items-center gap-2">
+                <button type="button" class="inline-flex items-center gap-1.5 h-control px-3 rounded border border-indigo text-[13px] font-medium bg-indigo-bg text-indigo-ink hover:bg-indigo-line transition-colors" onclick="window.showToast({ title: 'Converted to Invoice', message: 'QUO-0011 converted to Invoice INV-0015.', type: 'success', actionLabel: 'Open Invoices', onAction: () => { window.location.href = '/'; } });">
+                  <svg class="w-4 h-4 stroke-[2]" aria-hidden="true"><use href="#i-file-text"/></svg> Convert to Invoice
+                </button>
                 <button class="inline-flex items-center gap-1.5 h-control px-3 rounded border border-line-strong text-[13px] font-medium bg-surface hover:bg-th" data-goto="editor"><svg class="w-4 h-4 stroke-[1.75]" aria-hidden="true"><use href="#i-edit-2"/></svg> Edit quotation</button>
                 <button class="inline-flex items-center gap-1.5 h-control px-3 rounded border border-transparent text-[13px] font-medium bg-indigo text-white hover:bg-indigo-hover"><svg class="w-4 h-4 stroke-[1.75]" aria-hidden="true"><use href="#i-send"/></svg> Send to customer</button>
               </div>
@@ -432,6 +435,8 @@
       </div>
     </div>
 
+  {{> confirm-dialog id="confirmModal" title="Cancel Quotation" message="Are you sure you want to cancel this quotation? This quotation will be marked as void." confirm_label="Yes, cancel quotation"}}
+  {{> toast}}
   {{> scripts}}
   
   <script>
@@ -446,58 +451,6 @@
         document.getElementById('s-editor').classList.toggle('hidden', target !== 'editor');
         const v = document.getElementById('s-view'); if(v) v.classList.toggle('hidden', target !== 'view');
       });
-    });
-
-    document.querySelectorAll('#screens button').forEach(b => {
-      b.onclick = () => {
-        document.querySelectorAll('#screens button').forEach(x => x.setAttribute('aria-pressed', x === b));
-        document.getElementById('s-list').classList.toggle('hidden', b.dataset.screen !== 'list');
-        document.getElementById('s-editor').classList.toggle('hidden', b.dataset.screen !== 'editor');
-      };
-    });
-
-    document.addEventListener('click', e => {
-      const b = e.target.closest('[data-menu]');
-      if (!b) return;
-      closePopovers();
-      const isMobile = document.getElementById('app').getAttribute('data-layout') === 'mob' || window.innerWidth < 768;
-      const items = `
-        <button class="flex items-center gap-3 w-full bg-transparent border-0 px-3 py-3 text-[13px] font-medium text-left rounded hover:bg-th active:bg-th transition-colors" data-goto="editor">
-          <svg class="w-4 h-4 stroke-[1.75] shrink-0 text-muted" aria-hidden="true"><use href="#i-eye"/></svg> View quotation
-        </button>
-        <button class="flex items-center gap-3 w-full bg-transparent border-0 px-3 py-3 text-[13px] font-medium text-left rounded hover:bg-th active:bg-th transition-colors">
-          <svg class="w-4 h-4 stroke-[1.75] shrink-0 text-muted" aria-hidden="true"><use href="#i-send"/></svg> Send again
-        </button>
-        <button class="flex items-center gap-3 w-full bg-transparent border-0 px-3 py-3 text-[13px] font-medium text-left rounded hover:bg-th active:bg-th transition-colors">
-          <svg class="w-4 h-4 stroke-[1.75] shrink-0 text-muted" aria-hidden="true"><use href="#i-check"/></svg> Convert to invoice
-        </button>
-        <hr class="border-0 border-t border-line my-1">
-        <button class="flex items-center gap-3 w-full bg-transparent border-0 px-3 py-3 text-[13px] font-medium text-left rounded text-[#B4372A] hover:bg-th active:bg-th transition-colors">
-          <svg class="w-4 h-4 stroke-[1.75] shrink-0" aria-hidden="true"><use href="#i-trash-2"/></svg> Delete
-        </button>
-      `;
-      if (isMobile) {
-        const w = document.createElement('div');
-        w.className = 'sheetwrap fixed inset-0 z-50 flex items-end justify-center before:content-[""] before:absolute before:inset-0 before:bg-[rgba(16,20,50,0.4)]';
-        w.onclick = ev => { if (ev.target === w) closePopovers(); };
-        w.innerHTML = `
-          <div class="sheet relative w-full max-w-[390px] bg-surface rounded-t-xl pt-2 pb-3">
-            <div class="w-9 h-1 rounded-sm bg-line-strong mx-auto my-1 mb-2"></div>
-            <div class="px-4 py-1 pb-2 text-xs text-muted border-b border-line mb-1">${b.dataset.menu}</div>
-            ${items.replace(/py-3 text-\[13px\]/g, 'py-3 text-sm px-4')}
-          </div>
-        `;
-        document.body.appendChild(w);
-      } else {
-        createScrim();
-        const r = b.getBoundingClientRect();
-        const p = document.createElement('div');
-        p.className = 'popover absolute z-50 bg-surface border border-line-strong rounded shadow-[0_8px_24px_rgba(16,20,50,0.12)] min-w-[200px] p-1.5';
-        p.style.top = (r.bottom + window.scrollY + 4) + 'px';
-        p.style.left = (r.right + window.scrollX - 200) + 'px';
-        p.innerHTML = items;
-        document.body.appendChild(p);
-      }
     });
   </script>
 </body>

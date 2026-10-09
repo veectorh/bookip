@@ -1,0 +1,39 @@
+<div id="{{id}}" class="fixed inset-0 z-50 flex items-center justify-center pointer-events-none hidden group/modal">
+  <!-- Scrim -->
+  <div class="absolute inset-0 bg-ink/30 pointer-events-auto opacity-0 group-data-[open=true]/modal:opacity-100 transition-opacity backdrop-blur-[1px]" data-modal-close="{{id}}"></div>
+  
+  <!-- Dialog -->
+  <div class="w-full max-w-sm bg-surface rounded-xl shadow-2xl pointer-events-auto scale-95 opacity-0 group-data-[open=true]/modal:scale-100 group-data-[open=true]/modal:opacity-100 transition-all flex flex-col z-10 duration-200 border border-line mx-4">
+    
+    <!-- Body with Warning Icon & Text -->
+    <div class="p-5 text-[13px]">
+      <div class="flex items-start gap-3.5">
+        <div class="w-10 h-10 rounded-full bg-[#FDECEA] text-[#D0432F] border border-[#F5CFC9] flex items-center justify-center shrink-0">
+          <svg class="w-5 h-5 stroke-[2]" aria-hidden="true"><use href="#i-alert-circle"/></svg>
+        </div>
+        <div class="flex-1 min-w-0 pt-0.5">
+          <h2 class="m-0 text-[15px] font-semibold tracking-tight text-ink">{{#if title}}{{title}}{{else}}Are you sure?{{/if}}</h2>
+          <p class="text-muted text-[13px] mt-1.5 leading-relaxed">
+            {{#if message}}
+              {{message}}
+            {{else if @partial-block}}
+              {{> @partial-block }}
+            {{else}}
+              This action cannot be undone. Are you sure you want to proceed?
+            {{/if}}
+          </p>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Footer -->
+    <div class="px-5 py-3 border-t border-line bg-canvas/40 rounded-b-xl flex gap-2 justify-end shrink-0">
+      <button type="button" class="inline-flex items-center justify-center gap-1.5 h-control px-3.5 rounded border border-line-strong text-[13px] font-medium bg-surface text-ink hover:bg-th transition-colors shadow-sm" data-modal-close="{{id}}">
+        {{#if cancel_label}}{{cancel_label}}{{else}}Cancel{{/if}}
+      </button>
+      <button type="button" id="{{id}}ConfirmBtn" class="inline-flex items-center justify-center gap-1.5 h-control px-3.5 rounded border border-transparent text-[13px] font-medium {{#if confirm_class}}{{confirm_class}}{{else}}bg-[#D0432F] hover:bg-[#B4372A] text-white{{/if}} transition-colors shadow-sm" data-modal-close="{{id}}" {{#if confirm_attr}}{{{confirm_attr}}}{{/if}}>
+        {{#if confirm_label}}{{confirm_label}}{{else}}Confirm{{/if}}
+      </button>
+    </div>
+  </div>
+</div>

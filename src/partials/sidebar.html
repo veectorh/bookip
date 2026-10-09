@@ -39,14 +39,14 @@
       <div class="nav-sub hidden group-data-[open=true]:flex flex-col gap-0.5 pl-6 pr-1 py-1 text-xs text-navy-mute [&[data-layout=rail]_&]:hidden">
         <a href="/index.html" class="px-2.5 py-1.5 rounded-md {{#if (or (eq active "invoices") active_invoices)}}bg-indigo text-white font-medium{{else}}hover:text-white hover:bg-navy-hover{{/if}} truncate">Invoices</a>
         <a href="/quotations.html" class="px-2.5 py-1.5 rounded-md {{#if (or (eq active "quotations") active_quotations)}}bg-indigo text-white font-medium{{else}}hover:text-white hover:bg-navy-hover{{/if}} truncate">Quotations</a>
-        <a href="/recurring_invoices.html" class="px-2.5 py-1.5 rounded-md hover:text-white hover:bg-navy-hover truncate">Recurring Invoices</a>
+        <a href="/recurring_invoices.html" class="px-2.5 py-1.5 rounded-md {{#if (or (eq active "recurring_invoices") active_recurring_invoices)}}bg-indigo text-white font-medium{{else}}hover:text-white hover:bg-navy-hover{{/if}} truncate">Recurring Invoices</a>
       </div>
       <!-- Rail flyout -->
       <div class="hidden [&[data-layout=rail]_.group:hover_&]:flex flex-col gap-1 absolute left-[calc(100%+8px)] top-0 bg-ink text-white text-xs p-2 rounded-lg shadow-xl min-w-[150px] z-50">
         <div class="font-semibold px-2 py-1 text-[11px] text-muted border-b border-line uppercase">Sales</div>
-        <a href="/index.html" class="px-2 py-1 rounded hover:bg-th hover:text-ink">Invoices</a>
-        <a href="/quotations.html" class="px-2 py-1 rounded hover:bg-th hover:text-ink">Quotations</a>
-        <a href="/recurring_invoices.html" class="px-2 py-1 rounded hover:bg-th hover:text-ink">Recurring Invoices</a>
+        <a href="/index.html" class="px-2 py-1 rounded {{#if (or (eq active "invoices") active_invoices)}}bg-indigo text-white{{else}}hover:bg-th hover:text-ink{{/if}}">Invoices</a>
+        <a href="/quotations.html" class="px-2 py-1 rounded {{#if (or (eq active "quotations") active_quotations)}}bg-indigo text-white{{else}}hover:bg-th hover:text-ink{{/if}}">Quotations</a>
+        <a href="/recurring_invoices.html" class="px-2 py-1 rounded {{#if (or (eq active "recurring_invoices") active_recurring_invoices)}}bg-indigo text-white{{else}}hover:bg-th hover:text-ink{{/if}}">Recurring Invoices</a>
       </div>
     </div>
 

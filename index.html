@@ -491,6 +491,9 @@
       </div>
     </div>
 
+  {{> record-payment-modal}}
+  {{> confirm-dialog id="confirmModal" title="Cancel Invoice" message="Are you sure you want to cancel this invoice? An official cancellation record will be retained for auditing." confirm_label="Yes, cancel invoice"}}
+  {{> toast}}
   {{> scripts}}
   
   <script>
@@ -513,53 +516,6 @@
         document.getElementById('s-list').classList.toggle('hidden', b.dataset.screen !== 'list');
         document.getElementById('s-editor').classList.toggle('hidden', b.dataset.screen !== 'editor');
       };
-    });
-
-    document.addEventListener('click', e => {
-      const b = e.target.closest('[data-menu]');
-      if (!b) return;
-      closePopovers();
-      const isMobile = document.getElementById('app').getAttribute('data-layout') === 'mob' || window.innerWidth < 768;
-      const items = `
-        <button class="flex items-center gap-3 w-full bg-transparent border-0 px-3 py-3 text-[13px] font-medium text-left rounded hover:bg-th active:bg-th transition-colors">
-          <svg class="w-4 h-4 stroke-[1.75] shrink-0 text-muted" aria-hidden="true"><use href="#i-eye"/></svg> View invoice
-        </button>
-        <button class="flex items-center gap-3 w-full bg-transparent border-0 px-3 py-3 text-[13px] font-medium text-left rounded hover:bg-th active:bg-th transition-colors">
-          <svg class="w-4 h-4 stroke-[1.75] shrink-0 text-muted" aria-hidden="true"><use href="#i-wallet"/></svg> Record payment
-        </button>
-        <button class="flex items-center gap-3 w-full bg-transparent border-0 px-3 py-3 text-[13px] font-medium text-left rounded hover:bg-th active:bg-th transition-colors">
-          <svg class="w-4 h-4 stroke-[1.75] shrink-0 text-muted" aria-hidden="true"><use href="#i-send"/></svg> Send again
-        </button>
-        <button class="flex items-center gap-3 w-full bg-transparent border-0 px-3 py-3 text-[13px] font-medium text-left rounded hover:bg-th active:bg-th transition-colors">
-          <svg class="w-4 h-4 stroke-[1.75] shrink-0 text-muted" aria-hidden="true"><use href="#i-download"/></svg> Download PDF
-        </button>
-        <hr class="border-0 border-t border-line my-1">
-        <button class="flex items-center gap-3 w-full bg-transparent border-0 px-3 py-3 text-[13px] font-medium text-left rounded text-[#B4372A] hover:bg-th active:bg-th transition-colors">
-          <svg class="w-4 h-4 stroke-[1.75] shrink-0" aria-hidden="true"><use href="#i-x-circle"/></svg> Cancel invoice
-        </button>
-      `;
-      if (isMobile) {
-        const w = document.createElement('div');
-        w.className = 'sheetwrap fixed inset-0 z-50 flex items-end justify-center before:content-[""] before:absolute before:inset-0 before:bg-[rgba(16,20,50,0.4)]';
-        w.onclick = ev => { if (ev.target === w) closePopovers(); };
-        w.innerHTML = `
-          <div class="sheet relative w-full max-w-[390px] bg-surface rounded-t-xl pt-2 pb-3">
-            <div class="w-9 h-1 rounded-sm bg-line-strong mx-auto my-1 mb-2"></div>
-            <div class="px-4 py-1 pb-2 text-xs text-muted border-b border-line mb-1">${b.dataset.menu}</div>
-            ${items.replace(/py-3 text-\[13px\]/g, 'py-3 text-sm px-4')}
-          </div>
-        `;
-        document.body.appendChild(w);
-      } else {
-        createScrim();
-        const r = b.getBoundingClientRect();
-        const p = document.createElement('div');
-        p.className = 'popover absolute z-50 bg-surface border border-line-strong rounded shadow-[0_8px_24px_rgba(16,20,50,0.12)] min-w-[200px] p-1.5';
-        p.style.top = (r.bottom + window.scrollY + 4) + 'px';
-        p.style.left = (r.right + window.scrollX - 200) + 'px';
-        p.innerHTML = items;
-        document.body.appendChild(p);
-      }
     });
   </script>
 </body>

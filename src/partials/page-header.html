@@ -1,0 +1,36 @@
+<div class="mb-3.5">
+  {{#if section}}
+  <div class="text-xs text-muted mb-1.5 flex items-center gap-1.5 font-medium">
+    {{section}} <svg class="w-3.5 h-3.5 stroke-[1.75]" aria-hidden="true"><use href="#i-chevron-right"/></svg> {{title}}
+  </div>
+  {{/if}}
+
+  <div class="flex items-center justify-between gap-3">
+    <div class="flex items-center gap-2.5">
+      <h1 class="m-0 text-xl font-semibold tracking-tight text-ink">{{title}}</h1>
+      {{#if count}}
+      <span class="text-xs text-muted font-medium bg-canvas px-2 py-0.5 rounded border border-line">{{count}}</span>
+      {{/if}}
+    </div>
+
+    <div class="flex items-center gap-2">
+      {{#if show_export}}
+      <button class="inline-flex items-center gap-1.5 h-control px-2.5 md:px-3 rounded border border-line-strong text-[13px] font-medium bg-surface text-ink hover:bg-th transition-colors shadow-sm" title="Export CSV/Excel">
+        <svg class="w-4 h-4 stroke-[1.75]" aria-hidden="true"><use href="#i-download"/></svg>
+        <span class="hidden md:inline">{{#if export_label}}{{export_label}}{{else}}Export{{/if}}</span>
+      </button>
+      {{/if}}
+
+      {{#if action_label}}
+      <button class="inline-flex items-center gap-1.5 h-control px-2.5 md:px-3 rounded border border-transparent text-[13px] font-medium bg-indigo text-white hover:bg-indigo-hover transition-colors shadow-sm"
+        {{#if action_target}}data-goto="{{action_target}}"{{/if}}
+        {{#if action_modal}}data-modal-target="{{action_modal}}"{{/if}}
+        {{#if action_drawer}}data-drawer-target="{{action_drawer}}"{{/if}}
+        {{#if action_attr}}{{{action_attr}}}{{/if}}>
+        <svg class="w-4 h-4 stroke-[2]" aria-hidden="true"><use href="#i-plus"/></svg>
+        <span class="hidden sm:inline">{{action_label}}</span>
+      </button>
+      {{/if}}
+    </div>
+  </div>
+</div>

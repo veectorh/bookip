@@ -1,0 +1,42 @@
+{{#if label4}}
+<div class="grid grid-cols-2 lg:grid-cols-4 bg-surface border border-line rounded mb-3.5 overflow-hidden stats-grid">
+  <div class="p-3 border-r border-b lg:border-b-0 border-line">
+    <div class="text-xs text-muted font-medium">{{label1}}</div>
+    <div class="text-xl font-semibold tracking-tight mt-0.5 whitespace-nowrap {{#if danger1}}text-[#B4372A]{{else if success1}}text-[#146A3E]{{/if}}">{{value1}}</div>
+    {{#if subtext1}}<div class="text-[11px] text-muted mt-0.5">{{subtext1}}</div>{{/if}}
+  </div>
+  <div class="p-3 border-b lg:border-r lg:border-b-0 border-line">
+    <div class="text-xs text-muted font-medium">{{label2}}</div>
+    <div class="text-xl font-semibold tracking-tight mt-0.5 whitespace-nowrap {{#if danger2}}text-[#B4372A]{{else if success2}}text-[#146A3E]{{/if}}">{{value2}}</div>
+    {{#if subtext2}}<div class="text-[11px] text-muted mt-0.5">{{subtext2}}</div>{{/if}}
+  </div>
+  <div class="p-3 border-r lg:border-b-0 border-line">
+    <div class="text-xs text-muted font-medium">{{label3}}</div>
+    <div class="text-xl font-semibold tracking-tight mt-0.5 whitespace-nowrap {{#if danger3}}text-[#B4372A]{{else if success3}}text-[#146A3E]{{/if}}">{{value3}}</div>
+    {{#if subtext3}}<div class="text-[11px] text-muted mt-0.5">{{subtext3}}</div>{{/if}}
+  </div>
+  <div class="p-3">
+    <div class="text-xs text-muted font-medium">{{label4}}</div>
+    <div class="text-xl font-semibold tracking-tight mt-0.5 whitespace-nowrap {{#if danger4}}text-[#B4372A]{{else if success4}}text-[#146A3E]{{/if}}">{{value4}}</div>
+    {{#if subtext4}}<div class="text-[11px] text-muted mt-0.5">{{subtext4}}</div>{{/if}}
+  </div>
+</div>
+{{else}}
+<div class="grid grid-cols-2 md:grid-cols-3 bg-surface border border-line rounded mb-3.5 overflow-hidden stats-grid">
+  <div class="p-3 border-r border-b md:border-b-0 border-line">
+    <div class="text-xs text-muted font-medium">{{label1}}</div>
+    <div class="text-xl font-semibold tracking-tight mt-0.5 whitespace-nowrap {{#if danger1}}text-[#B4372A]{{else if success1}}text-[#146A3E]{{/if}}">{{value1}}</div>
+    {{#if subtext1}}<div class="text-[11px] text-muted mt-0.5">{{subtext1}}</div>{{/if}}
+  </div>
+  <div class="p-3 border-b md:border-r md:border-b-0 border-line">
+    <div class="text-xs text-muted font-medium">{{label2}}</div>
+    <div class="text-xl font-semibold tracking-tight mt-0.5 whitespace-nowrap {{#if danger2}}text-[#B4372A]{{else if success2}}text-[#146A3E]{{/if}}">{{value2}}</div>
+    {{#if subtext2}}<div class="text-[11px] text-muted mt-0.5">{{subtext2}}</div>{{/if}}
+  </div>
+  <div class="p-3 col-span-2 md:col-span-1">
+    <div class="text-xs text-muted font-medium">{{label3}}</div>
+    <div class="text-xl font-semibold tracking-tight mt-0.5 whitespace-nowrap {{#if danger3}}text-[#B4372A]{{else if success3}}text-[#146A3E]{{/if}}">{{value3}}</div>
+    {{#if subtext3}}<div class="text-[11px] text-muted mt-0.5">{{subtext3}}</div>{{/if}}
+  </div>
+</div>
+{{/if}}

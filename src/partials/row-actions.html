@@ -1,0 +1,15 @@
+<button class="w-[26px] h-[26px] rounded flex items-center justify-center text-muted hover:bg-th hover:border-line-strong hover:text-ink border border-transparent transition-colors"
+  data-menu="{{title}}"
+  {{#if type}}data-menu-type="{{type}}"{{/if}}
+  {{#if id}}data-menu-id="{{id}}"{{/if}}
+  {{#if view_target}}data-menu-view="{{view_target}}"{{/if}}
+  {{#if edit_target}}data-menu-edit="{{edit_target}}"{{/if}}
+  {{#if can_pay}}data-menu-payment="true"{{/if}}
+  {{#if can_send}}data-menu-send="true"{{/if}}
+  {{#if can_download}}data-menu-download="true"{{/if}}
+  {{#if can_cancel}}data-menu-cancel="true"{{/if}}
+  {{#if can_delete}}data-menu-delete="true"{{/if}}
+  aria-label="Actions for {{title}}"
+  title="Actions">
+  <svg class="w-4 h-4 stroke-[1.75]" aria-hidden="true"><use href="#i-more-horizontal"/></svg>
+</button>

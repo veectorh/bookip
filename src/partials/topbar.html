@@ -117,10 +117,10 @@
               </div>
               <p class="text-xs text-muted mt-0.5">Invoice INV-0011 · <span class="text-[#B4372A] font-medium">Overdue by 27 days</span></p>
               <div class="flex gap-2 mt-2">
-                <a href="/index.html" class="inline-flex items-center gap-1 px-2 py-1 rounded bg-surface border border-line-strong text-xs font-medium text-ink hover:bg-th">
+                <button type="button" class="inline-flex items-center gap-1 px-2 py-1 rounded bg-surface border border-line-strong text-xs font-medium text-ink hover:bg-th" data-modal-target="recordPaymentModal">
                   Record payment
-                </a>
-                <button class="inline-flex items-center gap-1 px-2 py-1 rounded text-xs font-medium text-muted hover:text-ink">
+                </button>
+                <button type="button" class="inline-flex items-center gap-1 px-2 py-1 rounded text-xs font-medium text-muted hover:text-ink" onclick="window.showToast({ title: 'Reminder sent', message: 'SMS and email reminder dispatched to Ann Kingsley.', type: 'success' });">
                   Send reminder
                 </button>
               </div>
