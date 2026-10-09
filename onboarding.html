@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="en">
+<head>
+  {{> head}}
+</head>
+<body class="bg-canvas text-ink font-sans text-[14px] leading-[1.5] min-h-screen flex flex-col justify-between p-4 sm:p-6 md:p-10">
+  
+  {{> icons}}
+
+  <div class="max-w-2xl mx-auto w-full my-auto space-y-8">
+
+    <!-- Brand Header -->
+    <div class="text-center">
+      <div class="inline-flex items-center gap-2.5 mb-2">
+        <span class="w-9 h-9 rounded-xl bg-navy text-white flex items-center justify-center font-bold text-base shadow-sm">B</span>
+        <span class="font-bold tracking-tight text-2xl text-ink">Bookkip</span>
+      </div>
+      <h1 class="text-xl md:text-2xl font-bold tracking-tight text-ink m-0">Set up your business in 3 minutes</h1>
+      <p class="text-xs text-muted mt-1">Configure your business currency, banking, and first item to get started</p>
+    </div>
+
+    <!-- Stepper Indicator -->
+    <div class="grid grid-cols-4 gap-2 text-xs">
+      <div class="step-pill text-center py-2 px-1 border-b-2 border-indigo text-indigo font-bold" id="stepIndicator1">
+        1. Business Profile
+      </div>
+      <div class="step-pill text-center py-2 px-1 border-b-2 border-line text-muted font-medium" id="stepIndicator2">
+        2. Bank Setup
+      </div>
+      <div class="step-pill text-center py-2 px-1 border-b-2 border-line text-muted font-medium" id="stepIndicator3">
+        3. First Item
+      </div>
+      <div class="step-pill text-center py-2 px-1 border-b-2 border-line text-muted font-medium" id="stepIndicator4">
+        4. Complete
+      </div>
+    </div>
+
+    <!-- Wizard Form Card Container -->
+    <div class="bg-surface border border-line rounded-2xl p-6 sm:p-8 shadow-sm">
+
+      <!-- STEP 1: Business Profile -->
+      <div id="step1" class="space-y-4">
+        <div class="border-b border-line pb-3">
+          <h2 class="text-base font-bold text-ink m-0">Company Information</h2>
+          <div class="text-xs text-muted">What is the name and industry of your business?</div>
+        </div>
+
+        <div class="space-y-3.5">
+          <div>
+            <label class="block text-xs font-medium text-muted mb-1">Company / Store Name <span class="text-[#B4372A]">*</span></label>
+            <input type="text" id="obBusinessName" value="Acme Dynamics Ltd" placeholder="e.g. Adeola Supermarket, Ikeja Logistics" class="w-full h-control px-3 bg-surface border border-line-strong rounded-lg focus:border-indigo focus:ring-[3px] focus:ring-indigo-line outline-none text-[13px] font-medium">
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label class="block text-xs font-medium text-muted mb-1">Business Type</label>
+              <select class="w-full h-control px-2.5 bg-surface border border-line-strong rounded-lg text-[13px] text-ink focus:border-indigo outline-none">
+                <option>Professional / Consulting Services</option>
+                <option>Retail & Supermarket</option>
+                <option>Wholesale & Distribution</option>
+                <option>IT & Digital Agency</option>
+                <option>Manufacturing & Craft</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs font-medium text-muted mb-1">Primary State / City</label>
+              <select class="w-full h-control px-2.5 bg-surface border border-line-strong rounded-lg text-[13px] text-ink focus:border-indigo outline-none">
+                <option>Lagos State</option>
+                <option>Abuja FCT</option>
+                <option>Rivers (Port Harcourt)</option>
+                <option>Oyo (Ibadan)</option>
+                <option>Kano State</option>
+                <option>Edo (Benin City)</option>
+              </select>
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-medium text-muted mb-1">Accounting Currency</label>
+            <select class="w-full h-control px-2.5 bg-surface border border-line-strong rounded-lg text-[13px] text-ink focus:border-indigo outline-none">
+              <option selected>Nigerian Naira (₦ / NGN)</option>
+              <option>US Dollar ($ / USD)</option>
+              <option>British Pound (£ / GBP)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="pt-4 border-t border-line flex justify-end">
+          <button type="button" class="inline-flex items-center gap-1.5 h-10 px-5 rounded-lg border border-transparent text-[13px] font-semibold bg-indigo text-white hover:bg-indigo-hover transition-colors shadow-sm" onclick="goToStep(2)">
+            Continue to Bank Setup <svg class="w-4 h-4 stroke-[2]"><use href="#i-arrow-right"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- STEP 2: Bank Setup -->
+      <div id="step2" class="space-y-4 hidden">
+        <div class="border-b border-line pb-3">
+          <h2 class="text-base font-bold text-ink m-0">Primary Bank Account</h2>
+          <div class="text-xs text-muted">Where do customers send payment transfers?</div>
+        </div>
+
+        <div class="space-y-3.5">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label class="block text-xs font-medium text-muted mb-1">Bank Name</label>
+              <select class="w-full h-control px-2.5 bg-surface border border-line-strong rounded-lg text-[13px] text-ink focus:border-indigo outline-none">
+                <option>First Bank of Nigeria Plc</option>
+                <option>Guaranty Trust Bank (GTB)</option>
+                <option>Zenith Bank Plc</option>
+                <option>Access Bank Plc</option>
+                <option>United Bank for Africa (UBA)</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs font-medium text-muted mb-1">Account Number (NUBAN) <span class="text-[#B4372A]">*</span></label>
+              <input type="text" value="0123456789" placeholder="10-digit account number" class="w-full h-control px-3 bg-surface border border-line-strong rounded-lg focus:border-indigo focus:ring-[3px] focus:ring-indigo-line outline-none text-[13px] font-mono">
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-medium text-muted mb-1">Account Name</label>
+            <input type="text" value="Acme Dynamics Ltd" class="w-full h-control px-3 bg-surface border border-line-strong rounded-lg focus:border-indigo focus:ring-[3px] focus:ring-indigo-line outline-none text-[13px]">
+          </div>
+
+          <div>
+            <label class="block text-xs font-medium text-muted mb-1">Initial Starting Cash / Bank Balance (₦)</label>
+            <input type="number" value="2800000" placeholder="0.00" class="w-full h-control px-3 bg-surface border border-line-strong rounded-lg focus:border-indigo focus:ring-[3px] focus:ring-indigo-line outline-none text-[13px] font-bold">
+            <span class="text-[11px] text-muted">You can adjust this or reconcile later from the accounts page.</span>
+          </div>
+        </div>
+
+        <div class="pt-4 border-t border-line flex justify-between">
+          <button type="button" class="h-10 px-4 rounded-lg border border-line-strong text-[13px] font-medium bg-surface text-ink hover:bg-th transition-colors" onclick="goToStep(1)">
+            Back
+          </button>
+          <button type="button" class="inline-flex items-center gap-1.5 h-10 px-5 rounded-lg border border-transparent text-[13px] font-semibold bg-indigo text-white hover:bg-indigo-hover transition-colors shadow-sm" onclick="goToStep(3)">
+            Continue to Products <svg class="w-4 h-4 stroke-[2]"><use href="#i-arrow-right"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- STEP 3: First Item / Service -->
+      <div id="step3" class="space-y-4 hidden">
+        <div class="border-b border-line pb-3">
+          <h2 class="text-base font-bold text-ink m-0">Add Your First Product or Service</h2>
+          <div class="text-xs text-muted">Create a starter item you can invoice right away</div>
+        </div>
+
+        <div class="space-y-3.5">
+          <div>
+            <label class="block text-xs font-medium text-muted mb-1">Item / Service Name <span class="text-[#B4372A]">*</span></label>
+            <input type="text" value="Website Retainer / Consultation" placeholder="e.g. Website Maintenance, Server Setup" class="w-full h-control px-3 bg-surface border border-line-strong rounded-lg focus:border-indigo focus:ring-[3px] focus:ring-indigo-line outline-none text-[13px] font-medium">
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label class="block text-xs font-medium text-muted mb-1">Selling Price (₦) <span class="text-[#B4372A]">*</span></label>
+              <input type="number" value="150000" class="w-full h-control px-3 bg-surface border border-line-strong rounded-lg focus:border-indigo focus:ring-[3px] focus:ring-indigo-line outline-none text-[13px] font-bold">
+            </div>
+            <div>
+              <label class="block text-xs font-medium text-muted mb-1">Item Type</label>
+              <select class="w-full h-control px-2.5 bg-surface border border-line-strong rounded-lg text-[13px] text-ink focus:border-indigo outline-none">
+                <option>Service</option>
+                <option>Physical Product</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="pt-4 border-t border-line flex justify-between">
+          <button type="button" class="h-10 px-4 rounded-lg border border-line-strong text-[13px] font-medium bg-surface text-ink hover:bg-th transition-colors" onclick="goToStep(2)">
+            Back
+          </button>
+          <button type="button" class="inline-flex items-center gap-1.5 h-10 px-5 rounded-lg border border-transparent text-[13px] font-semibold bg-indigo text-white hover:bg-indigo-hover transition-colors shadow-sm" onclick="goToStep(4)">
+            Finish Setup <svg class="w-4 h-4 stroke-[2]"><use href="#i-check"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- STEP 4: Complete -->
+      <div id="step4" class="space-y-5 text-center py-4 hidden">
+        <div class="w-16 h-16 rounded-full bg-[#E9F7EF] text-[#146A3E] flex items-center justify-center mx-auto text-2xl font-bold shadow-sm">
+          <svg class="w-8 h-8 stroke-[2.5]"><use href="#i-check"/></svg>
+        </div>
+
+        <div>
+          <h2 class="text-xl font-bold text-ink m-0">You are ready to start selling!</h2>
+          <p class="text-xs text-muted mt-1 max-w-sm mx-auto">Your business workspace is configured with Nigerian Naira currency, settlement bank details, and starter catalog items.</p>
+        </div>
+
+        <div class="p-4 bg-canvas rounded-xl border border-line text-left text-xs space-y-2 max-w-md mx-auto">
+          <div class="flex justify-between">
+            <span class="text-muted">Business Name:</span>
+            <span class="font-bold text-ink">Acme Dynamics Ltd</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-muted">Bank Account:</span>
+            <span class="font-bold text-ink">First Bank (0123456789)</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-muted">Currency:</span>
+            <span class="font-bold text-ink">NGN (₦)</span>
+          </div>
+        </div>
+
+        <div class="pt-2">
+          <button type="button" class="inline-flex items-center gap-2 h-11 px-8 rounded-lg border border-transparent text-[14px] font-bold bg-indigo text-white hover:bg-indigo-hover transition-colors shadow-md" onclick="window.location.href='/dashboard.html';">
+            Go to My Dashboard <svg class="w-4 h-4 stroke-[2]"><use href="#i-arrow-right"/></svg>
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Script to handle step switching -->
+    <script>
+      function goToStep(stepNum) {
+        for (let i = 1; i <= 4; i++) {
+          const el = document.getElementById('step' + i);
+          const ind = document.getElementById('stepIndicator' + i);
+          if (el) el.classList.add('hidden');
+          if (ind) {
+            ind.classList.remove('border-indigo', 'text-indigo', 'font-bold');
+            ind.classList.add('border-line', 'text-muted', 'font-medium');
+          }
+        }
+        const targetStep = document.getElementById('step' + stepNum);
+        const targetInd = document.getElementById('stepIndicator' + stepNum);
+        if (targetStep) targetStep.classList.remove('hidden');
+        if (targetInd) {
+          targetInd.classList.remove('border-line', 'text-muted', 'font-medium');
+          targetInd.classList.add('border-indigo', 'text-indigo', 'font-bold');
+        }
+      }
+    </script>
+
+  </div>
+
+  {{> toast}}
+  {{> scripts}}
+</body>
+</html>

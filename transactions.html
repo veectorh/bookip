@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="en">
+<head>
+  {{> head}}
+</head>
+<body class="bg-canvas text-ink font-sans text-[14px] leading-[1.5]">
+  
+  {{> icons}}
+
+  <div id="app" class="flex h-screen overflow-hidden" data-layout="rail">
+    {{> sidebar active_transactions=true active="transactions"}}
+
+    <div class="flex-1 flex flex-col min-w-0">
+      {{> topbar title="Transactions" active_accounting=true}}
+
+      <main class="flex-1 overflow-y-auto overflow-x-hidden relative bg-canvas">
+
+          <div class="p-4 md:p-6 overflow-auto flex-1">
+            <div class="text-xs text-muted mb-2 flex items-center gap-1.5 font-medium">
+              Accounting <svg class="w-4 h-4 stroke-[1.75]" aria-hidden="true"><use href="#i-chevron-right"/></svg> Income & Expense Ledger
+            </div>
+            
+            <div class="flex items-center justify-between gap-3 mb-3.5">
+              <div class="flex items-center gap-2.5">
+                <h1 class="m-0 text-xl font-semibold tracking-tight text-ink">Transactions</h1>
+                <span class="text-xs text-muted font-medium bg-surface px-2 py-0.5 rounded border border-line">{{seed.transactions.length}} entries</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <button class="inline-flex items-center gap-1.5 h-control px-2.5 md:px-3 rounded border border-line-strong text-[13px] font-medium bg-surface hover:bg-th transition-colors shadow-sm" onclick="window.showToast({ title: 'Export Generated', message: 'Transactions exported to CSV.', type: 'info' });">
+                  <svg class="w-4 h-4 stroke-[1.75]" aria-hidden="true"><use href="#i-download"/></svg> <span class="hidden md:inline">Export</span>
+                </button>
+                <button class="inline-flex items-center gap-1.5 h-control px-2.5 md:px-3 rounded border border-line-strong text-[13px] font-medium bg-surface text-[#B4372A] hover:bg-[#FDECEA] transition-colors shadow-sm" data-drawer-target="transactionDrawer" onclick="document.getElementById('txTypeExpense').checked = true;">
+                  <svg class="w-4 h-4 stroke-[2]"><use href="#i-plus"/></svg> <span>Record Expense</span>
+                </button>
+                <button class="inline-flex items-center gap-1.5 h-control px-2.5 md:px-3 rounded border border-transparent text-[13px] font-medium bg-[#146A3E] text-white hover:bg-[#115532] transition-colors shadow-sm" data-drawer-target="transactionDrawer" onclick="document.getElementById('txTypeIncome').checked = true;">
+                  <svg class="w-4 h-4 stroke-[2]"><use href="#i-plus"/></svg> <span>Record Income</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Stats Strip (Plain Store Language) -->
+            {{> stats-strip 
+              label1="Money In This Month" value1="₦ 95,937.50" success1=true subtext1="Customer payments collected"
+              label2="Money Out This Month" value2="₦ 460,000.00" danger2=true subtext2="Salaries & supplies paid"
+              label3="Net Cash Difference" value3="-₦ 364,062.50" danger3=true subtext3="Outflow higher than inflow"
+              label4="Transactions Logged" value4="4 entries"
+            }}
+
+            <!-- Desktop Filters -->
+            <div class="flex gap-2 mb-2.5 flex-wrap hidden md:flex">
+              <div class="flex-1 min-w-[220px] flex items-center gap-2 h-control px-2.5 bg-surface border border-line-strong rounded text-[13px] focus-within:border-indigo focus-within:ring-[3px] focus-within:ring-indigo-line">
+                <svg class="w-4 h-4 stroke-[1.75] text-muted shrink-0" aria-hidden="true"><use href="#i-search"/></svg>
+                <input type="text" placeholder="Search reference, customer, or note" class="bg-transparent border-0 outline-none w-full placeholder-muted">
+              </div>
+              <div class="flex items-center h-control px-2.5 bg-surface border border-line-strong rounded text-[13px] focus-within:border-indigo focus-within:ring-[3px] focus-within:ring-indigo-line">
+                <select class="bg-transparent border-0 outline-none w-full text-ink">
+                  <option>All Types</option>
+                  <option>Money In (Income)</option>
+                  <option>Money Out (Expense)</option>
+                </select>
+              </div>
+              <div class="flex items-center h-control px-2.5 bg-surface border border-line-strong rounded text-[13px] focus-within:border-indigo focus-within:ring-[3px] focus-within:ring-indigo-line">
+                <select class="bg-transparent border-0 outline-none w-full text-ink">
+                  <option>All Accounts</option>
+                  <option>First Bank Current</option>
+                  <option>GTBank Corporate</option>
+                  <option>Office Petty Cash</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Table (Desktop) -->
+            <div class="bg-surface border border-line rounded overflow-x-auto hidden md:block">
+              <table class="w-full border-collapse text-[13px] min-w-[760px]">
+                <thead>
+                  <tr class="bg-th text-muted font-medium text-xs">
+                    <th class="px-3.5 py-2.5 text-left border-b border-line whitespace-nowrap font-medium">Date</th>
+                    <th class="px-3.5 py-2.5 text-left border-b border-line whitespace-nowrap font-medium">Type</th>
+                    <th class="px-3.5 py-2.5 text-left border-b border-line whitespace-nowrap font-medium">Category</th>
+                    <th class="px-3.5 py-2.5 text-left border-b border-line whitespace-nowrap font-medium">Bank / Account</th>
+                    <th class="px-3.5 py-2.5 text-left border-b border-line font-medium">Reference / Note</th>
+                    <th class="px-3.5 py-2.5 text-right border-b border-line whitespace-nowrap font-medium">Amount (₦)</th>
+                    <th class="px-3.5 py-2.5 border-b border-line w-9"></th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-line">
+                  {{#each seed.transactions}}
+                  <tr class="hover:bg-[#FAFBFD] group transition-colors">
+                    <td class="px-3.5 py-3 whitespace-nowrap text-muted">{{this.date}}</td>
+                    <td class="px-3.5 py-3 whitespace-nowrap">
+                      {{#if (eq this.type "income")}}
+                        <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold bg-[#E9F7EF] text-[#146A3E] border border-[#C8EAD6]">
+                          + Money In
+                        </span>
+                      {{else}}
+                        <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold bg-[#FDECEA] text-[#B4372A] border border-[#F5CFC9]">
+                          - Money Out
+                        </span>
+                      {{/if}}
+                    </td>
+                    <td class="px-3.5 py-3 whitespace-nowrap font-medium text-ink">{{this.category}}</td>
+                    <td class="px-3.5 py-3 whitespace-nowrap text-muted">{{this.account}}</td>
+                    <td class="px-3.5 py-3 text-ink">
+                      <div class="font-medium">{{this.ref}}</div>
+                      <div class="text-xs text-muted">{{this.note}}</div>
+                    </td>
+                    <td class="px-3.5 py-3 whitespace-nowrap text-right font-bold {{#if (eq this.type "income")}}text-[#146A3E]{{else}}text-[#B4372A]{{/if}}" style="font-variant-numeric: tabular-nums;">
+                      {{#if (eq this.type "income")}}+{{else}}-{{/if}}{{this.amount}}
+                    </td>
+                    <td class="px-3.5 py-3 whitespace-nowrap">
+                      {{> row-actions title=this.ref type="transaction" id=this.id}}
+                    </td>
+                  </tr>
+                  {{/each}}
+                </tbody>
+              </table>
+              <div class="flex items-center gap-3 px-3.5 py-2.5 border-t border-line text-xs text-muted bg-surface">
+                <span>{{seed.transactions.length}} records in ledger</span>
+              </div>
+            </div>
+
+            <!-- List (Mobile) -->
+            <div class="block md:hidden">
+              <div class="bg-surface border border-line rounded overflow-hidden">
+                {{#each seed.transactions}}
+                <div class="w-full text-left bg-transparent border-0 border-b border-line px-3.5 py-3 grid grid-cols-[1fr_auto] gap-x-3 gap-y-1 items-center min-h-row-mob last:border-b-0">
+                  <div>
+                    <div class="font-medium text-ink">{{this.ref}}</div>
+                    <div class="text-xs text-muted">{{this.date}} · {{this.account}}</div>
+                  </div>
+                  <div class="text-right">
+                    <div class="font-bold {{#if (eq this.type "income")}}text-[#146A3E]{{else}}text-[#B4372A]{{/if}}">{{this.amount}}</div>
+                    <span class="text-[11px] text-muted">{{this.category}}</span>
+                  </div>
+                </div>
+                {{/each}}
+              </div>
+            </div>
+
+          </div>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- Slide-Over Drawer: Record Income or Expense -->
+  {{#> slide-over id="transactionDrawer" title="Record Cash Transaction" save_label="Save transaction"}}
+    <div>
+      <div class="text-xs font-semibold text-muted uppercase tracking-wider mb-2.5">Transaction Type</div>
+      <div class="grid grid-cols-2 gap-2.5 mb-4">
+        <label class="flex items-center gap-2 p-3 border border-line rounded-lg cursor-pointer hover:bg-canvas has-[:checked]:border-[#146A3E] has-[:checked]:bg-[#E9F7EF]/30">
+          <input type="radio" name="txType" id="txTypeIncome" value="income" checked class="text-[#146A3E] focus:ring-[#146A3E]">
+          <div>
+            <div class="font-bold text-ink text-xs">Money In (Income)</div>
+            <div class="text-[11px] text-muted">Customer payment, deposit</div>
+          </div>
+        </label>
+        <label class="flex items-center gap-2 p-3 border border-line rounded-lg cursor-pointer hover:bg-canvas has-[:checked]:border-[#B4372A] has-[:checked]:bg-[#FDECEA]/30">
+          <input type="radio" name="txType" id="txTypeExpense" value="expense" class="text-[#B4372A] focus:ring-[#B4372A]">
+          <div>
+            <div class="font-bold text-ink text-xs">Money Out (Expense)</div>
+            <div class="text-[11px] text-muted">Bill, salary, supplies</div>
+          </div>
+        </label>
+      </div>
+
+      <div class="space-y-3">
+        <div>
+          <label class="block text-xs font-medium text-muted mb-1">Amount (₦) <span class="text-[#B4372A]">*</span></label>
+          <input type="number" placeholder="0.00" class="w-full h-control px-2.5 bg-surface border border-line-strong rounded focus:border-indigo focus:ring-[3px] focus:ring-indigo-line outline-none text-[14px] font-bold">
+        </div>
+        <div class="grid grid-cols-2 gap-2.5">
+          <div>
+            <label class="block text-xs font-medium text-muted mb-1">Date</label>
+            <input type="date" value="2026-10-09" class="w-full h-control px-2.5 bg-surface border border-line-strong rounded focus:border-indigo focus:ring-[3px] focus:ring-indigo-line outline-none text-[13px]">
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-muted mb-1">Account Used</label>
+            <select class="w-full h-control px-2.5 bg-surface border border-line-strong rounded text-[13px] text-ink focus:border-indigo outline-none">
+              <option>First Bank Current Account</option>
+              <option>GTBank Corporate Account</option>
+              <option>Office Petty Cash Box</option>
+            </select>
+          </div>
+        </div>
+        <div>
+          <label class="block text-xs font-medium text-muted mb-1">Category</label>
+          <select class="w-full h-control px-2.5 bg-surface border border-line-strong rounded text-[13px] text-ink focus:border-indigo outline-none">
+            <option>Customer Payment</option>
+            <option>Office Supplies</option>
+            <option>Staff Salary</option>
+            <option>Rent & Utilities</option>
+            <option>Hardware & Tools</option>
+            <option>Transportation & Fuel</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-xs font-medium text-muted mb-1">Reference / Invoice # / Description</label>
+          <input type="text" placeholder="e.g. INV-0012 or Receipt #402" class="w-full h-control px-2.5 bg-surface border border-line-strong rounded focus:border-indigo focus:ring-[3px] focus:ring-indigo-line outline-none text-[13px]">
+        </div>
+        <div>
+          <label class="block text-xs font-medium text-muted mb-1">Notes / Remarks</label>
+          <textarea rows="2" placeholder="Details about this cash movement" class="w-full p-2.5 bg-surface border border-line-strong rounded focus:border-indigo focus:ring-[3px] focus:ring-indigo-line outline-none text-[13px] resize-none"></textarea>
+        </div>
+      </div>
+    </div>
+  {{/slide-over}}
+
+  {{> toast}}
+  {{> scripts}}
+</body>
+</html>

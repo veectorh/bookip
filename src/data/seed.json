@@ -200,5 +200,183 @@
         {"entity": "Swift Office Supplies", "doc": "PUR-0002", "amount": "₦ 45,000.00", "days_due_in": 8, "urgency": "due_soon"}
       ]
     }
-  }
+  },
+  "products": [
+    {
+      "id": "PROD-001",
+      "name": "Cloud Server Setup",
+      "sku": "SRV-SETUP",
+      "type": "Service",
+      "selling_price": "₦ 150,000.00",
+      "cost_price": "₦ 85,000.00",
+      "stock": "Service",
+      "unit": "Unit",
+      "status": "In Stock"
+    },
+    {
+      "id": "PROD-002",
+      "name": "Dell PowerEdge R740 Server",
+      "sku": "SRV-DELL-740",
+      "type": "Physical",
+      "selling_price": "₦ 850,000.00",
+      "cost_price": "₦ 750,000.00",
+      "stock": "4 units",
+      "unit": "Pieces",
+      "status": "In Stock"
+    },
+    {
+      "id": "PROD-003",
+      "name": "CAT6 Ethernet Cable Reel (305m)",
+      "sku": "CAB-CAT6-305",
+      "type": "Physical",
+      "selling_price": "₦ 45,000.00",
+      "cost_price": "₦ 32,000.00",
+      "stock": "12 reels",
+      "unit": "Box",
+      "status": "In Stock"
+    },
+    {
+      "id": "PROD-004",
+      "name": "Monthly Support Retainer",
+      "sku": "RET-MONTHLY",
+      "type": "Service",
+      "selling_price": "₦ 75,000.00",
+      "cost_price": "₦ 0.00",
+      "stock": "Service",
+      "unit": "Month",
+      "status": "In Stock"
+    }
+  ],
+  "product_units": [
+    {"id": "U-01", "name": "Pieces", "short_name": "Pcs", "products_count": 1},
+    {"id": "U-02", "name": "Boxes", "short_name": "Box", "products_count": 1},
+    {"id": "U-03", "name": "Reels / Rolls", "short_name": "Reel", "products_count": 1},
+    {"id": "U-04", "name": "Monthly Retainers", "short_name": "Mo", "products_count": 1},
+    {"id": "U-05", "name": "Hours of Work", "short_name": "Hr", "products_count": 0},
+    {"id": "U-06", "name": "Kilograms", "short_name": "Kg", "products_count": 0}
+  ],
+  "accounts": [
+    {
+      "id": "ACC-001",
+      "name": "First Bank Current Account",
+      "bank": "First Bank of Nigeria Plc",
+      "number": "0123456789",
+      "type": "Bank Current",
+      "balance": "₦ 2,800,000.00",
+      "status": "Active",
+      "is_default": true
+    },
+    {
+      "id": "ACC-002",
+      "name": "GTBank Corporate Account",
+      "bank": "Guaranty Trust Bank (GTB)",
+      "number": "2098765432",
+      "type": "Bank Corporate",
+      "balance": "₦ 620,500.00",
+      "status": "Active",
+      "is_default": false
+    },
+    {
+      "id": "ACC-003",
+      "name": "Office Petty Cash Box",
+      "bank": "Main Office Safe",
+      "number": "CASH-HQ",
+      "type": "Cash on Hand",
+      "balance": "₦ 45,000.00",
+      "status": "Active",
+      "is_default": false
+    }
+  ],
+  "transactions": [
+    {
+      "id": "TX-001",
+      "date": "04 Oct 2026",
+      "type": "income",
+      "type_label": "Money In",
+      "category": "Customer Payment",
+      "account": "GTBank Corporate",
+      "amount": "₦ 6,500.00",
+      "ref": "INV-0001 (Charles)",
+      "note": "Consultation payment received"
+    },
+    {
+      "id": "TX-002",
+      "date": "28 Sep 2026",
+      "type": "expense",
+      "type_label": "Money Out",
+      "category": "Office Supplies",
+      "account": "Petty Cash",
+      "amount": "₦ 45,000.00",
+      "ref": "EXP-0023",
+      "note": "Paper and cartridges"
+    },
+    {
+      "id": "TX-003",
+      "date": "18 Sep 2026",
+      "type": "income",
+      "type_label": "Money In",
+      "category": "Customer Payment",
+      "account": "First Bank Current",
+      "amount": "₦ 89,437.50",
+      "ref": "INV-0012 (Charles)",
+      "note": "Partial bank transfer"
+    },
+    {
+      "id": "TX-004",
+      "date": "15 Sep 2026",
+      "type": "expense",
+      "type_label": "Money Out",
+      "category": "Staff Salary",
+      "account": "First Bank Current",
+      "amount": "₦ 415,000.00",
+      "ref": "SAL-0012",
+      "note": "September salary payout (John Doe)"
+    }
+  ],
+  "departments": [
+    {
+      "id": "DEP-001",
+      "name": "Engineering & Technology",
+      "lead": "Engr. John Doe",
+      "staff_count": 2,
+      "budget": "₦ 1,500,000.00"
+    },
+    {
+      "id": "DEP-002",
+      "name": "Creative & UI Design",
+      "lead": "Jane Smith",
+      "staff_count": 1,
+      "budget": "₦ 800,000.00"
+    },
+    {
+      "id": "DEP-003",
+      "name": "Finance & Administration",
+      "lead": "Head of Finance",
+      "staff_count": 1,
+      "budget": "₦ 600,000.00"
+    }
+  ],
+  "salary_scales": [
+    {
+      "id": "SCALE-1",
+      "title": "Grade 1 - Junior Assistant / Store Help",
+      "min_salary": "₦ 80,000.00",
+      "max_salary": "₦ 150,000.00",
+      "staff_count": 0
+    },
+    {
+      "id": "SCALE-2",
+      "title": "Grade 2 - Associate Officer",
+      "min_salary": "₦ 160,000.00",
+      "max_salary": "₦ 300,000.00",
+      "staff_count": 0
+    },
+    {
+      "id": "SCALE-3",
+      "title": "Grade 3 - Senior Specialist / Lead",
+      "min_salary": "₦ 350,000.00",
+      "max_salary": "₦ 600,000.00",
+      "staff_count": 2
+    }
+  ]
 }

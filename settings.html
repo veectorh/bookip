@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+  {{> head}}
+</head>
+<body class="bg-canvas text-ink font-sans text-[14px] leading-[1.5]">
+  
+  {{> icons}}
+
+  <div id="app" class="flex h-screen overflow-hidden" data-layout="rail">
+    {{> sidebar active_settings=true active="settings"}}
+
+    <div class="flex-1 flex flex-col min-w-0">
+      {{> topbar title="Business Settings" active_settings=true}}
+
+      <main class="flex-1 overflow-y-auto overflow-x-hidden p-4 md:p-6 lg:p-8 bg-canvas">
+        <div class="max-w-4xl mx-auto space-y-6">
+
+          <!-- Header & Breadcrumb -->
+          <div>
+            <div class="text-xs text-muted mb-1 flex items-center gap-1.5 font-medium">
+              System <svg class="w-4 h-4 stroke-[1.75]" aria-hidden="true"><use href="#i-chevron-right"/></svg> Business Settings
+            </div>
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div>
+                <h1 class="m-0 text-xl md:text-2xl font-bold tracking-tight text-ink">Business Settings</h1>
+                <p class="text-xs text-muted mt-0.5">Manage your company profile, currency, invoicing rules, and VAT settings</p>
+              </div>
+              <button type="button" class="inline-flex items-center gap-1.5 h-control px-4 rounded border border-transparent text-[13px] font-medium bg-indigo text-white hover:bg-indigo-hover transition-colors shadow-sm self-start sm:self-auto" onclick="window.showToast({ title: 'Settings Saved', message: 'All company preferences updated successfully.', type: 'success' });">
+                <svg class="w-4 h-4 stroke-[2]"><use href="#i-check"/></svg> Save Changes
+              </button>
+            </div>
+          </div>
+
+          <!-- Section 1: Company Profile -->
+          <div class="bg-surface border border-line rounded-xl p-5 shadow-sm space-y-4">
+            <div class="border-b border-line pb-3">
+              <h2 class="text-base font-semibold tracking-tight text-ink m-0">Company Profile</h2>
+              <div class="text-xs text-muted">Legal registered details shown on customer invoices and receipts</div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-xs font-medium text-muted mb-1">Company / Business Name <span class="text-[#B4372A]">*</span></label>
+                <input type="text" value="{{seed.business.name}}" class="w-full h-control px-2.5 bg-surface border border-line-strong rounded focus:border-indigo focus:ring-[3px] focus:ring-indigo-line outline-none text-[13px] font-medium">
+              </div>
+
+              <div>
+                <label class="block text-xs font-medium text-muted mb-1">CAC / Registration Number</label>
+                <input type="text" value="RC-1984201" class="w-full h-control px-2.5 bg-surface border border-line-strong rounded focus:border-indigo focus:ring-[3px] focus:ring-indigo-line outline-none text-[13px]">
+              </div>
+
+              <div>
+                <label class="block text-xs font-medium text-muted mb-1">Official Business Email</label>
+                <input type="email" value="{{seed.business.email}}" class="w-full h-control px-2.5 bg-surface border border-line-strong rounded focus:border-indigo focus:ring-[3px] focus:ring-indigo-line outline-none text-[13px]">
+              </div>
+
+              <div>
+                <label class="block text-xs font-medium text-muted mb-1">Phone Number</label>
+                <input type="tel" value="{{seed.business.phone}}" class="w-full h-control px-2.5 bg-surface border border-line-strong rounded focus:border-indigo focus:ring-[3px] focus:ring-indigo-line outline-none text-[13px]">
+              </div>
+
+              <div class="md:col-span-2">
+                <label class="block text-xs font-medium text-muted mb-1">Registered Physical Address</label>
+                <textarea rows="2" class="w-full p-2.5 bg-surface border border-line-strong rounded focus:border-indigo focus:ring-[3px] focus:ring-indigo-line outline-none text-[13px] resize-none">{{seed.business.address}}</textarea>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section 2: Invoicing Rules & Currency -->
+          <div class="bg-surface border border-line rounded-xl p-5 shadow-sm space-y-4">
+            <div class="border-b border-line pb-3">
+              <h2 class="text-base font-semibold tracking-tight text-ink m-0">Invoicing & Tax Rules</h2>
+              <div class="text-xs text-muted">Configure default prefixes, payment windows, and Nigerian VAT rates</div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div>
+                <label class="block text-xs font-medium text-muted mb-1">Base Currency</label>
+                <select class="w-full h-control px-2.5 bg-surface border border-line-strong rounded text-[13px] text-ink focus:border-indigo outline-none">
+                  <option selected>Nigerian Naira (₦ / NGN)</option>
+                  <option>US Dollar ($ / USD)</option>
+                  <option>British Pound (£ / GBP)</option>
+                </select>
+              </div>
+
+              <div>
+                <label class="block text-xs font-medium text-muted mb-1">Invoice Prefix</label>
+                <input type="text" value="INV-" class="w-full h-control px-2.5 bg-surface border border-line-strong rounded focus:border-indigo focus:ring-[3px] focus:ring-indigo-line outline-none text-[13px]">
+              </div>
+
+              <div>
+                <label class="block text-xs font-medium text-muted mb-1">Quotation Prefix</label>
+                <input type="text" value="QUO-" class="w-full h-control px-2.5 bg-surface border border-line-strong rounded focus:border-indigo focus:ring-[3px] focus:ring-indigo-line outline-none text-[13px]">
+              </div>
+
+              <div>
+                <label class="block text-xs font-medium text-muted mb-1">Default Payment Terms</label>
+                <select class="w-full h-control px-2.5 bg-surface border border-line-strong rounded text-[13px] text-ink focus:border-indigo outline-none">
+                  <option selected>Net 14 Days</option>
+                  <option>Net 30 Days</option>
+                  <option>Due Upon Receipt</option>
+                  <option>Net 7 Days</option>
+                </select>
+              </div>
+
+              <div>
+                <label class="block text-xs font-medium text-muted mb-1">Standard VAT Tax Rate (%)</label>
+                <input type="text" value="7.5%" class="w-full h-control px-2.5 bg-surface border border-line-strong rounded focus:border-indigo focus:ring-[3px] focus:ring-indigo-line outline-none text-[13px]">
+              </div>
+
+              <div>
+                <label class="block text-xs font-medium text-muted mb-1">Primary Settlement Bank</label>
+                <select class="w-full h-control px-2.5 bg-surface border border-line-strong rounded text-[13px] text-ink focus:border-indigo outline-none">
+                  <option selected>First Bank Current (0123456789)</option>
+                  <option>GTBank Corporate (2098765432)</option>
+                  <option>Office Petty Cash</option>
+                </select>
+              </div>
+
+              <div class="md:col-span-3">
+                <label class="block text-xs font-medium text-muted mb-1">Default Invoice Footer Notice</label>
+                <textarea rows="2" class="w-full p-2.5 bg-surface border border-line-strong rounded focus:border-indigo focus:ring-[3px] focus:ring-indigo-line outline-none text-[13px] resize-none">Thank you for your business. Please make bank transfer payments to First Bank of Nigeria Plc (Acct: 0123456789 · Acme Dynamics Ltd).</textarea>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom Action Strip -->
+          <div class="flex items-center justify-end gap-3 pt-2">
+            <button type="button" class="h-control px-4 rounded border border-line-strong text-[13px] font-medium bg-surface text-ink hover:bg-th transition-colors" onclick="window.location.reload();">
+              Reset Form
+            </button>
+            <button type="button" class="inline-flex items-center gap-1.5 h-control px-4 rounded border border-transparent text-[13px] font-medium bg-indigo text-white hover:bg-indigo-hover transition-colors shadow-sm" onclick="window.showToast({ title: 'Settings Saved', message: 'All company preferences updated successfully.', type: 'success' });">
+              <svg class="w-4 h-4 stroke-[2]"><use href="#i-check"/></svg> Save Changes
+            </button>
+          </div>
+
+        </div>
+      </main>
+    </div>
+  </div>
+
+  {{> toast}}
+  {{> scripts}}
+</body>
+</html>

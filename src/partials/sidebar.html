@@ -58,8 +58,8 @@
     </a>
 
     <!-- Product & Services Group -->
-    <div class="nav-group relative group" data-group="products">
-      <button class="flex items-center justify-between w-full px-2.5 h-[34px] rounded-md text-navy-fg hover:bg-navy-hover hover:text-white [&[data-layout=rail]_&]:justify-center [&[data-layout=rail]_&]:px-0" onclick="toggleNavGroup(this)">
+    <div class="nav-group relative group" data-group="products" data-open="{{#if (or (eq active "products") active_products (eq active "product_units") active_product_units)}}true{{else}}false{{/if}}">
+      <button class="flex items-center justify-between w-full px-2.5 h-[34px] rounded-md {{#if (or (eq active "products") active_products (eq active "product_units") active_product_units)}}text-white font-medium bg-navy-hover/40{{else}}text-navy-fg hover:bg-navy-hover hover:text-white{{/if}} [&[data-layout=rail]_&]:justify-center [&[data-layout=rail]_&]:px-0" onclick="toggleNavGroup(this)">
         <div class="flex items-center gap-2.5">
           <svg class="w-4 h-4 stroke-2 shrink-0"><use href="#i-package"/></svg>
           <span class="whitespace-nowrap overflow-hidden [&[data-layout=rail]_&]:hidden">Product & Services</span>
@@ -67,20 +67,20 @@
         <svg class="w-3 h-3 stroke-2 transition-transform duration-150 [&[data-layout=rail]_&]:hidden group-data-[open=true]:rotate-180"><use href="#i-chevron-down"/></svg>
       </button>
       <div class="nav-sub hidden group-data-[open=true]:flex flex-col gap-0.5 pl-6 pr-1 py-1 text-xs text-navy-mute [&[data-layout=rail]_&]:hidden">
-        <a href="/products.html" class="px-2.5 py-1.5 rounded-md hover:text-white hover:bg-navy-hover truncate">Products</a>
-        <a href="/product_units.html" class="px-2.5 py-1.5 rounded-md hover:text-white hover:bg-navy-hover truncate">Product Units</a>
+        <a href="/products.html" class="px-2.5 py-1.5 rounded-md {{#if (or (eq active "products") active_products)}}bg-indigo text-white font-medium{{else}}hover:text-white hover:bg-navy-hover{{/if}} truncate">Products</a>
+        <a href="/product_units.html" class="px-2.5 py-1.5 rounded-md {{#if (or (eq active "product_units") active_product_units)}}bg-indigo text-white font-medium{{else}}hover:text-white hover:bg-navy-hover{{/if}} truncate">Product Units</a>
       </div>
       <!-- Rail flyout -->
       <div class="hidden [&[data-layout=rail]_.group:hover_&]:flex flex-col gap-1 absolute left-[calc(100%+8px)] top-0 bg-ink text-white text-xs p-2 rounded-lg shadow-xl min-w-[150px] z-50">
         <div class="font-semibold px-2 py-1 text-[11px] text-muted border-b border-line uppercase">Product & Services</div>
-        <a href="/products.html" class="px-2 py-1 rounded hover:bg-th hover:text-ink">Products</a>
-        <a href="/product_units.html" class="px-2 py-1 rounded hover:bg-th hover:text-ink">Product Units</a>
+        <a href="/products.html" class="px-2 py-1 rounded {{#if (or (eq active "products") active_products)}}bg-indigo text-white{{else}}hover:bg-th hover:text-ink{{/if}}">Products</a>
+        <a href="/product_units.html" class="px-2 py-1 rounded {{#if (or (eq active "product_units") active_product_units)}}bg-indigo text-white{{else}}hover:bg-th hover:text-ink{{/if}}">Product Units</a>
       </div>
     </div>
 
     <!-- Accounting Group -->
-    <div class="nav-group relative group" data-group="accounting" data-open="{{#if (or (eq active "accounting") active_accounting)}}true{{else}}false{{/if}}">
-      <button class="flex items-center justify-between w-full px-2.5 h-[34px] rounded-md text-navy-fg hover:bg-navy-hover hover:text-white [&[data-layout=rail]_&]:justify-center [&[data-layout=rail]_&]:px-0" onclick="toggleNavGroup(this)">
+    <div class="nav-group relative group" data-group="accounting" data-open="{{#if (or (eq active "accounts") active_accounts (eq active "transactions") active_transactions (eq active "accounting") active_accounting)}}true{{else}}false{{/if}}">
+      <button class="flex items-center justify-between w-full px-2.5 h-[34px] rounded-md {{#if (or (eq active "accounts") active_accounts (eq active "transactions") active_transactions)}}text-white font-medium bg-navy-hover/40{{else}}text-navy-fg hover:bg-navy-hover hover:text-white{{/if}} [&[data-layout=rail]_&]:justify-center [&[data-layout=rail]_&]:px-0" onclick="toggleNavGroup(this)">
         <div class="flex items-center gap-2.5">
           <svg class="w-4 h-4 stroke-2 shrink-0"><use href="#i-landmark"/></svg>
           <span class="whitespace-nowrap overflow-hidden [&[data-layout=rail]_&]:hidden">Accounting</span>
@@ -88,22 +88,22 @@
         <svg class="w-3 h-3 stroke-2 transition-transform duration-150 [&[data-layout=rail]_&]:hidden group-data-[open=true]:rotate-180"><use href="#i-chevron-down"/></svg>
       </button>
       <div class="nav-sub hidden group-data-[open=true]:flex flex-col gap-0.5 pl-6 pr-1 py-1 text-xs text-navy-mute [&[data-layout=rail]_&]:hidden">
-        <a href="/accounts.html" class="px-2.5 py-1.5 rounded-md hover:text-white hover:bg-navy-hover truncate">Bank & Cash Accounts</a>
-        <a href="/transactions.html" class="px-2.5 py-1.5 rounded-md hover:text-white hover:bg-navy-hover truncate">Transactions</a>
+        <a href="/accounts.html" class="px-2.5 py-1.5 rounded-md {{#if (or (eq active "accounts") active_accounts)}}bg-indigo text-white font-medium{{else}}hover:text-white hover:bg-navy-hover{{/if}} truncate">Bank & Cash Accounts</a>
+        <a href="/transactions.html" class="px-2.5 py-1.5 rounded-md {{#if (or (eq active "transactions") active_transactions)}}bg-indigo text-white font-medium{{else}}hover:text-white hover:bg-navy-hover{{/if}} truncate">Transactions</a>
         <a href="/transaction_categories.html" class="px-2.5 py-1.5 rounded-md hover:text-white hover:bg-navy-hover truncate">Transaction Categories</a>
         <a href="/transaction_methods.html" class="px-2.5 py-1.5 rounded-md hover:text-white hover:bg-navy-hover truncate">Transaction Methods</a>
       </div>
       <!-- Rail flyout -->
       <div class="hidden [&[data-layout=rail]_.group:hover_&]:flex flex-col gap-1 absolute left-[calc(100%+8px)] top-0 bg-ink text-white text-xs p-2 rounded-lg shadow-xl min-w-[160px] z-50">
         <div class="font-semibold px-2 py-1 text-[11px] text-muted border-b border-line uppercase">Accounting</div>
-        <a href="/accounts.html" class="px-2 py-1 rounded hover:bg-th hover:text-ink">Bank & Cash Accounts</a>
-        <a href="/transactions.html" class="px-2 py-1 rounded hover:bg-th hover:text-ink">Transactions</a>
+        <a href="/accounts.html" class="px-2 py-1 rounded {{#if (or (eq active "accounts") active_accounts)}}bg-indigo text-white{{else}}hover:bg-th hover:text-ink{{/if}}">Bank & Cash Accounts</a>
+        <a href="/transactions.html" class="px-2 py-1 rounded {{#if (or (eq active "transactions") active_transactions)}}bg-indigo text-white{{else}}hover:bg-th hover:text-ink{{/if}}">Transactions</a>
       </div>
     </div>
 
     <!-- HR & Payroll Group -->
-    <div class="nav-group relative group" data-group="hr" data-open="{{#if (or (eq active "employees") active_employees (eq active "attendance") active_attendance (eq active "payroll") active_payroll)}}true{{else}}false{{/if}}">
-      <button class="flex items-center justify-between w-full px-2.5 h-[34px] rounded-md {{#if (or (eq active "employees") active_employees (eq active "attendance") active_attendance (eq active "payroll") active_payroll)}}text-white font-medium bg-navy-hover/40{{else}}text-navy-fg hover:bg-navy-hover hover:text-white{{/if}} [&[data-layout=rail]_&]:justify-center [&[data-layout=rail]_&]:px-0" onclick="toggleNavGroup(this)">
+    <div class="nav-group relative group" data-group="hr" data-open="{{#if (or (eq active "employees") active_employees (eq active "attendance") active_attendance (eq active "payroll") active_payroll (eq active "departments") active_departments (eq active "salary_scales") active_salary_scales)}}true{{else}}false{{/if}}">
+      <button class="flex items-center justify-between w-full px-2.5 h-[34px] rounded-md {{#if (or (eq active "employees") active_employees (eq active "attendance") active_attendance (eq active "payroll") active_payroll (eq active "departments") active_departments (eq active "salary_scales") active_salary_scales)}}text-white font-medium bg-navy-hover/40{{else}}text-navy-fg hover:bg-navy-hover hover:text-white{{/if}} [&[data-layout=rail]_&]:justify-center [&[data-layout=rail]_&]:px-0" onclick="toggleNavGroup(this)">
         <div class="flex items-center gap-2.5">
           <svg class="w-4 h-4 stroke-2 shrink-0"><use href="#i-contact"/></svg>
           <span class="whitespace-nowrap overflow-hidden [&[data-layout=rail]_&]:hidden">HR & Payroll</span>
@@ -114,15 +114,17 @@
         <a href="/employees.html" class="px-2.5 py-1.5 rounded-md {{#if (or (eq active "employees") active_employees)}}bg-indigo text-white font-medium{{else}}hover:text-white hover:bg-navy-hover{{/if}} truncate">Staff Management</a>
         <a href="/attendance.html" class="px-2.5 py-1.5 rounded-md {{#if (or (eq active "attendance") active_attendance)}}bg-indigo text-white font-medium{{else}}hover:text-white hover:bg-navy-hover{{/if}} truncate">Attendance</a>
         <a href="/payroll.html" class="px-2.5 py-1.5 rounded-md {{#if (or (eq active "payroll") active_payroll)}}bg-indigo text-white font-medium{{else}}hover:text-white hover:bg-navy-hover{{/if}} truncate">Manage Payslips</a>
-        <a href="/departments.html" class="px-2.5 py-1.5 rounded-md hover:text-white hover:bg-navy-hover truncate">Departments</a>
-        <a href="/salary_scales.html" class="px-2.5 py-1.5 rounded-md hover:text-white hover:bg-navy-hover truncate">Salary Pay Scale</a>
+        <a href="/departments.html" class="px-2.5 py-1.5 rounded-md {{#if (or (eq active "departments") active_departments)}}bg-indigo text-white font-medium{{else}}hover:text-white hover:bg-navy-hover{{/if}} truncate">Departments</a>
+        <a href="/salary_scales.html" class="px-2.5 py-1.5 rounded-md {{#if (or (eq active "salary_scales") active_salary_scales)}}bg-indigo text-white font-medium{{else}}hover:text-white hover:bg-navy-hover{{/if}} truncate">Salary Pay Scale</a>
       </div>
       <!-- Rail flyout -->
       <div class="hidden [&[data-layout=rail]_.group:hover_&]:flex flex-col gap-1 absolute left-[calc(100%+8px)] top-0 bg-ink text-white text-xs p-2 rounded-lg shadow-xl min-w-[160px] z-50">
         <div class="font-semibold px-2 py-1 text-[11px] text-muted border-b border-line uppercase">HR & Payroll</div>
-        <a href="/employees.html" class="px-2 py-1 rounded hover:bg-th hover:text-ink">Staff Management</a>
-        <a href="/attendance.html" class="px-2 py-1 rounded hover:bg-th hover:text-ink">Attendance</a>
-        <a href="/payroll.html" class="px-2 py-1 rounded hover:bg-th hover:text-ink">Manage Payslips</a>
+        <a href="/employees.html" class="px-2 py-1 rounded {{#if (or (eq active "employees") active_employees)}}bg-indigo text-white{{else}}hover:bg-th hover:text-ink{{/if}}">Staff Management</a>
+        <a href="/attendance.html" class="px-2 py-1 rounded {{#if (or (eq active "attendance") active_attendance)}}bg-indigo text-white{{else}}hover:bg-th hover:text-ink{{/if}}">Attendance</a>
+        <a href="/payroll.html" class="px-2 py-1 rounded {{#if (or (eq active "payroll") active_payroll)}}bg-indigo text-white{{else}}hover:bg-th hover:text-ink{{/if}}">Manage Payslips</a>
+        <a href="/departments.html" class="px-2 py-1 rounded {{#if (or (eq active "departments") active_departments)}}bg-indigo text-white{{else}}hover:bg-th hover:text-ink{{/if}}">Departments</a>
+        <a href="/salary_scales.html" class="px-2 py-1 rounded {{#if (or (eq active "salary_scales") active_salary_scales)}}bg-indigo text-white{{else}}hover:bg-th hover:text-ink{{/if}}">Salary Pay Scale</a>
       </div>
     </div>
 

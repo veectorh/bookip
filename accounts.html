@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en">
+<head>
+  {{> head}}
+</head>
+<body class="bg-canvas text-ink font-sans text-[14px] leading-[1.5]">
+  
+  {{> icons}}
+
+  <div id="app" class="flex h-screen overflow-hidden" data-layout="rail">
+    {{> sidebar active_accounts=true active="accounts"}}
+
+    <div class="flex-1 flex flex-col min-w-0">
+      {{> topbar title="Bank & Cash Accounts" active_accounting=true}}
+
+      <main class="flex-1 overflow-y-auto overflow-x-hidden relative bg-canvas">
+
+          <div class="p-4 md:p-6 overflow-auto flex-1">
+            <div class="text-xs text-muted mb-2 flex items-center gap-1.5 font-medium">
+              Accounting <svg class="w-4 h-4 stroke-[1.75]" aria-hidden="true"><use href="#i-chevron-right"/></svg> Bank & Cash Accounts
+            </div>
+            
+            <div class="flex items-center justify-between gap-3 mb-3.5">
+              <div class="flex items-center gap-2.5">
+                <h1 class="m-0 text-xl font-semibold tracking-tight text-ink">Bank & Cash Accounts</h1>
+                <span class="text-xs text-muted font-medium bg-surface px-2 py-0.5 rounded border border-line">{{seed.accounts.length}} accounts</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <a href="/transactions.html" class="inline-flex items-center gap-1.5 h-control px-2.5 md:px-3 rounded border border-line-strong text-[13px] font-medium bg-surface hover:bg-th transition-colors shadow-sm text-ink">
+                  <svg class="w-4 h-4 stroke-[1.75] text-muted"><use href="#i-file-text"/></svg> <span class="hidden md:inline">Cash Ledger</span>
+                </a>
+                <button class="inline-flex items-center gap-1.5 h-control px-2.5 md:px-3 rounded border border-transparent text-[13px] font-medium bg-indigo text-white hover:bg-indigo-hover transition-colors shadow-sm" data-drawer-target="accountDrawer">
+                  <svg class="w-4 h-4 stroke-[2]" aria-hidden="true"><use href="#i-plus"/></svg> <span>Add account</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Stats Strip (Plain English) -->
+            {{> stats-strip 
+              label1="Total Cash Available" value1="₦ 3,465,500.00" success1=true subtext1="Across all banks & safe"
+              label2="Active Accounts" value2="3"
+              label3="First Bank (Main)" value3="₦ 2,800,000.00" subtext3="Primary settlement bank"
+              label4="Office Cash Box" value4="₦ 45,000.00" subtext4="Physical cash on hand"
+            }}
+
+            <!-- Bank Cards Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-5">
+              {{#each seed.accounts}}
+              <div class="bg-surface border border-line rounded-xl p-4 shadow-sm flex flex-col justify-between space-y-3 relative overflow-hidden">
+                <div class="flex items-start justify-between">
+                  <div class="flex items-center gap-2.5">
+                    <div class="w-9 h-9 rounded-lg {{#if (eq this.id "ACC-003")}}bg-[#FFF8E6] text-[#8A5A00]{{else}}bg-indigo/10 text-indigo{{/if}} flex items-center justify-center font-bold text-sm shrink-0">
+                      {{#if (eq this.id "ACC-003")}}
+                        <svg class="w-5 h-5 stroke-[2]"><use href="#i-wallet"/></svg>
+                      {{else}}
+                        <svg class="w-5 h-5 stroke-[2]"><use href="#i-landmark"/></svg>
+                      {{/if}}
+                    </div>
+                    <div>
+                      <h3 class="m-0 text-[14px] font-bold text-ink">{{this.name}}</h3>
+                      <div class="text-xs text-muted">{{this.bank}}</div>
+                    </div>
+                  </div>
+                  {{#if this.is_default}}
+                    <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-bold bg-[#E9F7EF] text-[#146A3E] border border-[#C8EAD6]">Default</span>
+                  {{/if}}
+                </div>
+
+                <div class="pt-2 border-t border-line/60">
+                  <div class="text-xs text-muted mb-0.5">Available Balance</div>
+                  <div class="text-xl font-bold text-ink" style="font-variant-numeric: tabular-nums;">{{this.balance}}</div>
+                  <div class="text-xs font-mono text-muted mt-1">Acct: {{this.number}}</div>
+                </div>
+
+                <div class="flex items-center justify-between pt-2 border-t border-line/60">
+                  <span class="text-xs font-medium text-muted">{{this.type}}</span>
+                  <div class="flex items-center gap-1.5">
+                    <a href="/transactions.html" class="inline-flex items-center gap-1 text-xs text-indigo font-semibold hover:underline">
+                      Ledger →
+                    </a>
+                  </div>
+                </div>
+              </div>
+              {{/each}}
+            </div>
+
+            <!-- Table of Accounts -->
+            <div class="bg-surface border border-line rounded-xl shadow-sm overflow-hidden">
+              <div class="px-5 py-3.5 border-b border-line flex items-center justify-between">
+                <div>
+                  <h3 class="m-0 text-[15px] font-semibold tracking-tight text-ink">Account Ledger Register</h3>
+                  <div class="text-xs text-muted">Bank accounts and cash safe reconciliation details</div>
+                </div>
+              </div>
+
+              <div class="overflow-x-auto">
+                <table class="w-full border-collapse text-[13px] min-w-[700px]">
+                  <thead>
+                    <tr class="bg-th text-muted font-medium text-xs">
+                      <th class="px-4 py-2.5 text-left border-b border-line font-medium">Account Name</th>
+                      <th class="px-4 py-2.5 text-left border-b border-line font-medium">Bank / Institution</th>
+                      <th class="px-4 py-2.5 text-left border-b border-line font-medium">NUBAN / Number</th>
+                      <th class="px-4 py-2.5 text-left border-b border-line font-medium">Type</th>
+                      <th class="px-4 py-2.5 text-right border-b border-line font-medium">Current Balance (₦)</th>
+                      <th class="px-4 py-2.5 text-left border-b border-line font-medium">Status</th>
+                      <th class="px-4 py-2.5 border-b border-line w-9"></th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-line">
+                    {{#each seed.accounts}}
+                    <tr class="hover:bg-[#FAFBFD] transition-colors">
+                      <td class="px-4 py-3 whitespace-nowrap font-medium text-ink">
+                        {{this.name}}
+                        {{#if this.is_default}}
+                          <span class="ml-1.5 text-[10px] text-muted font-normal">(Primary)</span>
+                        {{/if}}
+                      </td>
+                      <td class="px-4 py-3 whitespace-nowrap text-muted">{{this.bank}}</td>
+                      <td class="px-4 py-3 whitespace-nowrap font-mono text-ink">{{this.number}}</td>
+                      <td class="px-4 py-3 whitespace-nowrap text-muted">{{this.type}}</td>
+                      <td class="px-4 py-3 whitespace-nowrap text-right font-bold text-ink" style="font-variant-numeric: tabular-nums;">
+                        {{this.balance}}
+                      </td>
+                      <td class="px-4 py-3 whitespace-nowrap">
+                        <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold bg-[#E9F7EF] text-[#146A3E] border border-[#C8EAD6]">
+                          Active
+                        </span>
+                      </td>
+                      <td class="px-4 py-3 whitespace-nowrap">
+                        <button class="w-[26px] h-[26px] rounded flex items-center justify-center text-muted hover:bg-th hover:border-line-strong hover:text-ink border border-transparent" data-menu="{{this.name}}" data-menu-type="account">
+                          <svg class="w-4 h-4 stroke-[1.75]"><use href="#i-more-horizontal"/></svg>
+                        </button>
+                      </td>
+                    </tr>
+                    {{/each}}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+          </div>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- Slide-Over Drawer: Add Bank Account -->
+  {{#> slide-over id="accountDrawer" title="Bank & Cash Account Details" save_label="Save account"}}
+    <div>
+      <div class="text-xs font-semibold text-muted uppercase tracking-wider mb-2.5">Account Setup</div>
+      <div class="space-y-3">
+        <div>
+          <label class="block text-xs font-medium text-muted mb-1">Account Display Name <span class="text-[#B4372A]">*</span></label>
+          <input type="text" placeholder="e.g. First Bank Current, Main Safe" class="w-full h-control px-2.5 bg-surface border border-line-strong rounded focus:border-indigo focus:ring-[3px] focus:ring-indigo-line outline-none text-[13px]">
+        </div>
+        <div>
+          <label class="block text-xs font-medium text-muted mb-1">Bank Name / Location <span class="text-[#B4372A]">*</span></label>
+          <input type="text" placeholder="e.g. Zenith Bank Plc, Office Cashier" class="w-full h-control px-2.5 bg-surface border border-line-strong rounded focus:border-indigo focus:ring-[3px] focus:ring-indigo-line outline-none text-[13px]">
+        </div>
+        <div class="grid grid-cols-2 gap-2.5">
+          <div>
+            <label class="block text-xs font-medium text-muted mb-1">Account Number (NUBAN)</label>
+            <input type="text" placeholder="10-digit account #" class="w-full h-control px-2.5 bg-surface border border-line-strong rounded focus:border-indigo focus:ring-[3px] focus:ring-indigo-line outline-none text-[13px]">
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-muted mb-1">Account Type</label>
+            <select class="w-full h-control px-2.5 bg-surface border border-line-strong rounded text-[13px] text-ink focus:border-indigo outline-none">
+              <option>Bank Current Account</option>
+              <option>Bank Savings Account</option>
+              <option>Cash on Hand / Safe</option>
+              <option>Mobile Money / POS Wallet</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="border-t border-line pt-3">
+      <div class="text-xs font-semibold text-muted uppercase tracking-wider mb-2.5">Opening Balance & Settings</div>
+      <div class="space-y-3">
+        <div>
+          <label class="block text-xs font-medium text-muted mb-1">Opening Balance (₦)</label>
+          <input type="number" placeholder="0.00" class="w-full h-control px-2.5 bg-surface border border-line-strong rounded focus:border-indigo focus:ring-[3px] focus:ring-indigo-line outline-none text-[13px]">
+          <p class="text-[11px] text-muted mt-1">Starting balance when commencing bookkeeping in Bookkip.</p>
+        </div>
+        <div class="flex items-center gap-2 pt-1">
+          <input type="checkbox" id="defaultAcc" class="rounded border-line-strong text-indigo focus:ring-indigo w-4 h-4">
+          <label for="defaultAcc" class="text-xs font-medium text-ink cursor-pointer">Set as primary default account for customer payments</label>
+        </div>
+      </div>
+    </div>
+  {{/slide-over}}
+
+  {{> toast}}
+  {{> scripts}}
+</body>
+</html>
