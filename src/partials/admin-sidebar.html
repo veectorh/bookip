@@ -33,14 +33,14 @@
     </a>
 
     <!-- Subscription Payments -->
-    <a href="#subscription-payments" onclick="document.getElementById('subscription-payments')?.scrollIntoView({behavior:'smooth'});" class="flex items-center gap-2.5 px-2.5 h-[34px] rounded-md text-navy-fg hover:bg-navy-hover hover:text-white w-full relative group [&[data-layout=rail]_&]:justify-center [&[data-layout=rail]_&]:px-0" data-label="Subscription Payments">
+    <a href="/admin_payments.html" class="flex items-center gap-2.5 px-2.5 h-[34px] rounded-md {{#if (or (eq active "admin_payments") active_admin_payments)}}bg-indigo text-white font-medium{{else}}text-navy-fg hover:bg-navy-hover hover:text-white{{/if}} w-full relative group [&[data-layout=rail]_&]:justify-center [&[data-layout=rail]_&]:px-0" data-label="Subscription Payments">
       <svg class="w-4 h-4 stroke-2 shrink-0"><use href="#i-credit-card"/></svg>
       <span class="whitespace-nowrap overflow-hidden [&[data-layout=rail]_&]:hidden">Subscriptions & Revenue</span>
       <div class="hidden [&[data-layout=rail]_.group:hover_&]:block absolute left-[calc(100%+8px)] bg-ink text-white text-xs px-2.5 py-1.5 rounded shadow-lg whitespace-nowrap z-50">Subscriptions & Revenue</div>
     </a>
 
     <!-- Invoice Templates -->
-    <a href="/settings.html#preferences" class="flex items-center gap-2.5 px-2.5 h-[34px] rounded-md text-navy-fg hover:bg-navy-hover hover:text-white w-full relative group [&[data-layout=rail]_&]:justify-center [&[data-layout=rail]_&]:px-0" data-label="Invoice Templates">
+    <a href="/admin_invoice_templates.html" class="flex items-center gap-2.5 px-2.5 h-[34px] rounded-md {{#if (or (eq active "admin_invoice_templates") active_admin_invoice_templates)}}bg-indigo text-white font-medium{{else}}text-navy-fg hover:bg-navy-hover hover:text-white{{/if}} w-full relative group [&[data-layout=rail]_&]:justify-center [&[data-layout=rail]_&]:px-0" data-label="Invoice Templates">
       <svg class="w-4 h-4 stroke-2 shrink-0"><use href="#i-file-text"/></svg>
       <span class="whitespace-nowrap overflow-hidden [&[data-layout=rail]_&]:hidden">Invoice Templates</span>
       <div class="hidden [&[data-layout=rail]_.group:hover_&]:block absolute left-[calc(100%+8px)] bg-ink text-white text-xs px-2.5 py-1.5 rounded shadow-lg whitespace-nowrap z-50">Invoice Templates</div>

@@ -41,6 +41,8 @@ export default defineConfig({
         admin_dashboard: resolve(__dirname, 'admin_dashboard.html'),
         admin_packages: resolve(__dirname, 'admin_packages.html'),
         admin_users: resolve(__dirname, 'admin_users.html'),
+        admin_payments: resolve(__dirname, 'admin_payments.html'),
+        admin_invoice_templates: resolve(__dirname, 'admin_invoice_templates.html'),
       },
     },
   },
