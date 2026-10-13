@@ -523,5 +523,174 @@
       "net_vat_due": "₦ 820.31",
       "filing_deadline": "21 Nov 2026"
     }
+  },
+  "admin": {
+    "stats": {
+      "total_users": 148,
+      "total_owners": 94,
+      "trial_users": 18,
+      "expired_users": 36,
+      "mrr": "₦ 5,420,000.00",
+      "arr": "₦ 65,040,000.00",
+      "growth_rate": "+14.2%"
+    },
+    "packages": [
+      { "name": "Basic", "price": "₦ 15,000/mo", "subscribers": 52, "percentage": 35, "color": "#4F46E5" },
+      { "name": "Standard", "price": "₦ 35,000/mo", "subscribers": 62, "percentage": 42, "color": "#06B6D4" },
+      { "name": "Premium", "price": "₦ 75,000/mo", "subscribers": 22, "percentage": 15, "color": "#10B981" },
+      { "name": "Once and For All", "price": "₦ 5,000,000", "subscribers": 12, "percentage": 8, "color": "#F59E0B" }
+    ],
+    "monthly_revenue": [
+      { "month": "Jan", "amount": 2850000, "formatted": "₦ 2,850,000.00", "height_pct": 52 },
+      { "month": "Feb", "amount": 3100000, "formatted": "₦ 3,100,000.00", "height_pct": 57 },
+      { "month": "Mar", "amount": 3450000, "formatted": "₦ 3,450,000.00", "height_pct": 63 },
+      { "month": "Apr", "amount": 3800000, "formatted": "₦ 3,800,000.00", "height_pct": 70 },
+      { "month": "May", "amount": 4150000, "formatted": "₦ 4,150,000.00", "height_pct": 76 },
+      { "month": "Jun", "amount": 3950000, "formatted": "₦ 3,950,000.00", "height_pct": 72 },
+      { "month": "Jul", "amount": 4400000, "formatted": "₦ 4,400,000.00", "height_pct": 81 },
+      { "month": "Aug", "amount": 4750000, "formatted": "₦ 4,750,000.00", "height_pct": 87 },
+      { "month": "Sep", "amount": 5100000, "formatted": "₦ 5,100,000.00", "height_pct": 94 },
+      { "month": "Oct", "amount": 5420000, "formatted": "₦ 5,420,000.00", "height_pct": 100 }
+    ],
+    "registered_users": [
+      {
+        "id": "USR-001",
+        "name": "Acme Dynamics Ltd",
+        "owner": "Amina Bello",
+        "email": "finance@acmedynamics.ng",
+        "phone": "+234 802 555 0199",
+        "package": "Premium",
+        "membership": "Owner",
+        "status": "Active",
+        "joined_date": "14 Jan 2026",
+        "expiry_date": "14 Jan 2027",
+        "is_demo_tenant": true
+      },
+      {
+        "id": "USR-002",
+        "name": "Ebor Kingsley Enterprises",
+        "owner": "Ebor Kingsley",
+        "email": "kingsley@eborgroup.ng",
+        "phone": "+234 803 777 9922",
+        "package": "Basic",
+        "membership": "Owner",
+        "status": "Active",
+        "joined_date": "08 Sep 2026",
+        "expiry_date": "08 Oct 2026",
+        "is_demo_tenant": false
+      },
+      {
+        "id": "USR-003",
+        "name": "David Faith Creative Studio",
+        "owner": "David Faith",
+        "email": "faith@davidstudio.ng",
+        "phone": "+234 809 112 3344",
+        "package": "Standard",
+        "membership": "Owner",
+        "status": "Trial",
+        "joined_date": "02 Oct 2026",
+        "expiry_date": "16 Oct 2026",
+        "is_demo_tenant": false
+      },
+      {
+        "id": "USR-004",
+        "name": "Prime Technology Solutions Ltd",
+        "owner": "Emeka Okonkwo",
+        "email": "sales@primetech.ng",
+        "phone": "+234 805 111 2233",
+        "package": "Once and For All",
+        "membership": "Owner",
+        "status": "Active",
+        "joined_date": "12 Mar 2026",
+        "expiry_date": "Lifetime",
+        "is_demo_tenant": false
+      },
+      {
+        "id": "USR-005",
+        "name": "Bella Fashion & Apparel Hub",
+        "owner": "Isabella Adeleke",
+        "email": "orders@bellafashion.ng",
+        "phone": "+234 701 445 6677",
+        "package": "Basic",
+        "membership": "Owner",
+        "status": "Expired",
+        "joined_date": "15 Jul 2026",
+        "expiry_date": "15 Sep 2026",
+        "is_demo_tenant": false
+      },
+      {
+        "id": "USR-006",
+        "name": "Swift Logistics & Courier Services",
+        "owner": "Babajide Martins",
+        "email": "dispatch@swiftlogistics.ng",
+        "phone": "+234 812 345 6789",
+        "package": "Standard",
+        "membership": "Owner",
+        "status": "Trial",
+        "joined_date": "05 Oct 2026",
+        "expiry_date": "19 Oct 2026",
+        "is_demo_tenant": false
+      }
+    ],
+    "subscription_payments": [
+      {
+        "order_id": "SUB-8092",
+        "user": "Acme Dynamics Ltd",
+        "payer": "Amina Bello",
+        "method": "Paystack",
+        "package": "Premium",
+        "amount": "₦ 75,000.00",
+        "date": "01 Oct 2026",
+        "status": "Completed"
+      },
+      {
+        "order_id": "SUB-8091",
+        "user": "Prime Technology Solutions",
+        "payer": "Emeka Okonkwo",
+        "method": "Cash",
+        "package": "Once and For All",
+        "amount": "₦ 5,000,000.00",
+        "date": "28 Sep 2026",
+        "status": "Completed"
+      },
+      {
+        "order_id": "SUB-8090",
+        "user": "Ebor Kingsley Enterprises",
+        "payer": "Ebor Kingsley",
+        "method": "Flutterwave",
+        "package": "Basic",
+        "amount": "₦ 15,000.00",
+        "date": "24 Sep 2026",
+        "status": "Completed"
+      },
+      {
+        "order_id": "SUB-8089",
+        "user": "Swift Logistics",
+        "payer": "Babajide Martins",
+        "method": "Bank Transfer",
+        "package": "Standard",
+        "amount": "₦ 35,000.00",
+        "date": "19 Sep 2026",
+        "status": "Completed"
+      },
+      {
+        "order_id": "SUB-8088",
+        "user": "Bella Fashion Hub",
+        "payer": "Isabella Adeleke",
+        "method": "Paystack",
+        "package": "Basic",
+        "amount": "₦ 15,000.00",
+        "date": "15 Jul 2026",
+        "status": "Pending"
+      }
+    ],
+    "system_health": {
+      "status": "Operational",
+      "uptime": "99.98%",
+      "last_backup": "Today, 04:00 AM",
+      "database_size": "24.6 MB",
+      "active_sessions": 38,
+      "server_response_time": "48ms"
+    }
   }
 }

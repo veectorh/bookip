@@ -1,0 +1,89 @@
+<aside class="bg-navy text-navy-fg flex flex-col px-2.5 py-3 gap-0.5 overflow-y-auto overflow-x-hidden [scrollbar-width:none] [&::-webkit-scrollbar]:hidden hidden md:flex shrink-0 w-60 [&[data-layout=rail]_&]:w-[58px] transition-all duration-200" id="sidebar">
+  <!-- Brand -->
+  <div class="flex items-center gap-2.5 px-2 py-1 pb-3 text-white border-b border-navy-hover/50 mb-1">
+    <span class="w-[28px] h-[28px] rounded-[6px] bg-indigo text-white flex items-center justify-center font-bold text-sm shrink-0 shadow-sm">
+      <svg class="w-4 h-4 stroke-2"><use href="#i-shield-check"/></svg>
+    </span>
+    <div class="whitespace-nowrap overflow-hidden [&[data-layout=rail]_&]:hidden">
+      <div class="font-bold tracking-tight text-[14px] text-white leading-none">Bookkip Admin</div>
+      <div class="text-[10px] text-navy-mute tracking-wide uppercase font-semibold mt-0.5">Platform Console</div>
+    </div>
+  </div>
+
+  <nav class="flex-1 flex flex-col gap-0.5 text-[13px] w-full mt-1">
+    <!-- Admin Dashboard -->
+    <a href="/admin_dashboard.html" class="flex items-center gap-2.5 px-2.5 h-[34px] rounded-md {{#if (or (eq active "admin_dashboard") active_admin_dashboard)}}bg-indigo text-white font-medium{{else}}text-navy-fg hover:bg-navy-hover hover:text-white{{/if}} w-full relative group [&[data-layout=rail]_&]:justify-center [&[data-layout=rail]_&]:px-0" data-label="Dashboard">
+      <svg class="w-4 h-4 stroke-2 shrink-0"><use href="#i-layout-dashboard"/></svg>
+      <span class="whitespace-nowrap overflow-hidden [&[data-layout=rail]_&]:hidden">Platform Dashboard</span>
+      <div class="hidden [&[data-layout=rail]_.group:hover_&]:block absolute left-[calc(100%+8px)] bg-ink text-white text-xs px-2.5 py-1.5 rounded shadow-lg whitespace-nowrap z-50">Platform Dashboard</div>
+    </a>
+
+    <!-- Registered Tenants / Users -->
+    <a href="#registered-tenants" onclick="document.getElementById('registered-tenants')?.scrollIntoView({behavior:'smooth'});" class="flex items-center gap-2.5 px-2.5 h-[34px] rounded-md text-navy-fg hover:bg-navy-hover hover:text-white w-full relative group [&[data-layout=rail]_&]:justify-center [&[data-layout=rail]_&]:px-0" data-label="Tenants & Users">
+      <svg class="w-4 h-4 stroke-2 shrink-0"><use href="#i-users"/></svg>
+      <span class="whitespace-nowrap overflow-hidden [&[data-layout=rail]_&]:hidden">Tenants & Users</span>
+      <div class="hidden [&[data-layout=rail]_.group:hover_&]:block absolute left-[calc(100%+8px)] bg-ink text-white text-xs px-2.5 py-1.5 rounded shadow-lg whitespace-nowrap z-50">Tenants & Users</div>
+    </a>
+
+    <!-- Packages & Pricing -->
+    <a href="#package-breakdown" onclick="document.getElementById('package-breakdown')?.scrollIntoView({behavior:'smooth'});" class="flex items-center gap-2.5 px-2.5 h-[34px] rounded-md text-navy-fg hover:bg-navy-hover hover:text-white w-full relative group [&[data-layout=rail]_&]:justify-center [&[data-layout=rail]_&]:px-0" data-label="Packages & Pricing">
+      <svg class="w-4 h-4 stroke-2 shrink-0"><use href="#i-gift"/></svg>
+      <span class="whitespace-nowrap overflow-hidden [&[data-layout=rail]_&]:hidden">Packages & Plans</span>
+      <div class="hidden [&[data-layout=rail]_.group:hover_&]:block absolute left-[calc(100%+8px)] bg-ink text-white text-xs px-2.5 py-1.5 rounded shadow-lg whitespace-nowrap z-50">Packages & Plans</div>
+    </a>
+
+    <!-- Subscription Payments -->
+    <a href="#subscription-payments" onclick="document.getElementById('subscription-payments')?.scrollIntoView({behavior:'smooth'});" class="flex items-center gap-2.5 px-2.5 h-[34px] rounded-md text-navy-fg hover:bg-navy-hover hover:text-white w-full relative group [&[data-layout=rail]_&]:justify-center [&[data-layout=rail]_&]:px-0" data-label="Subscription Payments">
+      <svg class="w-4 h-4 stroke-2 shrink-0"><use href="#i-credit-card"/></svg>
+      <span class="whitespace-nowrap overflow-hidden [&[data-layout=rail]_&]:hidden">Subscriptions & Revenue</span>
+      <div class="hidden [&[data-layout=rail]_.group:hover_&]:block absolute left-[calc(100%+8px)] bg-ink text-white text-xs px-2.5 py-1.5 rounded shadow-lg whitespace-nowrap z-50">Subscriptions & Revenue</div>
+    </a>
+
+    <!-- Invoice Templates -->
+    <a href="/settings.html#preferences" class="flex items-center gap-2.5 px-2.5 h-[34px] rounded-md text-navy-fg hover:bg-navy-hover hover:text-white w-full relative group [&[data-layout=rail]_&]:justify-center [&[data-layout=rail]_&]:px-0" data-label="Invoice Templates">
+      <svg class="w-4 h-4 stroke-2 shrink-0"><use href="#i-file-text"/></svg>
+      <span class="whitespace-nowrap overflow-hidden [&[data-layout=rail]_&]:hidden">Invoice Templates</span>
+      <div class="hidden [&[data-layout=rail]_.group:hover_&]:block absolute left-[calc(100%+8px)] bg-ink text-white text-xs px-2.5 py-1.5 rounded shadow-lg whitespace-nowrap z-50">Invoice Templates</div>
+    </a>
+
+    <!-- System Health & Backups -->
+    <a href="#system-health" onclick="document.getElementById('system-health')?.scrollIntoView({behavior:'smooth'});" class="flex items-center gap-2.5 px-2.5 h-[34px] rounded-md text-navy-fg hover:bg-navy-hover hover:text-white w-full relative group [&[data-layout=rail]_&]:justify-center [&[data-layout=rail]_&]:px-0" data-label="System Health">
+      <svg class="w-4 h-4 stroke-2 shrink-0"><use href="#i-server"/></svg>
+      <span class="whitespace-nowrap overflow-hidden [&[data-layout=rail]_&]:hidden">System & Backups</span>
+      <div class="hidden [&[data-layout=rail]_.group:hover_&]:block absolute left-[calc(100%+8px)] bg-ink text-white text-xs px-2.5 py-1.5 rounded shadow-lg whitespace-nowrap z-50">System & Backups</div>
+    </a>
+
+    <!-- Global Settings -->
+    <a href="/settings.html" class="flex items-center gap-2.5 px-2.5 h-[34px] rounded-md text-navy-fg hover:bg-navy-hover hover:text-white w-full relative group [&[data-layout=rail]_&]:justify-center [&[data-layout=rail]_&]:px-0" data-label="Settings">
+      <svg class="w-4 h-4 stroke-2 shrink-0"><use href="#i-settings"/></svg>
+      <span class="whitespace-nowrap overflow-hidden [&[data-layout=rail]_&]:hidden">System Settings</span>
+      <div class="hidden [&[data-layout=rail]_.group:hover_&]:block absolute left-[calc(100%+8px)] bg-ink text-white text-xs px-2.5 py-1.5 rounded shadow-lg whitespace-nowrap z-50">System Settings</div>
+    </a>
+  </nav>
+
+  <!-- Bottom Workspace Switcher: Switch to Acme Dynamics Demo -->
+  <div class="mt-auto pt-3 border-t border-navy-hover/60 flex flex-col gap-1 w-full">
+    <div class="px-2 text-[10px] uppercase tracking-wider font-semibold text-navy-mute [&[data-layout=rail]_&]:hidden">
+      Tenant Sandbox
+    </div>
+    <a href="/dashboard.html" class="flex items-center gap-2.5 px-2 py-2 rounded-md bg-white/10 hover:bg-white/15 text-white transition-colors w-full relative group [&[data-layout=rail]_&]:justify-center [&[data-layout=rail]_&]:px-0" title="Switch to Acme Dynamics Ltd Demo">
+      <div class="w-7 h-7 rounded bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center justify-center shrink-0">
+        <svg class="w-4 h-4 stroke-2"><use href="#i-building-2"/></svg>
+      </div>
+      <div class="truncate text-left [&[data-layout=rail]_&]:hidden flex-1 min-w-0">
+        <div class="text-xs font-semibold text-white truncate leading-tight">Acme Dynamics</div>
+        <div class="text-[10px] text-emerald-300 font-medium">Launch Tenant Workspace →</div>
+      </div>
+      <div class="hidden [&[data-layout=rail]_.group:hover_&]:block absolute left-[calc(100%+8px)] bg-ink text-white text-xs px-2.5 py-1.5 rounded shadow-lg whitespace-nowrap z-50">
+        Launch Acme Dynamics (Tenant Workspace)
+      </div>
+    </a>
+
+    <!-- Rail Toggle Button -->
+    <div class="pt-2 flex justify-end [&[data-layout=rail]_&]:justify-center">
+      <button class="p-1 rounded text-navy-mute hover:text-white hover:bg-navy-hover transition-colors" id="railToggleBtn" aria-label="Toggle rail menu" onclick="window.toggleRail && window.toggleRail();">
+        <svg class="w-4 h-4 stroke-2"><use href="#i-panel-left-close"/></svg>
+      </button>
+    </div>
+  </div>
+</aside>

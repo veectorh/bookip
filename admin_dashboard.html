@@ -1,0 +1,903 @@
+<!doctype html>
+<html lang="en">
+<head>
+  {{> head}}
+</head>
+<body class="bg-canvas text-ink font-sans text-[14px] leading-[1.5]">
+  
+  {{> icons}}
+
+  <div id="app" class="flex h-screen overflow-hidden" data-layout="rail">
+    <!-- Super Admin Rail Sidebar -->
+    {{> admin-sidebar active_admin_dashboard=true active="admin_dashboard"}}
+
+    <div class="flex-1 flex flex-col min-w-0">
+      <!-- Admin Topbar -->
+      <header class="flex items-center gap-2 md:gap-3 px-3 md:px-4 h-12 bg-surface border-b border-line shrink-0 relative z-30">
+        <button class="inline-flex md:hidden p-1.5 -ml-1 text-ink hover:bg-th rounded" id="mobileMenuBtn" aria-label="Open menu">
+          <svg class="w-5 h-5 stroke-2" aria-hidden="true"><use href="#i-menu"/></svg>
+        </button>
+        
+        <!-- Platform Badge -->
+        <div class="flex items-center gap-2">
+          <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-indigo/10 text-indigo text-xs font-semibold border border-indigo/20">
+            <svg class="w-3.5 h-3.5 stroke-2"><use href="#i-shield-check"/></svg>
+            Super Admin Console
+          </span>
+          <span class="hidden sm:inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+            System Live &bull; {{seed.admin.system_health.uptime}}
+          </span>
+        </div>
+
+        <div class="ml-auto flex items-center gap-2 md:gap-2.5">
+          <!-- Quick Tenant Demo Jump Button -->
+          <a href="/dashboard.html" class="inline-flex items-center gap-1.5 h-8 px-2.5 rounded text-xs font-medium bg-emerald-600 hover:bg-emerald-700 text-white transition-colors shadow-sm" title="Open Acme Dynamics Ltd tenant workspace">
+            <svg class="w-3.5 h-3.5 stroke-2" aria-hidden="true"><use href="#i-building-2"/></svg>
+            <span class="hidden sm:inline">Tenant Demo (Acme)</span>
+          </a>
+
+          <!-- Quick Actions Button -->
+          <button class="inline-flex items-center gap-1.5 h-8 px-2.5 rounded text-xs font-medium bg-indigo text-white hover:bg-indigo-hover transition-colors shadow-sm cursor-pointer" onclick="openAddTenantDrawer()">
+            <svg class="w-3.5 h-3.5 stroke-2" aria-hidden="true"><use href="#i-plus"/></svg>
+            <span class="hidden sm:inline">Add Tenant</span>
+          </button>
+
+          <!-- Notification Bell -->
+          <div class="relative">
+            <button class="relative w-8 h-8 rounded flex items-center justify-center text-ink hover:bg-th border border-transparent hover:border-line transition-colors" title="Platform Notifications" onclick="window.showToast({ title: 'Platform Alerts', message: 'All automated background workers and database backups are running normally.', type: 'info' });">
+              <svg class="w-4 h-4 stroke-[1.75]" aria-hidden="true"><use href="#i-bell"/></svg>
+              <span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-emerald-500"></span>
+            </button>
+          </div>
+
+          <!-- User Profile Dropdown -->
+          <div class="relative">
+            <button type="button" class="flex items-center gap-1.5 pl-1 rounded p-1 hover:bg-th transition-colors cursor-pointer" id="adminUserMenuBtn" onclick="document.getElementById('adminUserMenuDropdown').classList.toggle('hidden');">
+              <span class="w-7 h-7 rounded-full bg-navy text-white flex items-center justify-center text-[11px] font-bold border border-white/20">SA</span>
+              <svg class="w-3 h-3 stroke-2 text-muted hidden sm:block"><use href="#i-chevron-down"/></svg>
+            </button>
+
+            <div id="adminUserMenuDropdown" class="hidden absolute right-0 top-full mt-1.5 w-52 bg-surface border border-line-strong rounded-xl shadow-xl py-1.5 text-xs text-ink z-50">
+              <div class="px-3 py-2 border-b border-line">
+                <div class="font-semibold text-ink">Super Administrator</div>
+                <div class="text-[11px] text-muted truncate">ict.swiftypos@gmail.com</div>
+              </div>
+              <a href="/dashboard.html" class="flex items-center gap-2 px-3 py-2 text-ink hover:bg-th hover:text-indigo transition-colors">
+                <svg class="w-4 h-4 stroke-[1.75] text-emerald-600"><use href="#i-building-2"/></svg> Acme Dynamics Workspace
+              </a>
+              <a href="/settings.html" class="flex items-center gap-2 px-3 py-2 text-ink hover:bg-th hover:text-indigo transition-colors">
+                <svg class="w-4 h-4 stroke-[1.75] text-muted"><use href="#i-settings"/></svg> System Settings
+              </a>
+              <div class="border-t border-line my-1"></div>
+              <a href="/login.html" class="flex items-center gap-2 px-3 py-2 text-[#B4372A] hover:bg-[#FDECEA] transition-colors font-medium">
+                <svg class="w-4 h-4 stroke-[1.75]"><use href="#i-log-out"/></svg> Sign Out
+              </a>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Main Content Container -->
+      <main class="flex-1 overflow-y-auto overflow-x-hidden p-4 md:p-6 lg:p-8 space-y-6 bg-canvas">
+
+        <!-- Top Header & Controls -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div>
+            <div class="text-xs text-muted mb-1 font-semibold uppercase tracking-wider">Bookkip SaaS Platform</div>
+            <h1 class="text-xl md:text-2xl font-bold tracking-tight text-ink m-0">Super Admin Dashboard</h1>
+            <p class="text-xs text-muted mt-0.5">Multi-tenant metrics, subscription payments, and platform health.</p>
+          </div>
+
+          <div class="flex items-center flex-wrap gap-2.5">
+            <div class="flex items-center h-control px-2.5 bg-surface border border-line-strong rounded text-[13px] font-medium text-ink shadow-sm">
+              <svg class="w-4 h-4 stroke-[1.75] text-muted mr-2 shrink-0"><use href="#i-calendar-check"/></svg>
+              <select class="bg-transparent border-0 outline-none text-ink cursor-pointer" id="adminPeriodSelect" onchange="window.showToast({ title: 'Date Range Updated', message: 'Metrics filtered for ' + this.value, type: 'info' });">
+                <option value="Year 2026">Year 2026 (Full Year)</option>
+                <option value="This Month (October 2026)">This Month (October 2026)</option>
+                <option value="Third Quarter (Q3 2026)">Third Quarter (Q3 2026)</option>
+                <option value="Last 30 Days">Last 30 Days</option>
+              </select>
+            </div>
+            
+            <button type="button" class="inline-flex items-center gap-1.5 h-control px-3 rounded border border-line-strong bg-surface text-ink hover:bg-th transition-colors shadow-sm text-[13px] font-medium cursor-pointer" onclick="openRecordPaymentModal()">
+              <svg class="w-4 h-4 stroke-[1.75] text-emerald-600" aria-hidden="true"><use href="#i-banknote"/></svg>
+              <span>Record Offline Payment</span>
+            </button>
+
+            <button type="button" class="inline-flex items-center gap-1.5 h-control px-3 rounded border border-transparent text-[13px] font-medium bg-indigo text-white hover:bg-indigo-hover transition-colors shadow-sm cursor-pointer" onclick="openAddTenantDrawer()">
+              <svg class="w-4 h-4 stroke-[2]" aria-hidden="true"><use href="#i-plus"/></svg>
+              <span>Add Tenant</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- 1. Primary SaaS Platform KPI Cards Grid (4 Cards) -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
+          <!-- KPI 1: Total Registered Tenants/Users -->
+          <div class="bg-surface border border-line rounded-xl p-4 shadow-sm flex flex-col justify-between">
+            <div class="flex items-center justify-between text-muted text-xs font-medium mb-2">
+              <span class="font-semibold text-ink">Total Registered Users</span>
+              <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[11px] font-semibold bg-[#E9F7EF] text-[#146A3E] border border-[#C8EAD6]">{{seed.admin.stats.growth_rate}} MoM</span>
+            </div>
+            <div>
+              <div class="text-2xl font-bold tracking-tight text-ink" style="font-variant-numeric: tabular-nums;">{{seed.admin.stats.total_users}}</div>
+              <div class="text-xs text-muted mt-1 flex items-center gap-1">
+                <span class="w-1.5 h-1.5 rounded-full bg-indigo"></span>
+                <span><b>{{seed.admin.stats.total_owners}}</b> active business owners</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- KPI 2: MRR & Subscription Inflow -->
+          <div class="bg-surface border border-line rounded-xl p-4 shadow-sm flex flex-col justify-between">
+            <div class="flex items-center justify-between text-muted text-xs font-medium mb-2">
+              <span class="font-semibold text-ink">Monthly Revenue (MRR)</span>
+              <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[11px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">+18.5%</span>
+            </div>
+            <div>
+              <div class="text-2xl font-bold tracking-tight text-ink" style="font-variant-numeric: tabular-nums;">{{seed.admin.stats.mrr}}</div>
+              <div class="text-xs text-muted mt-1 flex items-center gap-1">
+                <span class="w-1.5 h-1.5 rounded-full bg-[#1E9A5A]"></span>
+                <span>Annual Run Rate: <b>{{seed.admin.stats.arr}}</b></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- KPI 3: Trial Accounts -->
+          <div class="bg-surface border border-line rounded-xl p-4 shadow-sm flex flex-col justify-between">
+            <div class="flex items-center justify-between text-muted text-xs font-medium mb-2">
+              <span class="font-semibold text-ink">Active Free Trials</span>
+              <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[11px] font-semibold bg-sky-50 text-sky-700 border border-sky-200">14-Day Free</span>
+            </div>
+            <div>
+              <div class="text-2xl font-bold tracking-tight text-ink" style="font-variant-numeric: tabular-nums;">{{seed.admin.stats.trial_users}}</div>
+              <div class="text-xs text-muted mt-1 flex items-center gap-1">
+                <span class="w-1.5 h-1.5 rounded-full bg-sky-500"></span>
+                <span>5 converting this week</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- KPI 4: Expired Subscriptions -->
+          <div class="bg-surface border border-line rounded-xl p-4 shadow-sm flex flex-col justify-between">
+            <div class="flex items-center justify-between text-muted text-xs font-medium mb-2">
+              <span class="font-semibold text-ink">Expired Subscriptions</span>
+              <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[11px] font-semibold bg-amber-50 text-amber-700 border border-amber-200">Follow-up</span>
+            </div>
+            <div>
+              <div class="text-2xl font-bold tracking-tight text-ink" style="font-variant-numeric: tabular-nums;">{{seed.admin.stats.expired_users}}</div>
+              <div class="text-xs text-muted mt-1 flex items-center gap-1">
+                <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
+                <span>Renewal reminders queued</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. Interactive Charts Section (Package Donut + 12-Month Revenue Trajectory) -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-5" id="package-breakdown">
+          <!-- Col A: Package Wise Subscriptions (Donut Chart) -->
+          <div class="lg:col-span-5 bg-surface border border-line rounded-xl p-5 shadow-sm flex flex-col justify-between">
+            <div class="flex items-center justify-between mb-4 pb-3 border-b border-line">
+              <div>
+                <h3 class="text-sm font-bold text-ink">Package Wise Subscribed</h3>
+                <p class="text-xs text-muted mt-0.5">Distribution of paying business subscriptions</p>
+              </div>
+              <span class="text-xs font-semibold px-2 py-0.5 rounded bg-th text-ink">Active Plans</span>
+            </div>
+
+            <!-- SVG Donut Chart Component -->
+            <div class="flex flex-col sm:flex-row items-center gap-6 my-auto py-2">
+              <div class="relative w-44 h-44 shrink-0 flex items-center justify-center">
+                <svg viewBox="0 0 100 100" class="w-full h-full -rotate-90">
+                  <!-- Donut Base Ring -->
+                  <circle cx="50" cy="50" r="38" fill="none" stroke="#F1F5F9" stroke-width="14" />
+                  
+                  <!-- Segment 1: Standard (42%) -->
+                  <!-- Circumference = 2 * PI * 38 ≈ 238.76. 42% = 100.28, offset = 0 -->
+                  <circle cx="50" cy="50" r="38" fill="none" stroke="#06B6D4" stroke-width="14"
+                          stroke-dasharray="100.28 138.48" stroke-dashoffset="0"
+                          class="transition-all duration-300 hover:opacity-85 cursor-pointer">
+                    <title>Standard Plan: 42% (62 businesses)</title>
+                  </circle>
+                  
+                  <!-- Segment 2: Basic (35%) -->
+                  <!-- 35% = 83.57, offset = -100.28 -->
+                  <circle cx="50" cy="50" r="38" fill="none" stroke="#4F46E5" stroke-width="14"
+                          stroke-dasharray="83.57 155.19" stroke-dashoffset="-100.28"
+                          class="transition-all duration-300 hover:opacity-85 cursor-pointer">
+                    <title>Basic Plan: 35% (52 businesses)</title>
+                  </circle>
+
+                  <!-- Segment 3: Premium (15%) -->
+                  <!-- 15% = 35.81, offset = -(100.28 + 83.57) = -183.85 -->
+                  <circle cx="50" cy="50" r="38" fill="none" stroke="#10B981" stroke-width="14"
+                          stroke-dasharray="35.81 202.95" stroke-dashoffset="-183.85"
+                          class="transition-all duration-300 hover:opacity-85 cursor-pointer">
+                    <title>Premium Plan: 15% (22 businesses)</title>
+                  </circle>
+
+                  <!-- Segment 4: Lifetime Once and For All (8%) -->
+                  <!-- 8% = 19.10, offset = -(183.85 + 35.81) = -219.66 -->
+                  <circle cx="50" cy="50" r="38" fill="none" stroke="#F59E0B" stroke-width="14"
+                          stroke-dasharray="19.10 219.66" stroke-dashoffset="-219.66"
+                          class="transition-all duration-300 hover:opacity-85 cursor-pointer">
+                    <title>Once and For All (Lifetime): 8% (12 businesses)</title>
+                  </circle>
+                </svg>
+
+                <div class="absolute inset-0 flex flex-col items-center justify-center text-center pointer-events-none">
+                  <span class="text-2xl font-black tracking-tight text-ink">148</span>
+                  <span class="text-[10px] uppercase font-semibold text-muted tracking-wider">Subscribers</span>
+                </div>
+              </div>
+
+              <!-- Legend List -->
+              <div class="flex-1 w-full space-y-2 text-xs">
+                {{#each seed.admin.packages}}
+                <div class="flex items-center justify-between p-1.5 rounded hover:bg-th transition-colors">
+                  <div class="flex items-center gap-2">
+                    <span class="w-3 h-3 rounded-full shrink-0" style="background-color: {{this.color}};"></span>
+                    <span class="font-medium text-ink">{{this.name}}</span>
+                  </div>
+                  <div class="text-right">
+                    <span class="font-bold text-ink">{{this.subscribers}}</span>
+                    <span class="text-muted ml-1">({{this.percentage}}%)</span>
+                  </div>
+                </div>
+                {{/each}}
+              </div>
+            </div>
+
+            <div class="mt-3 pt-3 border-t border-line flex items-center justify-between text-xs text-muted">
+              <span>Top Plan: <strong class="text-ink">Standard (42%)</strong></span>
+              <a href="#registered-tenants" class="text-indigo font-medium hover:underline">View subscribers &rarr;</a>
+            </div>
+          </div>
+
+          <!-- Col B: Subscription Payments - 2026 (Monthly Revenue Bar Chart) -->
+          <div class="lg:col-span-7 bg-surface border border-line rounded-xl p-5 shadow-sm flex flex-col justify-between" id="subscription-payments">
+            <div class="flex items-center justify-between mb-4 pb-3 border-b border-line">
+              <div>
+                <h3 class="text-sm font-bold text-ink">Subscription Payments — 2026</h3>
+                <p class="text-xs text-muted mt-0.5">Monthly platform subscription collection growth (Jan &ndash; Oct)</p>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="inline-flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1 rounded bg-[#E9F7EF] text-[#146A3E] border border-[#C8EAD6]">
+                  <span class="w-2 h-2 rounded-full bg-[#1E9A5A]"></span> Peak Month: Oct 2026
+                </span>
+              </div>
+            </div>
+
+            <!-- SVG Bar Chart -->
+            <div class="w-full my-auto pt-2 pb-1">
+              <div class="h-44 w-full flex items-end gap-2 sm:gap-3 px-2 border-b border-line">
+                {{#each seed.admin.monthly_revenue}}
+                <div class="flex-1 flex flex-col items-center h-full justify-end group relative cursor-pointer">
+                  <!-- Floating Tooltip on Hover -->
+                  <div class="hidden group-hover:flex flex-col items-center absolute bottom-[calc(100%+8px)] z-30 bg-ink text-white text-[11px] px-2.5 py-1.5 rounded shadow-xl pointer-events-none whitespace-nowrap">
+                    <span class="font-bold">{{this.month}} 2026</span>
+                    <span>{{this.formatted}}</span>
+                    <div class="w-2 h-2 bg-ink rotate-45 -mb-2 mt-0.5"></div>
+                  </div>
+
+                  <!-- Bar Element -->
+                  <div class="w-full max-w-[34px] rounded-t-md transition-all duration-300 {{#if (eq this.month 'Oct')}}bg-indigo hover:bg-indigo-hover{{else}}bg-slate-300 hover:bg-indigo/70{{/if}}" 
+                       style="height: {{this.height_pct}}%;"></div>
+                  <span class="text-[11px] font-medium text-muted mt-2 group-hover:text-ink">{{this.month}}</span>
+                </div>
+                {{/each}}
+              </div>
+
+              <!-- Chart Baseline & Axis Labels -->
+              <div class="flex items-center justify-between pt-2 text-[11px] text-muted">
+                <span>Jan: ₦ 2.85M</span>
+                <span>Mid-Year: ₦ 3.95M</span>
+                <span class="font-semibold text-ink">Current Oct: ₦ 5.42M (+90.1% YTD)</span>
+              </div>
+            </div>
+
+            <div class="mt-3 pt-3 border-t border-line flex items-center justify-between text-xs text-muted">
+              <span>Payment Gateway Integrations: <strong>Paystack &bull; Flutterwave &bull; Bank Transfer</strong></span>
+              <button type="button" class="text-indigo font-medium hover:underline cursor-pointer" onclick="openRecordPaymentModal()">+ Record offline payment</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. Registered Tenants / Users Directory Table (#registered-tenants) -->
+        <div class="bg-surface border border-line rounded-xl shadow-sm overflow-hidden" id="registered-tenants">
+          <div class="p-4 border-b border-line flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div>
+              <h2 class="text-base font-bold text-ink">New Registered Users & Business Tenants</h2>
+              <p class="text-xs text-muted mt-0.5">Manage subscribed accounts, check package plans, and impersonate workspaces</p>
+            </div>
+
+            <!-- Controls: Status Filter Tabs & Search -->
+            <div class="flex items-center flex-wrap gap-2.5">
+              <!-- Tabs -->
+              <div class="inline-flex p-0.5 bg-canvas rounded-lg border border-line text-xs font-medium" id="tenantStatusTabs">
+                <button type="button" class="px-2.5 py-1 rounded-md bg-surface text-ink font-semibold shadow-xs transition-colors cursor-pointer" onclick="filterTenants('all', this)">All (6)</button>
+                <button type="button" class="px-2.5 py-1 rounded-md text-muted hover:text-ink transition-colors cursor-pointer" onclick="filterTenants('Active', this)">Active (3)</button>
+                <button type="button" class="px-2.5 py-1 rounded-md text-muted hover:text-ink transition-colors cursor-pointer" onclick="filterTenants('Trial', this)">Trial (2)</button>
+                <button type="button" class="px-2.5 py-1 rounded-md text-muted hover:text-ink transition-colors cursor-pointer" onclick="filterTenants('Expired', this)">Expired (1)</button>
+              </div>
+
+              <!-- Search -->
+              <div class="relative">
+                <input type="text" id="tenantSearchInput" placeholder="Search business or owner..." 
+                       class="h-8 pl-8 pr-3 text-xs bg-canvas border border-line rounded-md outline-none focus:border-indigo transition-colors w-44 sm:w-56 text-ink"
+                       oninput="searchTenants(this.value)">
+                <svg class="w-3.5 h-3.5 stroke-2 text-muted absolute left-2.5 top-2.5 pointer-events-none"><use href="#i-search"/></svg>
+              </div>
+            </div>
+          </div>
+
+          <!-- Table Content -->
+          <div class="overflow-x-auto [scrollbar-width:thin]">
+            <table class="w-full text-left text-[13px] whitespace-nowrap">
+              <thead class="bg-th/60 text-muted font-semibold text-xs border-b border-line uppercase tracking-wider">
+                <tr>
+                  <th class="py-2.5 px-4">Business / User Name</th>
+                  <th class="py-2.5 px-4">Package</th>
+                  <th class="py-2.5 px-4">Membership</th>
+                  <th class="py-2.5 px-4">Status</th>
+                  <th class="py-2.5 px-4">Joined &bull; Expiry</th>
+                  <th class="py-2.5 px-4 text-right">Actions</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-line text-ink" id="tenantTableBody">
+                {{#each seed.admin.registered_users}}
+                <tr class="hover:bg-th/40 transition-colors tenant-row" data-status="{{this.status}}" data-search="{{this.name}} {{this.owner}} {{this.email}}">
+                  <td class="py-3 px-4">
+                    <div class="flex items-center gap-2.5">
+                      <div class="w-8 h-8 rounded-lg bg-indigo/10 text-indigo border border-indigo/20 flex items-center justify-center font-bold text-xs shrink-0">
+                        {{#if this.is_demo_tenant}}★{{else}}🏢{{/if}}
+                      </div>
+                      <div>
+                        <div class="font-semibold text-ink flex items-center gap-1.5">
+                          <span>{{this.name}}</span>
+                          {{#if this.is_demo_tenant}}
+                          <span class="px-1.5 py-0.2 rounded text-[10px] font-bold bg-amber-100 text-amber-800 border border-amber-300">DEMO TENANT</span>
+                          {{/if}}
+                        </div>
+                        <div class="text-xs text-muted">{{this.owner}} &bull; <span class="font-mono text-[11px]">{{this.email}}</span></div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="py-3 px-4">
+                    <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium 
+                      {{#if (eq this.package 'Premium')}}bg-emerald-50 text-emerald-700 border border-emerald-200{{/if}}
+                      {{#if (eq this.package 'Standard')}}bg-cyan-50 text-cyan-700 border border-cyan-200{{/if}}
+                      {{#if (eq this.package 'Basic')}}bg-indigo-50 text-indigo-700 border border-indigo-200{{/if}}
+                      {{#if (eq this.package 'Once and For All')}}bg-amber-50 text-amber-700 border border-amber-200{{/if}}">
+                      {{this.package}}
+                    </span>
+                  </td>
+                  <td class="py-3 px-4">
+                    <span class="text-muted">{{this.membership}}</span>
+                  </td>
+                  <td class="py-3 px-4">
+                    <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-semibold
+                      {{#if (eq this.status 'Active')}}bg-[#E9F7EF] text-[#146A3E] border border-[#C8EAD6]{{/if}}
+                      {{#if (eq this.status 'Trial')}}bg-sky-50 text-sky-700 border border-sky-200{{/if}}
+                      {{#if (eq this.status 'Expired')}}bg-rose-50 text-rose-700 border border-rose-200{{/if}}">
+                      <span class="w-1.5 h-1.5 rounded-full 
+                        {{#if (eq this.status 'Active')}}bg-[#1E9A5A]{{/if}}
+                        {{#if (eq this.status 'Trial')}}bg-sky-500{{/if}}
+                        {{#if (eq this.status 'Expired')}}bg-rose-500{{/if}}"></span>
+                      {{this.status}}
+                    </span>
+                  </td>
+                  <td class="py-3 px-4 text-xs text-muted">
+                    <div>Joined: {{this.joined_date}}</div>
+                    <div class="text-[11px]">Expires: {{this.expiry_date}}</div>
+                  </td>
+                  <td class="py-3 px-4 text-right">
+                    <div class="inline-flex items-center gap-1.5">
+                      <!-- One-Click Impersonate Button -->
+                      <a href="/dashboard.html" class="inline-flex items-center gap-1 h-7 px-2.5 rounded text-xs font-semibold bg-indigo text-white hover:bg-indigo-hover transition-colors shadow-xs" 
+                         title="Login as user and manage this workspace"
+                         onclick="window.showToast({ title: 'Workspace Impersonation', message: 'Entering {{this.name}} workspace as Super Admin...', type: 'info' });">
+                        <svg class="w-3.5 h-3.5 stroke-2"><use href="#i-eye"/></svg>
+                        <span>Login as User</span>
+                      </a>
+
+                      <!-- Action Dropdown Toggle -->
+                      <button type="button" class="w-7 h-7 rounded border border-line-strong hover:bg-th flex items-center justify-center text-muted hover:text-ink transition-colors cursor-pointer" onclick="toggleTenantMenu('{{this.id}}')">
+                        <svg class="w-3.5 h-3.5 stroke-2"><use href="#i-more-horizontal"/></svg>
+                      </button>
+
+                      <!-- Floating Context Menu -->
+                      <div id="tenant-menu-{{this.id}}" class="hidden absolute right-6 mt-20 w-44 bg-surface border border-line-strong rounded-lg shadow-xl py-1 text-xs text-ink z-50 text-left">
+                        <button type="button" class="w-full text-left px-3 py-1.5 hover:bg-th flex items-center gap-2 cursor-pointer" onclick="viewTenantDetails('{{this.name}}', '{{this.owner}}', '{{this.package}}', '{{this.email}}')">
+                          <svg class="w-3.5 h-3.5 stroke-2 text-muted"><use href="#i-user"/></svg> View Details
+                        </button>
+                        <button type="button" class="w-full text-left px-3 py-1.5 hover:bg-th flex items-center gap-2 cursor-pointer" onclick="extendSubscription('{{this.name}}')">
+                          <svg class="w-3.5 h-3.5 stroke-2 text-emerald-600"><use href="#i-refresh-cw"/></svg> Extend 30 Days
+                        </button>
+                        <div class="border-t border-line my-1"></div>
+                        <button type="button" class="w-full text-left px-3 py-1.5 text-rose-600 hover:bg-rose-50 flex items-center gap-2 cursor-pointer" onclick="suspendTenant('{{this.name}}')">
+                          <svg class="w-3.5 h-3.5 stroke-2"><use href="#i-trash-2"/></svg> Suspend Account
+                        </button>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                {{/each}}
+              </tbody>
+            </table>
+          </div>
+
+          <div class="p-3 bg-canvas border-t border-line flex items-center justify-between text-xs text-muted">
+            <span id="tenantCountDisplay">Showing 6 of 6 registered business accounts</span>
+            <span class="text-muted">Database sync: Live (PostgreSQL)</span>
+          </div>
+        </div>
+
+        <!-- 4. Recent Subscription Payments Ledger Table -->
+        <div class="bg-surface border border-line rounded-xl shadow-sm overflow-hidden">
+          <div class="p-4 border-b border-line flex items-center justify-between">
+            <div>
+              <h2 class="text-base font-bold text-ink">Recent Subscription Payments</h2>
+              <p class="text-xs text-muted mt-0.5">Automated and offline subscription settlement audit trail</p>
+            </div>
+            <button type="button" class="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-semibold rounded bg-surface border border-line-strong hover:bg-th transition-colors cursor-pointer" onclick="openRecordPaymentModal()">
+              <svg class="w-3.5 h-3.5 stroke-2 text-indigo"><use href="#i-plus"/></svg> Record Offline
+            </button>
+          </div>
+
+          <div class="overflow-x-auto [scrollbar-width:thin]">
+            <table class="w-full text-left text-[13px] whitespace-nowrap">
+              <thead class="bg-th/60 text-muted font-semibold text-xs border-b border-line uppercase tracking-wider">
+                <tr>
+                  <th class="py-2.5 px-4">Order ID</th>
+                  <th class="py-2.5 px-4">Subscriber / Business</th>
+                  <th class="py-2.5 px-4">Package Plan</th>
+                  <th class="py-2.5 px-4">Gateway / Method</th>
+                  <th class="py-2.5 px-4 text-right">Amount (NGN)</th>
+                  <th class="py-2.5 px-4 text-center">Status</th>
+                  <th class="py-2.5 px-4 text-right">Receipt</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-line text-ink">
+                {{#each seed.admin.subscription_payments}}
+                <tr class="hover:bg-th/40 transition-colors">
+                  <td class="py-3 px-4 font-mono font-medium text-xs text-indigo">
+                    {{this.order_id}}
+                  </td>
+                  <td class="py-3 px-4">
+                    <div class="font-semibold text-ink">{{this.user}}</div>
+                    <div class="text-xs text-muted">Payer: {{this.payer}} &bull; {{this.date}}</div>
+                  </td>
+                  <td class="py-3 px-4">
+                    <span class="font-medium text-ink">{{this.package}}</span>
+                  </td>
+                  <td class="py-3 px-4">
+                    <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-medium bg-canvas border border-line">
+                      <svg class="w-3 h-3 stroke-2 text-muted"><use href="#i-banknote"/></svg>
+                      {{this.method}}
+                    </span>
+                  </td>
+                  <td class="py-3 px-4 text-right font-bold text-ink" style="font-variant-numeric: tabular-nums;">
+                    {{this.amount}}
+                  </td>
+                  <td class="py-3 px-4 text-center">
+                    <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-semibold
+                      {{#if (eq this.status 'Completed')}}bg-[#E9F7EF] text-[#146A3E] border border-[#C8EAD6]{{else}}bg-amber-50 text-amber-700 border border-amber-200{{/if}}">
+                      <span class="w-1.5 h-1.5 rounded-full {{#if (eq this.status 'Completed')}}bg-[#1E9A5A]{{else}}bg-amber-500{{/if}}"></span>
+                      {{this.status}}
+                    </span>
+                  </td>
+                  <td class="py-3 px-4 text-right">
+                    <button type="button" class="inline-flex items-center gap-1 text-xs text-muted hover:text-indigo transition-colors cursor-pointer" onclick="downloadPaymentReceipt('{{this.order_id}}', '{{this.user}}', '{{this.amount}}')">
+                      <svg class="w-3.5 h-3.5 stroke-2"><use href="#i-download"/></svg> Receipt
+                    </button>
+                  </td>
+                </tr>
+                {{/each}}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- 5. Platform System Health & Backups Strip (#system-health) -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4" id="system-health">
+          <!-- Card 1: Database & Automated Backups -->
+          <div class="bg-surface border border-line rounded-xl p-4 shadow-sm flex flex-col justify-between">
+            <div class="flex items-center justify-between mb-2">
+              <span class="font-semibold text-ink text-xs flex items-center gap-1.5">
+                <svg class="w-4 h-4 stroke-2 text-indigo"><use href="#i-database"/></svg>
+                Database & Snapshots
+              </span>
+              <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">HEALTHY</span>
+            </div>
+            <div class="text-xs text-muted space-y-1 my-1">
+              <div>Size: <strong class="text-ink">{{seed.admin.system_health.database_size}}</strong> &bull; Postgre 15</div>
+              <div>Last Backup: <span class="text-ink">{{seed.admin.system_health.last_backup}}</span></div>
+            </div>
+            <div class="mt-3 pt-2.5 border-t border-line flex items-center justify-between">
+              <span class="text-[11px] text-muted">Daily at 04:00 AM</span>
+              <button type="button" class="inline-flex items-center gap-1 text-xs font-semibold text-indigo hover:underline cursor-pointer" onclick="triggerManualBackup()">
+                <svg class="w-3.5 h-3.5 stroke-2"><use href="#i-refresh-cw"/></svg> Backup Now
+              </button>
+            </div>
+          </div>
+
+          <!-- Card 2: Workers & API Infrastructure -->
+          <div class="bg-surface border border-line rounded-xl p-4 shadow-sm flex flex-col justify-between">
+            <div class="flex items-center justify-between mb-2">
+              <span class="font-semibold text-ink text-xs flex items-center gap-1.5">
+                <svg class="w-4 h-4 stroke-2 text-emerald-600"><use href="#i-server"/></svg>
+                Workers & Queue Service
+              </span>
+              <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">ACTIVE</span>
+            </div>
+            <div class="text-xs text-muted space-y-1 my-1">
+              <div>Status: <strong class="text-ink">{{seed.admin.system_health.status}}</strong></div>
+              <div>Background Jobs: <span class="text-ink">0 failing &bull; Redis OK</span></div>
+            </div>
+            <div class="mt-3 pt-2.5 border-t border-line flex items-center justify-between text-xs text-muted">
+              <span>Uptime: <strong class="text-ink">{{seed.admin.system_health.uptime}}</strong></span>
+              <span class="text-emerald-700 font-medium">100% SLA</span>
+            </div>
+          </div>
+
+          <!-- Card 3: Traffic & Network Latency -->
+          <div class="bg-surface border border-line rounded-xl p-4 shadow-sm flex flex-col justify-between">
+            <div class="flex items-center justify-between mb-2">
+              <span class="font-semibold text-ink text-xs flex items-center gap-1.5">
+                <svg class="w-4 h-4 stroke-2 text-cyan-600"><use href="#i-globe"/></svg>
+                Network & Response Time
+              </span>
+              <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-bold bg-cyan-50 text-cyan-700 border border-cyan-200">OPTIMAL</span>
+            </div>
+            <div class="text-xs text-muted space-y-1 my-1">
+              <div>Response Time: <strong class="text-ink">{{seed.admin.system_health.server_response_time}}</strong></div>
+              <div>Active Sessions: <strong class="text-ink">{{seed.admin.system_health.active_sessions}}</strong> users online</div>
+            </div>
+            <div class="mt-3 pt-2.5 border-t border-line flex items-center justify-between text-xs text-muted">
+              <span>Region: <strong>Lagos Edge (LOS)</strong></span>
+              <span class="text-indigo font-medium">SSL A+</span>
+            </div>
+          </div>
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- SLIDE-OVER DRAWER: ADD NEW TENANT / USER  -->
+  <!-- ========================================== -->
+  <div id="addTenantDrawer" class="hidden fixed inset-0 z-50 overflow-hidden" aria-labelledby="slide-over-title" role="dialog" aria-modal="true">
+    <div class="absolute inset-0 bg-ink/40 backdrop-blur-xs transition-opacity" onclick="closeAddTenantDrawer()"></div>
+
+    <div class="fixed inset-y-0 right-0 max-w-full flex pl-10">
+      <div class="w-screen max-w-md bg-surface shadow-2xl flex flex-col border-l border-line">
+        <!-- Drawer Header -->
+        <div class="p-4 md:p-6 border-b border-line flex items-center justify-between bg-th/40">
+          <div>
+            <h2 class="text-base font-bold text-ink" id="slide-over-title">Add New Business Tenant</h2>
+            <p class="text-xs text-muted mt-0.5">Create a multi-tenant business and provision admin credentials</p>
+          </div>
+          <button type="button" class="p-1 rounded-md text-muted hover:text-ink hover:bg-th" onclick="closeAddTenantDrawer()">
+            <svg class="w-5 h-5 stroke-2"><use href="#i-x"/></svg>
+          </button>
+        </div>
+
+        <!-- Drawer Body Form -->
+        <form id="addTenantForm" class="flex-1 overflow-y-auto p-4 md:p-6 space-y-4 text-xs" onsubmit="submitAddTenant(event)">
+          <div>
+            <label class="block font-semibold text-ink mb-1">Business / Company Name *</label>
+            <input type="text" id="drawerBusinessName" required placeholder="e.g. Peak Horizon Technologies Ltd" class="w-full h-control px-3 bg-canvas border border-line-strong rounded outline-none focus:border-indigo text-ink text-xs">
+          </div>
+
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="block font-semibold text-ink mb-1">Owner Full Name *</label>
+              <input type="text" id="drawerOwnerName" required placeholder="e.g. Babatunde Jinadu" class="w-full h-control px-3 bg-canvas border border-line-strong rounded outline-none focus:border-indigo text-ink text-xs">
+            </div>
+            <div>
+              <label class="block font-semibold text-ink mb-1">Phone Number</label>
+              <input type="tel" id="drawerPhone" placeholder="+234 800 000 0000" class="w-full h-control px-3 bg-canvas border border-line-strong rounded outline-none focus:border-indigo text-ink text-xs">
+            </div>
+          </div>
+
+          <div>
+            <label class="block font-semibold text-ink mb-1">Account Email Address *</label>
+            <input type="email" id="drawerEmail" required placeholder="admin@peakhorizon.ng" class="w-full h-control px-3 bg-canvas border border-line-strong rounded outline-none focus:border-indigo text-ink text-xs">
+          </div>
+
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="block font-semibold text-ink mb-1">Subscription Package *</label>
+              <select id="drawerPackage" class="w-full h-control px-2.5 bg-canvas border border-line-strong rounded outline-none focus:border-indigo text-ink text-xs cursor-pointer">
+                <option value="Basic">Basic (₦ 15,000/mo)</option>
+                <option value="Standard" selected>Standard (₦ 35,000/mo)</option>
+                <option value="Premium">Premium (₦ 75,000/mo)</option>
+                <option value="Once and For All">Once & For All (₦ 5,000,000)</option>
+              </select>
+            </div>
+            <div>
+              <label class="block font-semibold text-ink mb-1">Membership Status</label>
+              <select id="drawerStatus" class="w-full h-control px-2.5 bg-canvas border border-line-strong rounded outline-none focus:border-indigo text-ink text-xs cursor-pointer">
+                <option value="Active">Active Subscription</option>
+                <option value="Trial" selected>14-Day Free Trial</option>
+              </select>
+            </div>
+          </div>
+
+          <div>
+            <label class="block font-semibold text-ink mb-1">Initial Password *</label>
+            <input type="password" id="drawerPassword" required value="password123" class="w-full h-control px-3 bg-canvas border border-line-strong rounded outline-none focus:border-indigo text-ink text-xs font-mono">
+            <span class="text-[10px] text-muted mt-1 block">Default: password123. The tenant will be prompted to reset upon first login.</span>
+          </div>
+
+          <div class="pt-2 border-t border-line">
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="checkbox" checked class="w-4 h-4 rounded text-indigo border-line-strong">
+              <span class="text-xs text-ink font-medium">Send welcome email with workspace access link</span>
+            </label>
+          </div>
+
+          <div class="pt-4 flex items-center justify-end gap-2 border-t border-line">
+            <button type="button" class="h-control px-4 rounded border border-line-strong hover:bg-th text-ink text-xs font-medium cursor-pointer" onclick="closeAddTenantDrawer()">Cancel</button>
+            <button type="submit" class="h-control px-4 rounded bg-indigo hover:bg-indigo-hover text-white text-xs font-medium shadow-sm cursor-pointer">Create Tenant Workspace</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================================================= -->
+  <!-- MODAL DIALOG: RECORD OFFLINE SUBSCRIPTION PAYMENT -->
+  <!-- ================================================= -->
+  <div id="recordPaymentModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4">
+    <div class="absolute inset-0 bg-ink/40 backdrop-blur-xs" onclick="closeRecordPaymentModal()"></div>
+    
+    <div class="relative w-full max-w-lg bg-surface border border-line-strong rounded-2xl shadow-2xl overflow-hidden z-10">
+      <div class="p-4 md:p-5 border-b border-line flex items-center justify-between bg-th/40">
+        <div class="flex items-center gap-2">
+          <div class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-800 flex items-center justify-center">
+            <svg class="w-4 h-4 stroke-2"><use href="#i-banknote"/></svg>
+          </div>
+          <div>
+            <h3 class="text-sm font-bold text-ink">Record Offline Subscription Payment</h3>
+            <p class="text-xs text-muted">Log bank transfers, cash, or cheques received for subscription plans</p>
+          </div>
+        </div>
+        <button type="button" class="p-1 rounded text-muted hover:text-ink" onclick="closeRecordPaymentModal()">
+          <svg class="w-4 h-4 stroke-2"><use href="#i-x"/></svg>
+        </button>
+      </div>
+
+      <form id="recordOfflinePaymentForm" class="p-4 md:p-5 space-y-3.5 text-xs" onsubmit="submitOfflinePayment(event)">
+        <div>
+          <label class="block font-semibold text-ink mb-1">Select Business Tenant *</label>
+          <select id="modalTenantSelect" required class="w-full h-control px-3 bg-canvas border border-line-strong rounded outline-none focus:border-indigo text-ink text-xs cursor-pointer">
+            <option value="Acme Dynamics Ltd">Acme Dynamics Ltd (Amina Bello)</option>
+            <option value="David Faith Creative Studio">David Faith Creative Studio (David Faith)</option>
+            <option value="Ebor Kingsley Enterprises">Ebor Kingsley Enterprises (Ebor Kingsley)</option>
+            <option value="Bella Fashion & Apparel Hub">Bella Fashion & Apparel Hub (Isabella Adeleke)</option>
+            <option value="Swift Logistics & Courier Services">Swift Logistics & Courier Services</option>
+          </select>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block font-semibold text-ink mb-1">Package Tier *</label>
+            <select id="modalPackageSelect" class="w-full h-control px-2.5 bg-canvas border border-line-strong rounded outline-none focus:border-indigo text-ink text-xs cursor-pointer" onchange="autoFillPackageAmount(this.value)">
+              <option value="Basic">Basic Plan (₦ 15,000)</option>
+              <option value="Standard" selected>Standard Plan (₦ 35,000)</option>
+              <option value="Premium">Premium Plan (₦ 75,000)</option>
+              <option value="Once and For All">Once & For All (₦ 5,000,000)</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-semibold text-ink mb-1">Amount Paid (NGN) *</label>
+            <input type="text" id="modalAmount" required value="₦ 35,000.00" class="w-full h-control px-3 bg-canvas border border-line-strong rounded outline-none focus:border-indigo text-ink text-xs font-bold" style="font-variant-numeric: tabular-nums;">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block font-semibold text-ink mb-1">Payment Method *</label>
+            <select id="modalMethod" class="w-full h-control px-2.5 bg-canvas border border-line-strong rounded outline-none focus:border-indigo text-ink text-xs cursor-pointer">
+              <option value="Bank Transfer" selected>Direct Bank Transfer</option>
+              <option value="Cash">Cash at Office</option>
+              <option value="POS / Terminal">POS Terminal</option>
+              <option value="Cheque">Bank Cheque</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-semibold text-ink mb-1">Transaction Ref / Cheque No.</label>
+            <input type="text" id="modalRef" placeholder="e.g. GTB-TRF-992144" class="w-full h-control px-3 bg-canvas border border-line-strong rounded outline-none focus:border-indigo text-ink text-xs font-mono">
+          </div>
+        </div>
+
+        <div>
+          <label class="block font-semibold text-ink mb-1">Admin Notes</label>
+          <input type="text" id="modalNotes" placeholder="Payment verified by Finance team via bank statement" class="w-full h-control px-3 bg-canvas border border-line-strong rounded outline-none focus:border-indigo text-ink text-xs">
+        </div>
+
+        <div class="pt-3 border-t border-line flex items-center justify-end gap-2">
+          <button type="button" class="h-control px-4 rounded border border-line-strong hover:bg-th text-ink text-xs font-medium cursor-pointer" onclick="closeRecordPaymentModal()">Cancel</button>
+          <button type="submit" class="h-control px-4 rounded bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold shadow-sm cursor-pointer">Confirm Payment & Activate</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  {{> toast}}
+  {{> scripts}}
+
+  <!-- Client-side Interactive Logic -->
+  <script>
+    // 1. Drawer Controls
+    function openAddTenantDrawer() {
+      document.getElementById('addTenantDrawer').classList.remove('hidden');
+      document.getElementById('drawerBusinessName').focus();
+    }
+    function closeAddTenantDrawer() {
+      document.getElementById('addTenantDrawer').classList.add('hidden');
+    }
+
+    // 2. Modal Controls
+    function openRecordPaymentModal() {
+      document.getElementById('recordPaymentModal').classList.remove('hidden');
+    }
+    function closeRecordPaymentModal() {
+      document.getElementById('recordPaymentModal').classList.add('hidden');
+    }
+
+    function autoFillPackageAmount(pkg) {
+      const amountMap = {
+        'Basic': '₦ 15,000.00',
+        'Standard': '₦ 35,000.00',
+        'Premium': '₦ 75,000.00',
+        'Once and For All': '₦ 5,000,000.00'
+      };
+      if (amountMap[pkg]) {
+        document.getElementById('modalAmount').value = amountMap[pkg];
+      }
+    }
+
+    // 3. Filter Tenants Table
+    function filterTenants(status, btn) {
+      // update active button state
+      document.querySelectorAll('#tenantStatusTabs button').forEach(b => {
+        b.classList.remove('bg-surface', 'font-semibold', 'shadow-xs', 'text-ink');
+        b.classList.add('text-muted');
+      });
+      btn.classList.remove('text-muted');
+      btn.classList.add('bg-surface', 'font-semibold', 'shadow-xs', 'text-ink');
+
+      const rows = document.querySelectorAll('.tenant-row');
+      let visible = 0;
+      rows.forEach(row => {
+        const rowStatus = row.getAttribute('data-status');
+        if (status === 'all' || rowStatus === status) {
+          row.style.display = '';
+          visible++;
+        } else {
+          row.style.display = 'none';
+        }
+      });
+      document.getElementById('tenantCountDisplay').textContent = `Showing ${visible} of ${rows.length} registered business accounts`;
+    }
+
+    // 4. Live Search Tenants
+    function searchTenants(query) {
+      const q = query.toLowerCase().trim();
+      const rows = document.querySelectorAll('.tenant-row');
+      let visible = 0;
+      rows.forEach(row => {
+        const searchContent = (row.getAttribute('data-search') || '').toLowerCase();
+        if (!q || searchContent.includes(q)) {
+          row.style.display = '';
+          visible++;
+        } else {
+          row.style.display = 'none';
+        }
+      });
+      document.getElementById('tenantCountDisplay').textContent = `Showing ${visible} of ${rows.length} registered business accounts`;
+    }
+
+    // 5. Context Menus
+    function toggleTenantMenu(id) {
+      const menu = document.getElementById(`tenant-menu-${id}`);
+      if (menu) {
+        menu.classList.toggle('hidden');
+      }
+    }
+
+    function viewTenantDetails(name, owner, pkg, email) {
+      window.showToast({
+        title: name,
+        message: `Owner: ${owner} · Plan: ${pkg} · Email: ${email}`,
+        type: 'info'
+      });
+    }
+
+    function extendSubscription(name) {
+      window.showToast({
+        title: 'Subscription Extended',
+        message: `${name} has been credited with an additional 30 active days.`,
+        type: 'success'
+      });
+    }
+
+    function suspendTenant(name) {
+      if (confirm(`Are you sure you want to suspend workspace for ${name}?`)) {
+        window.showToast({
+          title: 'Account Suspended',
+          message: `${name} access has been temporarily locked.`,
+          type: 'warning'
+        });
+      }
+    }
+
+    // 6. Form Handlers
+    function submitAddTenant(e) {
+      e.preventDefault();
+      const bizName = document.getElementById('drawerBusinessName').value;
+      const owner = document.getElementById('drawerOwnerName').value;
+      const pkg = document.getElementById('drawerPackage').value;
+      closeAddTenantDrawer();
+      window.showToast({
+        title: 'Tenant Provisioned Successfully!',
+        message: `${bizName} (${owner}) registered on ${pkg} tier. Welcome email dispatched.`,
+        type: 'success'
+      });
+    }
+
+    function submitOfflinePayment(e) {
+      e.preventDefault();
+      const tenant = document.getElementById('modalTenantSelect').value;
+      const amount = document.getElementById('modalAmount').value;
+      const method = document.getElementById('modalMethod').value;
+      closeRecordPaymentModal();
+      window.showToast({
+        title: 'Payment Recorded!',
+        message: `Receipt generated for ${amount} received from ${tenant} via ${method}.`,
+        type: 'success'
+      });
+    }
+
+    function downloadPaymentReceipt(orderId, user, amount) {
+      window.showToast({
+        title: 'Receipt Download',
+        message: `Official PDF invoice for ${orderId} (${amount}) generated for ${user}.`,
+        type: 'info'
+      });
+    }
+
+    function triggerManualBackup() {
+      window.showToast({
+        title: 'Backup Triggered',
+        message: 'PostgreSQL database snapshot initiated. Compressing to encrypted archive...',
+        type: 'info'
+      });
+      setTimeout(() => {
+        window.showToast({
+          title: 'Backup Completed',
+          message: 'Database backup bookkip_snap_20261013.tar.gz saved safely (24.6 MB).',
+          type: 'success'
+        });
+      }, 1600);
+    }
+
+    // Close floating context menus on outside click
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('#registered-tenants')) {
+        document.querySelectorAll('[id^="tenant-menu-"]').forEach(m => m.classList.add('hidden'));
+      }
+      if (!e.target.closest('#adminUserMenuBtn') && !e.target.closest('#adminUserMenuDropdown')) {
+        const dd = document.getElementById('adminUserMenuDropdown');
+        if (dd) dd.classList.add('hidden');
+      }
+    });
+  </script>
+</body>
+</html>
