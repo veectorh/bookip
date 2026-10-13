@@ -40,6 +40,7 @@ export default defineConfig({
         reports_tax: resolve(__dirname, 'reports_tax.html'),
         admin_dashboard: resolve(__dirname, 'admin_dashboard.html'),
         admin_packages: resolve(__dirname, 'admin_packages.html'),
+        admin_users: resolve(__dirname, 'admin_users.html'),
       },
     },
   },
