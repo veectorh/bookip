@@ -1,10 +1,18 @@
-{{#if (eq status "paid")}}
+{{#if (or (eq status "paid") (eq status "completed") (eq status "active") (eq status "Active"))}}
 <span class="inline-flex items-center gap-1.5 h-[22px] px-2 rounded-[3px] text-xs font-medium whitespace-nowrap bg-status-paid-bg text-status-paid-text border border-status-paid-border before:content-[''] before:w-1.5 before:h-1.5 before:rounded-full before:bg-status-paid-dot before:shrink-0">
-  {{#if label}}{{label}}{{else}}Paid{{/if}}
+  {{#if label}}{{label}}{{else if (eq status "active")}}Active{{else if (eq status "Active")}}Active{{else if (eq status "completed")}}Completed{{else}}Paid{{/if}}
 </span>
-{{else if (eq status "overdue")}}
+{{else if (or (eq status "trial") (eq status "Trial"))}}
+<span class="inline-flex items-center gap-1.5 h-[22px] px-2 rounded-[3px] text-xs font-medium whitespace-nowrap bg-sky-50 text-sky-700 border border-sky-200 before:content-[''] before:w-1.5 before:h-1.5 before:rounded-full before:bg-sky-500 before:shrink-0">
+  {{#if label}}{{label}}{{else}}Free Trial{{/if}}
+</span>
+{{else if (or (eq status "expired") (eq status "Expired"))}}
+<span class="inline-flex items-center gap-1.5 h-[22px] px-2 rounded-[3px] text-xs font-medium whitespace-nowrap bg-amber-50 text-amber-700 border border-amber-200 before:content-[''] before:w-1.5 before:h-1.5 before:rounded-full before:bg-amber-500 before:shrink-0">
+  {{#if label}}{{label}}{{else}}Expired{{/if}}
+</span>
+{{else if (or (eq status "overdue") (eq status "failed") (eq status "suspended") (eq status "Suspended"))}}
 <span class="inline-flex items-center gap-1.5 h-[22px] px-2 rounded-[3px] text-xs font-medium whitespace-nowrap bg-status-overdue-bg text-status-overdue-text border border-status-overdue-border before:content-[''] before:w-1.5 before:h-1.5 before:rounded-full before:bg-status-overdue-dot before:shrink-0">
-  {{#if label}}{{label}}{{else}}Overdue{{/if}}
+  {{#if label}}{{label}}{{else if (or (eq status "suspended") (eq status "Suspended"))}}Suspended{{else if (eq status "failed")}}Failed{{else}}Overdue{{/if}}
 </span>
 {{else if (eq status "partially_paid")}}
 <span class="inline-flex items-center gap-1.5 h-[22px] px-2 rounded-[3px] text-xs font-medium whitespace-nowrap bg-status-partiallyPaid-bg text-status-partiallyPaid-text border border-status-partiallyPaid-border before:content-[''] before:w-1.5 before:h-1.5 before:rounded-full before:bg-status-partiallyPaid-dot before:shrink-0">
@@ -18,9 +26,13 @@
 <span class="inline-flex items-center gap-1.5 h-[22px] px-2 rounded-[3px] text-xs font-medium whitespace-nowrap bg-status-cancelled-bg text-status-cancelled-text border border-status-cancelled-border before:content-[''] before:w-1.5 before:h-1.5 before:rounded-full before:bg-status-cancelled-dot before:shrink-0">
   {{#if label}}{{label}}{{else}}Cancelled{{/if}}
 </span>
-{{else if (eq status "pending")}}
+{{else if (or (eq status "pending") (eq status "Pending"))}}
 <span class="inline-flex items-center gap-1.5 h-[22px] px-2 rounded-[3px] text-xs font-medium whitespace-nowrap bg-status-pending-bg text-status-pending-text border border-status-pending-border before:content-[''] before:w-1.5 before:h-1.5 before:rounded-full before:bg-status-pending-dot before:shrink-0">
   {{#if label}}{{label}}{{else}}Pending{{/if}}
+</span>
+{{else if (or (eq status "lifetime") (eq status "Once and For All"))}}
+<span class="inline-flex items-center gap-1.5 h-[22px] px-2 rounded-[3px] text-xs font-medium whitespace-nowrap bg-purple-50 text-purple-700 border border-purple-200 before:content-[''] before:w-1.5 before:h-1.5 before:rounded-full before:bg-purple-500 before:shrink-0">
+  {{#if label}}{{label}}{{else}}Lifetime Plan{{/if}}
 </span>
 {{else}}
 <span class="inline-flex items-center gap-1.5 h-[22px] px-2 rounded-[3px] text-xs font-medium whitespace-nowrap bg-status-draft-bg text-status-draft-text border border-status-draft-border before:content-[''] before:w-1.5 before:h-1.5 before:rounded-full before:bg-status-draft-dot before:shrink-0">

@@ -39,6 +39,7 @@ export default defineConfig({
         reports_vendor_purchases: resolve(__dirname, 'reports_vendor_purchases.html'),
         reports_tax: resolve(__dirname, 'reports_tax.html'),
         admin_dashboard: resolve(__dirname, 'admin_dashboard.html'),
+        admin_packages: resolve(__dirname, 'admin_packages.html'),
       },
     },
   },

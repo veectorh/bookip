@@ -1,0 +1,49 @@
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-3.5">
+  <!-- Status Filter Pill Tabs -->
+  {{#if tab1_label}}
+  <div class="inline-flex p-0.5 bg-canvas rounded-lg border border-line text-xs font-medium overflow-x-auto [scrollbar-width:none] shrink-0" {{#if tabs_id}}id="{{tabs_id}}"{{/if}}>
+    <button type="button" class="px-2.5 py-1 rounded-md bg-surface text-ink font-semibold shadow-xs transition-colors cursor-pointer whitespace-nowrap" 
+            onclick="{{#if tab_handler}}{{tab_handler}}('{{#if tab1_val}}{{tab1_val}}{{else}}all{{/if}}', this){{else}}window.filterByTab && window.filterByTab('{{#if tab1_val}}{{tab1_val}}{{else}}all{{/if}}', this){{/if}}">
+      {{tab1_label}}{{#if tab1_count}} <span class="opacity-75">({{tab1_count}})</span>{{/if}}
+    </button>
+    {{#if tab2_label}}
+    <button type="button" class="px-2.5 py-1 rounded-md text-muted hover:text-ink transition-colors cursor-pointer whitespace-nowrap" 
+            onclick="{{#if tab_handler}}{{tab_handler}}('{{tab2_val}}', this){{else}}window.filterByTab && window.filterByTab('{{tab2_val}}', this){{/if}}">
+      {{tab2_label}}{{#if tab2_count}} <span class="opacity-75">({{tab2_count}})</span>{{/if}}
+    </button>
+    {{/if}}
+    {{#if tab3_label}}
+    <button type="button" class="px-2.5 py-1 rounded-md text-muted hover:text-ink transition-colors cursor-pointer whitespace-nowrap" 
+            onclick="{{#if tab_handler}}{{tab_handler}}('{{tab3_val}}', this){{else}}window.filterByTab && window.filterByTab('{{tab3_val}}', this){{/if}}">
+      {{tab3_label}}{{#if tab3_count}} <span class="opacity-75">({{tab3_count}})</span>{{/if}}
+    </button>
+    {{/if}}
+    {{#if tab4_label}}
+    <button type="button" class="px-2.5 py-1 rounded-md text-muted hover:text-ink transition-colors cursor-pointer whitespace-nowrap" 
+            onclick="{{#if tab_handler}}{{tab_handler}}('{{tab4_val}}', this){{else}}window.filterByTab && window.filterByTab('{{tab4_val}}', this){{/if}}">
+      {{tab4_label}}{{#if tab4_count}} <span class="opacity-75">({{tab4_count}})</span>{{/if}}
+    </button>
+    {{/if}}
+  </div>
+  {{/if}}
+
+  <!-- Search & Secondary Controls -->
+  <div class="flex items-center gap-2.5 ml-auto w-full sm:w-auto">
+    {{#if search_id}}
+    <div class="relative flex-1 sm:flex-initial">
+      <input type="text" id="{{search_id}}" placeholder="{{#if search_placeholder}}{{search_placeholder}}{{else}}Search...{{/if}}" 
+             class="h-8 pl-8 pr-3 text-xs bg-surface border border-line rounded-md outline-none focus:border-indigo transition-colors w-full sm:w-56 text-ink"
+             {{#if search_handler}}oninput="{{search_handler}}(this.value)"{{/if}}>
+      <svg class="w-3.5 h-3.5 stroke-2 text-muted absolute left-2.5 top-2.5 pointer-events-none"><use href="#i-search"/></svg>
+    </div>
+    {{/if}}
+
+    {{#if filter_select_id}}
+    <div class="flex items-center h-8 px-2 bg-surface border border-line rounded text-xs font-medium text-ink">
+      <select id="{{filter_select_id}}" class="bg-transparent border-0 outline-none text-ink cursor-pointer" {{#if filter_select_handler}}onchange="{{filter_select_handler}}(this.value)"{{/if}}>
+        {{> @partial-block }}
+      </select>
+    </div>
+    {{/if}}
+  </div>
+</div>

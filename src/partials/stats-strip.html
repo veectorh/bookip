@@ -1,42 +1,63 @@
 {{#if label4}}
 <div class="grid grid-cols-2 lg:grid-cols-4 bg-surface border border-line rounded mb-3.5 overflow-hidden stats-grid">
-  <div class="p-3 border-r border-b lg:border-b-0 border-line">
-    <div class="text-xs text-muted font-medium">{{label1}}</div>
-    <div class="text-xl font-semibold tracking-tight mt-0.5 whitespace-nowrap {{#if danger1}}text-[#B4372A]{{else if success1}}text-[#146A3E]{{/if}}">{{value1}}</div>
-    {{#if subtext1}}<div class="text-[11px] text-muted mt-0.5">{{subtext1}}</div>{{/if}}
+  <div class="p-3 border-r border-b lg:border-b-0 border-line flex flex-col justify-between">
+    <div class="flex items-center justify-between gap-1 text-xs text-muted font-medium mb-1">
+      <span class="truncate">{{label1}}</span>
+      {{#if badge1}}<span class="inline-flex items-center px-1.5 py-0.2 rounded text-[10px] font-semibold {{#if danger1}}bg-rose-50 text-rose-700 border border-rose-200{{else}}bg-[#E9F7EF] text-[#146A3E] border border-[#C8EAD6]{{/if}}">{{badge1}}</span>{{/if}}
+    </div>
+    <div class="text-xl font-semibold tracking-tight whitespace-nowrap {{#if danger1}}text-[#B4372A]{{else if success1}}text-[#146A3E]{{/if}}">{{value1}}</div>
+    {{#if subtext1}}<div class="text-[11px] text-muted mt-0.5 flex items-center gap-1">{{#if dot1}}<span class="w-1.5 h-1.5 rounded-full shrink-0" style="background-color: {{dot1}};"></span>{{/if}}{{subtext1}}</div>{{/if}}
   </div>
-  <div class="p-3 border-b lg:border-r lg:border-b-0 border-line">
-    <div class="text-xs text-muted font-medium">{{label2}}</div>
-    <div class="text-xl font-semibold tracking-tight mt-0.5 whitespace-nowrap {{#if danger2}}text-[#B4372A]{{else if success2}}text-[#146A3E]{{/if}}">{{value2}}</div>
-    {{#if subtext2}}<div class="text-[11px] text-muted mt-0.5">{{subtext2}}</div>{{/if}}
+  <div class="p-3 border-b lg:border-r lg:border-b-0 border-line flex flex-col justify-between">
+    <div class="flex items-center justify-between gap-1 text-xs text-muted font-medium mb-1">
+      <span class="truncate">{{label2}}</span>
+      {{#if badge2}}<span class="inline-flex items-center px-1.5 py-0.2 rounded text-[10px] font-semibold {{#if danger2}}bg-rose-50 text-rose-700 border border-rose-200{{else}}bg-[#E9F7EF] text-[#146A3E] border border-[#C8EAD6]{{/if}}">{{badge2}}</span>{{/if}}
+    </div>
+    <div class="text-xl font-semibold tracking-tight whitespace-nowrap {{#if danger2}}text-[#B4372A]{{else if success2}}text-[#146A3E]{{/if}}">{{value2}}</div>
+    {{#if subtext2}}<div class="text-[11px] text-muted mt-0.5 flex items-center gap-1">{{#if dot2}}<span class="w-1.5 h-1.5 rounded-full shrink-0" style="background-color: {{dot2}};"></span>{{/if}}{{subtext2}}</div>{{/if}}
   </div>
-  <div class="p-3 border-r lg:border-b-0 border-line">
-    <div class="text-xs text-muted font-medium">{{label3}}</div>
-    <div class="text-xl font-semibold tracking-tight mt-0.5 whitespace-nowrap {{#if danger3}}text-[#B4372A]{{else if success3}}text-[#146A3E]{{/if}}">{{value3}}</div>
-    {{#if subtext3}}<div class="text-[11px] text-muted mt-0.5">{{subtext3}}</div>{{/if}}
+  <div class="p-3 border-r lg:border-b-0 border-line flex flex-col justify-between">
+    <div class="flex items-center justify-between gap-1 text-xs text-muted font-medium mb-1">
+      <span class="truncate">{{label3}}</span>
+      {{#if badge3}}<span class="inline-flex items-center px-1.5 py-0.2 rounded text-[10px] font-semibold {{#if danger3}}bg-rose-50 text-rose-700 border border-rose-200{{else}}bg-[#E9F7EF] text-[#146A3E] border border-[#C8EAD6]{{/if}}">{{badge3}}</span>{{/if}}
+    </div>
+    <div class="text-xl font-semibold tracking-tight whitespace-nowrap {{#if danger3}}text-[#B4372A]{{else if success3}}text-[#146A3E]{{/if}}">{{value3}}</div>
+    {{#if subtext3}}<div class="text-[11px] text-muted mt-0.5 flex items-center gap-1">{{#if dot3}}<span class="w-1.5 h-1.5 rounded-full shrink-0" style="background-color: {{dot3}};"></span>{{/if}}{{subtext3}}</div>{{/if}}
   </div>
-  <div class="p-3">
-    <div class="text-xs text-muted font-medium">{{label4}}</div>
-    <div class="text-xl font-semibold tracking-tight mt-0.5 whitespace-nowrap {{#if danger4}}text-[#B4372A]{{else if success4}}text-[#146A3E]{{/if}}">{{value4}}</div>
-    {{#if subtext4}}<div class="text-[11px] text-muted mt-0.5">{{subtext4}}</div>{{/if}}
+  <div class="p-3 flex flex-col justify-between">
+    <div class="flex items-center justify-between gap-1 text-xs text-muted font-medium mb-1">
+      <span class="truncate">{{label4}}</span>
+      {{#if badge4}}<span class="inline-flex items-center px-1.5 py-0.2 rounded text-[10px] font-semibold {{#if danger4}}bg-rose-50 text-rose-700 border border-rose-200{{else}}bg-[#E9F7EF] text-[#146A3E] border border-[#C8EAD6]{{/if}}">{{badge4}}</span>{{/if}}
+    </div>
+    <div class="text-xl font-semibold tracking-tight whitespace-nowrap {{#if danger4}}text-[#B4372A]{{else if success4}}text-[#146A3E]{{/if}}">{{value4}}</div>
+    {{#if subtext4}}<div class="text-[11px] text-muted mt-0.5 flex items-center gap-1">{{#if dot4}}<span class="w-1.5 h-1.5 rounded-full shrink-0" style="background-color: {{dot4}};"></span>{{/if}}{{subtext4}}</div>{{/if}}
   </div>
 </div>
 {{else}}
 <div class="grid grid-cols-2 md:grid-cols-3 bg-surface border border-line rounded mb-3.5 overflow-hidden stats-grid">
-  <div class="p-3 border-r border-b md:border-b-0 border-line">
-    <div class="text-xs text-muted font-medium">{{label1}}</div>
-    <div class="text-xl font-semibold tracking-tight mt-0.5 whitespace-nowrap {{#if danger1}}text-[#B4372A]{{else if success1}}text-[#146A3E]{{/if}}">{{value1}}</div>
-    {{#if subtext1}}<div class="text-[11px] text-muted mt-0.5">{{subtext1}}</div>{{/if}}
+  <div class="p-3 border-r border-b md:border-b-0 border-line flex flex-col justify-between">
+    <div class="flex items-center justify-between gap-1 text-xs text-muted font-medium mb-1">
+      <span class="truncate">{{label1}}</span>
+      {{#if badge1}}<span class="inline-flex items-center px-1.5 py-0.2 rounded text-[10px] font-semibold {{#if danger1}}bg-rose-50 text-rose-700 border border-rose-200{{else}}bg-[#E9F7EF] text-[#146A3E] border border-[#C8EAD6]{{/if}}">{{badge1}}</span>{{/if}}
+    </div>
+    <div class="text-xl font-semibold tracking-tight whitespace-nowrap {{#if danger1}}text-[#B4372A]{{else if success1}}text-[#146A3E]{{/if}}">{{value1}}</div>
+    {{#if subtext1}}<div class="text-[11px] text-muted mt-0.5 flex items-center gap-1">{{#if dot1}}<span class="w-1.5 h-1.5 rounded-full shrink-0" style="background-color: {{dot1}};"></span>{{/if}}{{subtext1}}</div>{{/if}}
   </div>
-  <div class="p-3 border-b md:border-r md:border-b-0 border-line">
-    <div class="text-xs text-muted font-medium">{{label2}}</div>
-    <div class="text-xl font-semibold tracking-tight mt-0.5 whitespace-nowrap {{#if danger2}}text-[#B4372A]{{else if success2}}text-[#146A3E]{{/if}}">{{value2}}</div>
-    {{#if subtext2}}<div class="text-[11px] text-muted mt-0.5">{{subtext2}}</div>{{/if}}
+  <div class="p-3 border-b md:border-r md:border-b-0 border-line flex flex-col justify-between">
+    <div class="flex items-center justify-between gap-1 text-xs text-muted font-medium mb-1">
+      <span class="truncate">{{label2}}</span>
+      {{#if badge2}}<span class="inline-flex items-center px-1.5 py-0.2 rounded text-[10px] font-semibold {{#if danger2}}bg-rose-50 text-rose-700 border border-rose-200{{else}}bg-[#E9F7EF] text-[#146A3E] border border-[#C8EAD6]{{/if}}">{{badge2}}</span>{{/if}}
+    </div>
+    <div class="text-xl font-semibold tracking-tight whitespace-nowrap {{#if danger2}}text-[#B4372A]{{else if success2}}text-[#146A3E]{{/if}}">{{value2}}</div>
+    {{#if subtext2}}<div class="text-[11px] text-muted mt-0.5 flex items-center gap-1">{{#if dot2}}<span class="w-1.5 h-1.5 rounded-full shrink-0" style="background-color: {{dot2}};"></span>{{/if}}{{subtext2}}</div>{{/if}}
   </div>
-  <div class="p-3 col-span-2 md:col-span-1">
-    <div class="text-xs text-muted font-medium">{{label3}}</div>
-    <div class="text-xl font-semibold tracking-tight mt-0.5 whitespace-nowrap {{#if danger3}}text-[#B4372A]{{else if success3}}text-[#146A3E]{{/if}}">{{value3}}</div>
-    {{#if subtext3}}<div class="text-[11px] text-muted mt-0.5">{{subtext3}}</div>{{/if}}
+  <div class="p-3 col-span-2 md:col-span-1 flex flex-col justify-between">
+    <div class="flex items-center justify-between gap-1 text-xs text-muted font-medium mb-1">
+      <span class="truncate">{{label3}}</span>
+      {{#if badge3}}<span class="inline-flex items-center px-1.5 py-0.2 rounded text-[10px] font-semibold {{#if danger3}}bg-rose-50 text-rose-700 border border-rose-200{{else}}bg-[#E9F7EF] text-[#146A3E] border border-[#C8EAD6]{{/if}}">{{badge3}}</span>{{/if}}
+    </div>
+    <div class="text-xl font-semibold tracking-tight whitespace-nowrap {{#if danger3}}text-[#B4372A]{{else if success3}}text-[#146A3E]{{/if}}">{{value3}}</div>
+    {{#if subtext3}}<div class="text-[11px] text-muted mt-0.5 flex items-center gap-1">{{#if dot3}}<span class="w-1.5 h-1.5 rounded-full shrink-0" style="background-color: {{dot3}};"></span>{{/if}}{{subtext3}}</div>{{/if}}
   </div>
 </div>
 {{/if}}

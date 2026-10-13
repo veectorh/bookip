@@ -535,10 +535,134 @@
       "growth_rate": "+14.2%"
     },
     "packages": [
-      { "name": "Basic", "price": "₦ 15,000/mo", "subscribers": 52, "percentage": 35, "color": "#4F46E5" },
-      { "name": "Standard", "price": "₦ 35,000/mo", "subscribers": 62, "percentage": 42, "color": "#06B6D4" },
-      { "name": "Premium", "price": "₦ 75,000/mo", "subscribers": 22, "percentage": 15, "color": "#10B981" },
-      { "name": "Once and For All", "price": "₦ 5,000,000", "subscribers": 12, "percentage": 8, "color": "#F59E0B" }
+      {
+        "id": "PKG-01",
+        "name": "Basic",
+        "badge": "Starter",
+        "price_monthly": "₦ 15,000",
+        "price_annual": "₦ 144,000",
+        "price_period": "/month",
+        "subscribers": 52,
+        "percentage": 35,
+        "color": "#4F46E5",
+        "status": "Active",
+        "is_popular": false,
+        "description": "Essential accounting tools for small shops and sole proprietors.",
+        "quotas": {
+          "users": "1 User Seat",
+          "invoices": "50 Invoices / mo",
+          "products": "100 Products",
+          "storage": "1 GB Cloud Storage"
+        },
+        "features": [
+          { "name": "Basic Invoicing & Quotes", "included": true },
+          { "name": "Customer & Vendor Management", "included": true },
+          { "name": "Cashflow & Expense Tracking", "included": true },
+          { "name": "Standard Reports (P&L, VAT)", "included": true },
+          { "name": "Recurring Invoices & Reminders", "included": false },
+          { "name": "Payroll & Staff Attendance", "included": false },
+          { "name": "Multi-Currency Banking", "included": false },
+          { "name": "Custom Invoice Branding & Logo", "included": false },
+          { "name": "REST API & Webhooks Access", "included": false },
+          { "name": "Priority VIP Support", "included": false }
+        ]
+      },
+      {
+        "id": "PKG-02",
+        "name": "Standard",
+        "badge": "Most Popular",
+        "price_monthly": "₦ 35,000",
+        "price_annual": "₦ 336,000",
+        "price_period": "/month",
+        "subscribers": 62,
+        "percentage": 42,
+        "color": "#06B6D4",
+        "status": "Active",
+        "is_popular": true,
+        "description": "Full-featured platform for growing commercial enterprises & trade.",
+        "quotas": {
+          "users": "5 User Seats",
+          "invoices": "Unlimited Invoices",
+          "products": "1,000 Products",
+          "storage": "10 GB Cloud Storage"
+        },
+        "features": [
+          { "name": "Basic Invoicing & Quotes", "included": true },
+          { "name": "Customer & Vendor Management", "included": true },
+          { "name": "Cashflow & Expense Tracking", "included": true },
+          { "name": "Standard Reports (P&L, VAT)", "included": true },
+          { "name": "Recurring Invoices & Reminders", "included": true },
+          { "name": "Payroll & Staff Attendance", "included": true },
+          { "name": "Multi-Currency Banking", "included": true },
+          { "name": "Custom Invoice Branding & Logo", "included": true },
+          { "name": "REST API & Webhooks Access", "included": false },
+          { "name": "Priority VIP Support", "included": false }
+        ]
+      },
+      {
+        "id": "PKG-03",
+        "name": "Premium",
+        "badge": "Enterprise Scale",
+        "price_monthly": "₦ 75,000",
+        "price_annual": "₦ 720,000",
+        "price_period": "/month",
+        "subscribers": 22,
+        "percentage": 15,
+        "color": "#10B981",
+        "status": "Active",
+        "is_popular": false,
+        "description": "High-volume businesses needing multi-user HR, API access & audit compliance.",
+        "quotas": {
+          "users": "15 User Seats",
+          "invoices": "Unlimited Invoices",
+          "products": "Unlimited Products",
+          "storage": "50 GB Cloud Storage"
+        },
+        "features": [
+          { "name": "Basic Invoicing & Quotes", "included": true },
+          { "name": "Customer & Vendor Management", "included": true },
+          { "name": "Cashflow & Expense Tracking", "included": true },
+          { "name": "Standard Reports (P&L, VAT)", "included": true },
+          { "name": "Recurring Invoices & Reminders", "included": true },
+          { "name": "Payroll & Staff Attendance", "included": true },
+          { "name": "Multi-Currency Banking", "included": true },
+          { "name": "Custom Invoice Branding & Logo", "included": true },
+          { "name": "REST API & Webhooks Access", "included": true },
+          { "name": "Priority VIP Support", "included": true }
+        ]
+      },
+      {
+        "id": "PKG-04",
+        "name": "Once and For All",
+        "badge": "Lifetime License",
+        "price_monthly": "₦ 5,000,000",
+        "price_annual": "₦ 5,000,000",
+        "price_period": "one-time",
+        "subscribers": 12,
+        "percentage": 8,
+        "color": "#F59E0B",
+        "status": "Active",
+        "is_popular": false,
+        "description": "One-time perpetual license with dedicated server deployment & lifetime updates.",
+        "quotas": {
+          "users": "Unlimited Users",
+          "invoices": "Unlimited Invoices",
+          "products": "Unlimited Products",
+          "storage": "100 GB Cloud Storage"
+        },
+        "features": [
+          { "name": "Basic Invoicing & Quotes", "included": true },
+          { "name": "Customer & Vendor Management", "included": true },
+          { "name": "Cashflow & Expense Tracking", "included": true },
+          { "name": "Standard Reports (P&L, VAT)", "included": true },
+          { "name": "Recurring Invoices & Reminders", "included": true },
+          { "name": "Payroll & Staff Attendance", "included": true },
+          { "name": "Multi-Currency Banking", "included": true },
+          { "name": "Custom Invoice Branding & Logo", "included": true },
+          { "name": "REST API & Webhooks Access", "included": true },
+          { "name": "Priority VIP Support", "included": true }
+        ]
+      }
     ],
     "monthly_revenue": [
       { "month": "Jan", "amount": 2850000, "formatted": "₦ 2,850,000.00", "height_pct": 52 },
