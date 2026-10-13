@@ -815,6 +815,290 @@
       "database_size": "24.6 MB",
       "active_sessions": 38,
       "server_response_time": "48ms"
+    },
+    "affiliates": {
+      "stats": {
+        "total_paid": "₦ 1,850,000.00",
+        "pending_payouts": "₦ 145,000.00",
+        "active_partners": 24,
+        "conversion_rate": "8.4%"
+      },
+      "payout_requests": [
+        {
+          "id": "PAY-901",
+          "affiliate": "Oluwaseun Adeyemi",
+          "email": "seun.growth@gmail.com",
+          "bank": "Guaranty Trust Bank (GTB)",
+          "account_number": "0123456789",
+          "amount": "₦ 65,000.00",
+          "date": "10 Oct 2026",
+          "status": "Pending"
+        },
+        {
+          "id": "PAY-902",
+          "affiliate": "Techpreneurs Hub Lagos",
+          "email": "partners@techpreneurshub.ng",
+          "bank": "Zenith Bank",
+          "account_number": "2088761234",
+          "amount": "₦ 80,000.00",
+          "date": "08 Oct 2026",
+          "status": "Pending"
+        },
+        {
+          "id": "PAY-899",
+          "affiliate": "Chidi Nnamdi",
+          "email": "chidi@growthconsult.ng",
+          "bank": "Access Bank",
+          "account_number": "0099887766",
+          "amount": "₦ 120,000.00",
+          "date": "29 Sep 2026",
+          "status": "Approved"
+        },
+        {
+          "id": "PAY-898",
+          "affiliate": "SME Digital Africa",
+          "email": "payouts@smedigital.africa",
+          "bank": "First Bank of Nigeria",
+          "account_number": "3011223344",
+          "amount": "₦ 350,000.00",
+          "date": "22 Sep 2026",
+          "status": "Approved"
+        },
+        {
+          "id": "PAY-895",
+          "affiliate": "Kemi Badmus",
+          "email": "kemi.badmus@yahoo.com",
+          "bank": "Kuda Microfinance Bank",
+          "account_number": "1100229988",
+          "amount": "₦ 25,000.00",
+          "date": "15 Sep 2026",
+          "status": "Rejected",
+          "reason": "Invalid NUBAN account name match"
+        }
+      ],
+      "referrals": [
+        {
+          "id": "REF-401",
+          "affiliate": "Oluwaseun Adeyemi",
+          "tenant": "Ebor Kingsley Enterprises",
+          "package": "Basic Plan",
+          "commission": "₦ 2,250.00",
+          "date": "08 Sep 2026",
+          "status": "Active"
+        },
+        {
+          "id": "REF-402",
+          "affiliate": "Techpreneurs Hub Lagos",
+          "tenant": "David Faith Creative Studio",
+          "package": "Standard Plan",
+          "commission": "₦ 5,250.00",
+          "date": "02 Oct 2026",
+          "status": "Trial"
+        },
+        {
+          "id": "REF-403",
+          "affiliate": "SME Digital Africa",
+          "tenant": "Prime Technology Solutions",
+          "package": "Once and For All",
+          "commission": "₦ 750,000.00",
+          "date": "12 Mar 2026",
+          "status": "Active"
+        },
+        {
+          "id": "REF-404",
+          "affiliate": "Chidi Nnamdi",
+          "tenant": "Swift Logistics & Courier",
+          "package": "Standard Plan",
+          "commission": "₦ 5,250.00",
+          "date": "05 Oct 2026",
+          "status": "Trial"
+        }
+      ],
+      "partners": [
+        {
+          "id": "AFF-101",
+          "name": "Oluwaseun Adeyemi",
+          "email": "seun.growth@gmail.com",
+          "code": "SEUN20",
+          "referred_count": 14,
+          "total_earnings": "₦ 310,000.00",
+          "unpaid_balance": "₦ 65,000.00",
+          "joined_date": "15 Jan 2026",
+          "status": "Active"
+        },
+        {
+          "id": "AFF-102",
+          "name": "Techpreneurs Hub Lagos",
+          "email": "partners@techpreneurshub.ng",
+          "code": "TECHHUB",
+          "referred_count": 28,
+          "total_earnings": "₦ 640,000.00",
+          "unpaid_balance": "₦ 80,000.00",
+          "joined_date": "04 Feb 2026",
+          "status": "Active"
+        },
+        {
+          "id": "AFF-103",
+          "name": "SME Digital Africa",
+          "email": "payouts@smedigital.africa",
+          "code": "SMEDIGITAL",
+          "referred_count": 42,
+          "total_earnings": "₦ 1,450,000.00",
+          "unpaid_balance": "₦ 0.00",
+          "joined_date": "10 Nov 2025",
+          "status": "Active"
+        },
+        {
+          "id": "AFF-104",
+          "name": "Chidi Nnamdi",
+          "email": "chidi@growthconsult.ng",
+          "code": "CHIDIBIZ",
+          "referred_count": 9,
+          "total_earnings": "₦ 195,000.00",
+          "unpaid_balance": "₦ 0.00",
+          "joined_date": "18 Apr 2026",
+          "status": "Active"
+        }
+      ],
+      "settings": {
+        "commission_rate": 15,
+        "cookie_duration_days": 30,
+        "min_payout": 10000,
+        "auto_approve_limit": 50000
+      }
+    },
+    "website_cms": {
+      "faqs": [
+        {
+          "id": "FAQ-01",
+          "question": "Can I invite multiple team members with different permissions?",
+          "answer": "Yes! Standard and Premium tiers include multi-user role management with granular roles like Admin, Accountant, Sales Rep, and Inventory Auditor.",
+          "category": "Billing & Teams",
+          "order": 1,
+          "is_published": true
+        },
+        {
+          "id": "FAQ-02",
+          "question": "Does Bookkip work offline or during network dropouts?",
+          "answer": "Bookkip saves drafts locally in your browser storage and synchronizes safely once your connection is restored.",
+          "category": "Technical",
+          "order": 2,
+          "is_published": true
+        },
+        {
+          "id": "FAQ-03",
+          "question": "Can I receive online card payments directly on my invoices?",
+          "answer": "Yes, Bookkip integrates natively with Paystack and Flutterwave. Your clients can click to pay via card, bank transfer, or USSD.",
+          "category": "Invoicing & Payments",
+          "order": 3,
+          "is_published": true
+        },
+        {
+          "id": "FAQ-04",
+          "question": "What is the Once and For All Lifetime plan?",
+          "answer": "Our Lifetime plan grants permanent access for up to 5 business locations with zero recurring annual or monthly fees ever.",
+          "category": "Pricing",
+          "order": 4,
+          "is_published": true
+        }
+      ],
+      "testimonials": [
+        {
+          "id": "TEST-01",
+          "author": "Dr. Amina Bello",
+          "role": "Managing Director",
+          "company": "Acme Dynamics Ltd",
+          "quote": "Switching from fragmented Excel sheets to Bookkip cut our month-end bookkeeping cycle from 8 days down to 4 hours.",
+          "rating": 5,
+          "is_published": true
+        },
+        {
+          "id": "TEST-02",
+          "author": "Emeka Okonkwo",
+          "role": "Chief Operations Officer",
+          "company": "Prime Technology Solutions",
+          "quote": "The POS receipt generator and quotation-to-invoice one click flow made our retail counter operation lightning fast.",
+          "rating": 5,
+          "is_published": true
+        },
+        {
+          "id": "TEST-03",
+          "author": "Isabella Adeleke",
+          "role": "Founder & Creative Lead",
+          "company": "Bella Fashion & Apparel Hub",
+          "quote": "Our customers love the modern PDF invoice templates. We get paid 4x faster since enabling Paystack invoice links.",
+          "rating": 5,
+          "is_published": true
+        }
+      ],
+      "cookie_consent": {
+        "enabled": true,
+        "title": "We value your privacy and business data security",
+        "description": "Bookkip uses strictly essential cookies and telemetry to secure your multi-tenant session and maintain high audit integrity.",
+        "accept_text": "Accept All Cookies",
+        "decline_text": "Essential Only"
+      }
+    },
+    "platform_settings": {
+      "general": {
+        "platform_name": "Bookkip Cloud Invoicing & Accounting",
+        "support_email": "support@bookkip.ng",
+        "support_phone": "+234 800 266 5547",
+        "default_currency": "NGN",
+        "currency_symbol": "₦",
+        "timezone": "Africa/Lagos (GMT+1)",
+        "maintenance_mode": false
+      },
+      "smtp": {
+        "host": "smtp.mailgun.org",
+        "port": 587,
+        "encryption": "TLS",
+        "username": "postmaster@mg.bookkip.ng",
+        "from_name": "Bookkip Platform",
+        "from_email": "noreply@bookkip.ng",
+        "status": "Connected"
+      },
+      "currencies": [
+        { "code": "NGN", "name": "Nigerian Naira", "symbol": "₦", "rate": 1.0, "is_base": true, "status": "Active" },
+        { "code": "USD", "name": "US Dollar", "symbol": "$", "rate": 1620.0, "is_base": false, "status": "Active" },
+        { "code": "GBP", "name": "British Pound", "symbol": "£", "rate": 2110.0, "is_base": false, "status": "Active" },
+        { "code": "EUR", "name": "Euro", "symbol": "€", "rate": 1780.0, "is_base": false, "status": "Active" },
+        { "code": "GHS", "name": "Ghanaian Cedi", "symbol": "GH₵", "rate": 105.0, "is_base": false, "status": "Active" }
+      ],
+      "backups": [
+        {
+          "id": "BKP-20261013-0400",
+          "filename": "bookkip_db_prod_20261013_0400.tar.gz",
+          "size": "24.6 MB",
+          "type": "Automated Daily",
+          "created_at": "13 Oct 2026, 04:00 AM",
+          "status": "Completed"
+        },
+        {
+          "id": "BKP-20261012-0400",
+          "filename": "bookkip_db_prod_20261012_0400.tar.gz",
+          "size": "24.1 MB",
+          "type": "Automated Daily",
+          "created_at": "12 Oct 2026, 04:00 AM",
+          "status": "Completed"
+        },
+        {
+          "id": "BKP-20261011-0400",
+          "filename": "bookkip_db_prod_20261011_0400.tar.gz",
+          "size": "23.8 MB",
+          "type": "Automated Daily",
+          "created_at": "11 Oct 2026, 04:00 AM",
+          "status": "Completed"
+        },
+        {
+          "id": "BKP-20261010-1845",
+          "filename": "bookkip_db_manual_pre_release.tar.gz",
+          "size": "23.5 MB",
+          "type": "Manual Snapshot",
+          "created_at": "10 Oct 2026, 06:45 PM",
+          "status": "Completed"
+        }
+      ]
     }
   }
 }

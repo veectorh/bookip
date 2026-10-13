@@ -46,18 +46,25 @@
       <div class="hidden [&[data-layout=rail]_.group:hover_&]:block absolute left-[calc(100%+8px)] bg-ink text-white text-xs px-2.5 py-1.5 rounded shadow-lg whitespace-nowrap z-50">Invoice Templates</div>
     </a>
 
-    <!-- System Health & Backups -->
-    <a href="#system-health" onclick="document.getElementById('system-health')?.scrollIntoView({behavior:'smooth'});" class="flex items-center gap-2.5 px-2.5 h-[34px] rounded-md text-navy-fg hover:bg-navy-hover hover:text-white w-full relative group [&[data-layout=rail]_&]:justify-center [&[data-layout=rail]_&]:px-0" data-label="System Health">
-      <svg class="w-4 h-4 stroke-2 shrink-0"><use href="#i-server"/></svg>
-      <span class="whitespace-nowrap overflow-hidden [&[data-layout=rail]_&]:hidden">System & Backups</span>
-      <div class="hidden [&[data-layout=rail]_.group:hover_&]:block absolute left-[calc(100%+8px)] bg-ink text-white text-xs px-2.5 py-1.5 rounded shadow-lg whitespace-nowrap z-50">System & Backups</div>
+    <!-- Affiliates & Referrals -->
+    <a href="/admin_affiliates.html" class="flex items-center gap-2.5 px-2.5 h-[34px] rounded-md {{#if (or (eq active "admin_affiliates") active_admin_affiliates)}}bg-indigo text-white font-medium{{else}}text-navy-fg hover:bg-navy-hover hover:text-white{{/if}} w-full relative group [&[data-layout=rail]_&]:justify-center [&[data-layout=rail]_&]:px-0" data-label="Affiliates & Referrals">
+      <svg class="w-4 h-4 stroke-2 shrink-0"><use href="#i-wallet"/></svg>
+      <span class="whitespace-nowrap overflow-hidden [&[data-layout=rail]_&]:hidden">Affiliate Program</span>
+      <div class="hidden [&[data-layout=rail]_.group:hover_&]:block absolute left-[calc(100%+8px)] bg-ink text-white text-xs px-2.5 py-1.5 rounded shadow-lg whitespace-nowrap z-50">Affiliate Program</div>
     </a>
 
-    <!-- Global Settings -->
-    <a href="/settings.html" class="flex items-center gap-2.5 px-2.5 h-[34px] rounded-md text-navy-fg hover:bg-navy-hover hover:text-white w-full relative group [&[data-layout=rail]_&]:justify-center [&[data-layout=rail]_&]:px-0" data-label="Settings">
+    <!-- Website & Content CMS -->
+    <a href="/admin_website.html" class="flex items-center gap-2.5 px-2.5 h-[34px] rounded-md {{#if (or (eq active "admin_website") active_admin_website)}}bg-indigo text-white font-medium{{else}}text-navy-fg hover:bg-navy-hover hover:text-white{{/if}} w-full relative group [&[data-layout=rail]_&]:justify-center [&[data-layout=rail]_&]:px-0" data-label="Website CMS">
+      <svg class="w-4 h-4 stroke-2 shrink-0"><use href="#i-globe"/></svg>
+      <span class="whitespace-nowrap overflow-hidden [&[data-layout=rail]_&]:hidden">Website & CMS</span>
+      <div class="hidden [&[data-layout=rail]_.group:hover_&]:block absolute left-[calc(100%+8px)] bg-ink text-white text-xs px-2.5 py-1.5 rounded shadow-lg whitespace-nowrap z-50">Website & CMS</div>
+    </a>
+
+    <!-- Platform Settings & Backups -->
+    <a href="/admin_settings.html" class="flex items-center gap-2.5 px-2.5 h-[34px] rounded-md {{#if (or (eq active "admin_settings") active_admin_settings)}}bg-indigo text-white font-medium{{else}}text-navy-fg hover:bg-navy-hover hover:text-white{{/if}} w-full relative group [&[data-layout=rail]_&]:justify-center [&[data-layout=rail]_&]:px-0" data-label="Platform Settings">
       <svg class="w-4 h-4 stroke-2 shrink-0"><use href="#i-settings"/></svg>
-      <span class="whitespace-nowrap overflow-hidden [&[data-layout=rail]_&]:hidden">System Settings</span>
-      <div class="hidden [&[data-layout=rail]_.group:hover_&]:block absolute left-[calc(100%+8px)] bg-ink text-white text-xs px-2.5 py-1.5 rounded shadow-lg whitespace-nowrap z-50">System Settings</div>
+      <span class="whitespace-nowrap overflow-hidden [&[data-layout=rail]_&]:hidden">Platform Settings</span>
+      <div class="hidden [&[data-layout=rail]_.group:hover_&]:block absolute left-[calc(100%+8px)] bg-ink text-white text-xs px-2.5 py-1.5 rounded shadow-lg whitespace-nowrap z-50">Platform Settings</div>
     </a>
   </nav>
 
