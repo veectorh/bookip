@@ -26,15 +26,41 @@
                 <h1 class="m-0 text-xl font-semibold tracking-tight text-ink">Products & Services</h1>
                 <span class="text-xs text-muted font-medium bg-surface px-2 py-0.5 rounded border border-line">{{seed.products.length}} items</span>
               </div>
-              <div class="flex items-center gap-2">
-                <a href="/product_units.html" class="inline-flex items-center gap-1.5 h-control px-2.5 md:px-3 rounded border border-line-strong text-[13px] font-medium bg-surface hover:bg-th transition-colors shadow-sm text-ink" title="Measurement Units">
-                  <svg class="w-4 h-4 stroke-[1.75] text-muted"><use href="#i-package"/></svg> <span class="hidden md:inline">Units</span>
+              <div class="header-menu-container relative flex items-center gap-1.5 shrink-0">
+                <!-- Desktop Measurement Units Link -->
+                <a href="/product_units.html" class="hidden md:inline-flex items-center gap-1.5 h-control px-3 rounded border border-line-strong text-[13px] font-medium bg-surface hover:bg-th transition-colors shadow-sm text-ink" title="Measurement Units">
+                  <svg class="w-4 h-4 stroke-[1.75] text-muted"><use href="#i-package"/></svg> <span>Units</span>
                 </a>
-                <button class="inline-flex items-center gap-1.5 h-control px-2.5 md:px-3 rounded border border-line-strong text-[13px] font-medium bg-surface hover:bg-th transition-colors shadow-sm" title="Export CSV" onclick="window.showToast({ title: 'Export Generated', message: 'Products catalog exported to CSV.', type: 'info' });">
-                  <svg class="w-4 h-4 stroke-[1.75]" aria-hidden="true"><use href="#i-download"/></svg> <span class="hidden md:inline">Export</span>
+
+                <!-- Desktop Export Button -->
+                <button class="hidden md:inline-flex items-center gap-1.5 h-control px-3 rounded border border-line-strong text-[13px] font-medium bg-surface hover:bg-th transition-colors shadow-sm" title="Export CSV" onclick="window.showToast({ title: 'Export Generated', message: 'Products catalog exported to CSV.', type: 'info' })">
+                  <svg class="w-4 h-4 stroke-[1.75]" aria-hidden="true"><use href="#i-download"/></svg> <span>Export</span>
                 </button>
-                <button class="inline-flex items-center gap-1.5 h-control px-2.5 md:px-3 rounded border border-transparent text-[13px] font-medium bg-indigo text-white hover:bg-indigo-hover transition-colors shadow-sm" data-drawer-target="productDrawer">
-                  <svg class="w-4 h-4 stroke-[2]" aria-hidden="true"><use href="#i-plus"/></svg> <span>Add product</span>
+
+                <!-- Mobile Kebab Context Menu Trigger -->
+                <button type="button" 
+                        class="inline-flex md:hidden header-menu-btn items-center justify-center w-9 h-9 rounded-lg border border-line-strong bg-surface hover:bg-th text-muted hover:text-ink transition-colors shadow-xs" 
+                        aria-label="More options" 
+                        title="More options"
+                        onclick="toggleHeaderMenu(this, event)">
+                  <svg class="w-4 h-4 stroke-2" aria-hidden="true"><use href="#i-more-vertical"/></svg>
+                </button>
+
+                <!-- Mobile Context Menu Dropdown Popover -->
+                <div class="header-menu-dropdown hidden absolute right-10 top-full mt-1.5 w-48 bg-surface border border-line-strong rounded-xl shadow-xl py-1 text-xs text-ink z-50 text-left">
+                  <a href="/product_units.html" class="w-full text-left px-3 py-2 text-ink hover:bg-th flex items-center gap-2 cursor-pointer font-medium">
+                    <svg class="w-4 h-4 stroke-[1.75] text-muted"><use href="#i-package"/></svg>
+                    <span>Measurement Units</span>
+                  </a>
+                  <button type="button" class="w-full text-left px-3 py-2 text-ink hover:bg-th flex items-center gap-2 cursor-pointer font-medium" onclick="window.showToast({ title: 'Export Generated', message: 'Products catalog exported to CSV.', type: 'info' })">
+                    <svg class="w-4 h-4 stroke-[1.75] text-muted"><use href="#i-download"/></svg>
+                    <span>Export CSV</span>
+                  </button>
+                </div>
+
+                <!-- Primary CTA (Icon on Mobile, Text on Desktop) -->
+                <button class="inline-flex items-center justify-center gap-1.5 h-9 md:h-control px-2.5 md:px-3 rounded-lg md:rounded border border-transparent text-[13px] font-medium bg-indigo text-white hover:bg-indigo-hover transition-colors shadow-sm" data-drawer-target="productDrawer" aria-label="Add product" title="Add product">
+                  <svg class="w-4 h-4 stroke-[2]" aria-hidden="true"><use href="#i-plus"/></svg> <span class="hidden md:inline">Add product</span>
                 </button>
               </div>
             </div>

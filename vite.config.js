@@ -46,14 +46,25 @@ export default defineConfig({
         admin_affiliates: resolve(__dirname, 'admin_affiliates.html'),
         admin_website: resolve(__dirname, 'admin_website.html'),
         admin_settings: resolve(__dirname, 'admin_settings.html'),
+        admin_user_details: resolve(__dirname, 'admin_user_details.html'),
+        admin_payment_gateways: resolve(__dirname, 'admin_payment_gateways.html'),
+        admin_contact_messages: resolve(__dirname, 'admin_contact_messages.html'),
+        admin_subscribers: resolve(__dirname, 'admin_subscribers.html'),
+        admin_notification_templates: resolve(__dirname, 'admin_notification_templates.html'),
       },
     },
   },
   plugins: [
     handlebars({
       partialDirectory: resolve(__dirname, 'src/partials'),
-      context: {
-        seed,
+      context: () => {
+        try {
+          return {
+            seed: JSON.parse(fs.readFileSync(resolve(__dirname, 'src/data/seed.json'), 'utf-8')),
+          };
+        } catch (e) {
+          return { seed };
+        }
       },
       helpers: {
         eq: (a, b) => a === b,

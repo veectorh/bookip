@@ -22,13 +22,33 @@
             </div>
             
             <div class="flex items-center gap-3 mb-3.5">
-              <h1 class="m-0 text-xl font-semibold tracking-tight">Quotations</h1>
-              <div class="ml-auto flex gap-2">
-                <button class="inline-flex items-center gap-1.5 h-control px-2 md:px-3 rounded border border-line-strong text-[13px] font-medium bg-surface hover:bg-th">
-                  <svg class="w-4 h-4 stroke-[1.75]" aria-hidden="true"><use href="#i-download"/></svg> <span class="hidden md:inline">Export</span>
+              <h1 class="m-0 text-xl font-semibold tracking-tight text-ink">Quotations</h1>
+              <div class="header-menu-container ml-auto relative flex items-center gap-1.5 shrink-0">
+                <!-- Desktop Export Button -->
+                <button class="hidden md:inline-flex items-center gap-1.5 h-control px-3 rounded border border-line-strong text-[13px] font-medium bg-surface hover:bg-th transition-colors shadow-sm" title="Export CSV" onclick="window.showToast({ title: 'Export Generated', message: 'Quotations exported to CSV.', type: 'info' })">
+                  <svg class="w-4 h-4 stroke-[1.75]" aria-hidden="true"><use href="#i-download"/></svg> <span>Export</span>
                 </button>
-                <button class="inline-flex items-center gap-1.5 h-control px-2 md:px-3 rounded border border-transparent text-[13px] font-medium bg-indigo text-white hover:bg-indigo-hover" data-goto="editor">
-                  <svg class="w-4 h-4 stroke-[1.75]" aria-hidden="true"><use href="#i-plus"/></svg> <span class="hidden md:inline">New quotation</span>
+
+                <!-- Mobile Kebab Context Menu Trigger -->
+                <button type="button" 
+                        class="inline-flex md:hidden header-menu-btn items-center justify-center w-9 h-9 rounded-lg border border-line-strong bg-surface hover:bg-th text-muted hover:text-ink transition-colors shadow-xs" 
+                        aria-label="More options" 
+                        title="More options"
+                        onclick="toggleHeaderMenu(this, event)">
+                  <svg class="w-4 h-4 stroke-2" aria-hidden="true"><use href="#i-more-vertical"/></svg>
+                </button>
+
+                <!-- Mobile Context Menu Dropdown Popover -->
+                <div class="header-menu-dropdown hidden absolute right-10 top-full mt-1.5 w-44 bg-surface border border-line-strong rounded-xl shadow-xl py-1 text-xs text-ink z-50 text-left">
+                  <button type="button" class="w-full text-left px-3 py-2 text-ink hover:bg-th flex items-center gap-2 cursor-pointer font-medium" onclick="window.showToast({ title: 'Export Generated', message: 'Quotations exported to CSV.', type: 'info' })">
+                    <svg class="w-4 h-4 stroke-[1.75] text-muted"><use href="#i-download"/></svg>
+                    <span>Export CSV</span>
+                  </button>
+                </div>
+
+                <!-- Primary CTA (Icon on Mobile, Text on Desktop) -->
+                <button class="inline-flex items-center justify-center gap-1.5 h-9 md:h-control px-2.5 md:px-3 rounded-lg md:rounded border border-transparent text-[13px] font-medium bg-indigo text-white hover:bg-indigo-hover transition-colors shadow-sm" data-goto="editor" aria-label="New quotation" title="New quotation">
+                  <svg class="w-4 h-4 stroke-[2]" aria-hidden="true"><use href="#i-plus"/></svg> <span class="hidden md:inline">New quotation</span>
                 </button>
               </div>
             </div>

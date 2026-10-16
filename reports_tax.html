@@ -22,19 +22,46 @@
           </div>
           
           <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4 no-print">
-            <div>
-              <div class="flex items-center gap-2.5">
-                <h1 class="m-0 text-xl font-semibold tracking-tight text-ink">Tax Report &amp; FIRS VAT Return</h1>
-                <span class="text-xs font-medium bg-[#EAF5EF] text-[#146A3E] border border-[#C6E7D2] px-2 py-0.5 rounded">Standard 7.5% VAT</span>
+            <div class="flex items-center justify-between gap-3">
+              <div>
+                <div class="flex items-center gap-2.5">
+                  <h1 class="m-0 text-xl font-semibold tracking-tight text-ink">Tax Report &amp; FIRS VAT Return</h1>
+                  <span class="text-xs font-medium bg-[#EAF5EF] text-[#146A3E] border border-[#C6E7D2] px-2 py-0.5 rounded hidden sm:inline">Standard 7.5% VAT</span>
+                </div>
+                <p class="text-xs text-muted mt-1 hidden sm:block">Value Added Tax (VAT) computation and filing schedule for Federal Inland Revenue Service.</p>
               </div>
-              <p class="text-xs text-muted mt-1">Value Added Tax (VAT) computation and filing schedule for Federal Inland Revenue Service.</p>
+
+              <!-- Mobile Header Action Buttons beside title -->
+              <div class="header-menu-container sm:hidden relative flex items-center gap-1.5 shrink-0">
+                <!-- Mobile Kebab Context Menu Trigger -->
+                <button type="button" 
+                        class="header-menu-btn inline-flex items-center justify-center w-9 h-9 rounded-lg border border-line-strong bg-surface hover:bg-th text-muted hover:text-ink transition-colors shadow-xs" 
+                        aria-label="More options" 
+                        title="More options"
+                        onclick="toggleHeaderMenu(this, event)">
+                  <svg class="w-4 h-4 stroke-2" aria-hidden="true"><use href="#i-more-vertical"/></svg>
+                </button>
+
+                <!-- Mobile Context Menu Dropdown Popover -->
+                <div class="header-menu-dropdown hidden absolute right-10 top-full mt-1.5 w-44 bg-surface border border-line-strong rounded-xl shadow-xl py-1 text-xs text-ink z-50 text-left">
+                  <button type="button" class="w-full text-left px-3 py-2 text-ink hover:bg-th flex items-center gap-2 cursor-pointer font-medium" onclick="window.showToast({ title: 'Tax File Exported', message: 'FIRS VAT schedule exported for TaxPro-Max.', type: 'info' });">
+                    <svg class="w-4 h-4 stroke-[1.75] text-muted"><use href="#i-download"/></svg>
+                    <span>Export CSV</span>
+                  </button>
+                </div>
+
+                <!-- Primary Action Icon Button (Print) -->
+                <button class="inline-flex items-center justify-center w-9 h-9 rounded-lg bg-indigo text-white hover:bg-indigo-hover transition-colors shadow-sm" onclick="window.print()" aria-label="Print FIRS Return" title="Print FIRS Return">
+                  <svg class="w-4 h-4 stroke-[2]" aria-hidden="true"><use href="#i-printer"/></svg>
+                </button>
+              </div>
             </div>
             
             <div class="flex items-center gap-2 flex-wrap">
               <!-- Period Dropdown -->
-              <div class="flex items-center h-control px-2.5 bg-surface border border-line-strong rounded text-[13px] shadow-sm">
+              <div class="flex items-center h-control px-2.5 bg-surface border border-line-strong rounded text-[13px] shadow-sm w-full sm:w-auto">
                 <svg class="w-3.5 h-3.5 stroke-[1.75] text-muted mr-1.5 shrink-0" aria-hidden="true"><use href="#i-calendar"/></svg>
-                <select class="bg-transparent border-0 outline-none text-ink text-xs font-medium cursor-pointer" onchange="window.showToast({ title: 'Tax Period Updated', message: 'Showing VAT schedule for ' + this.value, type: 'info' })">
+                <select class="bg-transparent border-0 outline-none text-ink text-xs font-medium cursor-pointer w-full" onchange="window.showToast({ title: 'Tax Period Updated', message: 'Showing VAT schedule for ' + this.value, type: 'info' })">
                   <option selected>October 2026 (Due 21 Nov 2026)</option>
                   <option>September 2026 (Remitted)</option>
                   <option>August 2026 (Remitted)</option>
@@ -43,25 +70,88 @@
                 </select>
               </div>
 
-              <!-- Export CSV -->
-              <button class="inline-flex items-center gap-1.5 h-control px-3 rounded border border-line-strong text-[13px] font-medium bg-surface hover:bg-th transition-colors shadow-sm" onclick="window.showToast({ title: 'Tax File Exported', message: 'FIRS VAT schedule exported for TaxPro-Max.', type: 'info' });">
-                <svg class="w-4 h-4 stroke-[1.75]" aria-hidden="true"><use href="#i-download"/></svg> <span class="hidden md:inline">Export</span>
-              </button>
+              <!-- Desktop Actions -->
+              <div class="hidden sm:flex items-center gap-2">
+                <button class="inline-flex items-center gap-1.5 h-control px-3 rounded border border-line-strong text-[13px] font-medium bg-surface hover:bg-th transition-colors shadow-sm" onclick="window.showToast({ title: 'Tax File Exported', message: 'FIRS VAT schedule exported for TaxPro-Max.', type: 'info' });">
+                  <svg class="w-4 h-4 stroke-[1.75]" aria-hidden="true"><use href="#i-download"/></svg> <span>Export</span>
+                </button>
 
-              <!-- Print Report -->
-              <button class="inline-flex items-center gap-1.5 h-control px-3 rounded border border-transparent text-[13px] font-medium bg-indigo text-white hover:bg-indigo-hover transition-colors shadow-sm" onclick="window.print()">
-                <svg class="w-4 h-4 stroke-[2]" aria-hidden="true"><use href="#i-printer"/></svg> <span>Print FIRS Return</span>
-              </button>
+                <button class="inline-flex items-center gap-1.5 h-control px-3 rounded border border-transparent text-[13px] font-medium bg-indigo text-white hover:bg-indigo-hover transition-colors shadow-sm" onclick="window.print()">
+                  <svg class="w-4 h-4 stroke-[2]" aria-hidden="true"><use href="#i-printer"/></svg> <span>Print FIRS Return</span>
+                </button>
+              </div>
             </div>
           </div>
 
-          <!-- Reports Hub Navigation Tabs -->
-          <div class="flex items-center gap-1 border-b border-line mb-5 overflow-x-auto no-print scrollbar-none text-xs">
-            <a href="/reports_profit_loss.html" class="px-3 py-2 font-medium text-muted hover:text-ink whitespace-nowrap transition-colors">Profit & Loss</a>
-            <a href="/reports_account_balances.html" class="px-3 py-2 font-medium text-muted hover:text-ink whitespace-nowrap transition-colors">Account Balances</a>
-            <a href="/reports_customer_income.html" class="px-3 py-2 font-medium text-muted hover:text-ink whitespace-nowrap transition-colors">Income by Customer</a>
-            <a href="/reports_vendor_purchases.html" class="px-3 py-2 font-medium text-muted hover:text-ink whitespace-nowrap transition-colors">Purchases by Vendor</a>
-            <a href="/reports_tax.html" class="px-3 py-2 font-medium text-indigo border-b-2 border-indigo whitespace-nowrap bg-indigo-subtle/30 rounded-t">Tax Report (VAT)</a>
+          <!-- Reports Hub Navigation Tabs (Desktop only) -->
+          <div class="hidden md:flex items-center gap-1 border-b border-line mb-5 overflow-x-auto flex-nowrap [scrollbar-width:none] [&::-webkit-scrollbar]:hidden no-print text-xs">
+            <a href="/reports_profit_loss.html" class="px-3.5 py-2.5 font-medium text-muted hover:text-ink border-b-2 border-transparent hover:border-line-strong whitespace-nowrap shrink-0 transition-colors">Profit & Loss</a>
+            <a href="/reports_account_balances.html" class="px-3.5 py-2.5 font-medium text-muted hover:text-ink border-b-2 border-transparent hover:border-line-strong whitespace-nowrap shrink-0 transition-colors">Account Balances</a>
+            <a href="/reports_customer_income.html" class="px-3.5 py-2.5 font-medium text-muted hover:text-ink border-b-2 border-transparent hover:border-line-strong whitespace-nowrap shrink-0 transition-colors">Income by Customer</a>
+            <a href="/reports_vendor_purchases.html" class="px-3.5 py-2.5 font-medium text-muted hover:text-ink border-b-2 border-transparent hover:border-line-strong whitespace-nowrap shrink-0 transition-colors">Purchases by Vendor</a>
+            <a href="/reports_tax.html" class="px-3.5 py-2.5 font-semibold text-indigo border-b-2 border-indigo whitespace-nowrap shrink-0">Tax Report (VAT)</a>
+          </div>
+
+          <!-- Mobile Reports Switcher Dropdown (Mobile < 768px only) -->
+          <div class="tab-switcher-container relative block md:hidden mb-5 no-print">
+            <div class="flex items-center justify-between mb-1.5 px-0.5">
+              <span class="text-[11px] font-semibold text-muted uppercase tracking-wider">Active Financial Report</span>
+              <span class="text-[11px] text-muted font-medium">Tap to switch report</span>
+            </div>
+            
+            <button type="button" 
+                    class="tab-switcher-btn w-full flex items-center justify-between h-10 px-3 bg-surface border border-line-strong rounded-xl text-xs font-semibold text-ink shadow-xs hover:border-indigo transition-colors cursor-pointer"
+                    onclick="toggleTabSwitcher(this, event)"
+                    aria-expanded="false">
+              <div class="flex items-center gap-2.5 truncate">
+                <div class="w-6 h-6 rounded-md bg-indigo/10 text-indigo flex items-center justify-center shrink-0">
+                  <svg class="w-3.5 h-3.5 stroke-2"><use href="#i-receipt"/></svg>
+                </div>
+                <span class="truncate">Tax Report (VAT)</span>
+              </div>
+              <div class="flex items-center gap-1 text-muted shrink-0 ml-2">
+                <span class="text-[10px] uppercase font-bold tracking-wider opacity-70">Switch</span>
+                <svg class="w-4 h-4 stroke-2"><use href="#i-chevron-down"/></svg>
+              </div>
+            </button>
+
+            <!-- Floating Context Menu Popover -->
+            <div class="tab-switcher-dropdown hidden absolute left-0 right-0 top-full mt-1.5 bg-surface border border-line-strong rounded-xl shadow-xl py-1 text-xs text-ink z-50 divide-y divide-line/60">
+              <div class="px-3 py-1.5 text-[10px] font-bold text-muted uppercase tracking-wider">Select Financial Report (5)</div>
+              <div class="py-1">
+                <a href="/reports_profit_loss.html" class="flex items-center justify-between w-full px-3 py-2 text-left hover:bg-th text-ink transition-colors font-medium">
+                  <div class="flex items-center gap-2.5">
+                    <svg class="w-4 h-4 stroke-2 text-muted shrink-0"><use href="#i-file-bar-chart"/></svg>
+                    <span>Profit & Loss</span>
+                  </div>
+                </a>
+                <a href="/reports_account_balances.html" class="flex items-center justify-between w-full px-3 py-2 text-left hover:bg-th text-ink transition-colors font-medium">
+                  <div class="flex items-center gap-2.5">
+                    <svg class="w-4 h-4 stroke-2 text-muted shrink-0"><use href="#i-landmark"/></svg>
+                    <span>Account Balances</span>
+                  </div>
+                </a>
+                <a href="/reports_customer_income.html" class="flex items-center justify-between w-full px-3 py-2 text-left hover:bg-th text-ink transition-colors font-medium">
+                  <div class="flex items-center gap-2.5">
+                    <svg class="w-4 h-4 stroke-2 text-muted shrink-0"><use href="#i-users"/></svg>
+                    <span>Income by Customer</span>
+                  </div>
+                </a>
+                <a href="/reports_vendor_purchases.html" class="flex items-center justify-between w-full px-3 py-2 text-left hover:bg-th text-ink transition-colors font-medium">
+                  <div class="flex items-center gap-2.5">
+                    <svg class="w-4 h-4 stroke-2 text-muted shrink-0"><use href="#i-shopping-bag"/></svg>
+                    <span>Purchases by Vendor</span>
+                  </div>
+                </a>
+                <a href="/reports_tax.html" class="flex items-center justify-between w-full px-3 py-2 text-left bg-indigo/5 text-indigo font-semibold hover:bg-th transition-colors">
+                  <div class="flex items-center gap-2.5">
+                    <svg class="w-4 h-4 stroke-2 text-indigo shrink-0"><use href="#i-receipt"/></svg>
+                    <span>Tax Report (VAT)</span>
+                  </div>
+                  <span class="text-[10px] uppercase tracking-wider font-bold text-indigo">Active</span>
+                </a>
+              </div>
+            </div>
           </div>
 
           <!-- Plain Store Language KPI Cards -->
@@ -293,17 +383,6 @@
 
   {{> toast}}
 
-  <script>
-    window.addEventListener('DOMContentLoaded', () => {
-      const mobileBtn = document.getElementById('mobileMenuBtn');
-      const sidebar = document.getElementById('sidebar');
-      if (mobileBtn && sidebar) {
-        mobileBtn.addEventListener('click', () => {
-          sidebar.classList.toggle('hidden');
-          sidebar.classList.toggle('flex');
-        });
-      }
-    });
-  </script>
+  {{> scripts}}
 </body>
 </html>

@@ -18,6 +18,7 @@ export default {
           DEFAULT: '#4353E0',
           hover: '#3948C7', // inferred from original css
           bg: '#EDEFFC',
+          subtle: '#EEF0FC',
           line: '#DCE0FA',
           ink: '#2F3CB8',
         },

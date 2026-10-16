@@ -1,0 +1,342 @@
+<!doctype html>
+<html lang="en">
+<head>
+  {{> head}}
+</head>
+<body class="bg-canvas text-ink font-sans text-[14px] leading-[1.5]">
+  
+  {{> icons}}
+
+  <div id="app" class="flex h-screen overflow-hidden" data-layout="rail">
+    <!-- Super Admin Rail Sidebar -->
+    {{> admin-sidebar active_admin_notification_templates=true active="admin_notification_templates"}}
+
+    <div class="flex-1 flex flex-col min-w-0">
+      <!-- Admin Topbar -->
+      <header class="flex items-center gap-2 md:gap-3 px-3 md:px-4 h-12 bg-surface border-b border-line shrink-0 relative z-30">
+        <button class="inline-flex md:hidden p-1.5 -ml-1 text-ink hover:bg-th rounded" id="mobileMenuBtn" aria-label="Open menu">
+          <svg class="w-5 h-5 stroke-2" aria-hidden="true"><use href="#i-menu"/></svg>
+        </button>
+        
+        <!-- Platform Badge -->
+        <div class="flex items-center gap-2">
+          <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-indigo/10 text-indigo text-xs font-semibold border border-indigo/20">
+            <svg class="w-3.5 h-3.5 stroke-2"><use href="#i-shield-check"/></svg>
+            Super Admin Console
+          </span>
+          <span class="text-xs text-muted hidden sm:inline">&bull; Transactional Email & SMS Templates</span>
+        </div>
+
+        <div class="ml-auto flex items-center gap-2 md:gap-2.5">
+          <!-- Quick Tenant Demo Jump Button -->
+          <a href="/dashboard.html" class="inline-flex items-center gap-1.5 h-8 px-2.5 rounded text-xs font-medium bg-emerald-600 hover:bg-emerald-700 text-white transition-colors shadow-sm" title="Open Acme Dynamics Ltd tenant workspace">
+            <svg class="w-3.5 h-3.5 stroke-2" aria-hidden="true"><use href="#i-building-2"/></svg>
+            <span class="hidden sm:inline">Tenant Demo (Acme)</span>
+          </a>
+
+          <!-- User Profile Dropdown -->
+          <div class="relative">
+            <button type="button" class="flex items-center gap-1.5 pl-1 rounded p-1 hover:bg-th transition-colors cursor-pointer" id="adminUserMenuBtn" onclick="document.getElementById('adminUserMenuDropdown').classList.toggle('hidden');">
+              <span class="w-7 h-7 rounded-full bg-navy text-white flex items-center justify-center text-[11px] font-bold border border-white/20">SA</span>
+              <svg class="w-3.5 h-3.5 stroke-2 text-muted hidden sm:block"><use href="#i-chevron-down"/></svg>
+            </button>
+
+            <div id="adminUserMenuDropdown" class="hidden absolute right-0 top-full mt-1.5 w-52 bg-surface border border-line-strong rounded-xl shadow-xl py-1.5 text-xs text-ink z-50">
+              <div class="px-3 py-2 border-b border-line">
+                <div class="font-semibold text-ink">Super Administrator</div>
+                <div class="text-[11px] text-muted truncate">ict.swiftypos@gmail.com</div>
+              </div>
+              <a href="/admin_dashboard.html" class="flex items-center gap-2 px-3 py-2 text-ink hover:bg-th hover:text-indigo transition-colors font-medium">
+                <svg class="w-4 h-4 stroke-[1.75] text-indigo"><use href="#i-shield-check"/></svg> Admin Console
+              </a>
+              <a href="/dashboard.html" class="flex items-center gap-2 px-3 py-2 text-ink hover:bg-th hover:text-indigo transition-colors">
+                <svg class="w-4 h-4 stroke-[1.75] text-emerald-600"><use href="#i-building-2"/></svg> Acme Dynamics Workspace
+              </a>
+              <div class="border-t border-line my-1"></div>
+              <a href="/login.html" class="flex items-center gap-2 px-3 py-2 text-[#B4372A] hover:bg-[#FDECEA] transition-colors font-medium">
+                <svg class="w-4 h-4 stroke-[1.75]"><use href="#i-log-out"/></svg> Sign Out
+              </a>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Main Content Container -->
+      <main class="flex-1 overflow-y-auto overflow-x-hidden p-4 md:p-6 lg:p-8 space-y-6 bg-canvas">
+
+        <!-- Top Header & Controls -->
+        <div class="flex items-center justify-between gap-3 mb-4">
+          <div class="min-w-0">
+            <div class="text-xs text-muted mb-0.5 font-semibold uppercase tracking-wider hidden sm:block">System Communication</div>
+            <h1 class="text-lg md:text-2xl font-bold tracking-tight text-ink m-0 truncate">Notification Templates</h1>
+            <p class="text-xs text-muted mt-0.5 hidden sm:block">Customize transactional emails, billing reminders, and SMS alerts.</p>
+          </div>
+
+          <div class="flex items-center gap-1.5 shrink-0">
+            <a href="/admin_settings.html" class="inline-flex items-center justify-center gap-1.5 h-9 md:h-control px-2.5 md:px-3 rounded-lg md:rounded border border-line-strong bg-surface text-ink hover:bg-th transition-colors shadow-sm text-[13px] font-medium cursor-pointer" aria-label="SMTP Settings" title="SMTP Relay Settings">
+              <svg class="w-4 h-4 stroke-[1.75] text-muted" aria-hidden="true"><use href="#i-settings"/></svg>
+              <span class="hidden md:inline">SMTP Settings</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- 1. Universal KPI Metrics Strip -->
+        {{> stats-strip 
+            label1="Notification Templates" value1="5 Archetypes" subtext1="System transactional events"
+            label2="Supported Channels" value2="Email, SMS & WhatsApp" subtext2="Automated dispatch routing"
+            label3="SMTP Provider Relay" value3="Mailgun TLS" subtext3="smtp.mailgun.org:587"
+            label4="Delivery Latency" value4="1.2s Average" subtext4="99.8% inbox placement rate"
+        }}
+
+        <!-- 2. Templates Table -->
+        <div class="bg-surface rounded-xl border border-line shadow-xs overflow-hidden">
+          <div class="p-3 md:p-4 border-b border-line flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-canvas/50">
+            <div class="text-xs text-muted">
+              Standard transactional messages dispatched on critical tenant lifecycle actions.
+            </div>
+            <div class="relative w-full sm:w-64">
+              <input type="text" id="templateSearchInput" placeholder="Search templates..." class="w-full h-8 pl-8 pr-3 bg-surface rounded border border-line-strong text-xs text-ink placeholder:text-muted focus:outline-none focus:border-indigo" oninput="filterTemplates()">
+              <svg class="w-3.5 h-3.5 stroke-2 text-muted absolute left-2.5 top-1/2 -translate-y-1/2"><use href="#i-search"/></svg>
+            </div>
+          </div>
+
+          <!-- Desktop Tabular Grid -->
+          <div class="hidden md:block overflow-x-auto">
+            <table class="w-full text-left text-xs" id="templatesTable">
+              <thead class="bg-canvas border-b border-line text-muted uppercase tracking-wider text-[11px] font-semibold">
+                <tr>
+                  <th class="py-3 px-4">Event Key</th>
+                  <th class="py-3 px-4">Template Name</th>
+                  <th class="py-3 px-4">Channel</th>
+                  <th class="py-3 px-4">Category</th>
+                  <th class="py-3 px-4">Subject Line / Hook</th>
+                  <th class="py-3 px-4">Status</th>
+                  <th class="py-3 px-4 text-right">Actions</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-line text-ink">
+                {{#each seed.admin.notification_templates}}
+                <tr class="hover:bg-th/40 transition-colors template-row" data-search="{{this.key}} {{this.name}} {{this.subject}}">
+                  <td class="py-3 px-4 font-mono font-medium text-indigo">
+                    {{this.key}}
+                  </td>
+                  <td class="py-3 px-4">
+                    <div class="font-bold text-ink">{{this.name}}</div>
+                    <div class="text-[10px] text-muted font-mono mt-0.5">ID: {{this.id}}</div>
+                  </td>
+                  <td class="py-3 px-4 whitespace-nowrap">
+                    <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-medium bg-canvas border border-line text-ink">
+                      {{this.channel}}
+                    </span>
+                  </td>
+                  <td class="py-3 px-4 whitespace-nowrap">
+                    <span class="px-2 py-0.5 rounded text-[10px] font-semibold bg-indigo/10 text-indigo border border-indigo/20">
+                      {{this.category}}
+                    </span>
+                  </td>
+                  <td class="py-3 px-4 max-w-xs">
+                    <div class="truncate text-ink font-medium" title="{{this.subject}}">{{this.subject}}</div>
+                    <div class="flex flex-wrap gap-1 mt-1">
+                      {{#each this.variables}}
+                      <span class="text-[9px] font-mono px-1.5 py-0.2 bg-th rounded text-muted">&#123;&#123;{{this}}&#125;&#125;</span>
+                      {{/each}}
+                    </div>
+                  </td>
+                  <td class="py-3 px-4 whitespace-nowrap">
+                    <span class="inline-flex items-center gap-1 text-[11px] font-medium text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
+                      ● Active
+                    </span>
+                  </td>
+                  <td class="py-3 px-4 text-right whitespace-nowrap">
+                    <button type="button" class="inline-flex items-center gap-1 h-7 px-2.5 rounded bg-surface hover:bg-th border border-line text-ink font-medium text-[11px] transition-colors cursor-pointer" onclick="openTemplateEditor('{{this.key}}', '{{this.name}}', '{{this.subject}}', '{{this.channel}}')">
+                      <svg class="w-3.5 h-3.5 stroke-2"><use href="#i-edit-2"/></svg>
+                      <span>Edit Template</span>
+                    </button>
+                  </td>
+                </tr>
+                {{/each}}
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Mobile Compact Cards View -->
+          <div class="block md:hidden divide-y divide-line" id="templatesMobileList">
+            {{#each seed.admin.notification_templates}}
+            <div class="p-3.5 bg-surface template-card space-y-2" data-search="{{this.key}} {{this.name}} {{this.subject}}">
+              <!-- Row 1: Name & Channels -->
+              <div class="flex items-start justify-between gap-2">
+                <div>
+                  <div class="font-bold text-ink text-[13px] leading-tight">{{this.name}}</div>
+                  <div class="font-mono text-indigo text-[11px] mt-0.5">{{this.key}}</div>
+                </div>
+                <div class="flex items-center gap-1 shrink-0">
+                  <span class="px-1.5 py-0.5 rounded text-[10px] font-semibold bg-indigo/10 text-indigo border border-indigo/20">
+                    {{this.category}}
+                  </span>
+                  <span class="px-1.5 py-0.5 rounded text-[10px] font-medium bg-canvas border border-line text-muted">
+                    {{this.channel}}
+                  </span>
+                </div>
+              </div>
+
+              <!-- Row 2: Subject Hook -->
+              <div class="text-xs text-ink font-medium truncate pt-1 border-t border-line/60">
+                <span class="text-muted font-normal text-[11px]">Subject: </span>{{this.subject}}
+              </div>
+
+              <!-- Row 3: Variables & Action Button -->
+              <div class="flex items-center justify-between pt-1 border-t border-line/60 gap-2">
+                <div class="flex flex-wrap gap-1 max-w-[65%]">
+                  {{#each this.variables}}
+                  <span class="text-[9px] font-mono px-1 py-0.2 bg-th rounded text-muted">&#123;&#123;{{this}}&#125;&#125;</span>
+                  {{/each}}
+                </div>
+                <button type="button" class="inline-flex items-center gap-1 h-7 px-3 rounded bg-surface hover:bg-th border border-line text-ink font-medium text-xs transition-colors cursor-pointer shrink-0" onclick="openTemplateEditor('{{this.key}}', '{{this.name}}', '{{this.subject}}', '{{this.channel}}')">
+                  <svg class="w-3.5 h-3.5 stroke-2"><use href="#i-edit-2"/></svg>
+                  <span>Edit</span>
+                </button>
+              </div>
+            </div>
+            {{/each}}
+          </div>
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- ============================================== -->
+  <!-- SLIDE-OVER: EDIT NOTIFICATION TEMPLATE         -->
+  <!-- ============================================== -->
+  <div id="templateDrawer" class="hidden fixed inset-0 z-50 overflow-hidden" role="dialog" aria-modal="true">
+    <div class="fixed inset-0 bg-ink/40 backdrop-blur-[1px] transition-opacity" onclick="closeTemplateDrawer()"></div>
+    <div class="fixed inset-y-0 right-0 max-w-full flex pl-10">
+      <div class="w-screen max-w-lg bg-surface border-l border-line shadow-2xl flex flex-col">
+        <div class="flex items-center justify-between p-4 border-b border-line bg-th/40">
+          <div>
+            <h3 class="font-bold text-sm text-ink" id="drawerTemplateName">Edit Notification Template</h3>
+            <p class="text-xs text-muted font-mono mt-0.5" id="drawerTemplateKey">event_key</p>
+          </div>
+          <button type="button" class="p-1 text-muted hover:text-ink rounded" onclick="closeTemplateDrawer()">
+            <svg class="w-5 h-5 stroke-2"><use href="#i-x"/></svg>
+          </button>
+        </div>
+
+        <form onsubmit="saveTemplateChanges(event)" class="flex-1 overflow-y-auto p-4 md:p-6 space-y-4 text-xs">
+          <div>
+            <label class="block font-semibold text-ink mb-1">Subject Line Template <span class="text-rose-500">*</span></label>
+            <input type="text" id="editSubjectInput" required class="w-full h-control px-3 bg-canvas rounded border border-line-strong text-xs text-ink focus:outline-none focus:border-indigo">
+          </div>
+
+          <!-- Dynamic Merge Tags Bar -->
+          <div>
+            <label class="block font-semibold text-ink mb-1">Insert Dynamic Merge Variables</label>
+            <div class="flex flex-wrap gap-1.5 p-2 bg-canvas rounded-lg border border-line">
+              <button type="button" class="px-2 py-0.5 rounded bg-surface hover:bg-th border border-line text-[11px] font-mono text-indigo cursor-pointer" onclick="insertVariable('tenant_name')">&#123;&#123;tenant_name&#125;&#125;</button>
+              <button type="button" class="px-2 py-0.5 rounded bg-surface hover:bg-th border border-line text-[11px] font-mono text-indigo cursor-pointer" onclick="insertVariable('amount_paid')">&#123;&#123;amount_paid&#125;&#125;</button>
+              <button type="button" class="px-2 py-0.5 rounded bg-surface hover:bg-th border border-line text-[11px] font-mono text-indigo cursor-pointer" onclick="insertVariable('invoice_number')">&#123;&#123;invoice_number&#125;&#125;</button>
+              <button type="button" class="px-2 py-0.5 rounded bg-surface hover:bg-th border border-line text-[11px] font-mono text-indigo cursor-pointer" onclick="insertVariable('due_date')">&#123;&#123;due_date&#125;&#125;</button>
+              <button type="button" class="px-2 py-0.5 rounded bg-surface hover:bg-th border border-line text-[11px] font-mono text-indigo cursor-pointer" onclick="insertVariable('payment_link')">&#123;&#123;payment_link&#125;&#125;</button>
+            </div>
+          </div>
+
+          <div>
+            <label class="block font-semibold text-ink mb-1">Message Body (HTML / Markdown Supported)</label>
+            <textarea id="editBodyTextarea" rows="8" class="w-full p-3 font-mono text-[11px] bg-canvas rounded-xl border border-line-strong text-ink leading-relaxed focus:outline-none focus:border-indigo" placeholder="<p>Dear Customer,</p>..."></textarea>
+          </div>
+
+          <!-- Test Dispatch Simulation -->
+          <div class="pt-3 border-t border-line space-y-2">
+            <label class="block font-semibold text-ink">Test Dispatch Simulation</label>
+            <div class="flex items-center gap-2">
+              <input type="email" id="testEmailInput" value="ict.swiftypos@gmail.com" placeholder="Recipient email address" class="flex-1 h-8 px-2.5 bg-canvas rounded border border-line-strong text-xs text-ink focus:outline-none focus:border-indigo">
+              <button type="button" class="h-8 px-3 rounded bg-surface hover:bg-th border border-line text-ink text-xs font-medium cursor-pointer" onclick="sendTestEmail()">
+                Send Test
+              </button>
+            </div>
+          </div>
+
+          <!-- Secondary on left, Primary on right -->
+          <div class="mt-auto pt-4 border-t border-line flex items-center justify-between">
+            <button type="button" class="h-control px-4 rounded border border-line-strong bg-surface text-ink hover:bg-th text-xs font-medium cursor-pointer" onclick="closeTemplateDrawer()">
+              Cancel
+            </button>
+            <button type="submit" class="h-control px-4 rounded bg-indigo text-white hover:bg-indigo-hover text-xs font-semibold cursor-pointer shadow-sm transition-colors">
+              Save Template Changes
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Universal Toast Container -->
+  {{> toast}}
+
+  <script>
+    function openTemplateEditor(key, name, subject, channel) {
+      document.getElementById('drawerTemplateName').textContent = name;
+      document.getElementById('drawerTemplateKey').textContent = `Channel: ${channel} • Event Key: ${key}`;
+      document.getElementById('editSubjectInput').value = subject;
+      document.getElementById('editBodyTextarea').value = 
+        '<p>Hello ' + '{' + '{tenant_name}' + '},</p>\n' +
+        '<p>This is an automated notification regarding your Bookkip account.</p>\n' +
+        '<div style="background:#f8fafc; padding:12px; border-radius:6px; border:1px solid #e2e8f0; margin:16px 0;">\n' +
+        '  <strong>Reference:</strong> ' + '{' + '{invoice_number}' + '}<br>\n' +
+        '  <strong>Amount:</strong> ' + '{' + '{amount_paid}' + '}\n' +
+        '</div>\n' +
+        '<p>You can securely review or settle this at: <a href="' + '{' + '{payment_link}' + '}">Open Billing Workspace</a></p>\n' +
+        '<p>Best regards,<br>The Bookkip Finance Team</p>';
+      document.getElementById('templateDrawer').classList.remove('hidden');
+    }
+
+    function closeTemplateDrawer() {
+      document.getElementById('templateDrawer').classList.add('hidden');
+    }
+
+    function insertVariable(varName) {
+      const textarea = document.getElementById('editBodyTextarea');
+      const textToInsert = '{' + '{' + varName + '}' + '}';
+      textarea.value += textToInsert;
+      textarea.focus();
+    }
+
+    function sendTestEmail() {
+      const email = document.getElementById('testEmailInput').value;
+      showToast(`Test notification simulated and sent to ${email}`, 'success');
+    }
+
+    function saveTemplateChanges(e) {
+      e.preventDefault();
+      closeTemplateDrawer();
+      showToast('Notification template updated successfully.', 'success');
+    }
+
+    function filterTemplates() {
+      const term = document.getElementById('templateSearchInput').value.toLowerCase();
+      const items = document.querySelectorAll('.template-row, .template-card');
+      items.forEach(el => {
+        const text = (el.dataset.search || '').toLowerCase();
+        el.style.display = text.includes(term) ? '' : 'none';
+      });
+    }
+
+    function showToast(message, type) {
+      if (window.toast) {
+        window.toast(message, type);
+      } else {
+        const toastEl = document.getElementById('toast');
+        if (toastEl) {
+          toastEl.textContent = message;
+          toastEl.classList.remove('hidden');
+          setTimeout(() => toastEl.classList.add('hidden'), 3500);
+        } else {
+          console.log(type, message);
+        }
+      }
+    }
+  </script>
+
+  {{> scripts}}
+</body>
+</html>

@@ -968,6 +968,177 @@
       }
     },
     "website_cms": {
+      "default_pages": [
+        {
+          "id": "DP-01",
+          "name": "Home",
+          "slug": "/",
+          "meta_title": "Bookkip | Modern Invoicing & Accounting for Nigerian Businesses",
+          "meta_description": "Streamline invoices, collect payments with Paystack & Flutterwave, and manage stock in Lagos, Abuja & Port Harcourt.",
+          "hero_title": "Modern Invoicing, Accounting & POS for Ambitious Nigerian Businesses",
+          "hero_subtitle": "Streamline invoices, collect card and bank payments with Paystack & Flutterwave, track stock across locations, and file tax returns in minutes.",
+          "content": "All-in-one business accounting engine designed for Nigerian trade, compliance, and multi-location retail.",
+          "status": "Active",
+          "last_updated": "12 Oct 2026"
+        },
+        {
+          "id": "DP-02",
+          "name": "About Us",
+          "slug": "/about",
+          "meta_title": "About Us | Bookkip Technologies",
+          "meta_description": "Our mission is empowering 100,000+ African commercial businesses with accessible, audit-proof financial operating systems.",
+          "hero_title": "Empowering African Commerce with Digital Operating Rails",
+          "hero_subtitle": "We build high-availability accounting tools that replace tedious manual spreadsheets with automated precision.",
+          "content": "Founded in 2024, Bookkip powers thousands of merchants and growing enterprises across West Africa.",
+          "status": "Active",
+          "last_updated": "10 Oct 2026"
+        },
+        {
+          "id": "DP-03",
+          "name": "Features",
+          "slug": "/features",
+          "meta_title": "Platform Capabilities & Modules | Bookkip",
+          "meta_description": "Explore smart multi-currency invoicing, 80mm thermal POS, WhatsApp payment reminders, and multi-tenant security.",
+          "hero_title": "Enterprise-Grade Tools for Modern Business Operations",
+          "hero_subtitle": "Everything you need to sell, invoice, reconcile, and audit in one seamless platform.",
+          "content": "Deep feature suite spanning POS checkout, stock management, payroll, and FIRS e-invoicing compliance.",
+          "status": "Active",
+          "last_updated": "08 Oct 2026"
+        },
+        {
+          "id": "DP-04",
+          "name": "Pricing",
+          "slug": "/pricing",
+          "meta_title": "Commercial Tiers & Subscription Plans | Bookkip",
+          "meta_description": "Transparent pricing starting from ₦15,000/mo. Basic, Standard, Premium, and Once and For All Lifetime plans.",
+          "hero_title": "Predictable, High-Value Pricing for Any Scale",
+          "hero_subtitle": "No hidden processing surcharges. 14-day free trial on all plans.",
+          "content": "Choose the tier that matches your business scale with instant online card or bank wire activation.",
+          "status": "Active",
+          "last_updated": "08 Oct 2026"
+        },
+        {
+          "id": "DP-05",
+          "name": "Blogs",
+          "slug": "/blogs",
+          "meta_title": "Insights & Business Strategy | Bookkip Journal",
+          "meta_description": "Actionable guides on Nigerian tax law, FIRS e-invoicing mandates, inventory management, and SME growth.",
+          "hero_title": "Insights, Tutorials & Financial Guides",
+          "hero_subtitle": "Stay informed on statutory compliance, retail optimizations, and scaling strategies.",
+          "content": "Weekly articles curated by chartered accountants and enterprise software architects.",
+          "status": "Active",
+          "last_updated": "11 Oct 2026"
+        },
+        {
+          "id": "DP-06",
+          "name": "FAQ",
+          "slug": "/faqs",
+          "meta_title": "Frequently Asked Questions | Bookkip Help Center",
+          "meta_description": "Got questions about Bookkip? Find answers on pricing, integrations, offline POS, data security, and multi-tenant teams.",
+          "hero_title": "Everything You Need to Know",
+          "hero_subtitle": "Answers to common inquiries regarding subscription, payments, hardware, and data ownership.",
+          "content": "Browse categorized questions or reach our 24/7 dedicated customer engineering support desk.",
+          "status": "Active",
+          "last_updated": "09 Oct 2026"
+        },
+        {
+          "id": "DP-07",
+          "name": "Contact",
+          "slug": "/contact",
+          "meta_title": "Contact Our Sales & Support Team | Bookkip",
+          "meta_description": "Get in touch with our Lagos engineering headquarters. Live chat, email support, phone, or visit our office.",
+          "hero_title": "Let's Talk About Your Business Needs",
+          "hero_subtitle": "Our product advisors are ready to walk you through a personalized live demo or answer questions.",
+          "content": "Offices located at Plot 14 Commercial Avenue, Victoria Island, Lagos. Support hotline: +234 800 266 5547.",
+          "status": "Active",
+          "last_updated": "12 Oct 2026"
+        }
+      ],
+      "custom_pages": [
+        {
+          "id": "CP-01",
+          "name": "Privacy Policy",
+          "slug": "/privacy",
+          "meta_title": "NDPR Privacy Policy | Bookkip",
+          "meta_description": "Our NDPR and GDPR compliant privacy standards for tenant financial data encryption and residency.",
+          "status": "Active",
+          "last_updated": "05 Oct 2026"
+        },
+        {
+          "id": "CP-02",
+          "name": "Terms of Service",
+          "slug": "/terms",
+          "meta_title": "Platform Terms of Service | Bookkip",
+          "meta_description": "Master subscription agreement, service level warranties, and billing policies.",
+          "status": "Active",
+          "last_updated": "05 Oct 2026"
+        },
+        {
+          "id": "CP-03",
+          "name": "Security & Compliance",
+          "slug": "/security",
+          "meta_title": "Data Security & Infrastructure | Bookkip",
+          "meta_description": "SOC2 certified architecture, AES-256 database encryption at rest, and automated hourly snapshots.",
+          "status": "Active",
+          "last_updated": "28 Sep 2026"
+        }
+      ],
+      "teams": [
+        {
+          "id": "TEAM-01",
+          "name": "Adaora Okafor",
+          "role": "Chief Executive Officer & Co-Founder",
+          "avatar": "AO",
+          "bio": "Ex-Fintech Lead with 12+ years building enterprise payment and banking rails across Africa.",
+          "social_linkedin": "https://linkedin.com/in/adaora",
+          "order": 1,
+          "status": "Active"
+        },
+        {
+          "id": "TEAM-02",
+          "name": "Tunde Bakare",
+          "role": "Chief Technology Officer",
+          "avatar": "TB",
+          "bio": "Distributed systems architect specializing in high-throughput transactional ledgers and cloud databases.",
+          "social_linkedin": "https://linkedin.com/in/tunde",
+          "order": 2,
+          "status": "Active"
+        },
+        {
+          "id": "TEAM-03",
+          "name": "Chinedu Eze",
+          "role": "Head of Product & Design",
+          "avatar": "CE",
+          "bio": "Product strategist focused on zero-friction SME workflow automation and merchant POS experience.",
+          "social_linkedin": "https://linkedin.com/in/chinedu",
+          "order": 3,
+          "status": "Active"
+        },
+        {
+          "id": "TEAM-04",
+          "name": "Fatima Aliyu",
+          "role": "Lead Tax & Regulatory Accountant",
+          "avatar": "FA",
+          "bio": "FCA-certified auditor driving automated FIRS electronic invoicing and statutory tax schedules.",
+          "social_linkedin": "https://linkedin.com/in/fatima",
+          "order": 4,
+          "status": "Active"
+        }
+      ],
+      "header_footer_settings": {
+        "logo_text": "Bookkip",
+        "tagline": "Modern Accounting & Invoicing",
+        "cta_text": "Start Free Trial",
+        "cta_link": "/login.html",
+        "copyright": "© 2026 Bookkip Technologies Ltd. All rights reserved.",
+        "office_address": "Plot 14 Commercial Avenue, Victoria Island, Lagos, Nigeria",
+        "support_phone": "+234 800 266 5547",
+        "support_email": "support@bookkip.ng",
+        "social_x": "https://x.com/bookkip_hq",
+        "social_linkedin": "https://linkedin.com/company/bookkip",
+        "social_facebook": "https://facebook.com/bookkip",
+        "social_instagram": "https://instagram.com/bookkip"
+      },
       "faqs": [
         {
           "id": "FAQ-01",
@@ -1037,6 +1208,92 @@
         "description": "Bookkip uses strictly essential cookies and telemetry to secure your multi-tenant session and maintain high audit integrity.",
         "accept_text": "Accept All Cookies",
         "decline_text": "Essential Only"
+      },
+      "hero": {
+        "badge_text": "Bookkip v2.4 Live: Nigerian E-Invoicing & Automated FIRS VAT Compliance",
+        "headline": "Modern Invoicing, Accounting & POS for Ambitious Nigerian Businesses",
+        "subheadline": "Streamline invoices, collect card and bank payments with Paystack & Flutterwave, track stock across locations, and file tax returns in minutes.",
+        "cta_primary_text": "Start Free 14-Day Trial",
+        "cta_primary_link": "/login.html",
+        "cta_secondary_text": "Explore Live Demo",
+        "cta_secondary_link": "/dashboard.html",
+        "stats_text": "Trusted by 2,400+ growing companies in Lagos, Abuja & Port Harcourt"
+      },
+      "features": [
+        {
+          "id": "FEAT-01",
+          "title": "Smart Multi-Currency Invoicing",
+          "description": "Generate branded, audit-proof invoices in NGN, USD, GBP, and EUR with automated FIRS VAT 7.5% calculations and NUBAN bank wire boxes.",
+          "category": "Billing"
+        },
+        {
+          "id": "FEAT-02",
+          "title": "80mm POS Thermal Receipt Engine",
+          "description": "Instant point-of-sale checkout with barcode scanning, cashier shift reconciliation, and receipt printer support.",
+          "category": "Retail POS"
+        },
+        {
+          "id": "FEAT-03",
+          "title": "Multi-Gateway Instant Settlement",
+          "description": "Embedded Paystack, Flutterwave, and Monnify checkout links allow clients to pay via Card, USSD, or Virtual Bank Transfer.",
+          "category": "Payments"
+        },
+        {
+          "id": "FEAT-04",
+          "title": "Real-time Stock & Inventory Auditing",
+          "description": "Track stock movements across multiple warehouses, set automatic reorder alerts, and prevent shrinkage.",
+          "category": "Operations"
+        },
+        {
+          "id": "FEAT-05",
+          "title": "WhatsApp & SMS Payment Reminders",
+          "description": "Automated courtesy reminders sent to overdue clients via SMS and WhatsApp API, cutting late invoices by 65%.",
+          "category": "Automation"
+        },
+        {
+          "id": "FEAT-06",
+          "title": "Multi-Tenant Team Roles & Granular Access",
+          "description": "Delegate tasks safely with Owner, Administrator, Accountant, Sales Cashier, and Auditor role security.",
+          "category": "Security"
+        }
+      ],
+      "blog_posts": [
+        {
+          "id": "BLOG-01",
+          "title": "How to Prepare Your Business for FIRS 2026 E-Invoicing Mandate",
+          "category": "Tax & Compliance",
+          "read_time": "5 min read",
+          "publish_date": "08 Oct 2026",
+          "author": "Super Admin Team",
+          "status": "Published"
+        },
+        {
+          "id": "BLOG-02",
+          "title": "5 Proven Ways Nigerian Retailers Cut Checkout Times with Thermal POS",
+          "category": "Retail Strategy",
+          "read_time": "4 min read",
+          "publish_date": "02 Oct 2026",
+          "author": "Product Engineering",
+          "status": "Published"
+        },
+        {
+          "id": "BLOG-03",
+          "title": "Why Fast Invoice Payment Requires Multi-Channel NUBAN & Virtual Accounts",
+          "category": "Cash Flow",
+          "read_time": "6 min read",
+          "publish_date": "24 Sep 2026",
+          "author": "Finance Desk",
+          "status": "Draft"
+        }
+      ],
+      "footer": {
+        "tagline": "Empowering commerce and financial clarity for the next generation of African enterprises.",
+        "copyright": "© 2026 Bookkip Technologies Ltd. All rights reserved.",
+        "support_phone": "+234 800 266 5547",
+        "support_email": "support@bookkip.ng",
+        "social_x": "https://x.com/bookkip_hq",
+        "social_linkedin": "https://linkedin.com/company/bookkip",
+        "ndpr_badge_active": true
       }
     },
     "platform_settings": {
@@ -1099,6 +1356,145 @@
           "status": "Completed"
         }
       ]
-    }
+    },
+    "contact_messages": [
+      {
+        "id": "MSG-301",
+        "sender": "Alhaji Musa Ibrahim",
+        "company": "Arewa Wholesale Fabrics Ltd",
+        "email": "musa@arewawholesale.ng",
+        "phone": "+234 803 234 5678",
+        "subject": "Enterprise Multi-Branch POS Quotation",
+        "message": "We have 8 retail textile outlets across Kano and Kaduna. We want to inquire whether the Premium or Lifetime plan can support centralized stock synchronization and 12 cashier POS thermal printers.",
+        "category": "Sales Inquiry",
+        "date": "13 Oct 2026, 11:20 AM",
+        "status": "Unread"
+      },
+      {
+        "id": "MSG-302",
+        "sender": "Chioma Nwosu",
+        "company": "Apex Pharmacy Group",
+        "email": "c.nwosu@apexpharma.com",
+        "phone": "+234 818 901 2345",
+        "subject": "Integration with Monnify Virtual Accounts",
+        "message": "Hello Bookkip team, does your platform support automated customer-specific dedicated virtual accounts so our hospital clients can transfer directly?",
+        "category": "Technical",
+        "date": "12 Oct 2026, 03:45 PM",
+        "status": "Replied"
+      },
+      {
+        "id": "MSG-303",
+        "sender": "Adeola Johnson",
+        "company": "Lagos Accounting Chambers",
+        "email": "adeola@lagosaccountants.ng",
+        "phone": "+234 705 444 1122",
+        "subject": "Accounting Firm Partner Program",
+        "message": "We currently manage monthly tax and VAT returns for over 45 SME businesses in Ikeja. We would like to explore a bulk reseller white-label or agency tier.",
+        "category": "Partnership",
+        "date": "10 Oct 2026, 09:15 AM",
+        "status": "Replied"
+      },
+      {
+        "id": "MSG-304",
+        "sender": "Francis Obinna",
+        "company": "EastGate Logistics",
+        "email": "obinna@eastgate.com.ng",
+        "phone": "+234 802 777 8899",
+        "subject": "Waybill & Delivery Note Customization",
+        "message": "Can we generate waybills alongside invoices directly with delivery driver signatures? Looking forward to your response.",
+        "category": "Feature Request",
+        "date": "08 Oct 2026, 04:10 PM",
+        "status": "Archived"
+      }
+    ],
+    "subscribers": [
+      {
+        "id": "SUB-101",
+        "email": "bolanle@greenfieldfarms.ng",
+        "source": "Landing Page Hero",
+        "subscribed_date": "13 Oct 2026",
+        "status": "Active"
+      },
+      {
+        "id": "SUB-102",
+        "email": "kazeem@swiftpay.africa",
+        "source": "Pricing Plans Comparison",
+        "subscribed_date": "12 Oct 2026",
+        "status": "Active"
+      },
+      {
+        "id": "SUB-103",
+        "email": "uche@eastwoodconsulting.com",
+        "source": "Blog FIRS Guide",
+        "subscribed_date": "11 Oct 2026",
+        "status": "Active"
+      },
+      {
+        "id": "SUB-104",
+        "email": "fatima@arewatech.ng",
+        "source": "Landing Page Footer",
+        "subscribed_date": "09 Oct 2026",
+        "status": "Active"
+      },
+      {
+        "id": "SUB-105",
+        "email": "tunde@primecleaners.ng",
+        "source": "Landing Page Hero",
+        "subscribed_date": "04 Oct 2026",
+        "status": "Unsubscribed"
+      }
+    ],
+    "notification_templates": [
+      {
+        "id": "TMPL-01",
+        "key": "tenant_welcome",
+        "name": "New Tenant Account Welcome",
+        "channel": "Email",
+        "category": "Onboarding",
+        "subject": "Welcome to Bookkip — Your Cloud Accounting Workspace is Ready!",
+        "variables": ["tenant_name", "login_url", "owner_name", "trial_days"],
+        "status": "Active"
+      },
+      {
+        "id": "TMPL-02",
+        "key": "invoice_sent",
+        "name": "Invoice Delivery Notification",
+        "channel": "Email & WhatsApp",
+        "category": "Invoicing",
+        "subject": "New Invoice #{{invoice_number}} from {{business_name}}",
+        "variables": ["customer_name", "invoice_number", "total_amount", "due_date", "payment_link"],
+        "status": "Active"
+      },
+      {
+        "id": "TMPL-03",
+        "key": "payment_receipt",
+        "name": "Subscription Payment Receipt",
+        "channel": "Email",
+        "category": "Billing",
+        "subject": "Official Payment Receipt for Order #{{order_id}} — Bookkip",
+        "variables": ["tenant_name", "package_name", "amount_paid", "expiry_date", "receipt_pdf"],
+        "status": "Active"
+      },
+      {
+        "id": "TMPL-04",
+        "key": "subscription_expiring",
+        "name": "Subscription Expiry Courtesy Warning",
+        "channel": "Email & SMS",
+        "category": "Billing",
+        "subject": "Urgent: Your Bookkip Subscription Expires in {{days_left}} Days",
+        "variables": ["tenant_name", "days_left", "package_name", "renewal_url"],
+        "status": "Active"
+      },
+      {
+        "id": "TMPL-05",
+        "key": "affiliate_payout",
+        "name": "Affiliate Commission Settled",
+        "channel": "Email",
+        "category": "Affiliates",
+        "subject": "Good News! Your Affiliate Payout of {{payout_amount}} Has Been Settled",
+        "variables": ["partner_name", "payout_amount", "bank_name", "transaction_ref"],
+        "status": "Active"
+      }
+    ]
   }
 }

@@ -6,11 +6,16 @@
     </span>
     <div class="whitespace-nowrap overflow-hidden [&[data-layout=rail]_&]:hidden">
       <div class="font-bold tracking-tight text-[14px] text-white leading-none">Bookkip Admin</div>
-      <div class="text-[10px] text-navy-mute tracking-wide uppercase font-semibold mt-0.5">Platform Console</div>
+      <div class="text-[10px] text-navy-mute tracking-wide uppercase font-semibold mt-0.5">Super Admin Console</div>
     </div>
   </div>
 
   <nav class="flex-1 flex flex-col gap-0.5 text-[13px] w-full mt-1">
+    <!-- SECTION 1: OVERVIEW -->
+    <div class="px-2.5 pt-2 pb-1 text-[10px] font-bold uppercase tracking-wider text-navy-mute [&[data-layout=rail]_&]:hidden">
+      Overview
+    </div>
+
     <!-- Admin Dashboard -->
     <a href="/admin_dashboard.html" class="flex items-center gap-2.5 px-2.5 h-[34px] rounded-md {{#if (or (eq active "admin_dashboard") active_admin_dashboard)}}bg-indigo text-white font-medium{{else}}text-navy-fg hover:bg-navy-hover hover:text-white{{/if}} w-full relative group [&[data-layout=rail]_&]:justify-center [&[data-layout=rail]_&]:px-0" data-label="Dashboard">
       <svg class="w-4 h-4 stroke-2 shrink-0"><use href="#i-layout-dashboard"/></svg>
@@ -18,8 +23,13 @@
       <div class="hidden [&[data-layout=rail]_.group:hover_&]:block absolute left-[calc(100%+8px)] bg-ink text-white text-xs px-2.5 py-1.5 rounded shadow-lg whitespace-nowrap z-50">Platform Dashboard</div>
     </a>
 
+    <!-- SECTION 2: TENANTS & PLANS -->
+    <div class="px-2.5 pt-3 pb-1 text-[10px] font-bold uppercase tracking-wider text-navy-mute [&[data-layout=rail]_&]:hidden">
+      Tenants & Subscriptions
+    </div>
+
     <!-- Registered Tenants / Users -->
-    <a href="/admin_users.html" class="flex items-center gap-2.5 px-2.5 h-[34px] rounded-md {{#if (or (eq active "admin_users") active_admin_users)}}bg-indigo text-white font-medium{{else}}text-navy-fg hover:bg-navy-hover hover:text-white{{/if}} w-full relative group [&[data-layout=rail]_&]:justify-center [&[data-layout=rail]_&]:px-0" data-label="Tenants & Users">
+    <a href="/admin_users.html" class="flex items-center gap-2.5 px-2.5 h-[34px] rounded-md {{#if (or (eq active "admin_users") active_admin_users (eq active "admin_user_details"))}}bg-indigo text-white font-medium{{else}}text-navy-fg hover:bg-navy-hover hover:text-white{{/if}} w-full relative group [&[data-layout=rail]_&]:justify-center [&[data-layout=rail]_&]:px-0" data-label="Tenants & Users">
       <svg class="w-4 h-4 stroke-2 shrink-0"><use href="#i-users"/></svg>
       <span class="whitespace-nowrap overflow-hidden [&[data-layout=rail]_&]:hidden">Tenants & Users</span>
       <div class="hidden [&[data-layout=rail]_.group:hover_&]:block absolute left-[calc(100%+8px)] bg-ink text-white text-xs px-2.5 py-1.5 rounded shadow-lg whitespace-nowrap z-50">Tenants & Users</div>
@@ -39,6 +49,13 @@
       <div class="hidden [&[data-layout=rail]_.group:hover_&]:block absolute left-[calc(100%+8px)] bg-ink text-white text-xs px-2.5 py-1.5 rounded shadow-lg whitespace-nowrap z-50">Subscriptions & Revenue</div>
     </a>
 
+    <!-- Payment Gateways Hub -->
+    <a href="/admin_payment_gateways.html" class="flex items-center gap-2.5 px-2.5 h-[34px] rounded-md {{#if (or (eq active "admin_payment_gateways") active_admin_payment_gateways)}}bg-indigo text-white font-medium{{else}}text-navy-fg hover:bg-navy-hover hover:text-white{{/if}} w-full relative group [&[data-layout=rail]_&]:justify-center [&[data-layout=rail]_&]:px-0" data-label="Payment Gateways">
+      <svg class="w-4 h-4 stroke-2 shrink-0"><use href="#i-wallet"/></svg>
+      <span class="whitespace-nowrap overflow-hidden [&[data-layout=rail]_&]:hidden">Payment Gateways</span>
+      <div class="hidden [&[data-layout=rail]_.group:hover_&]:block absolute left-[calc(100%+8px)] bg-ink text-white text-xs px-2.5 py-1.5 rounded shadow-lg whitespace-nowrap z-50">Payment Gateways</div>
+    </a>
+
     <!-- Invoice Templates -->
     <a href="/admin_invoice_templates.html" class="flex items-center gap-2.5 px-2.5 h-[34px] rounded-md {{#if (or (eq active "admin_invoice_templates") active_admin_invoice_templates)}}bg-indigo text-white font-medium{{else}}text-navy-fg hover:bg-navy-hover hover:text-white{{/if}} w-full relative group [&[data-layout=rail]_&]:justify-center [&[data-layout=rail]_&]:px-0" data-label="Invoice Templates">
       <svg class="w-4 h-4 stroke-2 shrink-0"><use href="#i-file-text"/></svg>
@@ -46,9 +63,14 @@
       <div class="hidden [&[data-layout=rail]_.group:hover_&]:block absolute left-[calc(100%+8px)] bg-ink text-white text-xs px-2.5 py-1.5 rounded shadow-lg whitespace-nowrap z-50">Invoice Templates</div>
     </a>
 
+    <!-- SECTION 3: GROWTH & MARKETING -->
+    <div class="px-2.5 pt-3 pb-1 text-[10px] font-bold uppercase tracking-wider text-navy-mute [&[data-layout=rail]_&]:hidden">
+      Growth & Marketing
+    </div>
+
     <!-- Affiliates & Referrals -->
     <a href="/admin_affiliates.html" class="flex items-center gap-2.5 px-2.5 h-[34px] rounded-md {{#if (or (eq active "admin_affiliates") active_admin_affiliates)}}bg-indigo text-white font-medium{{else}}text-navy-fg hover:bg-navy-hover hover:text-white{{/if}} w-full relative group [&[data-layout=rail]_&]:justify-center [&[data-layout=rail]_&]:px-0" data-label="Affiliates & Referrals">
-      <svg class="w-4 h-4 stroke-2 shrink-0"><use href="#i-wallet"/></svg>
+      <svg class="w-4 h-4 stroke-2 shrink-0"><use href="#i-share-2"/></svg>
       <span class="whitespace-nowrap overflow-hidden [&[data-layout=rail]_&]:hidden">Affiliate Program</span>
       <div class="hidden [&[data-layout=rail]_.group:hover_&]:block absolute left-[calc(100%+8px)] bg-ink text-white text-xs px-2.5 py-1.5 rounded shadow-lg whitespace-nowrap z-50">Affiliate Program</div>
     </a>
@@ -58,6 +80,32 @@
       <svg class="w-4 h-4 stroke-2 shrink-0"><use href="#i-globe"/></svg>
       <span class="whitespace-nowrap overflow-hidden [&[data-layout=rail]_&]:hidden">Website & CMS</span>
       <div class="hidden [&[data-layout=rail]_.group:hover_&]:block absolute left-[calc(100%+8px)] bg-ink text-white text-xs px-2.5 py-1.5 rounded shadow-lg whitespace-nowrap z-50">Website & CMS</div>
+    </a>
+
+    <!-- Contact Inquiries / Messages -->
+    <a href="/admin_contact_messages.html" class="flex items-center gap-2.5 px-2.5 h-[34px] rounded-md {{#if (or (eq active "admin_contact_messages") active_admin_contact_messages)}}bg-indigo text-white font-medium{{else}}text-navy-fg hover:bg-navy-hover hover:text-white{{/if}} w-full relative group [&[data-layout=rail]_&]:justify-center [&[data-layout=rail]_&]:px-0" data-label="Inquiries">
+      <svg class="w-4 h-4 stroke-2 shrink-0"><use href="#i-mail"/></svg>
+      <span class="whitespace-nowrap overflow-hidden [&[data-layout=rail]_&]:hidden">Contact Inquiries</span>
+      <div class="hidden [&[data-layout=rail]_.group:hover_&]:block absolute left-[calc(100%+8px)] bg-ink text-white text-xs px-2.5 py-1.5 rounded shadow-lg whitespace-nowrap z-50">Contact Inquiries</div>
+    </a>
+
+    <!-- Newsletter Subscribers -->
+    <a href="/admin_subscribers.html" class="flex items-center gap-2.5 px-2.5 h-[34px] rounded-md {{#if (or (eq active "admin_subscribers") active_admin_subscribers)}}bg-indigo text-white font-medium{{else}}text-navy-fg hover:bg-navy-hover hover:text-white{{/if}} w-full relative group [&[data-layout=rail]_&]:justify-center [&[data-layout=rail]_&]:px-0" data-label="Subscribers">
+      <svg class="w-4 h-4 stroke-2 shrink-0"><use href="#i-bell"/></svg>
+      <span class="whitespace-nowrap overflow-hidden [&[data-layout=rail]_&]:hidden">Subscribers List</span>
+      <div class="hidden [&[data-layout=rail]_.group:hover_&]:block absolute left-[calc(100%+8px)] bg-ink text-white text-xs px-2.5 py-1.5 rounded shadow-lg whitespace-nowrap z-50">Subscribers List</div>
+    </a>
+
+    <!-- SECTION 4: SYSTEM & SETTINGS -->
+    <div class="px-2.5 pt-3 pb-1 text-[10px] font-bold uppercase tracking-wider text-navy-mute [&[data-layout=rail]_&]:hidden">
+      System & Security
+    </div>
+
+    <!-- Notification Templates -->
+    <a href="/admin_notification_templates.html" class="flex items-center gap-2.5 px-2.5 h-[34px] rounded-md {{#if (or (eq active "admin_notification_templates") active_admin_notification_templates)}}bg-indigo text-white font-medium{{else}}text-navy-fg hover:bg-navy-hover hover:text-white{{/if}} w-full relative group [&[data-layout=rail]_&]:justify-center [&[data-layout=rail]_&]:px-0" data-label="Notifications">
+      <svg class="w-4 h-4 stroke-2 shrink-0"><use href="#i-send"/></svg>
+      <span class="whitespace-nowrap overflow-hidden [&[data-layout=rail]_&]:hidden">Email Templates</span>
+      <div class="hidden [&[data-layout=rail]_.group:hover_&]:block absolute left-[calc(100%+8px)] bg-ink text-white text-xs px-2.5 py-1.5 rounded shadow-lg whitespace-nowrap z-50">Email Templates</div>
     </a>
 
     <!-- Platform Settings & Backups -->
@@ -88,7 +136,7 @@
 
     <!-- Rail Toggle Button -->
     <div class="pt-2 flex justify-end [&[data-layout=rail]_&]:justify-center">
-      <button class="p-1 rounded text-navy-mute hover:text-white hover:bg-navy-hover transition-colors" id="railToggleBtn" aria-label="Toggle rail menu" onclick="window.toggleRail && window.toggleRail();">
+      <button class="p-1 rounded text-navy-mute hover:text-white hover:bg-navy-hover transition-colors cursor-pointer" id="railToggleBtn" aria-label="Toggle rail menu" onclick="window.toggleRail && window.toggleRail();">
         <svg class="w-4 h-4 stroke-2"><use href="#i-panel-left-close"/></svg>
       </button>
     </div>

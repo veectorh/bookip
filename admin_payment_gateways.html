@@ -1,0 +1,497 @@
+<!doctype html>
+<html lang="en">
+<head>
+  {{> head}}
+</head>
+<body class="bg-canvas text-ink font-sans text-[14px] leading-[1.5]">
+  
+  {{> icons}}
+
+  <div id="app" class="flex h-screen overflow-hidden" data-layout="rail">
+    <!-- Super Admin Rail Sidebar -->
+    {{> admin-sidebar active_admin_payments=true active="admin_payments"}}
+
+    <div class="flex-1 flex flex-col min-w-0">
+      <!-- Admin Topbar -->
+      <header class="flex items-center gap-2 md:gap-3 px-3 md:px-4 h-12 bg-surface border-b border-line shrink-0 relative z-30">
+        <button class="inline-flex md:hidden p-1.5 -ml-1 text-ink hover:bg-th rounded" id="mobileMenuBtn" aria-label="Open menu">
+          <svg class="w-5 h-5 stroke-2" aria-hidden="true"><use href="#i-menu"/></svg>
+        </button>
+        
+        <!-- Platform Badge & Breadcrumb -->
+        <div class="flex items-center gap-2 text-xs">
+          <a href="/admin_payments.html" class="inline-flex items-center gap-1.5 text-muted hover:text-ink transition-colors font-medium">
+            <svg class="w-3.5 h-3.5 stroke-2"><use href="#i-credit-card"/></svg>
+            <span>Subscriptions & Revenue</span>
+          </a>
+          <span class="text-muted">/</span>
+          <span class="font-semibold text-ink">Payment Gateways</span>
+        </div>
+
+        <div class="ml-auto flex items-center gap-2 md:gap-2.5">
+          <!-- Quick Tenant Demo Jump Button -->
+          <a href="/dashboard.html" class="inline-flex items-center gap-1.5 h-8 px-2.5 rounded text-xs font-medium bg-emerald-600 hover:bg-emerald-700 text-white transition-colors shadow-sm" title="Open Acme Dynamics Ltd tenant workspace">
+            <svg class="w-3.5 h-3.5 stroke-2" aria-hidden="true"><use href="#i-building-2"/></svg>
+            <span class="hidden sm:inline">Tenant Demo (Acme)</span>
+          </a>
+
+          <!-- User Profile Dropdown -->
+          <div class="relative">
+            <button type="button" class="flex items-center gap-1.5 pl-1 rounded p-1 hover:bg-th transition-colors cursor-pointer" id="adminUserMenuBtn" onclick="document.getElementById('adminUserMenuDropdown').classList.toggle('hidden');">
+              <span class="w-7 h-7 rounded-full bg-navy text-white flex items-center justify-center text-[11px] font-bold border border-white/20">SA</span>
+              <svg class="w-3.5 h-3.5 stroke-2 text-muted hidden sm:block"><use href="#i-chevron-down"/></svg>
+            </button>
+
+            <div id="adminUserMenuDropdown" class="hidden absolute right-0 top-full mt-1.5 w-52 bg-surface border border-line-strong rounded-xl shadow-xl py-1.5 text-xs text-ink z-50">
+              <div class="px-3 py-2 border-b border-line">
+                <div class="font-semibold text-ink">Super Administrator</div>
+                <div class="text-[11px] text-muted truncate">ict.swiftypos@gmail.com</div>
+              </div>
+              <a href="/admin_dashboard.html" class="flex items-center gap-2 px-3 py-2 text-ink hover:bg-th hover:text-indigo transition-colors font-medium">
+                <svg class="w-4 h-4 stroke-[1.75] text-indigo"><use href="#i-shield-check"/></svg> Admin Console
+              </a>
+              <a href="/dashboard.html" class="flex items-center gap-2 px-3 py-2 text-ink hover:bg-th hover:text-indigo transition-colors">
+                <svg class="w-4 h-4 stroke-[1.75] text-emerald-600"><use href="#i-building-2"/></svg> Acme Dynamics Workspace
+              </a>
+              <div class="border-t border-line my-1"></div>
+              <a href="/login.html" class="flex items-center gap-2 px-3 py-2 text-[#B4372A] hover:bg-[#FDECEA] transition-colors font-medium">
+                <svg class="w-4 h-4 stroke-[1.75]"><use href="#i-log-out"/></svg> Sign Out
+              </a>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Main Content Container -->
+      <main class="flex-1 overflow-y-auto overflow-x-hidden p-4 md:p-6 lg:p-8 space-y-6 bg-canvas">
+
+        <!-- Top Header & Controls -->
+        <div class="flex items-center justify-between gap-3 mb-4">
+          <div class="min-w-0">
+            <div class="text-xs text-muted mb-0.5 font-semibold uppercase tracking-wider hidden sm:block">Payment Processor Integrations</div>
+            <h1 class="text-lg md:text-2xl font-bold tracking-tight text-ink m-0 truncate">Payment Gateways</h1>
+            <p class="text-xs text-muted mt-0.5 hidden sm:block">Connect and configure local and international payment processors for automated collections.</p>
+          </div>
+
+          <div class="header-menu-container relative flex items-center gap-1.5 shrink-0">
+            <!-- Desktop Back Button -->
+            <a href="/admin_payments.html" class="hidden md:inline-flex items-center gap-1.5 h-control px-3 rounded border border-line-strong bg-surface text-ink hover:bg-th transition-colors shadow-sm text-[13px] font-medium cursor-pointer">
+              <svg class="w-4 h-4 stroke-2 text-muted"><use href="#i-arrow-left"/></svg>
+              <span>Back to Ledger</span>
+            </a>
+
+            <!-- Mobile Kebab Context Menu Trigger -->
+            <button type="button" 
+                    class="header-menu-btn inline-flex md:hidden items-center justify-center w-9 h-9 rounded-lg border border-line-strong bg-surface hover:bg-th text-muted hover:text-ink transition-colors shadow-xs" 
+                    aria-label="More options" 
+                    title="More options"
+                    onclick="toggleHeaderMenu(this, event)">
+              <svg class="w-4 h-4 stroke-2" aria-hidden="true"><use href="#i-more-vertical"/></svg>
+            </button>
+
+            <!-- Mobile Context Menu Dropdown Popover -->
+            <div class="header-menu-dropdown hidden absolute right-10 top-full mt-1.5 w-44 bg-surface border border-line-strong rounded-xl shadow-xl py-1 text-xs text-ink z-50 text-left">
+              <a href="/admin_payments.html" class="w-full text-left px-3 py-2 text-ink hover:bg-th flex items-center gap-2 cursor-pointer font-medium">
+                <svg class="w-4 h-4 stroke-2 text-muted"><use href="#i-arrow-left"/></svg>
+                <span>Back to Ledger</span>
+              </a>
+            </div>
+
+            <!-- Primary Action (Icon on Mobile, Text on Desktop) -->
+            <button type="button" class="inline-flex items-center justify-center gap-1.5 h-9 md:h-control px-2.5 md:px-3 rounded-lg md:rounded border border-transparent text-[13px] font-medium bg-indigo text-white hover:bg-indigo-hover transition-colors shadow-sm cursor-pointer" onclick="openConfigureGatewayDrawer('Paystack', 'pk_live_99218274819', 'Live')" aria-label="Connect Gateway" title="Connect New Gateway">
+              <svg class="w-4 h-4 stroke-[2]" aria-hidden="true"><use href="#i-plus"/></svg>
+              <span class="hidden md:inline">Connect Gateway</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- 1. Universal KPI Metrics Strip -->
+        {{> stats-strip 
+            label1="Connected Gateways" value1="4 Active" subtext1="Paystack, Flutterwave, Bank Wire, Stripe"
+            label2="Supported Currencies" value2="5 Currencies" subtext2="NGN, USD, EUR, GBP, GHS"
+            label3="Webhook Health" value3="100% Success" subtext3="Real-time automated subscription renewals"
+            label4="Monthly Volume" value4="₦ 5,420,000.00" badge4="+18.5% MoM" subtext4="Total subscription collections this cycle"
+        }}
+
+        <!-- Gateway Catalog Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          
+          <!-- 1. Paystack -->
+          <div class="bg-surface rounded-xl border border-line p-5 shadow-xs flex flex-col justify-between space-y-4">
+            <div class="space-y-3">
+              <div class="flex items-start justify-between gap-2">
+                <div class="flex items-center gap-3">
+                  <div class="w-10 h-10 rounded-xl bg-sky-100 text-sky-800 flex items-center justify-center font-black text-sm">P</div>
+                  <div>
+                    <h3 class="font-bold text-sm text-ink">Paystack</h3>
+                    <div class="text-[11px] text-muted">Nigeria Cards, Transfer, USSD & Apple Pay</div>
+                  </div>
+                </div>
+                {{> status-badge status="Active" label="Live"}}
+              </div>
+
+              <p class="text-xs text-muted leading-relaxed">
+                Direct integration for instant Nigerian Naira settlements with automated debit tokens for monthly recurring plans.
+              </p>
+
+              <div class="p-2.5 bg-canvas rounded-lg border border-line text-xs font-mono space-y-1">
+                <div class="flex justify-between">
+                  <span class="text-muted">Public Key:</span>
+                  <span class="text-ink">pk_live_9921...819</span>
+                </div>
+                <div class="flex justify-between">
+                  <span class="text-muted">Fee:</span>
+                  <span class="text-emerald-700 font-semibold">1.5% Capped at ₦2,000</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="pt-3 border-t border-line flex items-center justify-between">
+              <span class="text-[11px] text-emerald-700 font-medium flex items-center gap-1">
+                <span class="w-2 h-2 rounded-full bg-emerald-500"></span> Webhook 200 OK
+              </span>
+              <button type="button" class="h-7 px-3 rounded bg-indigo text-white hover:bg-indigo-hover text-xs font-medium cursor-pointer transition-colors shadow-xs" onclick="openConfigureGatewayDrawer('Paystack', 'pk_live_99218274819', 'Live')">
+                Configure &rarr;
+              </button>
+            </div>
+          </div>
+
+          <!-- 2. Flutterwave -->
+          <div class="bg-surface rounded-xl border border-line p-5 shadow-xs flex flex-col justify-between space-y-4">
+            <div class="space-y-3">
+              <div class="flex items-start justify-between gap-2">
+                <div class="flex items-center gap-3">
+                  <div class="w-10 h-10 rounded-xl bg-amber-100 text-amber-800 flex items-center justify-center font-black text-sm">F</div>
+                  <div>
+                    <h3 class="font-bold text-sm text-ink">Flutterwave</h3>
+                    <div class="text-[11px] text-muted">Pan-African Multi-Currency Collections</div>
+                  </div>
+                </div>
+                {{> status-badge status="Active" label="Live"}}
+              </div>
+
+              <p class="text-xs text-muted leading-relaxed">
+                Collect subscription fees in NGN, GHS, KES, and USD via mobile money, virtual bank accounts, and international cards.
+              </p>
+
+              <div class="p-2.5 bg-canvas rounded-lg border border-line text-xs font-mono space-y-1">
+                <div class="flex justify-between">
+                  <span class="text-muted">Public Key:</span>
+                  <span class="text-ink">FLWPUBK-4819...102</span>
+                </div>
+                <div class="flex justify-between">
+                  <span class="text-muted">Fee:</span>
+                  <span class="text-emerald-700 font-semibold">1.4% Standard</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="pt-3 border-t border-line flex items-center justify-between">
+              <span class="text-[11px] text-emerald-700 font-medium flex items-center gap-1">
+                <span class="w-2 h-2 rounded-full bg-emerald-500"></span> Webhook 200 OK
+              </span>
+              <button type="button" class="h-7 px-3 rounded bg-indigo text-white hover:bg-indigo-hover text-xs font-medium cursor-pointer transition-colors shadow-xs" onclick="openConfigureGatewayDrawer('Flutterwave', 'FLWPUBK-4819284102', 'Live')">
+                Configure &rarr;
+              </button>
+            </div>
+          </div>
+
+          <!-- 3. Direct Bank Transfer (Offline) -->
+          <div class="bg-surface rounded-xl border border-line p-5 shadow-xs flex flex-col justify-between space-y-4">
+            <div class="space-y-3">
+              <div class="flex items-start justify-between gap-2">
+                <div class="flex items-center gap-3">
+                  <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-800 flex items-center justify-center font-bold text-sm">
+                    <svg class="w-5 h-5 stroke-2"><use href="#i-landmark"/></svg>
+                  </div>
+                  <div>
+                    <h3 class="font-bold text-sm text-ink">Bank Transfer (Offline)</h3>
+                    <div class="text-[11px] text-muted">Direct NUBAN Corporate Deposits</div>
+                  </div>
+                </div>
+                {{> status-badge status="Active" label="Active"}}
+              </div>
+
+              <p class="text-xs text-muted leading-relaxed">
+                Allows corporate tenants to pay directly into Bookkip's First Bank of Nigeria commercial account with manual verification.
+              </p>
+
+              <div class="p-2.5 bg-canvas rounded-lg border border-line text-xs space-y-1">
+                <div class="flex justify-between">
+                  <span class="text-muted">Primary Bank:</span>
+                  <span class="font-semibold text-ink">First Bank of Nigeria</span>
+                </div>
+                <div class="flex justify-between">
+                  <span class="text-muted">NUBAN:</span>
+                  <span class="font-mono font-bold text-indigo">1029384756</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="pt-3 border-t border-line flex items-center justify-between">
+              <span class="text-[11px] text-muted">Zero processor fee</span>
+              <button type="button" class="h-7 px-3 rounded border border-line-strong hover:bg-th text-xs font-medium text-ink cursor-pointer transition-colors" onclick="openConfigureGatewayDrawer('Bank Transfer', 'First Bank · 1029384756', 'Active')">
+                Edit Bank Details &rarr;
+              </button>
+            </div>
+          </div>
+
+          <!-- 4. Stripe -->
+          <div class="bg-surface rounded-xl border border-line p-5 shadow-xs flex flex-col justify-between space-y-4">
+            <div class="space-y-3">
+              <div class="flex items-start justify-between gap-2">
+                <div class="flex items-center gap-3">
+                  <div class="w-10 h-10 rounded-xl bg-purple-100 text-purple-800 flex items-center justify-center font-black text-sm">S</div>
+                  <div>
+                    <h3 class="font-bold text-sm text-ink">Stripe</h3>
+                    <div class="text-[11px] text-muted">International Credit & Debit Cards</div>
+                  </div>
+                </div>
+                {{> status-badge status="Trial" label="Test Mode"}}
+              </div>
+
+              <p class="text-xs text-muted leading-relaxed">
+                Global recurring billing in USD, EUR, and GBP for international diaspora tenants and cross-border businesses.
+              </p>
+
+              <div class="p-2.5 bg-canvas rounded-lg border border-line text-xs font-mono space-y-1">
+                <div class="flex justify-between">
+                  <span class="text-muted">Public Key:</span>
+                  <span class="text-ink">pk_test_stripe_51M...</span>
+                </div>
+                <div class="flex justify-between">
+                  <span class="text-muted">Fee:</span>
+                  <span class="text-ink">2.9% + 30¢</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="pt-3 border-t border-line flex items-center justify-between">
+              <span class="text-[11px] text-amber-700 font-medium">Sandbox Sandbox</span>
+              <button type="button" class="h-7 px-3 rounded bg-indigo text-white hover:bg-indigo-hover text-xs font-medium cursor-pointer transition-colors shadow-xs" onclick="openConfigureGatewayDrawer('Stripe', 'pk_test_stripe_51M...', 'Test Mode')">
+                Configure &rarr;
+              </button>
+            </div>
+          </div>
+
+          <!-- 5. Monnify -->
+          <div class="bg-surface rounded-xl border border-line p-5 shadow-xs flex flex-col justify-between space-y-4">
+            <div class="space-y-3">
+              <div class="flex items-start justify-between gap-2">
+                <div class="flex items-center gap-3">
+                  <div class="w-10 h-10 rounded-xl bg-blue-100 text-blue-800 flex items-center justify-center font-black text-sm">M</div>
+                  <div>
+                    <h3 class="font-bold text-sm text-ink">Monnify</h3>
+                    <div class="text-[11px] text-muted">Virtual Accounts & Bank Transfer</div>
+                  </div>
+                </div>
+              </div>
+
+              <p class="text-xs text-muted leading-relaxed">
+                Dedicated dynamic virtual accounts powered by Moniepoint with instant webhook reconciliation and low flat fees.
+              </p>
+
+              <div class="p-2.5 bg-canvas rounded-lg border border-line text-xs font-mono space-y-1">
+                <div class="flex justify-between">
+                  <span class="text-muted">Status:</span>
+                  <span class="text-muted">Not Connected</span>
+                </div>
+                <div class="flex justify-between">
+                  <span class="text-muted">Fee:</span>
+                  <span class="text-emerald-700 font-semibold">1.0% Capped at ₦1,000</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="pt-3 border-t border-line flex items-center justify-between">
+              <span class="text-[11px] text-muted">Ready to configure</span>
+              <button type="button" class="h-7 px-3 rounded bg-indigo text-white hover:bg-indigo-hover text-xs font-medium cursor-pointer transition-colors shadow-xs" onclick="openConfigureGatewayDrawer('Monnify', 'MNFY_KEY_DEMO', 'Setup')">
+                Connect Monnify &rarr;
+              </button>
+            </div>
+          </div>
+
+          <!-- 6. PayPal -->
+          <div class="bg-surface rounded-xl border border-line p-5 shadow-xs flex flex-col justify-between space-y-4">
+            <div class="space-y-3">
+              <div class="flex items-start justify-between gap-2">
+                <div class="flex items-center gap-3">
+                  <div class="w-10 h-10 rounded-xl bg-indigo-100 text-indigo-800 flex items-center justify-center font-black text-sm">PP</div>
+                  <div>
+                    <h3 class="font-bold text-sm text-ink">PayPal</h3>
+                    <div class="text-[11px] text-muted">Global Wallet & Buyer Invoicing</div>
+                  </div>
+                </div>
+              </div>
+
+              <p class="text-xs text-muted leading-relaxed">
+                Allow overseas clients and partners to settle invoices and subscriptions using their registered PayPal balance or card.
+              </p>
+
+              <div class="p-2.5 bg-canvas rounded-lg border border-line text-xs font-mono space-y-1">
+                <div class="flex justify-between">
+                  <span class="text-muted">Status:</span>
+                  <span class="text-muted">Not Connected</span>
+                </div>
+                <div class="flex justify-between">
+                  <span class="text-muted">Fee:</span>
+                  <span class="text-ink">3.49% + fixed</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="pt-3 border-t border-line flex items-center justify-between">
+              <span class="text-[11px] text-muted">Ready to configure</span>
+              <button type="button" class="h-7 px-3 rounded bg-indigo text-white hover:bg-indigo-hover text-xs font-medium cursor-pointer transition-colors shadow-xs" onclick="openConfigureGatewayDrawer('PayPal', 'PP_CLIENT_ID', 'Setup')">
+                Connect PayPal &rarr;
+              </button>
+            </div>
+          </div>
+
+          <!-- 7. Binance Pay / Crypto -->
+          <div class="bg-surface rounded-xl border border-line p-5 shadow-xs flex flex-col justify-between space-y-4">
+            <div class="space-y-3">
+              <div class="flex items-start justify-between gap-2">
+                <div class="flex items-center gap-3">
+                  <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 border border-amber-200 flex items-center justify-center font-bold text-sm">₿</div>
+                  <div>
+                    <h3 class="font-bold text-sm text-ink">Binance Pay (Crypto)</h3>
+                    <div class="text-[11px] text-muted">USDT Stablecoin Web3 Settlement</div>
+                  </div>
+                </div>
+              </div>
+
+              <p class="text-xs text-muted leading-relaxed">
+                Accept zero-gas USDT and stablecoin invoice payments for crypto-native businesses and global digital contractors.
+              </p>
+
+              <div class="p-2.5 bg-canvas rounded-lg border border-line text-xs font-mono space-y-1">
+                <div class="flex justify-between">
+                  <span class="text-muted">Status:</span>
+                  <span class="text-muted">Not Connected</span>
+                </div>
+                <div class="flex justify-between">
+                  <span class="text-muted">Fee:</span>
+                  <span class="text-emerald-700 font-semibold">0.5% Low Fee</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="pt-3 border-t border-line flex items-center justify-between">
+              <span class="text-[11px] text-muted">Ready to configure</span>
+              <button type="button" class="h-7 px-3 rounded bg-indigo text-white hover:bg-indigo-hover text-xs font-medium cursor-pointer transition-colors shadow-xs" onclick="openConfigureGatewayDrawer('Binance Pay', 'BINANCE_MERCHANT_KEY', 'Setup')">
+                Connect Web3 &rarr;
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- SLIDE-OVER: Configure Gateway Drawer -->
+  <div id="gatewayDrawer" class="hidden fixed inset-0 z-50 overflow-hidden" role="dialog" aria-modal="true">
+    <div class="fixed inset-0 bg-ink/40 backdrop-blur-[1px] transition-opacity" onclick="closeConfigureGatewayDrawer()"></div>
+    <div class="fixed inset-y-0 right-0 max-w-full flex pl-10">
+      <div class="w-screen max-w-md bg-surface border-l border-line shadow-2xl flex flex-col">
+        <div class="flex items-center justify-between p-4 border-b border-line">
+          <div class="flex items-center gap-2">
+            <span class="w-7 h-7 rounded-md bg-indigo/10 text-indigo flex items-center justify-center">
+              <svg class="w-4 h-4 stroke-2"><use href="#i-credit-card"/></svg>
+            </span>
+            <h3 class="font-bold text-sm text-ink" id="gwDrawerTitle">Configure Payment Gateway</h3>
+          </div>
+          <button type="button" class="p-1 text-muted hover:text-ink rounded" onclick="closeConfigureGatewayDrawer()">
+            <svg class="w-4 h-4 stroke-2"><use href="#i-x"/></svg>
+          </button>
+        </div>
+
+        <form onsubmit="submitGatewayForm(event)" class="flex-1 overflow-y-auto p-4 space-y-4 text-xs">
+          <div>
+            <label class="block text-xs font-semibold text-ink mb-1">Public Key / Merchant ID <span class="text-rose-500">*</span></label>
+            <input type="text" id="gwInputPub" required class="w-full h-control px-3 font-mono bg-canvas rounded border border-line-strong text-xs text-ink focus:outline-none focus:border-indigo">
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold text-ink mb-1">Secret Key / API Token <span class="text-rose-500">*</span></label>
+            <input type="password" id="gwInputSecret" value="••••••••••••••••••••••••••••" required class="w-full h-control px-3 font-mono bg-canvas rounded border border-line-strong text-xs text-ink focus:outline-none focus:border-indigo">
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold text-ink mb-1">System Webhook Callback URL</label>
+            <div class="flex items-center gap-1.5">
+              <input type="text" readonly value="https://api.bookkip.ng/v1/webhooks/gateway-settlement" class="w-full h-control px-3 font-mono bg-th text-muted rounded border border-line text-[11px]">
+              <button type="button" class="h-control px-2.5 rounded border border-line-strong hover:bg-th text-indigo" onclick="copyWebhook()">Copy</button>
+            </div>
+            <p class="text-[11px] text-muted mt-1">Paste this exact URL into your payment gateway webhook console.</p>
+          </div>
+
+          <div class="pt-2 border-t border-line">
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="checkbox" id="gwLiveMode" checked class="w-4 h-4 rounded text-indigo border-line-strong">
+              <span class="text-xs text-ink font-semibold">Enable Live Processing (Real Production Settlements)</span>
+            </label>
+            <p class="text-[11px] text-muted ml-6 mt-0.5">Uncheck to run in sandbox/test mode.</p>
+          </div>
+
+          <!-- Strict Button Ordering: Secondary on left, Primary on right -->
+          <div class="mt-auto pt-4 border-t border-line flex items-center justify-between">
+            <button type="button" class="h-control px-3 rounded border border-line-strong bg-surface text-ink hover:bg-th text-xs font-medium cursor-pointer" onclick="closeConfigureGatewayDrawer()">
+              Cancel
+            </button>
+            <button type="submit" class="h-control px-4 rounded bg-indigo text-white hover:bg-indigo-hover text-xs font-medium cursor-pointer shadow-sm transition-colors">
+              Save & Activate Gateway
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Universal Toast Container -->
+  {{> toast}}
+
+  <script>
+    let activeGw = '';
+
+    function openConfigureGatewayDrawer(name, pubKey, mode) {
+      activeGw = name;
+      document.getElementById('gwDrawerTitle').textContent = `Configure ${name}`;
+      document.getElementById('gwInputPub').value = pubKey;
+      document.getElementById('gatewayDrawer').classList.remove('hidden');
+    }
+
+    function closeConfigureGatewayDrawer() {
+      document.getElementById('gatewayDrawer').classList.add('hidden');
+    }
+
+    function copyWebhook() {
+      navigator.clipboard?.writeText('https://api.bookkip.ng/v1/webhooks/gateway-settlement').catch(() => {});
+      showToast('Webhook callback URL copied to clipboard.', 'info');
+    }
+
+    function submitGatewayForm(e) {
+      e.preventDefault();
+      closeConfigureGatewayDrawer();
+      showToast(`Gateway "${activeGw}" credentials encrypted and webhook verified.`, 'success');
+    }
+
+    function showToast(message, type) {
+      if (window.toast) {
+        window.toast(message, type);
+      } else {
+        const toastEl = document.getElementById('toast');
+        if (toastEl) {
+          toastEl.textContent = message;
+          toastEl.classList.remove('hidden');
+          setTimeout(() => toastEl.classList.add('hidden'), 3500);
+        }
+      }
+    }
+  </script>
+
+  {{> scripts}}
+</body>
+</html>

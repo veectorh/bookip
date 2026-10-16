@@ -15,7 +15,7 @@
     const auto = getAutoLayout();
     const layout = auto.layout;
 
-    app.setAttribute('data-layout', layout);
+    if (app) app.setAttribute('data-layout', layout);
 
     const isCollapsed = layout === 'rail';
     document.querySelectorAll('#railBtn, #railBtn2').forEach(b => {
@@ -81,52 +81,78 @@
     };
   }
 
-  // Mobile menu button opens off-canvas sidebar
-  const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-  if (mobileMenuBtn) {
-    mobileMenuBtn.onclick = () => {
-      closePopovers();
-      const sidebarContent = document.getElementById('sidebar');
-      if (!sidebarContent) return;
-      const w = document.createElement('div');
-      w.className = 'mobilenavwrap fixed inset-0 z-50 flex justify-start before:content-[""] before:absolute before:inset-0 before:bg-[rgba(16,20,50,0.5)]';
-      w.onclick = ev => { if (ev.target === w) closePopovers(); };
-      w.innerHTML = `
-        <div class="relative w-[260px] max-w-[80vw] h-full bg-navy text-navy-fg p-2 flex flex-col shadow-2xl animate-[slideInLeft_0.2s_ease-out]">
-          <div class="flex items-center justify-between px-2 py-3 mb-2 border-b border-navy-hover text-white">
-            <div class="flex items-center gap-2.5">
-              <span class="w-[26px] h-[26px] rounded-[5px] bg-white text-navy flex items-center justify-center font-semibold text-sm shrink-0">B</span>
-              <span class="font-semibold tracking-tight text-[15px]">Bookkip</span>
+  // Universal Dynamic Mobile Off-Canvas Sidebar
+  function openMobileNavDrawer() {
+    closePopovers();
+    const activeSidebar = document.getElementById('sidebar');
+    if (!activeSidebar) return;
+
+    // Detect if admin or tenant sidebar
+    const isAdmin = activeSidebar.querySelector('a[href*="admin_"]') !== null;
+    const navEl = activeSidebar.querySelector('nav');
+    if (!navEl) return;
+    const navContent = navEl.innerHTML;
+
+    // Check if there's a bottom workspace switcher (e.g. in admin sidebar)
+    const bottomSwitcher = activeSidebar.querySelector('.mt-auto.pt-3 a[href*="dashboard"]');
+    const bottomHtml = bottomSwitcher ? `
+      <div class="mt-auto pt-3 border-t border-navy-hover/60 flex flex-col gap-1 w-full shrink-0">
+        <div class="px-2 text-[10px] uppercase tracking-wider font-semibold text-navy-mute">Tenant Sandbox</div>
+        <a href="/dashboard.html" class="flex items-center gap-2.5 px-2 py-2 rounded-md bg-white/10 hover:bg-white/15 text-white transition-colors w-full">
+          <div class="w-7 h-7 rounded bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center justify-center shrink-0">
+            <svg class="w-4 h-4 stroke-2"><use href="#i-building-2"/></svg>
+          </div>
+          <div class="truncate text-left flex-1 min-w-0">
+            <div class="text-xs font-semibold text-white truncate leading-tight">Acme Dynamics</div>
+            <div class="text-[10px] text-emerald-300 font-medium">Launch Tenant Workspace →</div>
+          </div>
+        </a>
+      </div>
+    ` : '';
+
+    const w = document.createElement('div');
+    w.className = 'mobilenavwrap fixed inset-0 z-50 flex justify-start before:content-[""] before:absolute before:inset-0 before:bg-[rgba(16,20,50,0.6)] backdrop-blur-xs';
+    w.onclick = ev => { if (ev.target === w) closePopovers(); };
+    w.innerHTML = `
+      <div class="relative w-[280px] max-w-[85vw] h-full bg-navy text-navy-fg p-3 flex flex-col shadow-2xl animate-[slideInLeft_0.2s_ease-out]">
+        <div class="flex items-center justify-between px-2 py-3 mb-2 border-b border-navy-hover/50 text-white shrink-0">
+          <div class="flex items-center gap-2.5">
+            <span class="w-[28px] h-[28px] rounded-[6px] ${isAdmin ? 'bg-indigo text-white' : 'bg-white text-navy'} flex items-center justify-center font-bold text-sm shrink-0 shadow-sm">
+              ${isAdmin ? '<svg class="w-4 h-4 stroke-2"><use href="#i-shield-check"/></svg>' : 'B'}
+            </span>
+            <div>
+              <div class="font-bold tracking-tight text-[14px] text-white leading-none">${isAdmin ? 'Bookkip Admin' : 'Bookkip'}</div>
+              <div class="text-[10px] text-navy-mute tracking-wide uppercase font-semibold mt-0.5">${isAdmin ? 'Super Admin Console' : 'Business Workspace'}</div>
             </div>
-            <button class="w-7 h-7 flex items-center justify-center text-navy-fg hover:text-white" onclick="closePopovers()">
-              <svg class="w-5 h-5 stroke-2"><use href="#i-x-circle"/></svg>
-            </button>
           </div>
-          <div class="flex-1 overflow-y-auto flex flex-col gap-px">
-            <a href="/dashboard.html" class="flex items-center gap-2.5 px-2.5 h-[36px] rounded text-navy-fg hover:bg-navy-hover hover:text-white text-[13px] font-medium"><svg class="w-5 h-5 stroke-2 shrink-0"><use href="#i-layout-dashboard"/></svg> Dashboard</a>
-            <div class="text-[11px] text-navy-mute px-2.5 pt-3 pb-1 uppercase font-semibold">Sales</div>
-            <a href="/" class="flex items-center gap-2.5 px-2.5 h-[36px] rounded text-navy-fg hover:bg-navy-hover hover:text-white text-[13px] font-medium"><svg class="w-5 h-5 stroke-2 shrink-0"><use href="#i-file-text"/></svg> Invoices <span class="ml-auto text-xs text-navy-mute">4</span></a>
-            <a href="/quotations.html" class="flex items-center gap-2.5 px-2.5 h-[36px] rounded text-navy-fg hover:bg-navy-hover hover:text-white text-[13px] font-medium"><svg class="w-5 h-5 stroke-2 shrink-0"><use href="#i-file-clock"/></svg> Quotations</a>
-            <a href="/customers.html" class="flex items-center gap-2.5 px-2.5 h-[36px] rounded text-navy-fg hover:bg-navy-hover hover:text-white text-[13px] font-medium"><svg class="w-5 h-5 stroke-2 shrink-0"><use href="#i-users"/></svg> Customers</a>
-            <div class="text-[11px] text-navy-mute px-2.5 pt-3 pb-1 uppercase font-semibold">Purchasing</div>
-            <a href="/purchases.html" class="flex items-center gap-2.5 px-2.5 h-[36px] rounded text-navy-fg hover:bg-navy-hover hover:text-white text-[13px] font-medium"><svg class="w-5 h-5 stroke-2 shrink-0"><use href="#i-shopping-bag"/></svg> Purchases</a>
-            <a href="/vendors.html" class="flex items-center gap-2.5 px-2.5 h-[36px] rounded text-navy-fg hover:bg-navy-hover hover:text-white text-[13px] font-medium"><svg class="w-5 h-5 stroke-2 shrink-0"><use href="#i-truck"/></svg> Vendors</a>
-            <div class="text-[11px] text-navy-mute px-2.5 pt-3 pb-1 uppercase font-semibold">People</div>
-            <a href="/employees.html" class="flex items-center gap-2.5 px-2.5 h-[36px] rounded text-navy-fg hover:bg-navy-hover hover:text-white text-[13px] font-medium"><svg class="w-5 h-5 stroke-2 shrink-0"><use href="#i-contact"/></svg> Employees</a>
-            <a href="/attendance.html" class="flex items-center gap-2.5 px-2.5 h-[36px] rounded text-navy-fg hover:bg-navy-hover hover:text-white text-[13px] font-medium"><svg class="w-5 h-5 stroke-2 shrink-0"><use href="#i-calendar-check"/></svg> Attendance</a>
-            <a href="/payroll.html" class="flex items-center gap-2.5 px-2.5 h-[36px] rounded text-navy-fg hover:bg-navy-hover hover:text-white text-[13px] font-medium"><svg class="w-5 h-5 stroke-2 shrink-0"><use href="#i-banknote"/></svg> Payroll</a>
-          </div>
+          <button class="w-8 h-8 rounded-lg flex items-center justify-center text-navy-mute hover:text-white hover:bg-navy-hover cursor-pointer" onclick="closePopovers()" aria-label="Close navigation">
+            <svg class="w-5 h-5 stroke-2"><use href="#i-x"/></svg>
+          </button>
         </div>
-      `;
-      if (!document.getElementById('slideInLeft-style')) {
-        const s = document.createElement('style');
-        s.id = 'slideInLeft-style';
-        s.textContent = '@keyframes slideInLeft { from { transform: translateX(-100%); } to { transform: translateX(0); } }';
-        document.head.appendChild(s);
-      }
-      document.body.appendChild(w);
-    };
+        <div class="flex-1 overflow-y-auto flex flex-col gap-0.5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden mobile-nav-body py-1">
+          ${navContent}
+        </div>
+        ${bottomHtml}
+      </div>
+    `;
+    if (!document.getElementById('slideInLeft-style')) {
+      const s = document.createElement('style');
+      s.id = 'slideInLeft-style';
+      s.textContent = '@keyframes slideInLeft { from { transform: translateX(-100%); } to { transform: translateX(0); } }';
+      document.head.appendChild(s);
+    }
+    document.body.appendChild(w);
   }
+
+  window.openMobileNavDrawer = openMobileNavDrawer;
+
+  document.addEventListener('click', (e) => {
+    const btn = e.target.closest('#mobileMenuBtn, [data-mobile-menu]');
+    if (btn) {
+      e.preventDefault();
+      openMobileNavDrawer();
+    }
+  });
 
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closePopovers(); });
   apply();
@@ -251,7 +277,35 @@
       if (notifPanel && !notifPanel.contains(e.target) && !notifBellBtn.contains(e.target)) {
         notifPanel.classList.add('hidden');
       }
+      if (!e.target.closest('.header-menu-btn')) {
+        document.querySelectorAll('.header-menu-dropdown').forEach(d => d.classList.add('hidden'));
+      }
+      if (!e.target.closest('.tab-switcher-btn') && !e.target.closest('.tab-switcher-dropdown')) {
+        document.querySelectorAll('.tab-switcher-dropdown').forEach(d => d.classList.add('hidden'));
+      }
     });
+
+    // Universal Header Context Menu Toggle
+    window.toggleHeaderMenu = function(btn, event) {
+      if (event) event.stopPropagation();
+      const container = btn.closest('.header-menu-container');
+      const dropdown = container ? container.querySelector('.header-menu-dropdown') : null;
+      if (!dropdown) return;
+      const isHidden = dropdown.classList.contains('hidden');
+      document.querySelectorAll('.header-menu-dropdown').forEach(d => d.classList.add('hidden'));
+      if (isHidden) dropdown.classList.remove('hidden');
+    };
+
+    // Universal Tab View Switcher Toggle
+    window.toggleTabSwitcher = function(btn, event) {
+      if (event) event.stopPropagation();
+      const container = btn.closest('.tab-switcher-container');
+      const dropdown = container ? container.querySelector('.tab-switcher-dropdown') : null;
+      if (!dropdown) return;
+      const isHidden = dropdown.classList.contains('hidden');
+      document.querySelectorAll('.tab-switcher-dropdown').forEach(d => d.classList.add('hidden'));
+      if (isHidden) dropdown.classList.remove('hidden');
+    };
 
     // Global Screen Switching (List, Editor, View, Profile)
     document.addEventListener('click', (e) => {
@@ -295,7 +349,14 @@
     });
 
     // Toast Notification System
-    window.showToast = function({ title, message, type = 'success', duration = 4000, actionLabel, onAction }) {
+    window.showToast = function(optionsOrMsg, maybeType) {
+      let title, message, type = 'success', duration = 4000, actionLabel, onAction;
+      if (typeof optionsOrMsg === 'string') {
+        message = optionsOrMsg;
+        if (maybeType) type = maybeType;
+      } else if (optionsOrMsg && typeof optionsOrMsg === 'object') {
+        ({ title, message, type = 'success', duration = 4000, actionLabel, onAction } = optionsOrMsg);
+      }
       let container = document.getElementById('toastContainer');
       if (!container) {
         container = document.createElement('div');

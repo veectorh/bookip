@@ -28,9 +28,9 @@
                 <h1 class="m-0 text-xl font-semibold tracking-tight text-ink">Units of Measure</h1>
                 <span class="text-xs text-muted font-medium bg-surface px-2 py-0.5 rounded border border-line">{{seed.product_units.length}} units</span>
               </div>
-              <div class="flex items-center gap-2">
-                <button class="inline-flex items-center gap-1.5 h-control px-2.5 md:px-3 rounded border border-transparent text-[13px] font-medium bg-indigo text-white hover:bg-indigo-hover transition-colors shadow-sm" data-modal-target="unitModal">
-                  <svg class="w-4 h-4 stroke-[2]" aria-hidden="true"><use href="#i-plus"/></svg> <span>Add unit</span>
+              <div class="flex items-center gap-1.5 shrink-0">
+                <button class="inline-flex items-center justify-center gap-1.5 h-9 md:h-control px-2.5 md:px-3 rounded-lg md:rounded border border-transparent text-[13px] font-medium bg-indigo text-white hover:bg-indigo-hover transition-colors shadow-sm" data-modal-target="unitModal" aria-label="Add unit" title="Add unit">
+                  <svg class="w-4 h-4 stroke-[2]" aria-hidden="true"><use href="#i-plus"/></svg> <span class="hidden md:inline">Add unit</span>
                 </button>
               </div>
             </div>
@@ -43,46 +43,78 @@
               label4="Standard Pack" value4="Active" success4=true
             }}
 
-            <!-- Table (Desktop) -->
-            <div class="bg-surface border border-line rounded overflow-x-auto">
-              <table class="w-full border-collapse text-[13px] min-w-[500px]">
-                <thead>
-                  <tr class="bg-th text-muted font-medium text-xs">
-                    <th class="px-3.5 py-2.5 text-left border-b border-line whitespace-nowrap font-medium">Unit Name</th>
-                    <th class="px-3.5 py-2.5 text-left border-b border-line whitespace-nowrap font-medium">Short Code / Symbol</th>
-                    <th class="px-3.5 py-2.5 text-right border-b border-line whitespace-nowrap font-medium">Items Using This</th>
-                    <th class="px-3.5 py-2.5 text-left border-b border-line whitespace-nowrap font-medium">Status</th>
-                    <th class="px-3.5 py-2.5 border-b border-line w-9"></th>
-                  </tr>
-                </thead>
-                <tbody class="divide-y divide-line">
-                  {{#each seed.product_units}}
-                  <tr class="hover:bg-[#FAFBFD] group transition-colors">
-                    <td class="px-3.5 py-3 whitespace-nowrap font-medium text-ink">
-                      {{this.name}}
-                    </td>
-                    <td class="px-3.5 py-3 whitespace-nowrap">
+            <!-- Table (Desktop) & Cards (Mobile) -->
+            <div class="bg-surface border border-line rounded overflow-hidden">
+              <!-- Desktop Tabular Grid -->
+              <div class="hidden md:block overflow-x-auto">
+                <table class="w-full border-collapse text-[13px] min-w-[500px]">
+                  <thead>
+                    <tr class="bg-th text-muted font-medium text-xs">
+                      <th class="px-3.5 py-2.5 text-left border-b border-line whitespace-nowrap font-medium">Unit Name</th>
+                      <th class="px-3.5 py-2.5 text-left border-b border-line whitespace-nowrap font-medium">Short Code / Symbol</th>
+                      <th class="px-3.5 py-2.5 text-right border-b border-line whitespace-nowrap font-medium">Items Using This</th>
+                      <th class="px-3.5 py-2.5 text-left border-b border-line whitespace-nowrap font-medium">Status</th>
+                      <th class="px-3.5 py-2.5 border-b border-line w-9"></th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-line">
+                    {{#each seed.product_units}}
+                    <tr class="hover:bg-[#FAFBFD] group transition-colors">
+                      <td class="px-3.5 py-3 whitespace-nowrap font-medium text-ink">
+                        {{this.name}}
+                      </td>
+                      <td class="px-3.5 py-3 whitespace-nowrap">
+                        <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-mono font-semibold bg-canvas text-ink border border-line">
+                          {{this.short_name}}
+                        </span>
+                      </td>
+                      <td class="px-3.5 py-3 whitespace-nowrap text-right text-muted" style="font-variant-numeric: tabular-nums;">
+                        {{this.products_count}} products
+                      </td>
+                      <td class="px-3.5 py-3 whitespace-nowrap">
+                        <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-[#E9F7EF] text-[#146A3E] border border-[#C8EAD6]">
+                          Active
+                        </span>
+                      </td>
+                      <td class="px-3.5 py-3 whitespace-nowrap">
+                        <button class="w-[26px] h-[26px] rounded flex items-center justify-center text-muted hover:bg-th hover:border-line-strong hover:text-ink border border-transparent cursor-pointer" data-menu="{{this.name}}" data-menu-type="unit">
+                          <svg class="w-4 h-4 stroke-[1.75]"><use href="#i-more-horizontal"/></svg>
+                        </button>
+                      </td>
+                    </tr>
+                    {{/each}}
+                  </tbody>
+                </table>
+              </div>
+
+              <!-- Mobile Compact Cards View -->
+              <div class="block md:hidden divide-y divide-line">
+                {{#each seed.product_units}}
+                <div class="p-3.5 bg-surface space-y-2">
+                  <!-- Row 1: Name & Status -->
+                  <div class="flex items-center justify-between gap-2">
+                    <span class="font-bold text-ink text-[13px]">{{this.name}}</span>
+                    <span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-semibold bg-[#E9F7EF] text-[#146A3E] border border-[#C8EAD6]">
+                      Active
+                    </span>
+                  </div>
+
+                  <!-- Row 2: Symbol, Usage & Actions -->
+                  <div class="flex items-center justify-between text-xs pt-1 border-t border-line/60">
+                    <div class="flex items-center gap-2">
                       <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-mono font-semibold bg-canvas text-ink border border-line">
                         {{this.short_name}}
                       </span>
-                    </td>
-                    <td class="px-3.5 py-3 whitespace-nowrap text-right text-muted" style="font-variant-numeric: tabular-nums;">
-                      {{this.products_count}} products
-                    </td>
-                    <td class="px-3.5 py-3 whitespace-nowrap">
-                      <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-[#E9F7EF] text-[#146A3E] border border-[#C8EAD6]">
-                        Active
-                      </span>
-                    </td>
-                    <td class="px-3.5 py-3 whitespace-nowrap">
-                      <button class="w-[26px] h-[26px] rounded flex items-center justify-center text-muted hover:bg-th hover:border-line-strong hover:text-ink border border-transparent" data-menu="{{this.name}}" data-menu-type="unit">
-                        <svg class="w-4 h-4 stroke-[1.75]"><use href="#i-more-horizontal"/></svg>
-                      </button>
-                    </td>
-                  </tr>
-                  {{/each}}
-                </tbody>
-              </table>
+                      <span class="text-[11px] text-muted">{{this.products_count}} products assigned</span>
+                    </div>
+                    <button class="w-7 h-7 rounded border border-line hover:bg-th flex items-center justify-center text-muted hover:text-ink transition-colors cursor-pointer" data-menu="{{this.name}}" data-menu-type="unit">
+                      <svg class="w-4 h-4 stroke-[1.75]"><use href="#i-more-horizontal"/></svg>
+                    </button>
+                  </div>
+                </div>
+                {{/each}}
+              </div>
+
               <div class="flex items-center gap-3 px-3.5 py-2.5 border-t border-line text-xs text-muted bg-surface">
                 <span>{{seed.product_units.length}} units of measure</span>
               </div>
